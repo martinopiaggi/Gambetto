@@ -43,6 +43,7 @@ public class Room : MonoBehaviour
                 
                 GameObject cubeInstance=Instantiate(cubePrefab,position,Quaternion.identity);
                 cubeInstance.GetComponent<MeshRenderer>().material = (i+j)%2==0 ? light : dark;
+                cubeInstance.transform.parent = gameObject.transform;
             } 
         }  
     }
