@@ -10,13 +10,15 @@ public class Room : MonoBehaviour
     private int gridLength = 8;
     [SerializeField]
     private int gridWidth = 8;
-    [SerializeField]
-    private GameObject cubePrefab; // Reference to the Cube prefab
-
+    
     [SerializeField] private Material light;
     [SerializeField] private Material dark;
     
     private int[,] matrix; // The matrix to store the cubes
+    
+    [SerializeField]
+    private GameObject cubePrefab; // Reference to the Cube prefab
+
     
     void Start()
     {
@@ -36,7 +38,7 @@ public class Room : MonoBehaviour
         {
             for (int j = 0; j < gridWidth ;j++)
             { 
-                Vector3 position= new Vector3(i,0,j);
+                Vector3 position= new Vector3(i,-5,j);
                 matrix[i,j]=0;
                 
                 GameObject cubeInstance=Instantiate(cubePrefab,position,Quaternion.identity);
