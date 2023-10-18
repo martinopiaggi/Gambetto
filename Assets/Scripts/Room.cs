@@ -5,48 +5,45 @@ using System;
 
 public class Room : MonoBehaviour
 {
+    [SerializeField] private RoomLayout layout;
 
-    [SerializeField]
-    private int gridLength = 8;
-    [SerializeField]
-    private int gridWidth = 8;
-    
     [SerializeField] private Material light;
     [SerializeField] private Material dark;
-    
-    private int[,] matrix; // The matrix to store the cubes
-    
-    [SerializeField]
-    private GameObject cubePrefab; // Reference to the Cube prefab
 
-    
+    private int gridLength;
+    private int gridWidth;
+
+    private int[,] matrix; // The matrix to store the cubes
+
+    [SerializeField] private GameObject cubePrefab; // Reference to the Cube prefab
+
+
     void Start()
     {
-        CreateMatrix();
+        gridLength = layout.GetRows().Count;
+        gridWidth = layout.GetRows()[0].GetArray().Count;
+        matrix = new int[gridLength, gridWidth];
         FillMatrixWithCubes();
+    }
 
-    }
-    
-    void CreateMatrix()
-    {
-        matrix = new int[gridLength, gridWidth];   
-    }
-     
+
     void FillMatrixWithCubes()
     {
         for (int i = 0; i < gridLength; i++)
         {
-            for (int j = 0; j < gridWidth ;j++)
-            { 
-                Vector3 position= new Vector3(i,-5,j);
-                matrix[i,j]=0;
-                
-                GameObject cubeInstance=Instantiate(cubePrefab,position,Quaternion.identity);
-                cubeInstance.GetComponent<MeshRenderer>().material = (i+j)%2==0 ? light : dark;
-                cubeInstance.transform.parent = gameObject.transform;
-            } 
-        }  
-    }
+            for (int j = 0; j < gridWidth; j++)
+            {
+                Vector3 position = new Vector3(i, -5, j);
+                matrix[i, j] = 0;
+                if (layout.GetRows()[i].GetArray()[j] == -1)
+                {
+                    continue;
+                }
 
-    
+                GameObject cubeInstance = Instantiate(cubePrefab, position, Quaternion.identity);
+                cubeInstance.GetComponent<MeshRenderer>().material = (i + j) % 2 == 0 ? light : dark;
+                cubeInstance.transform.parent = gameObject.transform;
+            }
+        }
+    }
 }
