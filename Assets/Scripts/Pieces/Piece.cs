@@ -82,7 +82,8 @@ namespace Pieces
         {
             yield return new WaitForSeconds(1f);
             if (positions.Count <= 0) yield break;
-            
+            var text = "moving piece to " + positions[0];
+            Debugger.Instance.Show(text, Color.red, Debugger.Position.UpperLeft);
             var direction = positions[0] - _tr.position;
             while(direction != Vector3.zero)
             {
@@ -94,6 +95,7 @@ namespace Pieces
             }
             
             positions.RemoveAt(0);
+            //TODO: make this
             StartCoroutine(MovePieceCoroutine(positions));
         }
         
