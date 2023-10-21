@@ -18,7 +18,7 @@ public class TestSpawner : MonoBehaviour
     {
         SpawnPawn();
         var piece = _spawnGameObject.GetComponent<Piece>();
-        piece.MovePiece(new List<Vector3>
+        piece.Move(new List<Vector3>
         {
             new(0, 0, 1),
             new(1, 0, 0),
