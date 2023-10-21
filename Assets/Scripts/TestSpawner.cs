@@ -19,6 +19,12 @@ public class TestSpawner : MonoBehaviour
     private void Start()
     {
         SpawnPawn();
+        var piece = spawnGameObject.GetComponent<Piece>();
+        piece.MovePiece(new List<Vector3>
+        {
+            new Vector3(0, 0, 1),
+            new Vector3(1, 0, 0)
+        });
     }
     
     private void SpawnPawn()
@@ -29,14 +35,6 @@ public class TestSpawner : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            var pawn = spawnGameObject.GetComponent<Pawn>();
-            pawn.MovePiece(new List<Vector3>
-            {
-                new Vector3(0, 0, 1),
-                new Vector3(1, 0, 0)
-            });
-        }
+        
     }
 }
