@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Gambetto.Scripts.Utils;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Utils;
 
 namespace Pieces
@@ -14,18 +16,24 @@ namespace Pieces
         [Range(Constants.MinPieceCountdown, Constants.MaxPieceCountdown)] [SerializeField]
         private int countdown;
 
-        [SerializeField] private Constants.PieceCountdown startCountdown;
+        [SerializeField] private Constants.PieceCountdown countdownStartValue;
         private Transform _tr;
 
         public PieceType PieceType => pieceType;
         public PieceRole PieceRole => pieceRole;
 
+        /// <summary>
+        /// List of possible moves for the piece.
+        /// </summary>
         public List<Vector2> PossibleMoves
         {
             get => possibleMoves ?? new List<Vector2>();
             set => possibleMoves = value;
         }
 
+        /// <summary>
+        /// Active countdown after which the piece will move.
+        /// </summary>
         public int Countdown
         {
             get => countdown;
@@ -48,12 +56,18 @@ namespace Pieces
             }
         }
 
-        public Constants.PieceCountdown StartCountdown
+        /// <summary>
+        ///  Value of the countdown when <see cref="Piece"/> gets initialized.
+        /// </summary>
+        public Constants.PieceCountdown CountDownStartValue
         {
-            get => startCountdown;
-            set => startCountdown = value;
+            get => countdownStartValue;
+            set => countdownStartValue = value;
         }
 
+        ///<summary>
+        ///   <para> On awake, sets the transform and the possible moves for the piece</para>
+        /// </summary>
         private protected void Awake()
         {
             _tr = GetComponent<Transform>();
@@ -69,12 +83,18 @@ namespace Pieces
             };
         }
 
+        /**
+         * <summary>
+         * Moves the piece smoothly following a given list of positions when <see cref="Countdown"/> reaches <see cref="Constants.MinPieceCountdown"/>. 
+         * </summary>
+         * <param name="positions">The list of positions to follow</param>
+         */
         public void MovePiece(List<Vector3> positions)
         {
             if (countdown == Constants.MinPieceCountdown)
             {
                 StartCoroutine(MovePieceCoroutine(positions));
-                countdown = (int)startCountdown;
+                countdown = (int)countdownStartValue;
                 return;
             }
 
@@ -87,7 +107,7 @@ namespace Pieces
             {
                 yield return new WaitForSeconds(1f);
                 var text = "moving piece to " + destPosition;
-                Debugger.Instance.Show(text, Color.red, Debugger.Position.UpperLeft);
+                Debugger.Instance.Show(text);
                 var direction = destPosition - _tr.position;
                 while (direction != Vector3.zero)
                 {
