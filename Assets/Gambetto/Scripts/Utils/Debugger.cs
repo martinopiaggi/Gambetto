@@ -36,31 +36,31 @@ namespace Utils
             center.text = "";
         }
 
-        public void Show(string text, Color? color, Position position = Position.UpperRight)
+        public void Show(string text, Color color = default, Position position = Position.UpperRight)
         {
-            color ??= Color.white;
+            color = color == default ? Color.white : color;
            
             switch (position)
             {
                 case Position.UpperLeft:
                     upperLeft.text = text;
-                    upperLeft.color = color.Value;
+                    upperLeft.color = color;
                     break;
                 case Position.UpperRight:
                     upperRight.text = text;
-                    upperRight.color = color.Value;
+                    upperRight.color = color;
                     break;
                 case Position.LowerLeft:
                     lowerLeft.text = text;
-                    lowerLeft.color = color.Value;
+                    lowerLeft.color = color;
                     break;
                 case Position.LowerRight:
                     lowerRight.text =text;
-                    lowerRight.color = color.Value;
+                    lowerRight.color = color;
                     break;
                 case Position.Center:
                     center.text =text;
-                    center.color = color.Value;
+                    center.color = color;
                     break;
             }
         }
