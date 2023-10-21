@@ -152,7 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00d5959bb1587184ba7a13324707be93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pawnPrefab: {fileID: 2952612582261332343, guid: e89488c1ad9092a449c0ed41c38eb9f8,
+  pawnPrefab: {fileID: 2952612582261332343, guid: 3aeffb6fe3e16b84ea244459c0c840ea,
     type: 3}
 --- !u!4 &71603023
 Transform:

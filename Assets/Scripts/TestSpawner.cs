@@ -11,20 +11,18 @@ public class TestSpawner : MonoBehaviour
 
     private void Awake()
     {
-        //load pawnPrefab from Resources folder
-        pawnPrefab = Resources.Load<GameObject>("Prefabs/Pawn");
-        return;
+        pawnPrefab = Resources.Load<GameObject>("Prefabs/Queen");
     }
 
     private void Start()
     {
         SpawnPawn();
         var piece = spawnGameObject.GetComponent<Piece>();
-        piece.MovePiece(new List<Vector3>
-        {
-            new Vector3(0, 0, 1),
-            new Vector3(1, 0, 0)
-        });
+        // piece.MovePiece(new List<Vector3>
+        // {
+        //     new Vector3(0, 0, 1),
+        //     new Vector3(1, 0, 0)
+        // });
     }
     
     private void SpawnPawn()
