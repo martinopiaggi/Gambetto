@@ -10,20 +10,22 @@ namespace Pieces
         [SerializeField] private PieceType pieceType;
         [SerializeField] private PieceRole pieceRole;
         [SerializeField] private List<Vector2> possibleMoves;
-        [Range(Constants.MinPieceCountdown, Constants.MaxPieceCountdown)]
-        [SerializeField] private int countdown;
+
+        [Range(Constants.MinPieceCountdown, Constants.MaxPieceCountdown)] [SerializeField]
+        private int countdown;
+
         [SerializeField] private Constants.PieceCountdown startCountdown;
         private Transform _tr;
-        
+
         public PieceType PieceType => pieceType;
         public PieceRole PieceRole => pieceRole;
-        
+
         public List<Vector2> PossibleMoves
         {
             get => possibleMoves ?? new List<Vector2>();
             set => possibleMoves = value;
         }
-        
+
         public int Countdown
         {
             get => countdown;
@@ -51,7 +53,7 @@ namespace Pieces
             get => startCountdown;
             set => startCountdown = value;
         }
-        
+
         private protected void Awake()
         {
             _tr = GetComponent<Transform>();
@@ -69,36 +71,34 @@ namespace Pieces
 
         public void MovePiece(List<Vector3> positions)
         {
-            if (countdown ==  Constants.MinPieceCountdown)
+            if (countdown == Constants.MinPieceCountdown)
             {
                 StartCoroutine(MovePieceCoroutine(positions));
-                countdown = (int) startCountdown;
+                countdown = (int)startCountdown;
                 return;
             }
+
             countdown--;
         }
-    
+
         private IEnumerator MovePieceCoroutine(IList<Vector3> positions)
         {
-            yield return new WaitForSeconds(1f);
-            if (positions.Count <= 0) yield break;
-            var text = "moving piece to " + positions[0];
-            Debugger.Instance.Show(text, Color.red, Debugger.Position.UpperLeft);
-            var direction = positions[0] - _tr.position;
-            while(direction != Vector3.zero)
+            foreach (var destPosition in positions)
             {
-                var position = _tr.position;
-                position = Vector3.MoveTowards(position, positions[0], Constants.PieceSpeed);
-                _tr.position = position;
-                direction = positions[0] - position;
-                yield return null;
+                yield return new WaitForSeconds(1f);
+                var text = "moving piece to " + destPosition;
+                Debugger.Instance.Show(text, Color.red, Debugger.Position.UpperLeft);
+                var direction = destPosition - _tr.position;
+                while (direction != Vector3.zero)
+                {
+                    var piecePos = _tr.position;
+                    piecePos = Vector3.MoveTowards(piecePos, destPosition, Constants.PieceSpeed);
+                    _tr.position = piecePos;
+                    direction = destPosition - piecePos;
+                    yield return null;
+                }
             }
-            
-            positions.RemoveAt(0);
-            //TODO: make this
-            StartCoroutine(MovePieceCoroutine(positions));
         }
-        
     }
 
     public enum PieceType
