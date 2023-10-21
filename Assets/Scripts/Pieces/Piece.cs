@@ -7,12 +7,12 @@ namespace Pieces
 {
     public class Piece : MonoBehaviour
     {
-        [SerializeField] private protected PieceType pieceType;
-        [SerializeField] private protected PieceRole pieceRole;
-        [SerializeField] private protected List<Vector2> possibleMoves;
+        [SerializeField] private PieceType pieceType;
+        [SerializeField] private PieceRole pieceRole;
+        [SerializeField] private List<Vector2> possibleMoves;
         [Range(Constants.MinPieceCountdown, Constants.MaxPieceCountdown)]
-        [SerializeField] private protected int countdown;
-        [SerializeField] private protected Constants.PieceCountdown startCountdown;
+        [SerializeField] private int countdown;
+        [SerializeField] private Constants.PieceCountdown startCountdown;
         private Transform _tr;
         
         public PieceType PieceType => pieceType;
@@ -55,6 +55,16 @@ namespace Pieces
         private protected void Awake()
         {
             _tr = GetComponent<Transform>();
+            possibleMoves = PieceType switch
+            {
+                PieceType.Pawn => Utils.PossibleMoves.PawnPossibleMoves,
+                PieceType.Rook => Utils.PossibleMoves.RookPossibleMoves,
+                PieceType.Knight => Utils.PossibleMoves.KnightPossibleMoves,
+                PieceType.Bishop => Utils.PossibleMoves.BishopPossibleMoves,
+                PieceType.Queen => Utils.PossibleMoves.QueenPossibleMoves,
+                PieceType.King => Utils.PossibleMoves.KingPossibleMoves,
+                _ => new List<Vector2>()
+            };
         }
 
         public void MovePiece(List<Vector3> positions)
@@ -68,7 +78,7 @@ namespace Pieces
             countdown--;
         }
     
-        private IEnumerator MovePieceCoroutine(List<Vector3> positions)
+        private IEnumerator MovePieceCoroutine(IList<Vector3> positions)
         {
             yield return new WaitForSeconds(1f);
             if (positions.Count <= 0) yield break;
