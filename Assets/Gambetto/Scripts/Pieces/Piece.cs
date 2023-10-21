@@ -89,11 +89,11 @@ namespace Pieces
          * </summary>
          * <param name="positions">The list of positions to follow</param>
          */
-        public void MovePiece(List<Vector3> positions)
+        public void Move(List<Vector3> positions)
         {
             if (countdown == Constants.MinPieceCountdown)
             {
-                StartCoroutine(MovePieceCoroutine(positions));
+                StartCoroutine(MoveCoroutine(positions));
                 countdown = (int)countdownStartValue;
                 return;
             }
@@ -101,7 +101,7 @@ namespace Pieces
             countdown--;
         }
 
-        private IEnumerator MovePieceCoroutine(IList<Vector3> positions)
+        private IEnumerator MoveCoroutine(IList<Vector3> positions)
         {
             foreach (var destPosition in positions)
             {
