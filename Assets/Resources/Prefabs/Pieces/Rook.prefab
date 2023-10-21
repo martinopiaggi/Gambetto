@@ -81,7 +81,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 6717da2044c18dd44b69969a8f3085a2,
         type: 3}
       propertyPath: m_Name
-      value: Pawn
+      value: Rook
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -166,8 +166,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 601d3e9cd4bd9e946a97256959056b61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pieceType: 5
+  pieceType: 0
   pieceRole: 0
   possibleMoves: []
   countdown: 1
-  startCountdown: 1
+  startCountdown: 2
