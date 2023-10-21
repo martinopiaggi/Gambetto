@@ -1,12 +1,13 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
-
-namespace Utils
+﻿namespace Gambetto.Scripts.Utils
 {
     public static class Constants
     {
         public const int MaxPieceCountdown = 20;
         public const int MinPieceCountdown = 1;
+        
+        /// <summary>
+        /// Countdown values for each piece.
+        /// </summary>
         public enum PieceCountdown {
             Pawn = 1,
             Rook = 2,
