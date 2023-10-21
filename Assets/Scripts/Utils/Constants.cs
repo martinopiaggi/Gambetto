@@ -1,12 +1,21 @@
 ﻿namespace Utils
 {
-    public static class PieceCountdowns
+    public static class Constants
     {
-        public const int Pawn = 1;
-        public const int Rook = 2;
-        public const int Knight = 2;
-        public const int Bishop = 2;
-        public const int Queen = 1;
-        public const int King = 1;
+        public const int MaxPieceCountdown = 20;
+        public const int MinPieceCountdown = 1;
+        public enum PieceCountdown {
+            Pawn = 1,
+            Rook = 2,
+            Knight = 2,
+            Bishop = 2,
+            Queen = 1,
+            King = 1
+        }
+        
+        public const float PieceSpeed = 0.05f;
     }
+    
+    
+    
 }
