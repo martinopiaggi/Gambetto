@@ -14,7 +14,16 @@ public class RoomLayout : ScriptableObject
    {
       return rows;
    }
+
+   public int GetSizeRow()
+   {
+      return rows.Count;
+   }
    
+   public int GetSizeColumn()
+   {
+      return rows[0].GetColumns().Count;
+   }
    public List<Position> GetInitialPositions()
    {
       return initialPositions;
@@ -25,11 +34,11 @@ public class RoomLayout : ScriptableObject
    [Serializable]
    public class Column
    {
-      [SerializeField] private List<int> array;
+      [SerializeField] private List<int> columns;
       
-      public List<int> GetArray()
+      public List<int> GetColumns()
       {
-         return array;
+         return columns;
       }
    }
    

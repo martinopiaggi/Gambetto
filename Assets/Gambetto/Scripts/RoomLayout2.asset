@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: RoomLayout2
   m_EditorClassIdentifier: 
   rows:
-  - array: 000000000000000000000000
-  - array: 000000000000000000000000
-  - array: 000000000000000000000000
+  - columns: 0000000000000000
+  - columns: 0000000000000000
   initialPositions: []
