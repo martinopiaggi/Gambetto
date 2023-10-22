@@ -5,7 +5,7 @@ using System;
 
 public class Room : MonoBehaviour
 {
-    [SerializeField] private RoomLayout layout;
+    [SerializeField] private RoomLayout _layout;
 
     [SerializeField] private Material light;
     [SerializeField] private Material dark;
@@ -16,10 +16,11 @@ public class Room : MonoBehaviour
     private int[,] matrix; // The matrix to store the cubes
 
     [SerializeField] private GameObject cubePrefab; // Reference to the Cube prefab
-
-
-    void Start()
+    
+    
+    public void InitializeRoom(RoomLayout layout)
     {
+        _layout = layout;
         gridLength = layout.GetRows().Count;
         gridWidth = layout.GetRows()[0].GetArray().Count;
         matrix = new int[gridLength, gridWidth];
@@ -35,7 +36,7 @@ public class Room : MonoBehaviour
             {
                 Vector3 position = new Vector3(i, -5, j);
                 matrix[i, j] = 0;
-                if (layout.GetRows()[i].GetArray()[j] == -1)
+                if (_layout.GetRows()[i].GetArray()[j] == -1)
                 {
                     continue;
                 }
