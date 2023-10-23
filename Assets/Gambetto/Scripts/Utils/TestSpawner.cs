@@ -8,7 +8,7 @@ public class TestSpawner : MonoBehaviour
 {
     [SerializeField] private GameObject pawnPrefab;
     private GameObject _spawnGameObject;
-
+    
     private void Awake()
     {
         pawnPrefab = Resources.Load<GameObject>("Prefabs/Pieces/Queen");
