@@ -13,10 +13,9 @@ MonoBehaviour:
   m_Name: RoomLayout1
   m_EditorClassIdentifier: 
   rows:
-  - columns: 00000000000000000000000000000000
+  - columns: 0000000001000000ffffffff00000000
   - columns: 00000000000000000000000000000000
   - columns: 00000000000000000000000000000000
   - columns: 00000000000000000000000000000000
   initialPositions: []
-  exitSide: {x: 0, y: 0, z: 1}
-  enterSide: {x: -1, y: 0, z: 0}
+  exitSide: {x: 0, y: 0, z: -1}
