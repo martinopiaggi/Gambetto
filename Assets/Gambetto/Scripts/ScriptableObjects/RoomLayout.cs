@@ -14,19 +14,12 @@ public class RoomLayout : ScriptableObject
 
    [SerializeField]  private Vector3 exitSide = Directions.North;
    
-   [SerializeField] private Vector3 enterSide = Directions.South; 
-   
    
    public List<Column> GetRows()
    {
       return rows;
    }
-
    
-   public Vector3 GetEnter()
-   {
-      return enterSide;
-   }
    
    public Vector3 GetExit()
    {
