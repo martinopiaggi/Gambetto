@@ -3,18 +3,36 @@ using System.Collections;
 using System.Collections.Generic;
 using Pieces;
 using UnityEngine;
+using UnityEditor;
+using Gambetto.Scripts.Utils;
 
 [CreateAssetMenu(fileName = "RoomLayout", menuName = "ScriptableObjects/RoomLayout")]
 public class RoomLayout : ScriptableObject
 {
    [SerializeField] private List<Column> rows = new List<Column>();
    [SerializeField] private List<Position> initialPositions;
+
+   [SerializeField]  private Vector3 exitSide = Directions.North;
+   
+   [SerializeField] private Vector3 enterSide = Directions.South; 
+   
    
    public List<Column> GetRows()
    {
       return rows;
    }
 
+   
+   public Vector3 GetEnter()
+   {
+      return enterSide;
+   }
+   
+   public Vector3 GetExit()
+   {
+      return exitSide;
+   }
+   
    public int GetSizeRow()
    {
       return rows.Count;

@@ -17,7 +17,7 @@ public class GridManager : MonoBehaviour
     public void CreateGrid(List<RoomLayout> rooms)
     {
         Vector3 translation = new Vector3(0,0,0);
-        foreach (RoomLayout room in rooms)
+        foreach (RoomLayout roomLayout in rooms)
         {
             GameObject roomObj = Instantiate(roomPrefab,  transform.position, Quaternion.identity);
             //if the last color is 0 (white) the starting color will be changed in 1 (blue)
@@ -31,13 +31,13 @@ public class GridManager : MonoBehaviour
                 roomObj.GetComponent<Room>().setColorStart(1);
                 changed = true;
             }
-            roomObj.GetComponent<Room>().InitializeRoom(room);
+            roomObj.GetComponent<Room>().InitializeRoom(roomLayout);
             roomObj.transform.position = translation;
-            translation = translation + new Vector3(room.GetSizeRow(),0,0);
+            translation = translation + new Vector3(roomLayout.GetExit().x*roomLayout.GetSizeRow(),0,roomLayout.GetExit().z*roomLayout.GetSizeColumn());
             //this if determine what is the last color of the room, 1 (blue), 0 (white)
             //if the room has an even lenght and was not changed its last color is 1 (blue)
             //if the room has an odd lenght and was not chaged its last color is 0 (white)
-            if (room.GetSizeRow() % 2 == 0)
+            if (roomLayout.GetSizeRow() % 2 == 0)
             {
                 if (changed)
                 {
