@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Gambetto.Scripts.Utils;
 
 public class GridManager : MonoBehaviour
 {
@@ -35,9 +36,21 @@ public class GridManager : MonoBehaviour
             }
             roomObj.GetComponent<Room>().InitializeRoom(roomLayout);
             roomObj.transform.position = translation;
-            translation = translation + new Vector3(roomLayout.GetExit().x*roomLayout.GetSizeRow(), 
-                                        0,
-                                        roomLayout.GetExit().z*roomLayout.GetSizeColumn());
+
+            if (roomLayout.GetExit() != Directions.South && roomLayout.GetExit() != Directions.East)
+            {
+                translation = translation + new Vector3(roomLayout.GetExit().x*roomLayout.GetSizeRow(), 
+                    0,
+                    roomLayout.GetExit().z*roomLayout.GetSizeColumn());
+            }
+            else
+            {
+                //@todo/bug here we have to compute the correct translation considering **next** roomLayout size
+                translation = translation + new Vector3(roomLayout.GetExit().x*roomLayout.GetSizeRow(), 
+                    0,
+                    roomLayout.GetExit().z*roomLayout.GetSizeColumn());
+            }
+            
             
             //this if determine what is the last color of the room, 1 (blue), 0 (white)
             //if the room has an even lenght and was not changed its last color is 1 (blue)
