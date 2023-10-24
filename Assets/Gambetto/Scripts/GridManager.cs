@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Gambetto.Scripts.Utils;
 using Unity.Mathematics;
+using UnityEngine.Serialization;
 
 public class GridManager : MonoBehaviour
 {
@@ -18,24 +19,87 @@ public class GridManager : MonoBehaviour
     #region just_for_testing
     
     public GameObject prefabTest;
-    public bool testGridGraph = false;
+    public bool north = false;
+    public bool east = false;
+    public bool west = false;
+    public bool south = false;
+    public bool northEast = false;
+    public bool northWest = false;
+    public bool southEast = false;
+    public bool southWest = false; 
     
-    public void Update()
+    public Cell currentCell = null;
+    public GameObject pawnTest = null;
+    
+    public void Start()
     {
-        if(testGridGraph)VisualizeGraphCorrectly();
-        testGridGraph = false;
+        pawnTest = Instantiate(prefabTest, new Vector3(0,0,0), quaternion.identity);
     }
 
-    private void VisualizeGraphCorrectly()
+    public void Update()
     {
-        foreach (var room in _grid)
+        if (north || south || east || west || southWest || southEast || northEast || northWest)
         {
-            foreach (var cell in room)
+            if (currentCell == null) currentCell = _grid[0][0];
+
+            if (north)
             {
-                Instantiate(prefabTest, cell.getGlobalCoordinates(), quaternion.identity);
+                currentCell = currentCell.getNext(Directions.North);
+                pawnTest.transform.position = currentCell.getGlobalCoordinates();
+                north = false;
+            }
+            
+            if (south)
+            {
+                currentCell = currentCell.getNext(Directions.South);
+                pawnTest.transform.position = currentCell.getGlobalCoordinates();
+                south  = false;
+            }
+            
+            if (east)
+            {
+                currentCell = currentCell.getNext(Directions.East);
+                pawnTest.transform.position = currentCell.getGlobalCoordinates();
+                east  = false;
+            }
+            
+            if (west)
+            {
+                currentCell = currentCell.getNext(Directions.West);
+                pawnTest.transform.position = currentCell.getGlobalCoordinates();
+                west  = false;
+            }
+            
+            if (southWest)
+            {
+                currentCell = currentCell.getNext(Directions.SouthWest);
+                pawnTest.transform.position = currentCell.getGlobalCoordinates();
+                southWest  = false;
+            }
+            
+            if (southEast)
+            {
+                currentCell = currentCell.getNext(Directions.SouthEast);
+                pawnTest.transform.position = currentCell.getGlobalCoordinates();
+                southEast  = false;
+            }
+            
+            if (northEast)
+            {
+                currentCell = currentCell.getNext(Directions.NorthEast);
+                pawnTest.transform.position = currentCell.getGlobalCoordinates();
+                northEast  = false;
+            }
+            
+            if (northWest)
+            {
+                currentCell = currentCell.getNext(Directions.NorthWest);
+                pawnTest.transform.position = currentCell.getGlobalCoordinates();
+                northWest  = false;
             }
         }
     }
+    
     #endregion
     
     
@@ -112,13 +176,6 @@ public class GridManager : MonoBehaviour
                 {
                     _lastColor = 0;
                 }
-            }
-
-            if (roomIdx > 0) //first room hasn't any previous room to check consistency of common cells with
-            {
-                //make consistency of the cells of this room with the previous one
-                //we use the roomLayout exitSide information to compute it 
-                //we can use Directions to also update the "cells on the common edge" of the previous room
             }
 
         }

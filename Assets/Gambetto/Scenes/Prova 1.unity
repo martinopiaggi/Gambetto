@@ -198,6 +198,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4bf3eb98a536e546b29e7c6473da818, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  prefabTest: {fileID: 2952612582261332343, guid: 1dbd3a4a16968e445b4881f1ee2998e1,
+    type: 3}
+  up: 0
+  right: 0
+  left: 0
+  down: 0
+  pawnTest: {fileID: 0}
 --- !u!4 &295756830
 Transform:
   m_ObjectHideFlags: 0
