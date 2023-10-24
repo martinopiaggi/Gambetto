@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Gambetto.Scripts.Utils;
+using Unity.Mathematics;
 
 public class GridManager : MonoBehaviour
 {
@@ -11,6 +13,31 @@ public class GridManager : MonoBehaviour
 
     private List<List<Cell>> _grid;
 
+    
+    
+    #region just_for_testing
+    
+    public GameObject prefabTest;
+    public bool testGridGraph = false;
+    
+    public void Update()
+    {
+        if(testGridGraph)VisualizeGraphCorrectly();
+        testGridGraph = false;
+    }
+
+    private void VisualizeGraphCorrectly()
+    {
+        foreach (var room in _grid)
+        {
+            foreach (var cell in room)
+            {
+                Instantiate(prefabTest, cell.getGlobalCoordinates(), quaternion.identity);
+            }
+        }
+    }
+    #endregion
+    
     
     public void CreateGrid(List<RoomLayout> roomLayouts)
     {
