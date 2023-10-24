@@ -269,6 +269,7 @@ public class GridManager : MonoBehaviour
                     if (previousRoomLayout != null)
                     {
                         //the border direction from the POV of the cell inside the room "looking the previous one" 
+                        //It answers: "from which direction respect to the cell in the current room, the previous room is?
                         var borderCheckDirection = previousRoomLayout.GetExit() * -1; //opposite direction of the exit
 
                         if (borderCheckDirection == Directions.South)
