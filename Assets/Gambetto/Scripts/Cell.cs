@@ -25,7 +25,7 @@ public class Cell
     public Cell(Vector3 coordinates, int roomId)
     {
         _roomId = roomId;
-        globalCoordinates = coordinates + new Vector3(0.5f, 0.0f, 0.5f); // the Cube is unitary, we want to place things in the center of the cube
+        globalCoordinates = coordinates;
     }
     
     public void setNext(Vector3 dir,Cell next)
