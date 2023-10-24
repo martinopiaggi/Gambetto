@@ -33,7 +33,7 @@ public class Cell
         //with a switch I have an error :( @todo/refactor
         if (dir == Directions.North) north = next;
         if (dir == Directions.South) south = next;
-        if (dir == Directions.East) south = next;
+        if (dir == Directions.East) east = next;
         if (dir == Directions.West) west = next;
         if (dir == Directions.NorthWest)  northWest = next;
         if (dir == Directions.NorthEast) northEast = next;
@@ -46,7 +46,7 @@ public class Cell
         //with a switch I have an error :( @todo/refactor
         if (dir == Directions.North) return north;
         if (dir == Directions.South) return south;
-        if (dir == Directions.East) return south;
+        if (dir == Directions.East) return east;
         if (dir == Directions.West) return west;
         if (dir == Directions.NorthWest)  return northWest;
         if (dir == Directions.NorthEast) return northEast;
