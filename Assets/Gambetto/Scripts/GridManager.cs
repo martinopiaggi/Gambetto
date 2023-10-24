@@ -12,14 +12,14 @@ public class GridManager : MonoBehaviour
     private List<List<Cell>> grid;
 
     
-    public void CreateGrid(List<RoomLayout> rooms)
+    public void CreateGrid(List<RoomLayout> roomLayouts)
     {
         grid = new List<List<Cell>>();
         Vector3 translation = new Vector3(0,0,0);
-        int roomIdx = 0;
         
-        foreach (RoomLayout roomLayout in rooms)
+        for (int roomIdx = 0; roomIdx <= roomLayouts.Count; roomIdx++)
         {
+            var roomLayout = roomLayouts[roomIdx];
             grid.Add(populateRoomGraph(roomLayout,translation,roomIdx));
             
             GameObject roomObj = Instantiate(roomPrefab,  transform.position, Quaternion.identity);
@@ -45,10 +45,14 @@ public class GridManager : MonoBehaviour
             }
             else
             {
-                //@todo/bug here we have to compute the correct translation considering **next** roomLayout size
-                translation = translation + new Vector3(roomLayout.GetExit().x*roomLayout.GetSizeRow(), 
-                    0,
-                    roomLayout.GetExit().z*roomLayout.GetSizeColumn());
+                //we have to compute the correct translation considering **next** roomLayout size in case of South/East
+                
+                if(roomIdx!=(roomLayouts.Count-1)){
+                    var nextRoomLayout = roomLayouts[roomIdx+1];
+                        translation = translation + new Vector3(roomLayout.GetExit().x*nextRoomLayout.GetSizeRow(), 
+                            0,
+                            roomLayout.GetExit().z*nextRoomLayout.GetSizeColumn());
+                }
             }
             
             
@@ -85,8 +89,7 @@ public class GridManager : MonoBehaviour
                 //we use the roomLayout exitSide information to compute it 
                 //we can use Directions to also update the "cells on the common edge" of the previous room
             }
-            
-            roomIdx++;
+
         }
     }
     
