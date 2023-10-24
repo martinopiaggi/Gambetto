@@ -265,10 +265,11 @@ public class GridManager : MonoBehaviour
                     }
                     
                     //set all the neighbors links at BORDER updating also neighbors links in PREVIOUS ROOM
-
+                    
                     if (previousRoomLayout != null)
                     {
-                        var borderCheckDirection = previousRoomLayout.GetExit() * -1; //opposite direction
+                        //the border direction from the POV of the cell inside the room "looking the previous one" 
+                        var borderCheckDirection = previousRoomLayout.GetExit() * -1; //opposite direction of the exit
 
                         if (borderCheckDirection == Directions.South)
                         {
@@ -359,14 +360,12 @@ public class GridManager : MonoBehaviour
                                         foreignCell.setNext(Directions.SouthWest, cell);
                                     }
                                 }
-                                else if (rowNumber == cellBorder.Count)
+                                
+                                if (rowNumber - 1 >= 0)
                                 {
-                                    if (rowNumber - 1 >= 0)
-                                    {
-                                        var foreignCell = cellBorder[rowNumber - 1];
-                                        cell.setNext(Directions.SouthEast, foreignCell);
-                                        foreignCell.setNext(Directions.NorthWest, cell);
-                                    }
+                                    var foreignCell = cellBorder[rowNumber - 1];
+                                    cell.setNext(Directions.SouthEast, foreignCell);
+                                    foreignCell.setNext(Directions.NorthWest, cell);
                                 }
                             }
                         }
@@ -375,7 +374,6 @@ public class GridManager : MonoBehaviour
                         {
                             if (columnNumber == roomLayout.GetSizeColumn() - 1 && rowNumber < cellBorder.Count + 1)
                             {
-
                                 if (rowNumber < cellBorder.Count)
                                 {
                                     var foreignCell = cellBorder[rowNumber];
@@ -401,23 +399,17 @@ public class GridManager : MonoBehaviour
                                         foreignCell.setNext(Directions.SouthEast, cell);
                                     }
                                 }
-                                else if (rowNumber == cellBorder.Count)
+                                
+                                if (rowNumber - 1 >= 0)
                                 {
-                                    if (rowNumber - 1 >= 0)
-                                    {
-                                        var foreignCell = cellBorder[rowNumber - 1];
-                                        cell.setNext(Directions.SouthWest, foreignCell);
-                                        foreignCell.setNext(Directions.NorthEast, cell);
-                                    }
+                                    var foreignCell = cellBorder[rowNumber - 1];
+                                    cell.setNext(Directions.SouthWest, foreignCell);
+                                    foreignCell.setNext(Directions.NorthEast, cell);
                                 }
-
                             }
                         }
-
                     }
                 }
-
-                
             }
         }
 
