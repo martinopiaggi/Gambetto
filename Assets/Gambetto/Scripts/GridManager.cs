@@ -332,64 +332,88 @@ public class GridManager : MonoBehaviour
                         
                         if (borderCheckDirection == Directions.East)
                         {
-                            if (columnNumber == 0 && rowNumber < cellBorder.Count)
+                            if (columnNumber == 0 && rowNumber < cellBorder.Count + 1)
                             {
 
-                                var foreignCell = cellBorder[rowNumber];
-
-
-                                if (foreignCell != null)
+                                if (rowNumber < cellBorder.Count)
                                 {
-                                    cell.setNext(Directions.East, foreignCell);
-                                    foreignCell.setNext(Directions.West, cell);
+                                    var foreignCell = cellBorder[rowNumber];
+                                
+                                    if (foreignCell != null)
+                                    {
+                                        cell.setNext(Directions.East, foreignCell);
+                                        foreignCell.setNext(Directions.West, cell);
+                                    }
+
+                                    if (rowNumber - 1 >= 0)
+                                    {
+                                        foreignCell = cellBorder[rowNumber - 1];
+                                        cell.setNext(Directions.SouthEast, foreignCell);
+                                        foreignCell.setNext(Directions.NorthWest, cell);
+                                    }
+
+                                    if (rowNumber + 1 < cellBorder.Count)
+                                    {
+                                        foreignCell = cellBorder[rowNumber + 1];
+                                        cell.setNext(Directions.NorthEast, foreignCell);
+                                        foreignCell.setNext(Directions.SouthWest, cell);
+                                    }
                                 }
-
-                                if (rowNumber - 1 > 0)
+                                else if (rowNumber == cellBorder.Count)
                                 {
-                                    foreignCell = cellBorder[rowNumber - 1];
-                                    cell.setNext(Directions.SouthEast, foreignCell);
-                                    foreignCell.setNext(Directions.NorthWest, cell);
-                                }
-
-                                if (rowNumber + 1 < cellBorder.Count)
-                                {
-                                    foreignCell = cellBorder[rowNumber + 1];
-                                    cell.setNext(Directions.NorthEast, foreignCell);
-                                    foreignCell.setNext(Directions.SouthWest, cell);
+                                    if (rowNumber - 1 >= 0)
+                                    {
+                                        var foreignCell = cellBorder[rowNumber - 1];
+                                        cell.setNext(Directions.SouthEast, foreignCell);
+                                        foreignCell.setNext(Directions.NorthWest, cell);
+                                    }
                                 }
                             }
                         }
-                        
+
                         if (borderCheckDirection == Directions.West)
                         {
-                            if (columnNumber == roomLayout.GetSizeColumn()-1 && rowNumber < cellBorder.Count)
+                            if (columnNumber == roomLayout.GetSizeColumn() - 1 && rowNumber < cellBorder.Count + 1)
                             {
 
-                                var foreignCell = cellBorder[rowNumber];
-
-
-                                if (foreignCell != null)
+                                if (rowNumber < cellBorder.Count)
                                 {
-                                    cell.setNext(Directions.West, foreignCell);
-                                    foreignCell.setNext(Directions.East, cell);
+                                    var foreignCell = cellBorder[rowNumber];
+
+
+                                    if (foreignCell != null)
+                                    {
+                                        cell.setNext(Directions.West, foreignCell);
+                                        foreignCell.setNext(Directions.East, cell);
+                                    }
+
+                                    if (rowNumber - 1 > 0)
+                                    {
+                                        foreignCell = cellBorder[rowNumber - 1];
+                                        cell.setNext(Directions.SouthWest, foreignCell);
+                                        foreignCell.setNext(Directions.NorthEast, cell);
+                                    }
+
+                                    if (rowNumber + 1 < cellBorder.Count)
+                                    {
+                                        foreignCell = cellBorder[rowNumber + 1];
+                                        cell.setNext(Directions.NorthWest, foreignCell);
+                                        foreignCell.setNext(Directions.SouthEast, cell);
+                                    }
+                                }
+                                else if (rowNumber == cellBorder.Count)
+                                {
+                                    if (rowNumber - 1 >= 0)
+                                    {
+                                        var foreignCell = cellBorder[rowNumber - 1];
+                                        cell.setNext(Directions.SouthWest, foreignCell);
+                                        foreignCell.setNext(Directions.NorthEast, cell);
+                                    }
                                 }
 
-                                if (rowNumber - 1 > 0)
-                                {
-                                    foreignCell = cellBorder[rowNumber - 1];
-                                    cell.setNext(Directions.SouthWest, foreignCell);
-                                    foreignCell.setNext(Directions.NorthEast, cell);
-                                }
-
-                                if (rowNumber + 1 < cellBorder.Count)
-                                {
-                                    foreignCell = cellBorder[rowNumber + 1];
-                                    cell.setNext(Directions.NorthWest, foreignCell);
-                                    foreignCell.setNext(Directions.SouthEast, cell);
-                                }
                             }
                         }
-                        
+
                     }
                 }
 
