@@ -241,19 +241,9 @@ public class GridManager : MonoBehaviour
                                 cell.setNext(Directions.SouthEast,nextSouthEast);
                                 nextSouthEast.setNext(Directions.NorthWest,cell); 
                             }
-
-                            if (columnNumber < roomLayout.GetSizeColumn() - 1)
-                            {
-                                var nextSouthWest = matrixCells[rowNumber -1, columnNumber + 1];
-                                if (nextSouthWest != null)
-                                {
-                                    cell.setNext(Directions.SouthWest,nextSouthWest);
-                                    nextSouthWest.setNext(Directions.NorthEast,cell); 
-                                }
-                            }
                         }
                     }
-                        
+                    
                     if (rowNumber >= 1)
                     {
                         var nextSouth = matrixCells[rowNumber-1, columnNumber];
@@ -261,6 +251,16 @@ public class GridManager : MonoBehaviour
                         {
                             cell.setNext(Directions.South,nextSouth);
                             nextSouth.setNext(Directions.North,cell); 
+                        }
+                        
+                        if (columnNumber < roomLayout.GetSizeColumn() - 1)
+                        {
+                            var nextSouthWest = matrixCells[rowNumber -1, columnNumber + 1];
+                            if (nextSouthWest != null)
+                            {
+                                cell.setNext(Directions.SouthWest,nextSouthWest);
+                                nextSouthWest.setNext(Directions.NorthEast,cell); 
+                            }
                         }
                     }
                     
