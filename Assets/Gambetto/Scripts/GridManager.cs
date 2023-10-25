@@ -131,7 +131,9 @@ public class GridManager : MonoBehaviour
             }
             roomObj.GetComponent<Room>().InitializeRoom(roomLayout);
             roomObj.transform.position = translation;
-
+            
+            
+            //change the translation of the next room according to the exit of the previous room
             if (roomLayout.GetExit() != Directions.South && roomLayout.GetExit() != Directions.East)
             {
                 translation = translation + new Vector3(roomLayout.GetExit().x*roomLayout.GetSizeRow(), 
@@ -154,29 +156,59 @@ public class GridManager : MonoBehaviour
             //this if determine what is the last color of the room, 1 (blue), 0 (white)
             //if the room has an even lenght and was not changed its last color is 1 (blue)
             //if the room has an odd lenght and was not chaged its last color is 0 (white)
-            if (roomLayout.GetSizeRow() % 2 == 0)
+            if (roomLayout.GetExit() == Directions.East || roomLayout.GetExit() == Directions.West)
             {
-                if (_changed)
+                if (roomLayout.GetSizeRow() % 2 == 0)
                 {
-                    _lastColor = 0;
+                    if (_changed)
+                    {
+                        _lastColor = 0;
+                    }
+                    else
+                    {
+                        _lastColor = 1;
+                    }
+                
                 }
                 else
                 {
-                    _lastColor = 1;
+                    if (_changed)
+                    {
+                        _lastColor = 1;
+                    }
+                    else
+                    {
+                        _lastColor = 0;
+                    }
                 }
-                
             }
             else
             {
-                if (_changed)
+                if (roomLayout.GetSizeColumn() % 2 == 0)
                 {
-                    _lastColor = 1;
+                    if (_changed)
+                    {
+                        _lastColor = 0;
+                    }
+                    else
+                    {
+                        _lastColor = 1;
+                    }
+                
                 }
                 else
                 {
-                    _lastColor = 0;
+                    if (_changed)
+                    {
+                        _lastColor = 1;
+                    }
+                    else
+                    {
+                        _lastColor = 0;
+                    }
                 }
             }
+            
 
         }
         Debug.Log("grid finished");
@@ -194,7 +226,7 @@ public class GridManager : MonoBehaviour
         var matrixCells = new Cell[roomLayout.GetSizeRow(), roomLayout.GetSizeColumn()];
         var roomCells = new List<Cell>();
         
-        for(var rowNumber = 0; rowNumber < roomLayout.GetSizeRow();rowNumber++)
+        for(var rowNumber = 0; rowNumber < roomLayout.GetSizeRow(); rowNumber++)
         {
             for (var columnNumber = 0; columnNumber < roomLayout.GetSizeColumn(); columnNumber++)
             {
