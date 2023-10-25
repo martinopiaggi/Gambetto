@@ -202,7 +202,7 @@ public class GridManager : MonoBehaviour
             {
                 translation = translation + new Vector3(roomLayout.GetExit().x*roomLayout.GetSizeRow(), 
                     0,
-                    roomLayout.GetExit().z*roomLayout.GetSizeColumn());
+                    roomLayout.GetExit().y*roomLayout.GetSizeColumn());
             }
             else
             {
@@ -212,7 +212,7 @@ public class GridManager : MonoBehaviour
                     var nextRoomLayout = roomLayouts[roomIdx+1];
                         translation = translation + new Vector3(roomLayout.GetExit().x*nextRoomLayout.GetSizeRow(), 
                             0,
-                            roomLayout.GetExit().z*nextRoomLayout.GetSizeColumn());
+                            roomLayout.GetExit().y*nextRoomLayout.GetSizeColumn());
                 }
             }
             
@@ -307,7 +307,8 @@ public class GridManager : MonoBehaviour
                 }
                 else{ //not empty cell
                         
-                    var cell = new Cell(coordinateOrigin + new Vector3(rowNumber, 0, columnNumber),roomId);
+                    
+                    var cell = new Cell(new Vector2(coordinateOrigin.x,coordinateOrigin.z) + new Vector2(rowNumber, columnNumber),roomId);
                     roomCells.Add(cell); //add cell to current room cells
                     
                     matrixCells[rowNumber, columnNumber] = cell; //temporary matrix as helper to update links between cells

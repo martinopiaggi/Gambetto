@@ -12,7 +12,7 @@ public class RoomLayout : ScriptableObject
    [SerializeField] private List<Column> rows = new List<Column>();
    [SerializeField] private List<Position> initialPositions;
 
-   [SerializeField]  private Vector3 exitSide = Directions.North;
+   [SerializeField]  private Vector2 exitSide = Directions.North;
    
    
    public List<Column> GetRows()
@@ -21,7 +21,7 @@ public class RoomLayout : ScriptableObject
    }
    
    
-   public Vector3 GetExit()
+   public Vector2 GetExit()
    {
       return exitSide;
    }

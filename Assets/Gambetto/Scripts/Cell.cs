@@ -22,13 +22,13 @@ public class Cell
     private Cell southWest;
     private Cell southEast;
 
-    public Cell(Vector3 coordinates, int roomId)
+    public Cell(Vector2 coordinates, int roomId)
     {
         _roomId = roomId;
-        globalCoordinates = coordinates;
+        globalCoordinates = new Vector3(coordinates.x, 0f, coordinates.y);
     }
     
-    public void setNext(Vector3 dir,Cell next)
+    public void setNext(Vector2 dir,Cell next)
     {
         //with a switch I have an error :( @todo/refactor
         if (dir == Directions.North) north = next;
@@ -41,7 +41,7 @@ public class Cell
         if (dir == Directions.SouthWest) southWest = next;
     }
     
-    public Cell getNext(Vector3 dir)
+    public Cell getNext(Vector2 dir)
     {
         //with a switch I have an error :( @todo/refactor
         if (dir == Directions.North) return north;
@@ -64,7 +64,7 @@ public class Cell
     
     public Vector3 getGlobalCoordinates()
     {
-        return globalCoordinates; 
+        return globalCoordinates;
     }
     
 }
