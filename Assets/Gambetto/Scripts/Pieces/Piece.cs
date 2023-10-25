@@ -9,8 +9,6 @@ namespace Pieces
 {
     public class Piece : MonoBehaviour
     {
-        private AudioManager _audioManager;
-        
         [SerializeField] private PieceType pieceType;
         [SerializeField] private PieceRole pieceRole;
         [SerializeField] private List<Vector2> possibleMoves;
@@ -72,8 +70,6 @@ namespace Pieces
         /// </summary>
         private protected void Awake()
         {
-            _audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
-            
             _tr = GetComponent<Transform>();
             possibleMoves = PieceType switch
             {
@@ -98,7 +94,7 @@ namespace Pieces
             if (countdown == Constants.MinPieceCountdown)
             {
                 StartCoroutine(MoveCoroutine(positions));
-                _audioManager.PlaySfx(_audioManager.pawnMovement);
+                AudioManager.Instance.PlaySfx(AudioManager.Instance.pawnMovement);
                 countdown = (int)countdownStartValue;
                 return;
             }
