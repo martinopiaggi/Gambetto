@@ -17,7 +17,6 @@ namespace Gambetto.Scripts.Utils
         public static readonly Vector3 NorthEast = new Vector3(1f, 0f, -1f);
         public static readonly Vector3 SouthEast = new Vector3(-1f, 0f, -1f);
         public static readonly Vector3 SouthWest = new Vector3(-1f, 0f, 1f);
-        
     }
     
 }
