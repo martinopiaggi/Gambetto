@@ -158,7 +158,7 @@ public class GridManager : MonoBehaviour
             //if the room has an odd lenght and was not chaged its last color is 0 (white)
             if (roomLayout.GetExit() == Directions.East || roomLayout.GetExit() == Directions.West)
             {
-                if (roomLayout.GetSizeRow() % 2 == 0)
+                if (roomLayout.GetSizeColumn() % 2 == 0)
                 {
                     if (_changed)
                     {
@@ -184,7 +184,7 @@ public class GridManager : MonoBehaviour
             }
             else
             {
-                if (roomLayout.GetSizeColumn() % 2 == 0)
+                if (roomLayout.GetSizeRow() % 2 == 0)
                 {
                     if (_changed)
                     {
