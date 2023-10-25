@@ -44,58 +44,122 @@ public class GridManager : MonoBehaviour
 
             if (north)
             {
-                currentCell = currentCell.getNext(Directions.North);
-                pawnTest.transform.position = currentCell.getGlobalCoordinates();
-                north = false;
+                var next = currentCell.getNext(Directions.North);
+                if (next != null)
+                {
+                    currentCell = next;
+                    pawnTest.transform.position = currentCell.getGlobalCoordinates();
+                    north = false;
+                }
+                else
+                {
+                    Debug.Log("ERROR");
+                }
             }
             
             if (south)
             {
-                currentCell = currentCell.getNext(Directions.South);
-                pawnTest.transform.position = currentCell.getGlobalCoordinates();
-                south  = false;
+                var next = currentCell.getNext(Directions.South);
+                if (next != null)
+                {
+                    currentCell = next;
+                    pawnTest.transform.position = currentCell.getGlobalCoordinates();
+                    south  = false;
+                }
+                else
+                {
+                    Debug.Log("ERROR");
+                }
             }
             
             if (east)
             {
-                currentCell = currentCell.getNext(Directions.East);
-                pawnTest.transform.position = currentCell.getGlobalCoordinates();
-                east  = false;
+                var next = currentCell.getNext(Directions.East);
+                if (next != null)
+                {
+                    currentCell = next;
+                    pawnTest.transform.position = currentCell.getGlobalCoordinates();
+                    east  = false;
+                }
+                else
+                {
+                    Debug.Log("ERROR");
+                }
             }
             
             if (west)
             {
-                currentCell = currentCell.getNext(Directions.West);
-                pawnTest.transform.position = currentCell.getGlobalCoordinates();
-                west  = false;
+                var next = currentCell.getNext(Directions.West);
+                if (next != null)
+                {
+                    currentCell = next;
+                    pawnTest.transform.position = currentCell.getGlobalCoordinates();
+                    west  = false;
+                }
+                else
+                {
+                    Debug.Log("ERROR");
+                }
             }
             
             if (southWest)
             {
-                currentCell = currentCell.getNext(Directions.SouthWest);
-                pawnTest.transform.position = currentCell.getGlobalCoordinates();
-                southWest  = false;
+                var next = currentCell.getNext(Directions.SouthWest);
+                if (next != null)
+                {
+                    currentCell = next;
+                    pawnTest.transform.position = currentCell.getGlobalCoordinates(); 
+                    southWest  = false;
+                }
+                else
+                {
+                    Debug.Log("ERROR");
+                }
             }
             
             if (southEast)
             {
-                currentCell = currentCell.getNext(Directions.SouthEast);
-                pawnTest.transform.position = currentCell.getGlobalCoordinates();
-                southEast  = false;
+                var next = currentCell.getNext(Directions.SouthEast);
+                if (next != null)
+                {
+                    currentCell = next;
+                    pawnTest.transform.position = currentCell.getGlobalCoordinates(); 
+                    southEast  = false;
+                }
+                else
+                {
+                    Debug.Log("ERROR");
+                }
             }
             
             if (northEast)
             {
-                currentCell = currentCell.getNext(Directions.NorthEast);
-                pawnTest.transform.position = currentCell.getGlobalCoordinates();
-                northEast  = false;
+                var next = currentCell.getNext(Directions.NorthEast);
+                if (next != null)
+                {
+                    currentCell = next;
+                    pawnTest.transform.position = currentCell.getGlobalCoordinates();
+                    northEast  = false;
+                }
+                else
+                {
+                    Debug.Log("ERROR");
+                }
             }
             
             if (northWest)
             {
-                currentCell = currentCell.getNext(Directions.NorthWest);
-                pawnTest.transform.position = currentCell.getGlobalCoordinates();
-                northWest  = false;
+                var next = currentCell.getNext(Directions.NorthWest);
+                if (next != null)
+                {
+                    currentCell = next;
+                    pawnTest.transform.position = currentCell.getGlobalCoordinates();
+                    northWest  = false;
+                }
+                else
+                {
+                    Debug.Log("ERROR");
+                }
             }
         }
     }
@@ -138,7 +202,7 @@ public class GridManager : MonoBehaviour
             {
                 translation = translation + new Vector3(roomLayout.GetExit().x*roomLayout.GetSizeRow(), 
                     0,
-                    roomLayout.GetExit().z*roomLayout.GetSizeColumn());
+                    roomLayout.GetExit().y*roomLayout.GetSizeColumn());
             }
             else
             {
@@ -148,7 +212,7 @@ public class GridManager : MonoBehaviour
                     var nextRoomLayout = roomLayouts[roomIdx+1];
                         translation = translation + new Vector3(roomLayout.GetExit().x*nextRoomLayout.GetSizeRow(), 
                             0,
-                            roomLayout.GetExit().z*nextRoomLayout.GetSizeColumn());
+                            roomLayout.GetExit().y*nextRoomLayout.GetSizeColumn());
                 }
             }
             
@@ -243,7 +307,8 @@ public class GridManager : MonoBehaviour
                 }
                 else{ //not empty cell
                         
-                    var cell = new Cell(coordinateOrigin + new Vector3(rowNumber, 0, columnNumber),roomId);
+                    
+                    var cell = new Cell(new Vector2(coordinateOrigin.x,coordinateOrigin.z) + new Vector2(rowNumber, columnNumber),roomId);
                     roomCells.Add(cell); //add cell to current room cells
                     
                     matrixCells[rowNumber, columnNumber] = cell; //temporary matrix as helper to update links between cells
@@ -297,7 +362,6 @@ public class GridManager : MonoBehaviour
                     }
                     
                     //set all the neighbors links at BORDER updating also neighbors links in PREVIOUS ROOM
-                    
                     if (previousRoomLayout != null)
                     {
                         //the border direction from the POV of the cell inside the room "looking the previous one" 
@@ -306,60 +370,91 @@ public class GridManager : MonoBehaviour
 
                         if (borderCheckDirection == Directions.South)
                         {
-                            if (rowNumber == 0 && columnNumber < cellBorder.Count)
+                            if (rowNumber == 0 && columnNumber < cellBorder.Count + 1)
                             {
-
-                                var foreignCell = cellBorder[columnNumber];
-
-
-                                if (foreignCell != null)
+                                if (columnNumber < cellBorder.Count)
                                 {
-                                    cell.setNext(Directions.South, foreignCell);
-                                    foreignCell.setNext(Directions.North, cell);
+                                    
+                                    var foreignCell = cellBorder[columnNumber];
+                                
+                                    if (foreignCell != null)
+                                    {
+                                        cell.setNext(Directions.South, foreignCell);
+                                        foreignCell.setNext(Directions.North, cell);
+                                    }
+
+                                    if (columnNumber + 1 < cellBorder.Count)
+                                    {
+                                        foreignCell = cellBorder[columnNumber + 1];
+                                        if (foreignCell != null)
+                                        {
+                                            cell.setNext(Directions.SouthWest, foreignCell);
+                                            foreignCell.setNext(Directions.NorthEast, cell);
+                                        }
+                                    }
+                                
+                                    if (columnNumber - 1 >= 0)
+                                    {
+                                        foreignCell = cellBorder[columnNumber - 1];
+                                        if (foreignCell != null)
+                                        {
+                                            cell.setNext(Directions.SouthEast, foreignCell);
+                                            foreignCell.setNext(Directions.NorthWest, cell);
+                                        }
+                                    }
                                 }
 
-                                if (columnNumber - 1 > 0)
+                                if (columnNumber - 1 >= 0)
                                 {
-                                    foreignCell = cellBorder[columnNumber - 1];
-                                    cell.setNext(Directions.SouthEast, foreignCell);
-                                    foreignCell.setNext(Directions.NorthWest, cell);
-                                }
-
-                                if (columnNumber + 1 < cellBorder.Count)
-                                {
-                                    foreignCell = cellBorder[columnNumber + 1];
-                                    cell.setNext(Directions.SouthWest, foreignCell);
-                                    foreignCell.setNext(Directions.NorthEast, cell);
+                                    var foreignCell = cellBorder[columnNumber - 1];
+                                    if (foreignCell != null)
+                                    {
+                                        cell.setNext(Directions.SouthEast, foreignCell);
+                                        foreignCell.setNext(Directions.NorthWest, cell);
+                                    }
                                 }
                             }
                         }
 
                         if (borderCheckDirection == Directions.North)
                         {
-                            if (rowNumber == roomLayout.GetSizeRow()-1 && columnNumber < cellBorder.Count)
+                            if (rowNumber == roomLayout.GetSizeRow()-1 && columnNumber < cellBorder.Count + 1)
                             {
 
-                                var foreignCell = cellBorder[columnNumber];
-
-
-                                if (foreignCell != null)
+                                if (columnNumber < cellBorder.Count)
                                 {
-                                    cell.setNext(Directions.North, foreignCell);
-                                    foreignCell.setNext(Directions.South, cell);
+                                    var foreignCell = cellBorder[columnNumber];
+
+
+                                    if (foreignCell != null)
+                                    {
+                                        cell.setNext(Directions.North, foreignCell);
+                                        foreignCell.setNext(Directions.South, cell);
+                                    }
+
+                                    if (columnNumber - 1 > 0)
+                                    {
+                                        foreignCell = cellBorder[columnNumber - 1];
+                                        cell.setNext(Directions.NorthEast, foreignCell);
+                                        foreignCell.setNext(Directions.SouthWest, cell);
+                                    }
+
+                                    if (columnNumber + 1 < cellBorder.Count)
+                                    {
+                                        foreignCell = cellBorder[columnNumber + 1];
+                                        cell.setNext(Directions.NorthWest, foreignCell);
+                                        foreignCell.setNext(Directions.SouthEast, cell);
+                                    }
                                 }
 
-                                if (columnNumber - 1 > 0)
+                                if (columnNumber - 1 >= 0)
                                 {
-                                    foreignCell = cellBorder[columnNumber - 1];
-                                    cell.setNext(Directions.NorthEast, foreignCell);
-                                    foreignCell.setNext(Directions.SouthWest, cell);
-                                }
-
-                                if (columnNumber + 1 < cellBorder.Count)
-                                {
-                                    foreignCell = cellBorder[columnNumber + 1];
-                                    cell.setNext(Directions.NorthWest, foreignCell);
-                                    foreignCell.setNext(Directions.SouthEast, cell);
+                                    var foreignCell = cellBorder[columnNumber - 1];
+                                    if (foreignCell != null)
+                                    {
+                                        cell.setNext(Directions.NorthEast, foreignCell);
+                                        foreignCell.setNext(Directions.SouthWest, cell);
+                                    }
                                 }
                             }
                         }

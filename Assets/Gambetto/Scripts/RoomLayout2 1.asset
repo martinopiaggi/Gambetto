@@ -19,4 +19,8 @@ MonoBehaviour:
   - columns: 000000000000000000000000
   - columns: 000000000000000000000000
   initialPositions: []
+<<<<<<< HEAD
   exitSide: {x: 0, y: 0, z: -1}
+=======
+  exitSide: {x: 0, y: -1}
+>>>>>>> 61c9a6e268afe5417ccc9c85972b3bf911c8fd26
