@@ -668,10 +668,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rooms:
   - {fileID: 11400000, guid: ff825f57703e5474593743544987404a, type: 2}
-  - {fileID: 11400000, guid: 81f8b3ca13ed347448bdd4360c85fcb1, type: 2}
-  - {fileID: 11400000, guid: 81f8b3ca13ed347448bdd4360c85fcb1, type: 2}
-  - {fileID: 11400000, guid: 81f8b3ca13ed347448bdd4360c85fcb1, type: 2}
-  - {fileID: 11400000, guid: f7ef4d51aea9127479fc88925c53a446, type: 2}
+  - {fileID: 11400000, guid: ff825f57703e5474593743544987404a, type: 2}
+  - {fileID: 11400000, guid: e0ff9ba28a0722f499cde2f4864b9b7c, type: 2}
+  - {fileID: 11400000, guid: 942dc705c7b728f4991ddc7a250afa8a, type: 2}
+  - {fileID: 11400000, guid: ff825f57703e5474593743544987404a, type: 2}
+  - {fileID: 11400000, guid: 8e128edf9ee93c046960ae9468338976, type: 2}
   gridManager: {fileID: 295756828}
 --- !u!4 &1181219728
 Transform:

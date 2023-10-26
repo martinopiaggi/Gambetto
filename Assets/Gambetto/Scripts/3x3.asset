@@ -10,16 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 030530086e85cb745a146f3a7806b1b7, type: 3}
-  m_Name: RoomLayout2
+  m_Name: 3x3
   m_EditorClassIdentifier: 
   rows:
-  - columns: 0000000000000000
-  - columns: 0000000000000000
-  - columns: 0000000000000000
-  - columns: 0000000000000000
+  - columns: 000000000000000000000000
+  - columns: 000000000000000000000000
+  - columns: 000000000000000000000000
   initialPositions: []
-<<<<<<< HEAD
-  exitSide: {x: 0, y: 0, z: 1}
-=======
-  exitSide: {x: -1, y: 0}
->>>>>>> 61c9a6e268afe5417ccc9c85972b3bf911c8fd26
+  exitSide: {x: 0, y: -1}
