@@ -10,10 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 030530086e85cb745a146f3a7806b1b7, type: 3}
-  m_Name: RoomLayout1
+  m_Name: hole_4x3_nord
   m_EditorClassIdentifier: 
   rows:
   - columns: 00000000000000000000000000000000
-  - columns: 00000000000000000000000000000000
+  - columns: 00000000ffffffffffffffff00000000
+  - columns: 00000000ffffffffffffffff00000000
   initialPositions: []
-  exitSide: {x: 0, y: -1}
+  exitSide: {x: 0, y: 1}
