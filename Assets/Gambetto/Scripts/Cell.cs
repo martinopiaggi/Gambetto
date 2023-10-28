@@ -7,6 +7,7 @@ using Pieces;
 public class Cell
 {
     private Vector3 globalCoordinates;
+    private Vector2 globalCoordinates2D;
 
     private int _roomId;
     
@@ -26,6 +27,7 @@ public class Cell
     {
         _roomId = roomId;
         globalCoordinates = new Vector3(coordinates.x, 0f, coordinates.y);
+        globalCoordinates2D = new Vector2(coordinates.x, coordinates.y);
     }
     
     public void setNext(Vector2 dir,Cell next)
@@ -65,6 +67,10 @@ public class Cell
     public Vector3 getGlobalCoordinates()
     {
         return globalCoordinates;
+    }
+    public Vector2 getGlobalCoordinates2D()
+    {
+        return globalCoordinates2D;
     }
     
 }

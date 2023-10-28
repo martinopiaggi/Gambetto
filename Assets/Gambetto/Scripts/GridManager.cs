@@ -16,9 +16,10 @@ namespace Gambetto.Scripts
         private Dictionary<Piece, Cell> _pieces = new Dictionary<Piece, Cell>();
     
         #region just_for_testing
-    
+        
         public GameObject prefabTest;
-        public bool north = false;
+        private GameObject _spawnGameObject;
+        public bool north = true;
         public bool east = false;
         public bool west = false;
         public bool south = false;
@@ -29,10 +30,13 @@ namespace Gambetto.Scripts
     
         public Cell CurrentCell = null;
         public GameObject pawnTest = null;
+        public List<Vector3> positions = null;
+        public Piece pieceTry = null;
     
         public void Start()
         {
             pawnTest = Instantiate(prefabTest, new Vector3(0,0,0), quaternion.identity);
+             pieceTry = pawnTest.GetComponent<Piece>();
         }
 
         public void Update()
@@ -55,7 +59,7 @@ namespace Gambetto.Scripts
                         Debug.Log("ERROR");
                     }
                 }
-            
+
                 if (south)
                 {
                     var next = CurrentCell.getNext(Directions.South);
@@ -63,14 +67,14 @@ namespace Gambetto.Scripts
                     {
                         CurrentCell = next;
                         pawnTest.transform.position = CurrentCell.getGlobalCoordinates();
-                        south  = false;
+                        south = false;
                     }
                     else
                     {
                         Debug.Log("ERROR");
                     }
                 }
-            
+
                 if (east)
                 {
                     var next = CurrentCell.getNext(Directions.East);
@@ -78,14 +82,14 @@ namespace Gambetto.Scripts
                     {
                         CurrentCell = next;
                         pawnTest.transform.position = CurrentCell.getGlobalCoordinates();
-                        east  = false;
+                        east = false;
                     }
                     else
                     {
                         Debug.Log("ERROR");
                     }
                 }
-            
+
                 if (west)
                 {
                     var next = CurrentCell.getNext(Directions.West);
@@ -93,44 +97,44 @@ namespace Gambetto.Scripts
                     {
                         CurrentCell = next;
                         pawnTest.transform.position = CurrentCell.getGlobalCoordinates();
-                        west  = false;
+                        west = false;
                     }
                     else
                     {
                         Debug.Log("ERROR");
                     }
                 }
-            
+
                 if (southWest)
                 {
                     var next = CurrentCell.getNext(Directions.SouthWest);
                     if (next != null)
                     {
                         CurrentCell = next;
-                        pawnTest.transform.position = CurrentCell.getGlobalCoordinates(); 
-                        southWest  = false;
+                        pawnTest.transform.position = CurrentCell.getGlobalCoordinates();
+                        southWest = false;
                     }
                     else
                     {
                         Debug.Log("ERROR");
                     }
                 }
-            
+
                 if (southEast)
                 {
                     var next = CurrentCell.getNext(Directions.SouthEast);
                     if (next != null)
                     {
                         CurrentCell = next;
-                        pawnTest.transform.position = CurrentCell.getGlobalCoordinates(); 
-                        southEast  = false;
+                        pawnTest.transform.position = CurrentCell.getGlobalCoordinates();
+                        southEast = false;
                     }
                     else
                     {
                         Debug.Log("ERROR");
                     }
                 }
-            
+
                 if (northEast)
                 {
                     var next = CurrentCell.getNext(Directions.NorthEast);
@@ -138,14 +142,14 @@ namespace Gambetto.Scripts
                     {
                         CurrentCell = next;
                         pawnTest.transform.position = CurrentCell.getGlobalCoordinates();
-                        northEast  = false;
+                        northEast = false;
                     }
                     else
                     {
                         Debug.Log("ERROR");
                     }
                 }
-            
+
                 if (northWest)
                 {
                     var next = CurrentCell.getNext(Directions.NorthWest);
@@ -153,7 +157,7 @@ namespace Gambetto.Scripts
                     {
                         CurrentCell = next;
                         pawnTest.transform.position = CurrentCell.getGlobalCoordinates();
-                        northWest  = false;
+                        northWest = false;
                     }
                     else
                     {
@@ -161,9 +165,174 @@ namespace Gambetto.Scripts
                     }
                 }
             }
+
+            pawnTest.transform.position = new Vector3(0, 0, 0);
+            CurrentCell = _grid[0][0];
+
+            positions = GetPossibleMovements(pieceTry, CurrentCell);
+            foreach (Vector3 position in positions)
+            {
+                //_spawnGameObject = Instantiate(pawnPrefab, transform.position, Quaternion.identity);
+                Debug.Log(position);
+            }
         }
-    
+
         #endregion
+        
+        public List<Vector3> GetPossibleMovements(Piece player, Cell currentPosition)
+        {
+            List<Vector3> possibleMovement = new List<Vector3>();
+            Cell startingCell = currentPosition;
+            Cell tempCell = startingCell;
+            List<Vector2> directions = player.PossibleMoves;
+            switch (player.PieceType)
+            {
+                case PieceType.Bishop:
+                    //Debug.Log("bishop");
+                    foreach (Vector2 direction in directions)
+                    {
+                        tempCell = startingCell;
+                        while (tempCell != null)
+                        {
+                            tempCell = tempCell.getNext(direction);
+                            if (tempCell != null)
+                            {
+                                possibleMovement.Add(tempCell.getGlobalCoordinates());
+                            }
+                        }
+                    }
+                    break;
+                case PieceType.King:
+                    //Debug.Log("king");
+                    foreach (Vector2 direction in directions)
+                    {
+                        tempCell = startingCell;
+                        tempCell = tempCell.getNext(direction);
+                        if (tempCell != null)
+                        {
+                            possibleMovement.Add(tempCell.getGlobalCoordinates());
+                        }
+                    }
+                    break;
+                case PieceType.Knight:
+                    //Debug.Log("knight");
+                    int i = 0;
+                    while(i < directions.Count)
+                    {
+                        tempCell = startingCell;
+                        for (int j = 0; j < 3; j++)
+                        {
+                            tempCell = tempCell.getNext(directions[i+j]);
+                            if (tempCell == null) break;
+                        }
+                        i = i + 3;
+                        if (tempCell != null) possibleMovement.Add(tempCell.getGlobalCoordinates());
+                    }
+                    break;
+                    /*
+                    foreach (Vector2 direction in directions)
+                    {   
+                        tempCell = startingCell;
+                        tempCell = tempCell.getNext(Directions.North);
+                        tempCell = tempCell.getNext(Directions.North);
+                        tempCell = tempCell.getNext(Directions.East);
+                        if (tempCell != null) possibleMovement.Add(tempCell.getGlobalCoordinates());
+                        
+                        tempCell = startingCell;
+                        tempCell = tempCell.getNext(Directions.North);
+                        tempCell = tempCell.getNext(Directions.North);
+                        tempCell = tempCell.getNext(Directions.West);
+                        if (tempCell != null) possibleMovement.Add(tempCell.getGlobalCoordinates());
+                        
+                        tempCell = startingCell;
+                        tempCell = tempCell.getNext(Directions.South);
+                        tempCell = tempCell.getNext(Directions.South);
+                        tempCell = tempCell.getNext(Directions.East);
+                        if (tempCell != null) possibleMovement.Add(tempCell.getGlobalCoordinates());
+                        
+                        tempCell = startingCell;
+                        tempCell = tempCell.getNext(Directions.South);
+                        tempCell = tempCell.getNext(Directions.South);
+                        tempCell = tempCell.getNext(Directions.West);
+                        if (tempCell != null) possibleMovement.Add(tempCell.getGlobalCoordinates());
+                        
+                        tempCell = startingCell;
+                        tempCell = tempCell.getNext(Directions.East);
+                        tempCell = tempCell.getNext(Directions.East);
+                        tempCell = tempCell.getNext(Directions.North);
+                        if (tempCell != null) possibleMovement.Add(tempCell.getGlobalCoordinates());
+                        
+                        tempCell = startingCell;
+                        tempCell = tempCell.getNext(Directions.East);
+                        tempCell = tempCell.getNext(Directions.East);
+                        tempCell = tempCell.getNext(Directions.South);
+                        if (tempCell != null) possibleMovement.Add(tempCell.getGlobalCoordinates());
+                        
+                        tempCell = startingCell;
+                        tempCell = tempCell.getNext(Directions.West);
+                        tempCell = tempCell.getNext(Directions.West);
+                        tempCell = tempCell.getNext(Directions.North);
+                        if (tempCell != null) possibleMovement.Add(tempCell.getGlobalCoordinates());
+                        
+                        tempCell = startingCell;
+                        tempCell = tempCell.getNext(Directions.West);
+                        tempCell = tempCell.getNext(Directions.West);
+                        tempCell = tempCell.getNext(Directions.South);
+                        if (tempCell != null) possibleMovement.Add(tempCell.getGlobalCoordinates());
+                        
+                    }
+                    break;
+                    */
+                case PieceType.Pawn:
+                    //Debug.Log("pawn");
+                    foreach (Vector2 direction in directions)
+                    {
+                        tempCell = startingCell;
+                        tempCell = tempCell.getNext(direction);
+                        if (tempCell != null)
+                        {
+                            possibleMovement.Add(tempCell.getGlobalCoordinates());
+                        }
+                    }
+
+                    break;
+                case PieceType.Queen:
+                    //Debug.Log("queen");
+                    foreach (Vector2 direction in directions)
+                    {
+                        tempCell = startingCell;
+                        while (tempCell != null)
+                        {
+                            tempCell = tempCell.getNext(direction);
+                            if (tempCell != null)
+                            {
+                                possibleMovement.Add(tempCell.getGlobalCoordinates());
+                            }
+                        }
+                    }
+                    break;
+                case PieceType.Rook:
+                    //Debug.Log("rook");
+                    foreach (Vector2 direction in directions)
+                    {
+                        tempCell = startingCell;
+                        while (tempCell != null)
+                        {
+                            tempCell = tempCell.getNext(direction);
+                            if (tempCell != null)
+                            {
+                                possibleMovement.Add(tempCell.getGlobalCoordinates());
+                            }
+                        }
+                    }
+                    break;
+                default:
+                    Debug.Log("Invalid type of piece");
+                    break;
+            }
+
+            return possibleMovement;
+        }
     
     
         public void CreateGrid(List<RoomLayout> roomLayouts)
