@@ -169,12 +169,13 @@ namespace Gambetto.Scripts
             pawnTest.transform.position = new Vector3(0, 0, 0);
             CurrentCell = _grid[0][0];
 
-            positions = GetPossibleMovements(pieceTry, CurrentCell);
+            /*positions = GetPossibleMovements(pieceTry, CurrentCell);
             foreach (Vector3 position in positions)
             {
                 //_spawnGameObject = Instantiate(pawnPrefab, transform.position, Quaternion.identity);
                 Debug.Log(position);
             }
+            */
         }
 
         #endregion
