@@ -163,6 +163,8 @@ MonoBehaviour:
   southEast: 0
   southWest: 0
   pawnTest: {fileID: 0}
+  positions: []
+  pieceTry: {fileID: 0}
 --- !u!4 &295756830
 Transform:
   m_ObjectHideFlags: 0
@@ -667,12 +669,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rooms:
-  - {fileID: 11400000, guid: ff825f57703e5474593743544987404a, type: 2}
-  - {fileID: 11400000, guid: ff825f57703e5474593743544987404a, type: 2}
-  - {fileID: 11400000, guid: e0ff9ba28a0722f499cde2f4864b9b7c, type: 2}
-  - {fileID: 11400000, guid: 942dc705c7b728f4991ddc7a250afa8a, type: 2}
-  - {fileID: 11400000, guid: ff825f57703e5474593743544987404a, type: 2}
-  - {fileID: 11400000, guid: 8e128edf9ee93c046960ae9468338976, type: 2}
+  - {fileID: 11400000, guid: 0b51b9151e564594b9877f68fe861ddc, type: 2}
+  - {fileID: 11400000, guid: 5b918be347f9ef5418a819fe5e527b66, type: 2}
+  - {fileID: 11400000, guid: 05e4685576840a442877b2fc9e467203, type: 2}
+  - {fileID: 11400000, guid: 5b918be347f9ef5418a819fe5e527b66, type: 2}
+  - {fileID: 11400000, guid: 05e4685576840a442877b2fc9e467203, type: 2}
+  - {fileID: 11400000, guid: 5b918be347f9ef5418a819fe5e527b66, type: 2}
+  - {fileID: 11400000, guid: 05e4685576840a442877b2fc9e467203, type: 2}
   gridManager: {fileID: 295756828}
 --- !u!4 &1181219728
 Transform:
