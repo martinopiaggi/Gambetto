@@ -94,6 +94,7 @@ namespace Pieces
             if (countdown == Constants.MinPieceCountdown)
             {
                 StartCoroutine(MoveCoroutine(positions));
+                AudioManager.Instance.PlaySfx(AudioManager.Instance.pawnMovement);
                 countdown = (int)countdownStartValue;
                 return;
             }
