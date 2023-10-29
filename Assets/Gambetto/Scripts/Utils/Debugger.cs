@@ -36,10 +36,12 @@ namespace Utils
             center.text = "";
         }
 
-        public void Show(string text, Color color = default, Position position = Position.UpperRight)
+        public void Show(string text, Color color = default, Position position = Position.UpperRight, bool printConsole = true)
         {
             color = color == default ? Color.white : color;
-           
+
+            if (printConsole) Debug.Log(text);
+            
             switch (position)
             {
                 case Position.UpperLeft:
@@ -55,16 +57,14 @@ namespace Utils
                     lowerLeft.color = color;
                     break;
                 case Position.LowerRight:
-                    lowerRight.text =text;
+                    lowerRight.text = text;
                     lowerRight.color = color;
                     break;
                 case Position.Center:
-                    center.text =text;
+                    center.text = text;
                     center.color = color;
                     break;
             }
         }
-  
     }
-
 }
