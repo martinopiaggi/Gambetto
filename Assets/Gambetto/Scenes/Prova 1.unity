@@ -671,9 +671,8 @@ MonoBehaviour:
   rooms:
   - {fileID: 11400000, guid: 0b51b9151e564594b9877f68fe861ddc, type: 2}
   - {fileID: 11400000, guid: 5b918be347f9ef5418a819fe5e527b66, type: 2}
-  - {fileID: 11400000, guid: 05e4685576840a442877b2fc9e467203, type: 2}
   - {fileID: 11400000, guid: 5b918be347f9ef5418a819fe5e527b66, type: 2}
-  - {fileID: 11400000, guid: 05e4685576840a442877b2fc9e467203, type: 2}
+  - {fileID: 11400000, guid: 0b51b9151e564594b9877f68fe861ddc, type: 2}
   - {fileID: 11400000, guid: 5b918be347f9ef5418a819fe5e527b66, type: 2}
   - {fileID: 11400000, guid: 05e4685576840a442877b2fc9e467203, type: 2}
   gridManager: {fileID: 295756828}
