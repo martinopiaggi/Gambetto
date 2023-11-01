@@ -9,6 +9,8 @@ using Gambetto.Scripts.Utils;
 [CreateAssetMenu(fileName = "RoomLayout", menuName = "ScriptableObjects/RoomLayout")]
 public class RoomLayout : ScriptableObject
 {
+   [SerializeField]
+   private string _description;
    [SerializeField] private List<Column> rows = new List<Column>();
    [SerializeField] private List<Position> initialPositions;
 
