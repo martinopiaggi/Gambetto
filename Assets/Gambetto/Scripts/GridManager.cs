@@ -200,29 +200,28 @@ namespace Gambetto.Scripts
                 //if the last color is 0 (white) the starting color will be changed in 1 (blue)
                 if (_lastColor == 1)
                 {
-                    roomObj.GetComponent<Room>().setColorStart(0);
+                    roomObj.GetComponent<RoomBuilder>().setColorStart(0);
                     _changed = false;
                 }
                 else
                 {
-                    roomObj.GetComponent<Room>().setColorStart(1);
+                    roomObj.GetComponent<RoomBuilder>().setColorStart(1);
                     _changed = true;
                 }
-                roomObj.GetComponent<Room>().InitializeRoom(roomLayout);
+                
+                roomObj.GetComponent<RoomBuilder>().InitializeRoom(roomLayout);
                 roomObj.transform.position = translation;
-            
-            
+                
                 //change the translation of the next room according to the exit of the previous room
                 if (roomLayout.GetExit() != Directions.South && roomLayout.GetExit() != Directions.East)
                 {
-                    translation = translation + new Vector3(roomLayout.GetExit().x*roomLayout.GetSizeRow(), 
+                    translation += new Vector3(roomLayout.GetExit().x*roomLayout.GetSizeRow(), 
                         0,
                         roomLayout.GetExit().y*roomLayout.GetSizeColumn());
                 }
                 else
                 {
                     //we have to compute the correct translation considering **next** roomLayout size in case of South/East
-                
                     if(roomIdx!=(roomLayouts.Count-1)){
                         var nextRoomLayout = roomLayouts[roomIdx+1];
                         translation = translation + new Vector3(roomLayout.GetExit().x*nextRoomLayout.GetSizeRow(), 
@@ -230,67 +229,28 @@ namespace Gambetto.Scripts
                             roomLayout.GetExit().y*nextRoomLayout.GetSizeColumn());
                     }
                 }
-            
-            
-                //this if determine what is the last color of the room, 1 (blue), 0 (white)
-                //if the room has an even lenght and was not changed its last color is 1 (blue)
-                //if the room has an odd lenght and was not changed its last color is 0 (white)
-                if (roomLayout.GetExit() == Directions.East || roomLayout.GetExit() == Directions.West)
-                {
-                    if (roomLayout.GetSizeColumn() % 2 == 0)
-                    {
-                        if (_changed)
-                        {
-                            _lastColor = 0;
-                        }
-                        else
-                        {
-                            _lastColor = 1;
-                        }
-                
-                    }
-                    else
-                    {
-                        if (_changed)
-                        {
-                            _lastColor = 1;
-                        }
-                        else
-                        {
-                            _lastColor = 0;
-                        }
-                    }
-                }
-                else
-                {
-                    if (roomLayout.GetSizeRow() % 2 == 0)
-                    {
-                        if (_changed)
-                        {
-                            _lastColor = 0;
-                        }
-                        else
-                        {
-                            _lastColor = 1;
-                        }
-                
-                    }
-                    else
-                    {
-                        if (_changed)
-                        {
-                            _lastColor = 1;
-                        }
-                        else
-                        {
-                            _lastColor = 0;
-                        }
-                    }
-                }
+
+                _lastColor = ColorConsistencyUpdate(roomLayout, _changed);
             }
+            
             Debug.Log("grid finished");
         }
 
+        private int ColorConsistencyUpdate(RoomLayout roomLayout, bool changed)
+        {
+            //this if determine what is the last color of the room, 1 (dark), 0 (bright)
+            //if the room has an even lenght and was not changed its last color is 1 (dark)
+            //if the room has an odd lenght and was not changed its last color is 0 (bright)
+            if (roomLayout.GetExit() == Directions.East || roomLayout.GetExit() == Directions.West)
+            {
+                if (roomLayout.GetSizeColumn() % 2 == 0) return changed ? 0 : 1;
+                return changed ? 1 : 0;
+            }
+
+            if (roomLayout.GetSizeRow() % 2 != 0) return changed ? 1 : 0;
+            
+            return changed ? 0 : 1;
+        }
 
         private List<Cell> _cellBorder = new List<Cell>();
         
