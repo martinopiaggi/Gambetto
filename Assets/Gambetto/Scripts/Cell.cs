@@ -1,8 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Gambetto.Scripts.Utils;
-using Pieces;
 
 public class Cell
 {
@@ -10,6 +8,7 @@ public class Cell
     private Vector2 globalCoordinates2D;
 
     private int _roomId;
+    private bool _empty = false;
     
     private List<Cell> neighbors; 
     
@@ -28,6 +27,13 @@ public class Cell
         _roomId = roomId;
         globalCoordinates = new Vector3(coordinates.x, 0f, coordinates.y);
         globalCoordinates2D = new Vector2(coordinates.x, coordinates.y);
+    }
+    
+    public bool isEmpty() => _empty;
+
+    public void setEmpty()
+    {
+        _empty = true;
     }
     
     public void setNext(Vector2 dir,Cell next)

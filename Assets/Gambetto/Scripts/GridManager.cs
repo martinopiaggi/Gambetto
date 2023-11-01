@@ -293,7 +293,7 @@ namespace Gambetto.Scripts
 
 
         private List<Cell> _cellBorder = new List<Cell>();
-    
+        
         private List<Cell> PopulateRoomGraph(RoomLayout roomLayout, Vector3 coordinateOrigin, int roomId, RoomLayout previousRoomLayout)
         {
             var borderDirection = roomLayout.GetExit(); //border direction of this room 
@@ -309,15 +309,9 @@ namespace Gambetto.Scripts
                 {
                     var square = roomLayout.GetRows()[rowNumber].GetColumns()[columnNumber];
 
-                    if (square == -1) //empty cell
-                    {
-                        //even if there is no cell it's necessary to insert a null placeholder in the border to correctly update
-                        // cell links at border in next room 
-                        AddNullPlaceholder(rowNumber, columnNumber, roomLayout, currentCellBorder, borderDirection);
-                    }
-                    else{ //not empty cell
-                        var cell = CreateCell(coordinateOrigin, roomLayout.GetExit(), rowNumber, columnNumber, roomId, roomLayout,
+                    var cell = CreateCell(coordinateOrigin, roomLayout.GetExit(), rowNumber, columnNumber, roomId, roomLayout,
                             currentCellBorder);
+                        if (square == -1) cell.setEmpty();
                         roomCells.Add(cell); //add cell to current room cells
                         matrixCells[rowNumber, columnNumber] = cell; //temporary matrix as helper to update links between cells
                     
@@ -327,23 +321,14 @@ namespace Gambetto.Scripts
                         if (roomId > 0) //check if it's not the first room.
                             SolveInterRoomConsistencies(cell, rowNumber, columnNumber, previousRoomLayout.GetExit() * -1,
                                 _cellBorder, roomLayout.GetSizeRow(),roomLayout.GetSizeColumn());
-                    }
+                    
                 }
             }
 
             _cellBorder = currentCellBorder;
             return roomCells;
         }
-
-
-        private static void AddNullPlaceholder(int rowNumber, int columnNumber, RoomLayout r, List<Cell> currentCellBorder, Vector2 borderDirection)
-        {
-            if(borderDirection==Directions.North) if(rowNumber == r.GetSizeRow()-1) currentCellBorder.Add(null);
-            if(borderDirection==Directions.South) if(rowNumber == 0) currentCellBorder.Add(null);
-            if(borderDirection==Directions.West) if(columnNumber == r.GetSizeColumn()-1) currentCellBorder.Add(null);
-            if (borderDirection != Directions.East) return;
-            if(columnNumber == 0) currentCellBorder.Add(null);
-        }
+        
 
         private static Cell CreateCell(Vector3 coordinateOrigin, Vector2 borderDirection, int rowNumber, int columnNumber, int roomId, RoomLayout r, List<Cell> currentCellBorder)
         {
@@ -416,42 +401,30 @@ namespace Gambetto.Scripts
                     {
 
                         var foreignCell = _cellBorder[columnNumber];
-
-                        if (foreignCell != null)
-                        {
-                            cell.setNext(Directions.South, foreignCell);
-                            foreignCell.setNext(Directions.North, cell);
-                        }
+                        cell.setNext(Directions.South, foreignCell);
+                        foreignCell.setNext(Directions.North, cell);
+                        
 
                         if (columnNumber + 1 < _cellBorder.Count)
                         {
                             foreignCell = _cellBorder[columnNumber + 1];
-                            if (foreignCell != null)
-                            {
-                                cell.setNext(Directions.SouthWest, foreignCell);
-                                foreignCell.setNext(Directions.NorthEast, cell);
-                            }
+                            cell.setNext(Directions.SouthWest, foreignCell);
+                            foreignCell.setNext(Directions.NorthEast, cell);
                         }
 
                         if (columnNumber - 1 >= 0)
                         {
                             foreignCell = _cellBorder[columnNumber - 1];
-                            if (foreignCell != null)
-                            {
-                                cell.setNext(Directions.SouthEast, foreignCell);
-                                foreignCell.setNext(Directions.NorthWest, cell);
-                            }
+                            cell.setNext(Directions.SouthEast, foreignCell);
+                            foreignCell.setNext(Directions.NorthWest, cell);
                         }
                     }
 
                     if (columnNumber - 1 >= 0)
                     {
                         var foreignCell = _cellBorder[columnNumber - 1];
-                        if (foreignCell != null)
-                        {
-                            cell.setNext(Directions.SouthEast, foreignCell);
-                            foreignCell.setNext(Directions.NorthWest, cell);
-                        }
+                        cell.setNext(Directions.SouthEast, foreignCell);
+                        foreignCell.setNext(Directions.NorthWest, cell);
                     }
                 }
 
@@ -462,41 +435,29 @@ namespace Gambetto.Scripts
                     if (columnNumber < _cellBorder.Count)
                     {
                         var foreignCell = _cellBorder[columnNumber];
-                        if (foreignCell != null)
-                        {
-                            cell.setNext(Directions.North, foreignCell);
-                            foreignCell.setNext(Directions.South, cell);
-                        }
-
+                        cell.setNext(Directions.North, foreignCell);
+                        foreignCell.setNext(Directions.South, cell);
+                        
                         if (columnNumber - 1 > 0)
                         {
                             foreignCell = _cellBorder[columnNumber - 1];
-                            if (foreignCell != null)
-                            {
-                                cell.setNext(Directions.NorthEast, foreignCell);
-                                foreignCell.setNext(Directions.SouthWest, cell);
-                            }
+                            cell.setNext(Directions.NorthEast, foreignCell);
+                            foreignCell.setNext(Directions.SouthWest, cell);
                         }
 
                         if (columnNumber + 1 < _cellBorder.Count)
                         {
                             foreignCell = _cellBorder[columnNumber + 1];
-                            if (foreignCell != null)
-                            {
-                                cell.setNext(Directions.NorthWest, foreignCell);
-                                foreignCell.setNext(Directions.SouthEast, cell);
-                            }
+                            cell.setNext(Directions.NorthWest, foreignCell);
+                            foreignCell.setNext(Directions.SouthEast, cell);
                         }
                     }
 
                     if (columnNumber - 1 >= 0)
                     {
                         var foreignCell = _cellBorder[columnNumber - 1];
-                        if (foreignCell != null)
-                        {
-                            cell.setNext(Directions.NorthEast, foreignCell);
-                            foreignCell.setNext(Directions.SouthWest, cell);
-                        }
+                        cell.setNext(Directions.NorthEast, foreignCell);
+                        foreignCell.setNext(Directions.SouthWest, cell);
                     }
                 }
 
@@ -506,41 +467,29 @@ namespace Gambetto.Scripts
                 if (rowNumber < _cellBorder.Count)
                 {
                     var foreignCell = _cellBorder[rowNumber];
-                    if (foreignCell != null)
-                    {
-                        cell.setNext(Directions.East, foreignCell);
-                        foreignCell.setNext(Directions.West, cell);
-                    }
+                    cell.setNext(Directions.East, foreignCell);
+                    foreignCell.setNext(Directions.West, cell);
 
                     if (rowNumber - 1 >= 0)
                     {
                         foreignCell = _cellBorder[rowNumber - 1];
-                        if (foreignCell != null)
-                        {
-                            cell.setNext(Directions.SouthEast, foreignCell);
-                            foreignCell.setNext(Directions.NorthWest, cell);
-                        }
+                        cell.setNext(Directions.SouthEast, foreignCell);
+                        foreignCell.setNext(Directions.NorthWest, cell);
                     }
 
                     if (rowNumber + 1 < _cellBorder.Count)
                     {
                         foreignCell = _cellBorder[rowNumber + 1];
-                        if (foreignCell != null)
-                        {
-                            cell.setNext(Directions.NorthEast, foreignCell);
-                            foreignCell.setNext(Directions.SouthWest, cell);
-                        }
+                        cell.setNext(Directions.NorthEast, foreignCell);
+                        foreignCell.setNext(Directions.SouthWest, cell);
                     }
                 }
                                 
                 if (rowNumber - 1 >= 0)
                 {
                     var foreignCell = _cellBorder[rowNumber - 1];
-                    if (foreignCell != null)
-                    {
-                        cell.setNext(Directions.SouthEast, foreignCell);
-                        foreignCell.setNext(Directions.NorthWest, cell);
-                    }
+                    cell.setNext(Directions.SouthEast, foreignCell);
+                    foreignCell.setNext(Directions.NorthWest, cell);
                 }
             }
 
@@ -550,42 +499,30 @@ namespace Gambetto.Scripts
                 if (rowNumber < _cellBorder.Count)
                 {
                     var foreignCell = _cellBorder[rowNumber];
-                
-                    if (foreignCell != null)
-                    {
-                        cell.setNext(Directions.West, foreignCell);
-                        foreignCell.setNext(Directions.East, cell);
-                    }
+                    cell.setNext(Directions.West, foreignCell);
+                    foreignCell.setNext(Directions.East, cell);
+                    
 
                     if (rowNumber - 1 > 0)
                     {
                         foreignCell = _cellBorder[rowNumber - 1];
-                        if (foreignCell != null)
-                        {
-                            cell.setNext(Directions.SouthWest, foreignCell);
-                            foreignCell.setNext(Directions.NorthEast, cell);
-                        }
+                        cell.setNext(Directions.SouthWest, foreignCell);
+                        foreignCell.setNext(Directions.NorthEast, cell);
                     }
 
                     if (rowNumber + 1 < _cellBorder.Count)
                     {
                         foreignCell = _cellBorder[rowNumber + 1];
-                        if (foreignCell != null)
-                        {
-                            cell.setNext(Directions.NorthWest, foreignCell);
-                            foreignCell.setNext(Directions.SouthEast, cell);
-                        }
+                        cell.setNext(Directions.NorthWest, foreignCell);
+                        foreignCell.setNext(Directions.SouthEast, cell);
                     }
                 }
 
                 if (rowNumber - 1 < 0) return;
                 {
                     var foreignCell = _cellBorder[rowNumber - 1];
-                    if (foreignCell != null)
-                    {
-                        cell.setNext(Directions.SouthWest, foreignCell);
-                        foreignCell.setNext(Directions.NorthEast, cell);
-                    }
+                    cell.setNext(Directions.SouthWest, foreignCell);
+                    foreignCell.setNext(Directions.NorthEast, cell);
                 }
             }
         }
