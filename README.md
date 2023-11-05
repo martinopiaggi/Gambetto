@@ -3,34 +3,39 @@
 
 ## Overview and Vision Statement
 
+// da espandere e rielaborare (la parte ritmica è completamente omessa)
 Gambetto combines the strategic depth of chess with the frenetic pace of arcade games.
-Set in abstract, rotating dungeons, players take on the role of a chess pawn facing various challenges. As they navigate, they can transform using the abilities of other chess pieces, introducing layers of strategy and gameplay depth.
+Set in abstract, rotating dungeons, players take on the role of a chess pawn facing various challenges. As they navigate, they can transform using power-ups and gain the abilities of other chess pieces, introducing layers of strategy and gameplay depth.
 
 Genre
 
-Arcade-Strategy Hybrid
+Arcade-Strategy Hybrid with Rhythm elements
 
 Platforms
 
 PC, Mobile
 
 Analysis of the Market
-Games like "Monument Valley" showcase the appetite for visually striking, innovative puzzle games. "The Binding of Isaac" and "Crossy Road" prove that arcade elements, combined with depth, have a broad appeal.
+The game's visual aesthetics will draw inspiration from Monument Valley while blending rhythm-based elements with arcade mechanics reminiscent of games like Crossy Road.
 
 
 ## Gameplay
 
-Gambetto thrusts players into a world where chess meets action. As a pawn, players must traverse intricate dungeons, avoiding enemies and leveraging the powers of other chess pieces.
+### Game Flow
+In a typical game players commence a level in the role of a pawn, and they must strategize their moves by carefully timing their inputs. The available move is visually highlighted on the ground, and changes cycling through an array of moves over a set duration.
+Using this game mechanic, players navigate the dungeon, progressing through various rooms while avoiding enemy pieces and environmental hazards. If a player's character succumbs to these challenges, they are reset to a designated checkpoint at the start of the room they were in. Certain rooms contain power-ups essential for progressing through the map. Completion of each level grants access to the next one.
 
 ### Core Mechanics
 
 - Chess-inspired Movement: Navigate using the movement rules of chess pieces.
 - Movement Rhythms: Sync your moves with the ticking of an in-game clock. Mistime your move, and face the consequences.
-- Chess Transformations: Collect transparent chess pieces to temporarily gain their movement abilities.
+- Chess Power-ups: Collect transparent chess pieces to temporarily gain their movement abilities.
 - Enemy Elimination: Rare power-ups allow players to eliminate certain enemies.
 - Quick Levels: Short, intense levels, especially during the initial phases.
+- Check Points: Checkpoints between different sections (rooms) of a level.
 
-Challenges
+
+### Challenges
 - Time Pressure: Players must make their move within a time limit or remain stationary.
 - Dynamic Enemies: Some move in sync with the player, while others have their unique rhythms.
 
@@ -38,6 +43,15 @@ Challenges
 - Dual-Pawn Control: Maybe in specific levels, control two pawns simultaneously, adding a layer of complexity and strategy.
 - Rotating Rooms: Dynamic rooms that periodically rotate, altering paths and challenges.
 
+### Level Design
+Levels will be formed by a succession of rooms each with different challenges and hazards,
+rooms are made of chess board style tiles and are surrounded by a foggy void.
+Rooms exhibit unique, irregular shapes and may incorporate openings within their design. Distinct levels are set apart by alterations in tile patterns, lighting, and fog effects, presenting varying colors to immerse players in diverse environments. Within each room, adversaries are strategically positioned, and players will find checkpoints to return to upon death.
+
+## User Interface
+The main menu will double as the level selection interface, offering players a side view of rooms that exhibit characteristics related to each level, similar to the design seen in the game Smash Hit. [title](https://www.youtube.com/watch?v=8Sb8wIWeM2E)
+
+The in-game user interface will maintain a minimalistic design, featuring only a select few elements, including a pause button and a timer that tracks the elapsed time within the level.
 
 ## Characters
 
@@ -51,12 +65,18 @@ In a surreal chess world, a lone pawn seeks to become a king. To do so, it must 
 ## World
 
 The setting is an abstract, ever-changing chessboard. Each level is a unique dungeon, some of which rotate or shift, challenging the player's spatial awareness.
+In each level the player will face a chessboard with different dimension and sometimes different colors compared to the previous one
 
-## Media List
+## Art and Visual Style
+The game's artistic style embraces a Low Poly Minimalist approach, infusing it with a hint of surrealism. Inspired by "Monument Valley".
+Lighting and chess board colors may vary depending on the level.
+The game camera will have an isometric view of the map and will follow the player.
 
-- Art Style: Minimalist, with a touch of surrealism, inspired by "Monument Valley".
-- Music: Ambient, with rhythmic elements echoing the ticking of the in-game clock.
-- Sound Effects: Discrete, emphasizing movements, captures, and transformations.
+## Music
+The game's music sets the mood with an ambient composition, where rhythmic elements echoing the in-game clock's tick, creating a soothing and immersive experience for players.
+
+## Sound Effects
+Discrete, emphasizing movements, captures, and transformations.
 
 
 Gambetto Project Structure Overview
@@ -96,16 +116,21 @@ Scripts
 
 ## Technical Specification
 - Engine: Unity (ideal for both PC and Mobile platforms).
+
 - Graphics: 
-- Controls: 
+
+- Controls:
+The player can only use one keyboard key (or screen tap) to select his move. He needs to press it when the light displayed on the terrain corresponds to his desired direction.
+Initially the pawn can only move one step in each direction (excluding diagonal moves), but the game will provide some powerups to increase the variety of the movement.
+In this last case the player will be also able to select the destination cell always in the frenetic way that distinguishes the game.
 
 
 ## Team
 
 - Martino Piaggi: Developer -> repo github e email 
-- Lorenzo Morelli: Develope-> repo github e email
+- Lorenzo Morelli: Developer-> repo github e email
 - Matteo Laini: Developer -> repo github e email 
-- Milo Brontesi: Developer -> repo github e email
+- Milo Brontesi: Developer -> [title](https://github.com/zibasPk) milo.brontesi@mail.polimi.it
 - Mario Vallone: Developer-> repo github e email 
 
 ## Deadlines
@@ -196,10 +221,4 @@ Final Task Review
 ### Week 17 (February 23 - February 27, 2024)
 - Final touches and last-minute refinements.
 - Submit the final project.
-
-
-
-
-
-
 
