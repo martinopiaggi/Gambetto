@@ -49,17 +49,26 @@ Using this game mechanic, players navigate the dungeon, progressing through vari
 
 
 ### Challenges
-- Time Pressure: Players must make their move within a time limit or remain stationary.
-- Dynamic Enemies: Some move in sync with the player, while others have their unique rhythms.
-- Dual-Pawn Control: Maybe in specific levels, control two pawns simultaneously, adding a layer of complexity and strategy.
-- Rotating Rooms: Dynamic rooms that periodically rotate, altering paths and challenges.
+- **Time Pressure**: player must make their move within a time limit
+  - To be stationary increase the chances to be captured by an enemy piece
+  - Selecting the wrong move can result into falling out from the chessboard or crashing into an enemy piece
+- **Dynamic Enemies**: various types of enemies
+  - Different enemies have different move patterns
+  - Some move in sync with the player, while others have their unique rhythms (slower or faster).
+- **Powerup exploitations**: Player must make the most of powerups
+  - Wrong powerups could increase difficulty
+- *Dual-Pawn Control*: Maybe in specific levels, control two pawns simultaneously, adding a layer of complexity and strategy.
+- *Moving platforms*: Rooms that periodically move, altering paths
+  - Rotations
+  - Translations
 
 ### Level Design
-Levels will be formed by a succession of rooms each with different challenges and hazards,
-rooms are made of chess board style tiles and are surrounded by a foggy void.
+
+Levels will be formed by a succession of rooms each with different challenges and hazards, rooms are made of chess board style tiles and are surrounded by a foggy void.
 Rooms exhibit unique, irregular shapes and may incorporate openings within their design. Distinct levels are set apart by alterations in tile patterns, lighting, and fog effects, presenting varying colors to immerse players in diverse environments. Within each room, enemies are strategically positioned, and players will find checkpoints to return to upon death.
 
 ## User Interface
+
 The main menu will double as the level selection interface, offering players a side view of rooms that exhibit characteristics related to each level, similar to the design seen in the game Smash Hit. [Smash Hit example](https://www.youtube.com/watch?v=8Sb8wIWeM2E)
 
 The in-game user interface will maintain a minimalistic design, featuring only a select few elements, including a pause button and a timer that tracks the elapsed time within the level.
@@ -75,12 +84,11 @@ In a surreal chess world, a lone pawn seeks to become a king. To do so, it must 
 
 ## World
 
-The setting is an abstract, ever-changing chessboard. Each level is a unique dungeon, some of which rotate or shift, challenging the player's spatial awareness.
-In each level the player will face a chessboard with different dimension and sometimes different colors compared to the previous one
+The setting is an abstract, ever-changing chessboard. Each level is a unique dungeon challenging the player's spatial awareness.
+In each level the player will face a chessboard with different shape compared to the previous one. Lighting and chess board colors may vary too.
 
 ## Art and Visual Style
 The game's artistic style embraces a Low Poly Minimalist approach, infusing it with a hint of surrealism. Inspired by "Monument Valley".
-Lighting and chess board colors may vary depending on the level.
 The game camera will have an isometric view of the map and will follow the player.
 
 ## Music
@@ -89,15 +97,19 @@ The game's music sets the mood with an ambient composition, where rhythmic eleme
 ## Sound Effects
 Discrete, emphasizing movements, captures, and transformations.
 
+## Technical Specification
 
-Gambetto Project Structure Overview
+- **Engine**: Unity (ideal for both PC and Mobile platforms).
+- **Graphics**: 3D low poly
+- **Controls**: The player can only use one keyboard key (or screen tap) to select his move. He needs to press it when the light displayed on the terrain corresponds to his desired direction. Initially the pawn can only move one step in each direction (excluding diagonal moves), but the game will provide some power-ups to increase the variety of the movement. In this last case the player will be also able to select the destination cell always in the frenetic way that distinguishes the game.
+
+### Project Structure Overview
 
 1. Materials
 - Two distinct chessboard materials: Dark and Light. These could represent the two different colored squares on a chessboard.
 - background fog 
 - gradient background 
 - maybe the player can choose to be white/black piece. And if black it's hard because we can make that for the first turn only the enemies (white) moves (like in chess white move first)
-
 
 Scenes
 
@@ -123,100 +135,42 @@ Scripts
 - Audio files for theme music and sound effects, which will contribute to the game's ambiance and player feedback.
 
 
-## Technical Specification
-- Engine: Unity (ideal for both PC and Mobile platforms).
 
-- Graphics: 3D low poly
-
-- Controls:
-The player can only use one keyboard key (or screen tap) to select his move. He needs to press it when the light displayed on the terrain corresponds to his desired direction.
-Initially the pawn can only move one step in each direction (excluding diagonal moves), but the game will provide some power-ups to increase the variety of the movement.
-In this last case the player will be also able to select the destination cell always in the frenetic way that distinguishes the game.
 
 ## Deadlines
 
 ### Week 1 (October 10 - October 17, 2023)
-- Team formation and initial brainstorming sessions.
-- Begin work on the game's core mechanics.
-- Assign specific roles and tasks to team members.
-
-Team Formation
-Initial Brainstorming
-Task Assignment
+- **Team formation** and initial brainstorming sessions.
+- **Task Assignment** to start game's core mechanics.
 
 
 ### Week 2 (October 17 - October 24, 2023)
-- Finalize and solidify game mechanics.
-- Begin work on game aesthetics and sound.
+- Continuing **Core Mechanics Development**
+- **Aesthetics Brainstorm**
 - Hold a team meeting to discuss progress and potential changes.
 
-Core Mechanics Development
-Aesthetics Brainstorm
-Sound Conceptualization
-
-### Week 3 (October 24 - October 31, 2023)
-- Refine the game's core mechanics and gameplay loop.
-- Expand on the game's aesthetics and sound design.
-- Create the initial layout of levels and challenges.
-
-Level Design
-Mechanics Testing
-Feedback Integration
-
-### Week 4 (October 31 - November 6, 2023)
-- Finalize the game design document.
-- Set up the git repository and ensure all members have access.
+### Week 3-4 (October 24 - November 6, 2023)
+- **Experimenting layout of levels**
+- **Milestone Review**
+- **Draft of GDD**
 - Send the game design document and git repository link to pierluca.lanzi@polimi.it.
 
-Documentation
-Repository Setup
-Milestone Review
-
-
-
 ### Week 5-9 (November 6 - December 10, 2023)
-- Develop the game prototype.
-- Test and refine gameplay mechanics.
-- Implement feedback from team members and playtesters.
-
-Prototype Development
-Aesthetics Implementation
-Regular Playtesting
-Notion Task Reviews
-
-
+- **Prototype Development**
+- **Aesthetics Implementation**
+- **Regular Playtesting**, testing and refining gameplay mechanics
 
 ### Week 10 (December 10 - December 20, 2023)
-- Submit the game prototype.
-- Await feedback and prepare for potential revisions.
-
-Prototype Submission
-Feedback Gathering
-
+- **Prototype Submission**
+- **Feedback Gathering**
 
 ### Week 11-13 (December 20, 2023 - January 13, 2024)
-- Refine and expand the game based on feedback.
-- Develop the beta version of the game.
-- Test and polish game elements for the beta submission.
-Beta Development
-Bug Fixing
-Notion Task Updates
-
-
-Beta Testing
-Feedback Implementation
-Final Task Review
-
-
+- **Beta Development**
+- **Bug Fixing**
 
 ### Week 14-16 (January 13 - February 23, 2024)
-- Await feedback on the beta.
-- Implement changes and refinements based on feedback.
-
-Beta Testing
-Feedback Implementation
-Final Task Review
-
+- **Beta Testing**
+- **Feedback Implementation**
 
 ### Week 17 (February 23 - February 27, 2024)
 - Final touches and last-minute refinements.
