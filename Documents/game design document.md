@@ -17,7 +17,7 @@ Players take on the role of a chess pawn facing various challenges. As they navi
 All pieces in the game will move following a certain rhythm; players will need to time their actions to choose moves.
 The player also needs to avoid falling out from the chessboard, otherwise he will restart the level from the latest checkpoint.
 Levels are designed and ordered with increasing difficulty.
-Anylevel will be considered completed only if the player reaches the end uneaten. As a consequence, the next level will be unlocked and playable.
+Any level will be considered completed only if the player reaches the end uneaten. As a consequence, the next level will be unlocked and playable.
 
 
 ### Genre
