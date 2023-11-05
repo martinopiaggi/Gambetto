@@ -1,21 +1,31 @@
 
 # Gambetto
 
+## Team
+
+- Martino Piaggi: Developer -> [GitHub](https://github.com/martinopiaggi), martino.piaggi@mail.polimi.it
+- Lorenzo Morelli: Developer-> [GitHub](https://github.com/lorenzo-morelli), lorenzo.morelli@mail.polimi.it
+- Matteo Laini: Developer -> [GitHub](https://github.com/matteolaini), matteo.laini@mail.polimi.it
+- Milo Brontesi: Developer -> [GitHub](https://github.com/zibasPk),milo.brontesi@mail.polimi.it
+- Mario Vallone: Developer-> [GitHub](https://github.com/Mario2414), mario.vallone@mail.polimi.it 
+
+
 ## Overview and Vision Statement
 
-// da espandere e rielaborare (la parte ritmica è completamente omessa)
-Gambetto combines the strategic depth of chess with the frenetic pace of arcade games.
-Set in abstract, rotating dungeons, players take on the role of a chess pawn facing various challenges. As they navigate, they can transform using power-ups and gain the abilities of other chess pieces, introducing layers of strategy and gameplay depth.
+Gambetto combines the strategic depth of chess with the frenetic pace of arcade and rhythm games.
+Players take on the role of a chess pawn facing various challenges. As they navigate different types of dungeons, they’ll need to face enemy pieces and to get to the end of different rooms. Players can transform using power-ups and gain the abilities of other chess pieces, introducing layers of strategy and gameplay depth.
+All pieces in the game will move following a certain rhythm; players will need to time their actions to choose moves.
+The player also needs to avoid falling out from the chessboard, otherwise he will restart the level from the latest checkpoint. 
 
-Genre
+### Genre
 
 Arcade-Strategy Hybrid with Rhythm elements
 
-Platforms
+### Platforms
 
 PC, Mobile
 
-Analysis of the Market
+### Market Analysis
 The game's visual aesthetics will draw inspiration from Monument Valley while blending rhythm-based elements with arcade mechanics reminiscent of games like Crossy Road.
 
 
@@ -38,18 +48,16 @@ Using this game mechanic, players navigate the dungeon, progressing through vari
 ### Challenges
 - Time Pressure: Players must make their move within a time limit or remain stationary.
 - Dynamic Enemies: Some move in sync with the player, while others have their unique rhythms.
-
-
 - Dual-Pawn Control: Maybe in specific levels, control two pawns simultaneously, adding a layer of complexity and strategy.
 - Rotating Rooms: Dynamic rooms that periodically rotate, altering paths and challenges.
 
 ### Level Design
 Levels will be formed by a succession of rooms each with different challenges and hazards,
 rooms are made of chess board style tiles and are surrounded by a foggy void.
-Rooms exhibit unique, irregular shapes and may incorporate openings within their design. Distinct levels are set apart by alterations in tile patterns, lighting, and fog effects, presenting varying colors to immerse players in diverse environments. Within each room, adversaries are strategically positioned, and players will find checkpoints to return to upon death.
+Rooms exhibit unique, irregular shapes and may incorporate openings within their design. Distinct levels are set apart by alterations in tile patterns, lighting, and fog effects, presenting varying colors to immerse players in diverse environments. Within each room, enemies are strategically positioned, and players will find checkpoints to return to upon death.
 
 ## User Interface
-The main menu will double as the level selection interface, offering players a side view of rooms that exhibit characteristics related to each level, similar to the design seen in the game Smash Hit. [title](https://www.youtube.com/watch?v=8Sb8wIWeM2E)
+The main menu will double as the level selection interface, offering players a side view of rooms that exhibit characteristics related to each level, similar to the design seen in the game Smash Hit. [Smash Hit example](https://www.youtube.com/watch?v=8Sb8wIWeM2E)
 
 The in-game user interface will maintain a minimalistic design, featuring only a select few elements, including a pause button and a timer that tracks the elapsed time within the level.
 
@@ -112,26 +120,15 @@ Scripts
 - Audio files for theme music and sound effects, which will contribute to the game's ambiance and player feedback.
 
 
-
-
 ## Technical Specification
 - Engine: Unity (ideal for both PC and Mobile platforms).
 
-- Graphics: 
+- Graphics: 3D low poly
 
 - Controls:
 The player can only use one keyboard key (or screen tap) to select his move. He needs to press it when the light displayed on the terrain corresponds to his desired direction.
-Initially the pawn can only move one step in each direction (excluding diagonal moves), but the game will provide some powerups to increase the variety of the movement.
+Initially the pawn can only move one step in each direction (excluding diagonal moves), but the game will provide some power-ups to increase the variety of the movement.
 In this last case the player will be also able to select the destination cell always in the frenetic way that distinguishes the game.
-
-
-## Team
-
-- Martino Piaggi: Developer -> repo github e email 
-- Lorenzo Morelli: Developer-> repo github e email
-- Matteo Laini: Developer -> repo github e email 
-- Milo Brontesi: Developer -> [title](https://github.com/zibasPk) milo.brontesi@mail.polimi.it
-- Mario Vallone: Developer-> repo github e email 
 
 ## Deadlines
 
@@ -221,4 +218,11 @@ Final Task Review
 ### Week 17 (February 23 - February 27, 2024)
 - Final touches and last-minute refinements.
 - Submit the final project.
+
+
+
+
+
+
+
 
