@@ -15,7 +15,10 @@
 Gambetto combines the strategic depth of chess with the frenetic pace of arcade and rhythm games.
 Players take on the role of a chess pawn facing various challenges. As they navigate different types of dungeons, they’ll need to face enemy pieces and to get to the end of different rooms. Players can transform using power-ups and gain the abilities of other chess pieces, introducing layers of strategy and gameplay depth.
 All pieces in the game will move following a certain rhythm; players will need to time their actions to choose moves.
-The player also needs to avoid falling out from the chessboard, otherwise he will restart the level from the latest checkpoint. 
+The player also needs to avoid falling out from the chessboard, otherwise he will restart the level from the latest checkpoint.
+Levels are designed and ordered with increasing difficulty.
+Anylevel will be considered completed only if the player reaches the end uneaten. As a consequence, the next level will be unlocked and playable.
+
 
 ### Genre
 
