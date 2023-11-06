@@ -3,11 +3,11 @@
 
 ## Team
 
-- Martino Piaggi: Developer -> [martinopiaggi](https://github.com/martinopiaggi), martino.piaggi@mail.polimi.it
-- Lorenzo Morelli: Developer-> [lorenzo-morelli](https://github.com/lorenzo-morelli), lorenzo.morelli@mail.polimi.it
-- Matteo Laini: Developer -> [matteolaini](https://github.com/matteolaini), matteo.laini@mail.polimi.it
-- Milo Brontesi: Developer -> [zibasPk](https://github.com/zibasPk),milo.brontesi@mail.polimi.it
-- Mario Vallone: Developer -> [Mario2414](https://github.com/Mario2414), mario.vallone@mail.polimi.it 
+- Martino Piaggi: Developer -> [martinopiaggi](https://github.com/martinopiaggi),  martino.piaggi@mail.polimi.it
+- Lorenzo Morelli: Developer-> [lorenzo-morelli](https://github.com/lorenzo-morelli),  lorenzo.morelli@mail.polimi.it
+- Matteo Laini: Developer -> [matteolaini](https://github.com/matteolaini),  matteo.laini@mail.polimi.it
+- Milo Brontesi: Developer -> [zibasPk](https://github.com/zibasPk),  milo.brontesi@mail.polimi.it
+- Mario Vallone: Developer -> [Mario2414](https://github.com/Mario2414),  mario.vallone@mail.polimi.it 
 
 
 ## Overview and Vision Statement
