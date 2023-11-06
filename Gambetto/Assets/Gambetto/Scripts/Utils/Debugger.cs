@@ -36,7 +36,7 @@ namespace Utils
             center.text = "";
         }
 
-        public void Show(string text, Color color = default, Position position = Position.UpperRight, bool printConsole = true)
+        public void Show(string text, Color color = default, Position position = Position.UpperLeft, bool printConsole = true)
         {
             color = color == default ? Color.white : color;
 
