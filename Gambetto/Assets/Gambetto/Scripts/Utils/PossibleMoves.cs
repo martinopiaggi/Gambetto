@@ -5,6 +5,7 @@ namespace Utils
 {
     public static class PossibleMoves
     {
+        //TODO: convert all necessary Vector2 to Vector2Int
         public static readonly List<Vector2> PawnPossibleMoves = new List<Vector2>
         {
             new Vector2(0, 1)
