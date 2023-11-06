@@ -18,7 +18,8 @@ namespace Pieces
 
         [SerializeField] private protected Constants.PieceCountdown countdownStartValue;
         private Transform _tr;
-        
+        private protected Mesh _mesh;
+
         public PieceRole PieceRole => pieceRole;
         public PieceType PieceType => _pieceType;
 
@@ -67,11 +68,12 @@ namespace Pieces
 
         
         ///<summary>
-        ///  <para> On Awake, sets the transform parameter</para>
+        ///  <para> On Awake, sets the references to the Transform and Mesh components.</para>
         /// </summary>
         private protected void Awake()
         {
             _tr = GetComponent<Transform>();
+            _mesh = GetComponent<MeshFilter>().mesh;
         }
 
         /**

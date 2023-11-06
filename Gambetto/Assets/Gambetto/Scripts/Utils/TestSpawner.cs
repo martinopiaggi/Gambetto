@@ -6,12 +6,12 @@ using UnityEngine;
 
 public class TestSpawner : MonoBehaviour
 {
-    [SerializeField] private GameObject pawnPrefab;
+    private GameObject pawnPrefab;
     private GameObject _spawnGameObject;
     
     private void Awake()
     {
-        pawnPrefab = Resources.Load<GameObject>("Prefabs/Pieces/Queen");
+        pawnPrefab = Resources.Load<GameObject>("Prefabs/Pieces/Rook");
     }
 
     private void Start()

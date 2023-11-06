@@ -3,10 +3,11 @@ using UnityEngine;
 
 namespace Pieces
 {
-    public class Pawn: Piece
+    public class Pawn : Piece
     {
         ///<summary>
         ///   <para> Calls parent <see cref="Piece.Awake">Awake</see>, sets the <see cref="PieceType">Piece Type</see>, <see cref="Piece.Countdown">Countdown</see> and the possible moves for the piece</para>
+        ///   <para> Also sets the mesh for the piece.</para>
         /// </summary>
         private protected void Awake()
         {
@@ -14,7 +15,8 @@ namespace Pieces
             _pieceType = PieceType.Pawn;
             // Set the possible moves for the piece
             PossibleMoves = Utils.PossibleMoves.PawnPossibleMoves;
-            Countdown = (int) Constants.PieceCountdown.Pawn;
+            Countdown = (int)Constants.PieceCountdown.Pawn;
+            GetComponent<MeshFilter>().mesh = Resources.Load<Mesh>("Models/pawn");
         }
     }
 }
