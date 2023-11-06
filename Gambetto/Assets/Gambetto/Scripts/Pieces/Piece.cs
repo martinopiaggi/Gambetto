@@ -7,20 +7,20 @@ using Utils;
 
 namespace Pieces
 {
-    public class Piece : MonoBehaviour
+    public abstract class Piece : MonoBehaviour
     {
-        [SerializeField] private PieceType pieceType;
-        [SerializeField] private PieceRole pieceRole;
-        [SerializeField] private List<Vector2> possibleMoves;
+        private protected PieceType _pieceType;
+        [SerializeField] private protected PieceRole pieceRole;
+        [SerializeField] private protected List<Vector2> possibleMoves;
 
         [Range(Constants.MinPieceCountdown, Constants.MaxPieceCountdown)] [SerializeField]
-        private int countdown;
+        private protected int countdown;
 
-        [SerializeField] private Constants.PieceCountdown countdownStartValue;
+        [SerializeField] private protected Constants.PieceCountdown countdownStartValue;
         private Transform _tr;
-
-        public PieceType PieceType => pieceType;
+        
         public PieceRole PieceRole => pieceRole;
+        public PieceType PieceType => _pieceType;
 
         /// <summary>
         /// List of possible moves for the piece.
@@ -65,22 +65,13 @@ namespace Pieces
             set => countdownStartValue = value;
         }
 
+        
         ///<summary>
-        ///   <para> On awake, sets the transform and the possible moves for the piece</para>
+        ///  <para> On Awake, sets the transform parameter</para>
         /// </summary>
         private protected void Awake()
         {
             _tr = GetComponent<Transform>();
-            possibleMoves = PieceType switch
-            {
-                PieceType.Pawn => Utils.PossibleMoves.PawnPossibleMoves,
-                PieceType.Rook => Utils.PossibleMoves.RookPossibleMoves,
-                PieceType.Knight => Utils.PossibleMoves.KnightPossibleMoves,
-                PieceType.Bishop => Utils.PossibleMoves.BishopPossibleMoves,
-                PieceType.Queen => Utils.PossibleMoves.QueenPossibleMoves,
-                PieceType.King => Utils.PossibleMoves.KingPossibleMoves,
-                _ => new List<Vector2>()
-            };
         }
 
         /**
@@ -108,7 +99,8 @@ namespace Pieces
             {
                 yield return new WaitForSeconds(1f);
                 var text = "moving piece to " + destPosition;
-                Debugger.Instance.Show(text);
+                if (Debugger.Instance != null)
+                    Debugger.Instance.Show(text, printConsole: false);
                 var direction = destPosition - _tr.position;
                 while (direction != Vector3.zero)
                 {
