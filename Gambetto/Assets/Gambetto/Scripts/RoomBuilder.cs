@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Gambetto.Scripts
@@ -8,8 +9,8 @@ namespace Gambetto.Scripts
 
         [SerializeField] private Material light;
         [SerializeField] private Material dark;
-    
-    
+        [SerializeField] private bool isBuilt = false;
+
         private int colorStart = 0;
         private int gridLength;
         private int gridWidth;
@@ -18,8 +19,14 @@ namespace Gambetto.Scripts
         private int[,] matrix; // The matrix to store the cubes
 
         [SerializeField] private GameObject cubePrefab; // Reference to the Cube prefab
-    
-    
+
+
+        private void Update()
+        {
+            if(isBuilt) return;
+            InitializeRoom(_layout);
+        }
+
         public void setColorStart(int value)
         {
             colorStart = value;
@@ -32,6 +39,7 @@ namespace Gambetto.Scripts
             gridWidth = layout.GetSizeColumn();
             matrix = new int[gridLength, gridWidth];
             FillMatrixWithCubes();
+            isBuilt = true;
         }
 
 
