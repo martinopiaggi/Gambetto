@@ -30,7 +30,8 @@ public class TestSpawner : MonoBehaviour
     
     private void SpawnPawn()
     {
-        _spawnGameObject = Instantiate(pawnPrefab, transform.position, Quaternion.identity);
+        var pos = new Vector3(2,1,1);
+        _spawnGameObject = Instantiate(pawnPrefab, pos, Quaternion.identity);
         _spawnGameObject.transform.SetParent(transform);
     }
 
