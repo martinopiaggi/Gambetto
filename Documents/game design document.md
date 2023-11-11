@@ -126,7 +126,30 @@ Scripts
 
 - Room Logic:
 - Scripts related to room behavior and layout, indicating dynamic and varied level designs.
-- Manually design rooms and concatenate rooms layouts/specifications easily in each level 
+- Manually design rooms and concatenate rooms layouts/specifications easily in each level
+
+- Clock Logic:
+  
+```mermaid
+sequenceDiagram
+
+    participant C as Clock
+
+    participant G as GridManager
+		participant PC as PlayerController
+		participant CB as CPUCBehaviour
+		actor P as Player
+		loop Every cycle
+		C->>+G: clockEvent
+		G -x+ PC: startChoosing(piece, grid)
+		PC->>+ P: cycleThroughShownMoves
+		P -->>- PC: choose move
+		PC --x- G: chosenMove
+		G -x CB: chooseMoves(grid,pieces)
+		CB --x G: chosenMoves
+		G -->>-C: 
+		end
+```
 
 - Utilities:
 - Several utility scripts for constants, debugging, and movement directions, among others. These are crucial for game functionality and development efficiency.
