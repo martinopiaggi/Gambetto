@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.3069224, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -152,8 +152,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00d5959bb1587184ba7a13324707be93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pawnPrefab: {fileID: 2952612582261332343, guid: 3aeffb6fe3e16b84ea244459c0c840ea,
-    type: 3}
 --- !u!4 &71603023
 Transform:
   m_ObjectHideFlags: 0
@@ -946,6 +944,55 @@ Transform:
   - {fileID: 656006931}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1727940800
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1727940802}
+  - component: {fileID: 1727940801}
+  m_Layer: 0
+  m_Name: Roomb
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1727940801
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1727940800}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a64e22d10c50f041a5587208e4e0b60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _layout: {fileID: 11400000, guid: 0b51b9151e564594b9877f68fe861ddc, type: 2}
+  light: {fileID: -3033667219593020291, guid: 37ee083a27403184d9a9b9552c89eae1, type: 3}
+  dark: {fileID: 2100000, guid: a778dca5d3731a24ba57709c077ce4e1, type: 2}
+  cubePrefab: {fileID: 6026861969032406006, guid: cb4f7d2a140b0fb4f8ccd7a1f934cb1d,
+    type: 3}
+--- !u!4 &1727940802
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1727940800}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 6.2603116, y: 2.438693, z: 3.6627178}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1807988311 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5910531336301742194, guid: f89f0150aca816646b2b058ba8ced2ca,
@@ -958,55 +1005,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &1964321665
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1964321667}
-  - component: {fileID: 1964321666}
-  m_Layer: 0
-  m_Name: Room
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1964321666
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1964321665}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a64e22d10c50f041a5587208e4e0b60, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  layout: {fileID: 11400000, guid: 81f8b3ca13ed347448bdd4360c85fcb1, type: 2}
-  light: {fileID: 2100000, guid: cf4f19fd0a10ee044a41c976ddca337a, type: 2}
-  dark: {fileID: 2100000, guid: a778dca5d3731a24ba57709c077ce4e1, type: 2}
-  cubePrefab: {fileID: 6026861969032406006, guid: cb4f7d2a140b0fb4f8ccd7a1f934cb1d,
-    type: 3}
---- !u!4 &1964321667
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1964321665}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2029887050 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3485381041876347107, guid: f89f0150aca816646b2b058ba8ced2ca,
@@ -1038,7 +1036,7 @@ SceneRoots:
   - {fileID: 330585546}
   - {fileID: 410087041}
   - {fileID: 832575519}
-  - {fileID: 1964321667}
   - {fileID: 71603023}
   - {fileID: 351143411}
   - {fileID: 1611169588}
+  - {fileID: 1727940802}
