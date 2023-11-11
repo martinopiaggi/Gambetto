@@ -178,13 +178,14 @@ sequenceDiagram
 - **Draft of GDD**
 - Send the game design document and git repository link to pierluca.lanzi@polimi.it.
 
-### Week 5-9 (November 6 - December 10, 2023)
+### Week 5-9 (November 6 - December 12, 2023)
 - **Prototype Development**
 - **Aesthetics Implementation**
 - **Regular Playtesting**, testing and refining gameplay mechanics
+- **Prototype Submission** (December 10)
 
-### Week 10 (December 10 - December 20, 2023)
-- **Prototype Submission**
+### Week 10 (December 12 - December 20, 2023)
+- **Prototype Evaluation**
 - **Feedback Gathering**
 
 ### Week 11-13 (December 20, 2023 - January 13, 2024)
