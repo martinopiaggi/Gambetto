@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using Gambetto.Scripts.Utils;
 using Pieces;
@@ -11,6 +12,7 @@ namespace Gambetto.Scripts
         private GameObject _roomPrefab;
         private int _lastColor = 1;
         private bool _changed = false;
+        public PlayerControllerGambetto _playerControllerGambetto;
 
         private readonly List<List<Cell>> _grid = new List<List<Cell>>();
         private Dictionary<Piece, Cell> _pieces = new Dictionary<Piece, Cell>();
@@ -19,7 +21,7 @@ namespace Gambetto.Scripts
         
         public GameObject prefabTest;
         private GameObject _spawnGameObject;
-        public bool north = true;
+        public bool north = false;
         public bool east = false;
         public bool west = false;
         public bool south = false;
@@ -32,11 +34,14 @@ namespace Gambetto.Scripts
         public GameObject pawnTest = null;
         public List<Vector3> positions = null;
         public Piece pieceTry = null;
+        
+        private int framesToWait = 100; // Numero di frame da aspettare
+        private int currentFrame = 0;
     
         public void Start()
         {
             pawnTest = Instantiate(prefabTest, new Vector3(0,0,0), quaternion.identity);
-             pieceTry = pawnTest.GetComponent<Piece>();
+            pieceTry = pawnTest.GetComponent<Piece>();
         }
 
         public void Update()
@@ -166,17 +171,22 @@ namespace Gambetto.Scripts
                 }
             }
 
-            pawnTest.transform.position = new Vector3(0, 0, 0);
+            
             CurrentCell = _grid[0][0];
+            currentFrame++;
 
-            /*positions = GetPossibleMovements(pieceTry, CurrentCell);
-            foreach (Vector3 position in positions)
+            // Verifica se abbiamo raggiunto il numero desiderato di frame
+            if (currentFrame >= framesToWait)
             {
-                //_spawnGameObject = Instantiate(pawnPrefab, transform.position, Quaternion.identity);
-                Debug.Log(position);
+                pawnTest.transform.position =  _playerControllerGambetto.startChoosing(pieceTry, CurrentCell);
+                
+                // Resetta il contatore di frame corrente
+                currentFrame = 0;
             }
-            */
+
+            
         }
+        
 
         #endregion
         
