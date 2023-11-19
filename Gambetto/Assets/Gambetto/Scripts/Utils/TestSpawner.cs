@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Gambetto.Scripts;
 using Pieces;
 using UnityEngine;
 
@@ -16,8 +17,13 @@ public class TestSpawner : MonoBehaviour
 
     private void Start()
     {
+        
+        GameClock.ClockTick += OnClockTicked;
+        GameClock.StartClock();
+        
         SpawnPawn();
         var piece = _spawnGameObject.GetComponent<Piece>();
+        piece.Countdown = 1;
         piece.Move(new List<Vector3>
         {
             new(0, 0, 1),
@@ -35,8 +41,8 @@ public class TestSpawner : MonoBehaviour
         _spawnGameObject.transform.SetParent(transform);
     }
 
-    private void Update()
+    public void OnClockTicked(object source, ClockEventArgs args)
     {
-        
+        Debug.Log("Clock ticked " + args.CurrentTick);
     }
 }
