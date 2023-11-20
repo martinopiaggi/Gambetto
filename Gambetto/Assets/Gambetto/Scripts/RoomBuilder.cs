@@ -11,6 +11,8 @@ namespace Gambetto.Scripts
         [SerializeField] private Material dark;
         [SerializeField] private bool isBuilt = false;
 
+        private GameObject fog;
+
         private int colorStart = 0;
         private int gridLength;
         private int gridWidth;
@@ -24,6 +26,7 @@ namespace Gambetto.Scripts
         private void Update()
         {
             if(isBuilt) return;
+            fog = GameObject.FindGameObjectWithTag("Fog"); // Reference to the fog, in order to access it and change material
             InitializeRoom(_layout);
         }
 
@@ -40,6 +43,7 @@ namespace Gambetto.Scripts
             matrix = new int[gridLength, gridWidth];
             FillMatrixWithCubes();
             isBuilt = true;
+            
         }
 
 
