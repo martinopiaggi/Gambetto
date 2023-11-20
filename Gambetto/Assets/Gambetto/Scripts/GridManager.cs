@@ -34,18 +34,20 @@ namespace Gambetto.Scripts
         public GameObject pawnTest = null;
         public List<Vector3> positions = null;
         public Piece pieceTry = null;
+        public bool gridFinished = false;
         
-        private int framesToWait = 100; // Numero di frame da aspettare
+        private int framesToWait = 1000; // Numero di frame da aspettare prima di chiedere la posizione
         private int currentFrame = 0;
     
         public void Start()
         {
-            pawnTest = Instantiate(prefabTest, new Vector3(0,0,0), quaternion.identity);
+            pawnTest = Instantiate(prefabTest, new Vector3(1,0,1), quaternion.identity);
             pieceTry = pawnTest.GetComponent<Piece>();
         }
 
         public void Update()
         {
+            /*
             if (north || south || east || west || southWest || southEast || northEast || northWest)
             {
                 if (CurrentCell == null) CurrentCell = _grid[0][0];
@@ -170,21 +172,49 @@ namespace Gambetto.Scripts
                     }
                 }
             }
+            */
 
             
-            CurrentCell = _grid[0][0];
+            //CurrentCell = _grid[1][1];
             currentFrame++;
 
             // Verifica se abbiamo raggiunto il numero desiderato di frame
             if (currentFrame >= framesToWait)
             {
-                pawnTest.transform.position =  _playerControllerGambetto.startChoosing(pieceTry, CurrentCell);
+                //Debug.Log("startchoosing");
+                //_playerControllerGambetto.startChoosing(pieceTry, CurrentCell);
+                if (gridFinished)
+                {
+                    CurrentCell = _grid[0][10];
+                    _playerControllerGambetto.startChoosing(pieceTry, CurrentCell);
+                    //printGrid(_grid);
+                }
                 
                 // Resetta il contatore di frame corrente
                 currentFrame = 0;
             }
+            
 
             
+        }
+
+        public void printGrid(List<List<Cell>> grid)
+        {
+            for (int i = 0; i < grid.Count; i++)
+            {
+                for (int j = 0; j < grid[0].Count; j++)
+                {
+                    Debug.Log(grid[i][j].getGlobalCoordinates());
+                    Debug.Log(grid[i][j].isEmpty());
+                }
+            }
+            gridFinished=false;
+            
+        }
+
+        public void setPositionOfPlayer(Vector3 ReturnedPosition)
+        {
+            pawnTest.transform.position = ReturnedPosition;
         }
         
 
@@ -243,7 +273,8 @@ namespace Gambetto.Scripts
                 _lastColor = ColorConsistencyUpdate(roomLayout, _changed);
             }
             
-            Debug.Log("grid finished");
+            //Debug.Log("grid finished");
+            gridFinished = true;
         }
 
         private int ColorConsistencyUpdate(RoomLayout roomLayout, bool changed)
