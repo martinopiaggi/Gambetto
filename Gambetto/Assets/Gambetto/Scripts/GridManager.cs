@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Gambetto.Scripts.Pieces;
 using Gambetto.Scripts.Utils;
 using Pieces;
 using Unity.Mathematics;

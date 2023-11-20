@@ -1,7 +1,8 @@
 using Gambetto.Scripts.Utils;
+using Pieces;
 using UnityEngine;
 
-namespace Pieces
+namespace Gambetto.Scripts.Pieces
 {
     public class Queen : Piece
     {
@@ -9,12 +10,12 @@ namespace Pieces
         ///     <para> Calls parent <see cref="Piece.Awake">Awake</see>, sets the <see cref="PieceType">Piece Type</see>, <see cref="Piece.Countdown">Countdown</see> and the possible moves for the piece</para>
         ///     <para> Also sets the mesh for the piece.</para> 
         ///</summary>
-        private protected void Awake()
+        private protected new void Awake()
         {
             base.Awake();
             _pieceType = PieceType.Queen;
             // Set the possible moves for the piece
-            PossibleMoves = Utils.PossibleMoves.QueenPossibleMoves;
+            PossibleMoves = global::Utils.PossibleMoves.QueenPossibleMoves;
             Countdown = (int)Constants.PieceCountdown.Queen;
             GetComponent<MeshFilter>().mesh = Resources.Load<Mesh>("Models/Queen");
         }

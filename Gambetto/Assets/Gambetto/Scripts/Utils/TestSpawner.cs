@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Gambetto.Scripts;
+using Gambetto.Scripts.Pieces;
 using Pieces;
 using UnityEngine;
 

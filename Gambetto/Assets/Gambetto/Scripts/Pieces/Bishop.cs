@@ -1,3 +1,4 @@
+using Gambetto.Scripts.Pieces;
 using Gambetto.Scripts.Utils;
 using UnityEngine;
 
@@ -9,7 +10,7 @@ namespace Pieces
         ///  <para> Calls parent <see cref="Piece.Awake">Awake</see>, sets the <see cref="PieceType">Piece Type</see>, <see cref="Piece.Countdown">Countdown</see> and the possible moves for the piece.</para>
         ///  <para> Also sets the mesh for the piece.</para>
         /// </summary>
-        private protected void Awake()
+        private protected new void Awake()
         {
             base.Awake();
             _pieceType = PieceType.Bishop;
