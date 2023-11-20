@@ -2,10 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using Gambetto.Scripts.Utils;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Utils;
 
-namespace Pieces
+namespace Gambetto.Scripts.Pieces
 {
     public abstract class Piece : MonoBehaviour
     {
