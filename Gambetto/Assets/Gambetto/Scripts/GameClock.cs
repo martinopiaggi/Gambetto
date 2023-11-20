@@ -1,41 +1,49 @@
 using System;
+using System.Collections;
 using System.Threading;
+using JetBrains.Annotations;
 using UnityEngine;
 
 namespace Gambetto.Scripts
 {
-    
     public class ClockEventArgs : EventArgs
     {
         public int CurrentTick { get; set; }
     }
-    
-    /// <summary>
-    /// Static class that implements a game clock.
-    /// </summary>
-    public static class GameClock
+    public class GameClock : MonoBehaviour
     {
-        // Define event delegate (signature of the method that will be called by the event)
+        public static GameClock Instance { get; private set; }
+
+
+        private const float DefaultClockPeriod = 4.0f;
+        private bool _isRunning;
+        private float _clockPeriod = DefaultClockPeriod; // clock period in seconds
+        private Thread _clockThread;
+
+        // Defines event delegate (signature of the method that will be called by the event)
         public delegate void ClockTickEventHandler(object sender, ClockEventArgs args);
 
-        public static event ClockTickEventHandler ClockTick;
-
-        private static bool _isRunning;
-        private static int _clockPeriod = 1000; // clock period in milliseconds
-        private static Thread _clockThread;
-
-        private static void ClockRoutine()
+        public event ClockTickEventHandler ClockTick;
+        
+        private void Awake()
         {
-            var i = 0;
-            while (_isRunning)
+            if (Instance == null)
             {
-                Thread.Sleep(_clockPeriod);
-                OnClockTick(new ClockEventArgs() {CurrentTick = i});
-                i++;
+                Instance = this;
+                DontDestroyOnLoad(gameObject);
+            }
+            else
+            {
+                Destroy(gameObject);
             }
         }
 
-        public static void StartClock()
+
+        /// <summary>
+        /// If the clock thread isn't running, it starts it.
+        /// </summary>
+        /// <param name="clockPeriod"> Clock period in seconds. Default is<see cref="DefaultClockPeriod"/>.</param>
+        public void StartClock(float clockPeriod = DefaultClockPeriod)
         {
             if (_isRunning)
             {
@@ -43,20 +51,46 @@ namespace Gambetto.Scripts
                 return;
             }
 
+            _clockPeriod = clockPeriod;
             _isRunning = true;
-            // Could
-            _clockThread = new Thread(ClockRoutine);
-            _clockThread.Start();
+            StartCoroutine(ClockRoutine());
         }
-
-        public static void StopClock()
+        
+        private IEnumerator ClockRoutine()
+        {
+            var i = 0;
+            while (_isRunning)
+            {
+                yield return new WaitForSeconds(_clockPeriod);
+                OnClockTick(new ClockEventArgs() { CurrentTick = i });
+                i++;
+            }
+        }
+        
+        
+        /// <summary>
+        /// Stops the clock thread.
+        /// </summary>
+        public void StopClock()
         {
             _isRunning = false;
         }
 
-        private static void OnClockTick(ClockEventArgs e)
+        /// <summary>
+        /// Changes the clock period.
+        /// </summary>
+        /// <param name="clockPeriod"> Clock period in seconds.</param>
+        public void ChangeClockPeriod(float clockPeriod)
+        {
+            _clockPeriod = clockPeriod;
+        }
+
+        
+
+        private void OnClockTick(ClockEventArgs e)
         {
             ClockTick?.Invoke(null, e);
         }
     }
+    
 }
