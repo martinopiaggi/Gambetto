@@ -15,14 +15,14 @@ MonoBehaviour:
   _description: east to west bridge wide 2, empty at north and south
   rows:
   - columns: ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
-  - columns: ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+  - columns: ffffffff00000000ffffffffffffffffffffffffffffffff00000000ffffffff
   - columns: ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
   - columns: ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
   - columns: 0000000000000000000000000000000000000000000000000000000000000000
   - columns: 0000000000000000000000000000000000000000000000000000000000000000
   - columns: ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
   - columns: ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
-  - columns: ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+  - columns: 0000000000000000000000000000000000000000000000000000000000000000
   - columns: ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
   initialPositions: []
   exitSide: {x: 0, y: 1}
