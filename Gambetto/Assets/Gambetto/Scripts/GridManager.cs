@@ -4,6 +4,7 @@ using Gambetto.Scripts.Utils;
 using Pieces;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Gambetto.Scripts
 {
@@ -12,7 +13,7 @@ namespace Gambetto.Scripts
         private GameObject _roomPrefab;
         private int _lastColor = 1;
         private bool _changed = false;
-        public PlayerControllerGambetto _playerControllerGambetto;
+        [FormerlySerializedAs("_playerControllerGambetto")] public PlayerController playerController;
 
         private readonly List<List<Cell>> _grid = new List<List<Cell>>();
         private Dictionary<Piece, Cell> _pieces = new Dictionary<Piece, Cell>();
@@ -47,134 +48,6 @@ namespace Gambetto.Scripts
 
         public void Update()
         {
-            /*
-            if (north || south || east || west || southWest || southEast || northEast || northWest)
-            {
-                if (CurrentCell == null) CurrentCell = _grid[0][0];
-
-                if (north)
-                {
-                    var next = CurrentCell.getNext(Directions.North);
-                    if (next != null)
-                    {
-                        CurrentCell = next;
-                        pawnTest.transform.position = CurrentCell.getGlobalCoordinates();
-                        north = false;
-                    }
-                    else
-                    {
-                        Debug.Log("ERROR");
-                    }
-                }
-
-                if (south)
-                {
-                    var next = CurrentCell.getNext(Directions.South);
-                    if (next != null)
-                    {
-                        CurrentCell = next;
-                        pawnTest.transform.position = CurrentCell.getGlobalCoordinates();
-                        south = false;
-                    }
-                    else
-                    {
-                        Debug.Log("ERROR");
-                    }
-                }
-
-                if (east)
-                {
-                    var next = CurrentCell.getNext(Directions.East);
-                    if (next != null)
-                    {
-                        CurrentCell = next;
-                        pawnTest.transform.position = CurrentCell.getGlobalCoordinates();
-                        east = false;
-                    }
-                    else
-                    {
-                        Debug.Log("ERROR");
-                    }
-                }
-
-                if (west)
-                {
-                    var next = CurrentCell.getNext(Directions.West);
-                    if (next != null)
-                    {
-                        CurrentCell = next;
-                        pawnTest.transform.position = CurrentCell.getGlobalCoordinates();
-                        west = false;
-                    }
-                    else
-                    {
-                        Debug.Log("ERROR");
-                    }
-                }
-
-                if (southWest)
-                {
-                    var next = CurrentCell.getNext(Directions.SouthWest);
-                    if (next != null)
-                    {
-                        CurrentCell = next;
-                        pawnTest.transform.position = CurrentCell.getGlobalCoordinates();
-                        southWest = false;
-                    }
-                    else
-                    {
-                        Debug.Log("ERROR");
-                    }
-                }
-
-                if (southEast)
-                {
-                    var next = CurrentCell.getNext(Directions.SouthEast);
-                    if (next != null)
-                    {
-                        CurrentCell = next;
-                        pawnTest.transform.position = CurrentCell.getGlobalCoordinates();
-                        southEast = false;
-                    }
-                    else
-                    {
-                        Debug.Log("ERROR");
-                    }
-                }
-
-                if (northEast)
-                {
-                    var next = CurrentCell.getNext(Directions.NorthEast);
-                    if (next != null)
-                    {
-                        CurrentCell = next;
-                        pawnTest.transform.position = CurrentCell.getGlobalCoordinates();
-                        northEast = false;
-                    }
-                    else
-                    {
-                        Debug.Log("ERROR");
-                    }
-                }
-
-                if (northWest)
-                {
-                    var next = CurrentCell.getNext(Directions.NorthWest);
-                    if (next != null)
-                    {
-                        CurrentCell = next;
-                        pawnTest.transform.position = CurrentCell.getGlobalCoordinates();
-                        northWest = false;
-                    }
-                    else
-                    {
-                        Debug.Log("ERROR");
-                    }
-                }
-            }
-            */
-
-            
             //CurrentCell = _grid[1][1];
             currentFrame++;
 
@@ -186,7 +59,7 @@ namespace Gambetto.Scripts
                 if (gridFinished)
                 {
                     CurrentCell = _grid[0][10];
-                    _playerControllerGambetto.startChoosing(pieceTry, CurrentCell);
+                    playerController.StartChoosing(pieceTry, CurrentCell);
                     //printGrid(_grid);
                 }
                 
