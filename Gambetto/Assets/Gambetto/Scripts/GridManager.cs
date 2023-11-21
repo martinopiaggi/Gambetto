@@ -1,9 +1,11 @@
+using System.Collections;
 using System.Collections.Generic;
 using Gambetto.Scripts.Pieces;
 using Gambetto.Scripts.Utils;
 using Pieces;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Gambetto.Scripts
 {
@@ -12,6 +14,7 @@ namespace Gambetto.Scripts
         private GameObject _roomPrefab;
         private int _lastColor = 1;
         private bool _changed = false;
+        [FormerlySerializedAs("_playerControllerGambetto")] public PlayerController playerController;
 
         private readonly List<List<Cell>> _grid = new List<List<Cell>>();
         private Dictionary<Piece, Cell> _pieces = new Dictionary<Piece, Cell>();
@@ -20,7 +23,7 @@ namespace Gambetto.Scripts
         
         public GameObject prefabTest;
         private GameObject _spawnGameObject;
-        public bool north = true;
+        public bool north = false;
         public bool east = false;
         public bool west = false;
         public bool south = false;
@@ -33,151 +36,61 @@ namespace Gambetto.Scripts
         public GameObject pawnTest = null;
         public List<Vector3> positions = null;
         public Piece pieceTry = null;
+        public bool gridFinished = false;
+        
+        private int framesToWait = 1000; // Numero di frame da aspettare prima di chiedere la posizione
+        private int currentFrame = 0;
     
         public void Start()
         {
-            pawnTest = Instantiate(prefabTest, new Vector3(0,0,0), quaternion.identity);
-             pieceTry = pawnTest.GetComponent<Piece>();
+            pawnTest = Instantiate(prefabTest, new Vector3(1,0,1), quaternion.identity);
+            pieceTry = pawnTest.GetComponent<Piece>();
         }
 
         public void Update()
         {
-            if (north || south || east || west || southWest || southEast || northEast || northWest)
+            //CurrentCell = _grid[1][1];
+            currentFrame++;
+
+            // Verifica se abbiamo raggiunto il numero desiderato di frame
+            if (currentFrame >= framesToWait)
             {
-                if (CurrentCell == null) CurrentCell = _grid[0][0];
-
-                if (north)
+                //Debug.Log("startchoosing");
+                //_playerControllerGambetto.startChoosing(pieceTry, CurrentCell);
+                if (gridFinished)
                 {
-                    var next = CurrentCell.getNext(Directions.North);
-                    if (next != null)
-                    {
-                        CurrentCell = next;
-                        pawnTest.transform.position = CurrentCell.getGlobalCoordinates();
-                        north = false;
-                    }
-                    else
-                    {
-                        Debug.Log("ERROR");
-                    }
+                    CurrentCell = _grid[0][10];
+                    playerController.StartChoosing(pieceTry, CurrentCell);
+                    //printGrid(_grid);
                 }
-
-                if (south)
-                {
-                    var next = CurrentCell.getNext(Directions.South);
-                    if (next != null)
-                    {
-                        CurrentCell = next;
-                        pawnTest.transform.position = CurrentCell.getGlobalCoordinates();
-                        south = false;
-                    }
-                    else
-                    {
-                        Debug.Log("ERROR");
-                    }
-                }
-
-                if (east)
-                {
-                    var next = CurrentCell.getNext(Directions.East);
-                    if (next != null)
-                    {
-                        CurrentCell = next;
-                        pawnTest.transform.position = CurrentCell.getGlobalCoordinates();
-                        east = false;
-                    }
-                    else
-                    {
-                        Debug.Log("ERROR");
-                    }
-                }
-
-                if (west)
-                {
-                    var next = CurrentCell.getNext(Directions.West);
-                    if (next != null)
-                    {
-                        CurrentCell = next;
-                        pawnTest.transform.position = CurrentCell.getGlobalCoordinates();
-                        west = false;
-                    }
-                    else
-                    {
-                        Debug.Log("ERROR");
-                    }
-                }
-
-                if (southWest)
-                {
-                    var next = CurrentCell.getNext(Directions.SouthWest);
-                    if (next != null)
-                    {
-                        CurrentCell = next;
-                        pawnTest.transform.position = CurrentCell.getGlobalCoordinates();
-                        southWest = false;
-                    }
-                    else
-                    {
-                        Debug.Log("ERROR");
-                    }
-                }
-
-                if (southEast)
-                {
-                    var next = CurrentCell.getNext(Directions.SouthEast);
-                    if (next != null)
-                    {
-                        CurrentCell = next;
-                        pawnTest.transform.position = CurrentCell.getGlobalCoordinates();
-                        southEast = false;
-                    }
-                    else
-                    {
-                        Debug.Log("ERROR");
-                    }
-                }
-
-                if (northEast)
-                {
-                    var next = CurrentCell.getNext(Directions.NorthEast);
-                    if (next != null)
-                    {
-                        CurrentCell = next;
-                        pawnTest.transform.position = CurrentCell.getGlobalCoordinates();
-                        northEast = false;
-                    }
-                    else
-                    {
-                        Debug.Log("ERROR");
-                    }
-                }
-
-                if (northWest)
-                {
-                    var next = CurrentCell.getNext(Directions.NorthWest);
-                    if (next != null)
-                    {
-                        CurrentCell = next;
-                        pawnTest.transform.position = CurrentCell.getGlobalCoordinates();
-                        northWest = false;
-                    }
-                    else
-                    {
-                        Debug.Log("ERROR");
-                    }
-                }
+                
+                // Resetta il contatore di frame corrente
+                currentFrame = 0;
             }
+            
 
-            pawnTest.transform.position = new Vector3(0, 0, 0);
-            CurrentCell = _grid[0][0];
-
-            /*positions = GetPossibleMovements(pieceTry, CurrentCell);
-            foreach (Vector3 position in positions)
-            {
-                //_spawnGameObject = Instantiate(pawnPrefab, transform.position, Quaternion.identity);
-                Debug.Log(position);
-            }
-            */
+            
         }
+
+        public void printGrid(List<List<Cell>> grid)
+        {
+            for (int i = 0; i < grid.Count; i++)
+            {
+                for (int j = 0; j < grid[0].Count; j++)
+                {
+                    Debug.Log(grid[i][j].getGlobalCoordinates());
+                    Debug.Log(grid[i][j].isEmpty());
+                }
+            }
+            gridFinished=false;
+            
+        }
+
+        public void setPositionOfPlayer(Vector3 ReturnedPosition)
+        {
+            pawnTest.transform.position = ReturnedPosition;
+        }
+        
 
         #endregion
         
@@ -234,7 +147,8 @@ namespace Gambetto.Scripts
                 _lastColor = ColorConsistencyUpdate(roomLayout, _changed);
             }
             
-            Debug.Log("grid finished");
+            //Debug.Log("grid finished");
+            gridFinished = true;
         }
 
         private int ColorConsistencyUpdate(RoomLayout roomLayout, bool changed)
