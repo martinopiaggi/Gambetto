@@ -3,6 +3,7 @@ using System.Collections;
 using System.Threading;
 using JetBrains.Annotations;
 using UnityEngine;
+using Utils;
 
 namespace Gambetto.Scripts
 {
@@ -15,7 +16,7 @@ namespace Gambetto.Scripts
         public static GameClock Instance { get; private set; }
 
 
-        private const float DefaultClockPeriod = 4.0f;
+        private const float DefaultClockPeriod = 2.0f;
         private bool _isRunning;
         private float _clockPeriod = DefaultClockPeriod; // clock period in seconds
         private Thread _clockThread;
@@ -62,9 +63,12 @@ namespace Gambetto.Scripts
             var i = 0;
             while (_isRunning)
             {
-                yield return new WaitForSeconds(_clockPeriod);
                 OnClockTick(new ClockEventArgs() { CurrentTick = i });
                 i++;
+                var text = "currentTick = " + i;
+                if (Debugger.Instance != null)
+                    Debugger.Instance.Show(text, Color.white, Debugger.Position.UpperRight,printConsole: false);
+                yield return new WaitForSeconds(_clockPeriod);
             }
         }
         
