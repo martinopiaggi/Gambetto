@@ -12,27 +12,21 @@ namespace Gambetto.Scripts
         private Light playerLight;
         private List<Cell> possibleMovements;
         private Cell possibleChoice;
+        private GameObject _selectedSquare;
         
         private bool _choosing = false;
 
-        void Start()
+        private void Start()
         {
+            var selectedSquarePrefab = Resources.Load<GameObject>("Prefabs/Square");
             //In start I create the light used to illuminate the grid
-            GameObject lightObject = new GameObject("PlayerLight");
-            playerLight = lightObject.AddComponent<Light>();
-
-            // Set light properties (you can customize these)
-            playerLight.type = LightType.Point;
-            playerLight.range = 2.0f;
-            playerLight.intensity = 6.0f;
-
-            // Turn off the light initially
-            playerLight.enabled = false;
+            _selectedSquare = Instantiate(selectedSquarePrefab);
+            _selectedSquare.SetActive(false);
             
             possibleMovements = new List<Cell>();
         }
 
-        void Update()
+        private void Update()
         {
             if (!Input.GetKeyDown(KeyCode.Space) || !_choosing) return;
             ChosenMove = possibleChoice;
@@ -55,13 +49,12 @@ namespace Gambetto.Scripts
             foreach (var move in possibleMovements)
             {
                 if(_choosing == false) break;
-                playerLight.enabled = true;
-                // Move the light to the new coordinates
-                playerLight.transform.position = move.getGlobalCoordinates() + new Vector3(0, 0.2f, 0);
+                _selectedSquare.SetActive(true);
+                _selectedSquare.transform.position = move.getGlobalCoordinates() + new Vector3(0, 0.01f, 0);
                 possibleChoice = move;
                 yield return new WaitForSeconds((clockPeriod/possibleMovements.Count)*0.9f); 
             }
-            playerLight.enabled = false;
+            _selectedSquare.SetActive(false);
         }
         
         
