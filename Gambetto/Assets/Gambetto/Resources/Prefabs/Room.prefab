@@ -44,8 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a64e22d10c50f041a5587208e4e0b60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  layout: {fileID: 11400000, guid: 81f8b3ca13ed347448bdd4360c85fcb1, type: 2}
+  _layout: {fileID: 0}
   light: {fileID: 2100000, guid: cf4f19fd0a10ee044a41c976ddca337a, type: 2}
   dark: {fileID: 2100000, guid: a778dca5d3731a24ba57709c077ce4e1, type: 2}
-  cubePrefab: {fileID: 6026861969032406006, guid: cb4f7d2a140b0fb4f8ccd7a1f934cb1d,
+  isBuilt: 0
+  cubePrefab: {fileID: 6026861969032406006, guid: 83cee9be6da46a249a5a1af0f79bebfe,
     type: 3}
