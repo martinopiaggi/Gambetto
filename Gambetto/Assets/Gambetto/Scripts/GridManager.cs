@@ -36,6 +36,11 @@ namespace Gambetto.Scripts
             GameClock.Instance.StartClock();
         }
 
+        /// <summary>
+        /// Called every clock tick, it updates the player position and starts the choosing of the next move for each piece
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="args"></param>
         private void OnClockTick(object source,ClockEventArgs args)
         {
             if (!gridFinished) return;
@@ -44,17 +49,34 @@ namespace Gambetto.Scripts
                 _playerCell = _grid[0][10];
                 playerController.ChosenMove = _playerCell;
             }
-            UpdatePlayerPosition();
+            // apply movements from the previous tick
+            UpdatePiecesPosition();
+            
+            // Compute Cpu behaviour and Start the choosing animation for the player
+            ComputeCpuBehaviour(_pieces); //todo: implement cpu behaviour
             playerController.StartChoosing(pieceTry, _playerCell);
+        }
+
+        private void ComputeCpuBehaviour(Dictionary<Piece, Cell> pieces)
+        {
+            //cpu behaviour stuff/
+        }
+        
+        private void UpdatePiecesPosition()
+        {
+            // todo: fetch movements from cpubehaviour
+            // for each piece in cpubehaviour move
+            UpdatePlayerPosition();
         }
         
         private void UpdatePlayerPosition()
         {
-            var newPos = playerController.ChosenMove;
-            if(newPos == null) return;
-            _playerCell = newPos;
+            var nextCellPlayer = playerController.ChosenMove;
+            //At the start of the level the player has not chosen a cell, it remains in the same position
+            if(nextCellPlayer == null) return;
+            _playerCell = nextCellPlayer;
             var list = new List<Vector3>();
-            list.Add(newPos.getGlobalCoordinates());
+            list.Add(nextCellPlayer.getGlobalCoordinates());
             pieceTry.Move(list);
         }
 
