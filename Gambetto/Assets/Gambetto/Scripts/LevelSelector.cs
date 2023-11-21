@@ -34,7 +34,7 @@ public class LevelSelector : MonoBehaviour
     public void LoadLevel1()
     {
         currentLevel = 1;
-        SceneManager.LoadScene("Prova 1");
+        SceneManager.LoadScene("Sample Scene");
     }
     
     
