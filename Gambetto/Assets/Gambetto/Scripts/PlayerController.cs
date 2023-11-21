@@ -50,7 +50,7 @@ namespace Gambetto.Scripts
             {
                 if(_choosing == false) break;
                 _selectedSquare.SetActive(true);
-                _selectedSquare.transform.position = move.getGlobalCoordinates() + new Vector3(0, 0.01f, 0);
+                _selectedSquare.transform.position = move.getGlobalCoordinates() + new Vector3(0, 0.05f, 0);
                 possibleChoice = move;
                 yield return new WaitForSeconds((clockPeriod/possibleMovements.Count)*0.9f); 
             }
