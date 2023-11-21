@@ -153,18 +153,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerController: {fileID: 1275976313}
-  prefabTest: {fileID: 2952612582261332343, guid: 3aeffb6fe3e16b84ea244459c0c840ea,
+  prefabTest: {fileID: 2952612582261332343, guid: 5b441d7bd4ccf7545aaf540eb3b2a605,
     type: 3}
-  north: 0
-  east: 0
-  west: 0
-  south: 0
-  northEast: 0
-  northWest: 0
-  southEast: 0
-  southWest: 0
   pawnTest: {fileID: 0}
-  positions: []
   pieceTry: {fileID: 0}
   gridFinished: 0
 --- !u!4 &295756830
@@ -671,7 +662,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rooms:
-  - {fileID: 11400000, guid: 6d28f07b65aacc843806471c536203aa, type: 2}
+  - {fileID: 11400000, guid: 05e4685576840a442877b2fc9e467203, type: 2}
+  - {fileID: 11400000, guid: 5b918be347f9ef5418a819fe5e527b66, type: 2}
   gridManager: {fileID: 295756828}
 --- !u!4 &1181219728
 Transform:
