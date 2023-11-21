@@ -14,88 +14,50 @@ namespace Gambetto.Scripts
         private GameObject _roomPrefab;
         private int _lastColor = 1;
         private bool _changed = false;
-        [FormerlySerializedAs("_playerControllerGambetto")] public PlayerController playerController;
+        [FormerlySerializedAs("_playerControllerGambetto")] public PlayerController playerController; 
 
         private readonly List<List<Cell>> _grid = new List<List<Cell>>();
         private Dictionary<Piece, Cell> _pieces = new Dictionary<Piece, Cell>();
-    
-        #region just_for_testing
         
         public GameObject prefabTest;
         private GameObject _spawnGameObject;
-        public bool north = false;
-        public bool east = false;
-        public bool west = false;
-        public bool south = false;
-        public bool northEast = false;
-        public bool northWest = false;
-        public bool southEast = false;
-        public bool southWest = false; 
-    
-        public Cell CurrentCell = null;
+
+        private Cell _playerCell = null;
         public GameObject pawnTest = null;
-        public List<Vector3> positions = null;
+        
         public Piece pieceTry = null;
         public bool gridFinished = false;
-        
-        private int framesToWait = 1000; // Numero di frame da aspettare prima di chiedere la posizione
-        private int currentFrame = 0;
-    
+
         public void Start()
         {
             pawnTest = Instantiate(prefabTest, new Vector3(1,0,1), quaternion.identity);
             pieceTry = pawnTest.GetComponent<Piece>();
+            GameClock.Instance.ClockTick += OnClockTick;
+            GameClock.Instance.StartClock();
         }
 
-        public void Update()
+        private void OnClockTick(object source,ClockEventArgs args)
         {
-            //CurrentCell = _grid[1][1];
-            currentFrame++;
-
-            // Verifica se abbiamo raggiunto il numero desiderato di frame
-            if (currentFrame >= framesToWait)
+            if (!gridFinished) return;
+            if (playerController.ChosenMove == null)
             {
-                //Debug.Log("startchoosing");
-                //_playerControllerGambetto.startChoosing(pieceTry, CurrentCell);
-                if (gridFinished)
-                {
-                    CurrentCell = _grid[0][10];
-                    playerController.StartChoosing(pieceTry, CurrentCell);
-                    //printGrid(_grid);
-                }
-                
-                // Resetta il contatore di frame corrente
-                currentFrame = 0;
+                _playerCell = _grid[0][10];
+                playerController.ChosenMove = _playerCell;
             }
-            
-
-            
-        }
-
-        public void printGrid(List<List<Cell>> grid)
-        {
-            for (int i = 0; i < grid.Count; i++)
-            {
-                for (int j = 0; j < grid[0].Count; j++)
-                {
-                    Debug.Log(grid[i][j].getGlobalCoordinates());
-                    Debug.Log(grid[i][j].isEmpty());
-                }
-            }
-            gridFinished=false;
-            
-        }
-
-        public void setPositionOfPlayer(Vector3 ReturnedPosition)
-        {
-            pawnTest.transform.position = ReturnedPosition;
+            UpdatePlayerPosition();
+            playerController.StartChoosing(pieceTry, _playerCell);
         }
         
+        private void UpdatePlayerPosition()
+        {
+            var newPos = playerController.ChosenMove;
+            if(newPos == null) return;
+            _playerCell = newPos;
+            var list = new List<Vector3>();
+            list.Add(newPos.getGlobalCoordinates());
+            pieceTry.Move(list);
+        }
 
-        #endregion
-        
-    
-    
         public void CreateGrid(List<RoomLayout> roomLayouts)
         {
             var translation = new Vector3(0,0,0);
@@ -203,7 +165,6 @@ namespace Gambetto.Scripts
             _cellBorder = currentCellBorder;
             return roomCells;
         }
-        
 
         private static Cell CreateCell(Vector3 coordinateOrigin, Vector2 borderDirection, int rowNumber, int columnNumber, int roomId, RoomLayout r, List<Cell> currentCellBorder)
         {

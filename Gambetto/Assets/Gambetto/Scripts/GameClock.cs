@@ -38,6 +38,7 @@ namespace Gambetto.Scripts
             }
         }
 
+        public float ClockPeriod => _clockPeriod;
 
         /// <summary>
         /// If the clock thread isn't running, it starts it.
