@@ -10,13 +10,10 @@ namespace Gambetto.Scripts
     {
         public GridManager GridManager;
         private Light playerLight;
-        private List<Vector3> possibleMovements;
-        private Vector3 currentMove;
-        private Vector3 possibleChoice;
-
-        private int framesToWait = 60; // frames to be able to choose
-        private int currentFrame = 0;
-        private bool enter = false;
+        private List<Cell> possibleMovements;
+        private Cell possibleChoice;
+        
+        private bool _choosing = false;
 
         void Start()
         {
@@ -31,77 +28,49 @@ namespace Gambetto.Scripts
 
             // Turn off the light initially
             playerLight.enabled = false;
-
-            currentMove = new Vector3();
-            possibleMovements = new List<Vector3>();
+            
+            possibleMovements = new List<Cell>();
         }
 
         void Update()
         {
-            currentFrame++;
-
-
-            if (currentFrame >= framesToWait)
-            {
-                //in possible movements there are all the grid coordinates that need to be illuminated
-                if (possibleMovements.Count > 0)
-                {
-                    // Get the first movement from the list
-                    Vector3 nextMovement = possibleMovements[0] + new Vector3(0, 0.2f, 0);
-                    //Debug.Log(nextMovement);
-                    // Turn on the light
-                    playerLight.enabled = true;
-                    // Move the light to the new coordinates
-                    playerLight.transform.position = nextMovement;
-                    possibleChoice = possibleMovements[0];
-                    possibleMovements.RemoveAt(0);
-                    //Debug.Log("setto a true");
-                    enter = true;
-                }
-                else
-                {
-                    // If the list is empty, turn off the light
-                    playerLight.enabled = false;
-                    enter = false;
-                }
-
-                currentFrame = 0;
-            }
+            if (!Input.GetKeyDown(KeyCode.Space) || !_choosing) return;
+            ChosenMove = possibleChoice;
+            _choosing = false;
         }
-
-        //I use LateUpdate to control if the player has chosen a position, if yes the current move is update
-        //and the list of possible positions is cleared
-        private void LateUpdate()
-        {
-            if (!enter) return;
-            if (!Input.GetKeyDown(KeyCode.Space)) return;
-            
-            //Debug.Log("hai premuto spazio");
-            currentMove = possibleChoice;
-            //Debug.Log("la scelta è"+currentMove);
-            possibleMovements.Clear();
-            //Currently the position is changed with a setter in GridManager
-            GridManager.setPositionOfPlayer(currentMove);
-            enter = false;
-        }
+        
+        public Cell ChosenMove { get; set; }
 
         public void StartChoosing(Piece piece, Cell currentPosition)
         {
             possibleMovements.Clear();
             possibleMovements = GetPossibleMovements(piece, currentPosition);
-            //for (int i = 0; i < possibleMovements.Count; i++)
-            //{
-            //    Debug.Log(possibleMovements[i]);
-            //}
-            //StartCoroutine(WaitForFrames(possibleMovements.Count*100));
-            //Debug.Log("ritorno val");
+            StartCoroutine(CycleMoves());
         }
+        
+        private IEnumerator CycleMoves()
+        {
+            var clockPeriod = GameClock.Instance.ClockPeriod;
+            _choosing = true;
+            foreach (var move in possibleMovements)
+            {
+                if(_choosing == false) break;
+                playerLight.enabled = true;
+                // Move the light to the new coordinates
+                playerLight.transform.position = move.getGlobalCoordinates() + new Vector3(0, 0.2f, 0);
+                possibleChoice = move;
+                yield return new WaitForSeconds((clockPeriod/possibleMovements.Count)*0.9f); 
+            }
+            playerLight.enabled = false;
+        }
+        
+        
 
         //Now this function suppose that in the grid there are cell with values -1 that resembles the fact that 
         // are empty
-        private List<Vector3> GetPossibleMovements(Piece player, Cell currentPosition)
+        private List<Cell> GetPossibleMovements(Piece player, Cell currentPosition)
         {
-            List<Vector3> possibleMovement = new List<Vector3>();
+            List<Cell> possibleMovement = new List<Cell>();
             Cell startingCell = currentPosition;
             Cell tempCell = startingCell;
             List<Vector2> directions = player.PossibleMoves;
@@ -123,7 +92,7 @@ namespace Gambetto.Scripts
                             tempCell = tempCell.getNext(direction);
                             if (tempCell != null)
                             {
-                                possibleMovement.Add(tempCell.getGlobalCoordinates());
+                                possibleMovement.Add(tempCell);
                             }
                         }
                     }
@@ -137,7 +106,7 @@ namespace Gambetto.Scripts
                         tempCell = tempCell.getNext(direction);
                         if (tempCell != null)
                         {
-                            possibleMovement.Add(tempCell.getGlobalCoordinates());
+                            possibleMovement.Add(tempCell);
                         }
                     }
 
@@ -155,7 +124,7 @@ namespace Gambetto.Scripts
                         }
 
                         i = i + 3;
-                        if (tempCell != null) possibleMovement.Add(tempCell.getGlobalCoordinates());
+                        if (tempCell != null) possibleMovement.Add(tempCell);
                     }
 
                     break;
@@ -168,7 +137,7 @@ namespace Gambetto.Scripts
                         tempCell = tempCell.getNext(direction);
                         if (tempCell != null)
                         {
-                            possibleMovement.Add(tempCell.getGlobalCoordinates());
+                            possibleMovement.Add(tempCell);
                         }
                     }
 
@@ -183,7 +152,7 @@ namespace Gambetto.Scripts
                             tempCell = tempCell.getNext(direction);
                             if (tempCell != null)
                             {
-                                possibleMovement.Add(tempCell.getGlobalCoordinates());
+                                possibleMovement.Add(tempCell);
                             }
                         }
                     }
@@ -199,21 +168,13 @@ namespace Gambetto.Scripts
                             tempCell = tempCell.getNext(direction);
                             if (tempCell != null)
                             {
-                                possibleMovement.Add(tempCell.getGlobalCoordinates());
+                                possibleMovement.Add(tempCell);
                             }
                         }
                     }
-
-                    break;
-                default:
-                    //Debug.Log("Invalid type of piece");
                     break;
             }
-
-            //for (int l = 0; l < possibleMovement.Count; l++)
-            //{
-            //Debug.Log(possibleMovement[l]); 
-            //}
+            
             return possibleMovement;
         }
 
