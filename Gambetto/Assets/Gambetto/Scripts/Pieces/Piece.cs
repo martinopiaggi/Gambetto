@@ -83,22 +83,15 @@ namespace Gambetto.Scripts.Pieces
          */
         public void Move(List<Vector3> positions)
         {
-            if (countdown == Constants.MinPieceCountdown)
-            {
-                StartCoroutine(MoveCoroutine(positions));
-                AudioManager.Instance.PlaySfx(AudioManager.Instance.pawnMovement);
-                countdown = (int)countdownStartValue;
-                return;
-            }
-
-            countdown--;
+            StartCoroutine(MoveCoroutine(positions));
+            //AudioManager.Instance.PlaySfx(AudioManager.Instance.pawnMovement);
         }
 
         private IEnumerator MoveCoroutine(IList<Vector3> positions)
         {
             foreach (var destPosition in positions)
             {
-                yield return new WaitForSeconds(1f);
+                yield return new WaitForSeconds(0.1f);
                 var text = "moving piece to " + destPosition;
                 if (Debugger.Instance != null)
                     Debugger.Instance.Show(text, printConsole: false);
