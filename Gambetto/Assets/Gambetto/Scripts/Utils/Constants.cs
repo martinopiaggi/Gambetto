@@ -17,7 +17,7 @@
             King = 1
         }
         
-        public const float PieceSpeed = 0.025f;
+        public const float PieceSpeed = 0.5f;
         
         
   
