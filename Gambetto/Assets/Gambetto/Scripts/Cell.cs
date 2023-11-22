@@ -36,7 +36,7 @@ public class Cell
         _empty = true;
     }
     
-    public void setNext(Vector2 dir,Cell next)
+    public void setNext(Vector2Int dir,Cell next)
     {
         //with a switch I have an error :( @todo/refactor
         if (dir == Directions.North) north = next;
@@ -49,7 +49,7 @@ public class Cell
         if (dir == Directions.SouthWest) southWest = next;
     }
     
-    public Cell getNext(Vector2 dir)
+    public Cell getNext(Vector2Int dir)
     {
         //with a switch I have an error :( @todo/refactor
         if (dir == Directions.North) return north;

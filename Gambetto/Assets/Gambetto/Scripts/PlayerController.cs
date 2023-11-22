@@ -66,7 +66,7 @@ namespace Gambetto.Scripts
             List<Cell> possibleMovement = new List<Cell>();
             Cell startingCell = currentPosition;
             Cell tempCell = startingCell;
-            List<Vector2> directions = player.PossibleMoves;
+            List<Vector2Int> directions = player.PossibleMoves;
             if (currentPosition.isEmpty())
             {
                 //Debug.Log("starting cell is empty");
@@ -77,7 +77,7 @@ namespace Gambetto.Scripts
             {
                 case PieceType.Bishop:
                     //Debug.Log("bishop");
-                    foreach (Vector2 direction in directions)
+                    foreach (Vector2Int direction in directions)
                     {
                         tempCell = startingCell;
                         while (tempCell != null)
@@ -93,7 +93,7 @@ namespace Gambetto.Scripts
                     break;
                 case PieceType.King:
                     //Debug.Log("king");
-                    foreach (Vector2 direction in directions)
+                    foreach (Vector2Int direction in directions)
                     {
                         tempCell = startingCell;
                         tempCell = tempCell.getNext(direction);
@@ -124,7 +124,7 @@ namespace Gambetto.Scripts
 
                 case PieceType.Pawn:
                     //Debug.Log("pawn");
-                    foreach (Vector2 direction in directions)
+                    foreach (Vector2Int direction in directions)
                     {
                         tempCell = startingCell;
                         tempCell = tempCell.getNext(direction);
@@ -137,7 +137,7 @@ namespace Gambetto.Scripts
                     break;
                 case PieceType.Queen:
                     //Debug.Log("queen");
-                    foreach (Vector2 direction in directions)
+                    foreach (Vector2Int direction in directions)
                     {
                         tempCell = startingCell;
                         while (tempCell != null)
@@ -153,7 +153,7 @@ namespace Gambetto.Scripts
                     break;
                 case PieceType.Rook:
                     //Debug.Log("rook");
-                    foreach (Vector2 direction in directions)
+                    foreach (Vector2Int direction in directions)
                     {
                         tempCell = startingCell;
                         while (tempCell != null)
