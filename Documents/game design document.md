@@ -1,14 +1,12 @@
-
 # Gambetto
 
 ## Team
 
-- Martino Piaggi: Developer -> [martinopiaggi](https://github.com/martinopiaggi),  martino.piaggi@mail.polimi.it
-- Lorenzo Morelli: Developer-> [lorenzo-morelli](https://github.com/lorenzo-morelli),  lorenzo.morelli@mail.polimi.it
-- Matteo Laini: Developer -> [matteolaini](https://github.com/matteolaini),  matteo.laini@mail.polimi.it
-- Milo Brontesi: Developer -> [zibasPk](https://github.com/zibasPk),  milo.brontesi@mail.polimi.it
-- Mario Vallone: Developer -> [Mario2414](https://github.com/Mario2414),  mario.vallone@mail.polimi.it 
-
+- Martino Piaggi: Developer -> [martinopiaggi](https://github.com/martinopiaggi), martino.piaggi@mail.polimi.it
+- Lorenzo Morelli: Developer-> [lorenzo-morelli](https://github.com/lorenzo-morelli), lorenzo.morelli@mail.polimi.it
+- Matteo Laini: Developer -> [matteolaini](https://github.com/matteolaini), matteo.laini@mail.polimi.it
+- Milo Brontesi: Developer -> [zibasPk](https://github.com/zibasPk), milo.brontesi@mail.polimi.it
+- Mario Vallone: Developer -> [Mario2414](https://github.com/Mario2414), mario.vallone@mail.polimi.it
 
 ## Overview and Vision Statement
 
@@ -19,7 +17,6 @@ The player also needs to avoid falling out from the chessboard, otherwise he wil
 Levels are designed and ordered with increasing difficulty.
 Any level will be considered completed only if the player reaches the end uneaten. As a consequence, the next level will be unlocked and playable.
 
-
 ### Genre
 
 Arcade-Strategy Hybrid with Rhythm elements
@@ -29,12 +26,13 @@ Arcade-Strategy Hybrid with Rhythm elements
 PC, Mobile
 
 ### Market Analysis
-The game's visual aesthetics will draw inspiration from Monument Valley while blending rhythm-based elements with arcade mechanics reminiscent of games like Crossy Road.
 
+The game's visual aesthetics will draw inspiration from Monument Valley while blending rhythm-based elements with arcade mechanics reminiscent of games like Crossy Road.
 
 ## Gameplay
 
 ### Game Flow
+
 In a typical game players commence a level in the role of a pawn, and they must strategize their moves by carefully timing their inputs. The available move is visually highlighted on the ground, and changes cycling through an array of moves over a set duration.
 Using this game mechanic, players navigate the dungeon, progressing through various rooms while avoiding enemy pieces and environmental hazards. If a player's character succumbs to these challenges, they are reset to a designated checkpoint at the start of the room they were in. Certain rooms contain power-ups essential for progressing through the map. Completion of each level grants access to the next one.
 
@@ -47,8 +45,8 @@ Using this game mechanic, players navigate the dungeon, progressing through vari
 - Quick Levels: Short, intense levels, especially during the initial phases.
 - Check Points: Checkpoints between different sections (rooms) of a level.
 
-
 ### Challenges
+
 - **Time Pressure**: player must make their move within a time limit
   - To be stationary increase the chances to be captured by an enemy piece
   - Selecting the wrong move can result into falling out from the chessboard or crashing into an enemy piece
@@ -57,8 +55,8 @@ Using this game mechanic, players navigate the dungeon, progressing through vari
   - Some move in sync with the player, while others have their unique rhythms (slower or faster).
 - **Powerup exploitations**: Player must make the most of powerups
   - Wrong powerups could increase difficulty
-- *Dual-Pawn Control*: Maybe in specific levels, control two pawns simultaneously, adding a layer of complexity and strategy.
-- *Moving platforms*: Rooms that periodically move, altering paths
+- _Dual-Pawn Control_: Maybe in specific levels, control two pawns simultaneously, adding a layer of complexity and strategy.
+- _Moving platforms_: Rooms that periodically move, altering paths
   - Rotations
   - Translations
 
@@ -88,13 +86,16 @@ The setting is an abstract, ever-changing chessboard. Each level is a unique dun
 In each level the player will face a chessboard with different shape compared to the previous one. Lighting and chess board colors may vary too.
 
 ## Art and Visual Style
+
 The game's artistic style embraces a Low Poly Minimalist approach, infusing it with a hint of surrealism. Inspired by "Monument Valley".
 The game camera will have an isometric view of the map and will follow the player.
 
 ## Music
+
 The game's music sets the mood with an ambient composition, where rhythmic elements echoing the in-game clock's tick, creating a soothing and immersive experience for players.
 
 ## Sound Effects
+
 Discrete, emphasizing movements, captures, and transformations.
 
 ## Technical Specification
@@ -106,9 +107,10 @@ Discrete, emphasizing movements, captures, and transformations.
 ### Project Structure Overview
 
 1. Materials
+
 - Two distinct chessboard materials: Dark and Light. These could represent the two different colored squares on a chessboard.
-- background fog 
-- gradient background 
+- background fog
+- gradient background
 - maybe the player can choose to be white/black piece. And if black it's hard because we can make that for the first turn only the enemies (white) moves (like in chess white move first)
 
 Scenes
@@ -118,6 +120,7 @@ Scenes
 - Several testing or development scenes, like "Prova" and "SampleScene", indicating ongoing development and experimentation.
 
 Scripts
+
 - Main Game Logic:
 - Scripts for audio management, cell interactions, grid management, level flow, main menu functionality, and UI management.
 
@@ -129,25 +132,46 @@ Scripts
 - Manually design rooms and concatenate rooms layouts/specifications easily in each level
 
 - Clock Logic:
-  
+
+  arrow conventions:
+
 ```mermaid
+
+sequenceDiagram
+		A-)B: Asynchronous Call
+		A ->> B: Synchronous Call
+		B-->> A: Synchronous Response
+		B--)A: Asynchronous Response
+
+
+```
+
+<br><br><br>
+
+```mermaid
+
 sequenceDiagram
 
     participant C as Clock
 
     participant G as GridManager
 		participant PC as PlayerController
-		participant CB as CPUCBehaviour
+		participant CB as CPUBehaviour
 		actor P as Player
+		participant PI as Pieces
 		loop Every cycle
-		C->>+G: clockEvent
-		G -x+ PC: startChoosing(piece, grid)
-		PC->>+ P: cycleThroughShownMoves
+		C-)+G: clockEvent
+		G ->>+ PI: updatePositions
+		PI -->>-G: done
+		par GridManager to PlayerController
+		G -)+ PC: startChoosing(piece, currentPosition)
+		PC->>+ P: cycleThroughPossibleMoves
 		P -->>- PC: choose move
-		PC --x- G: chosenMove
-		G -x CB: chooseMoves(grid,pieces)
-		CB --x G: chosenMoves
-		G -->>-C: 
+		PC --)- G: chosenMove
+		and GridManager to CPUBehaviour
+		G -)+ CB: chooseMoves(grid,pieces)
+		CB --)- G: chosenMoves
+		end
 		end
 ```
 
@@ -157,45 +181,49 @@ sequenceDiagram
 - Sounds
 - Audio files for theme music and sound effects, which will contribute to the game's ambiance and player feedback.
 
-
-
-
 ## Deadlines
 
 ### Week 1 (October 10 - October 17, 2023)
+
 - **Team formation** and initial brainstorming sessions.
 - **Task Assignment** to start game's core mechanics.
 
-
 ### Week 2 (October 17 - October 24, 2023)
+
 - Continuing **Core Mechanics Development**
 - **Aesthetics Brainstorm**
 - Hold a team meeting to discuss progress and potential changes.
 
 ### Week 3-4 (October 24 - November 6, 2023)
+
 - **Experimenting layout of levels**
 - **Milestone Review**
 - **Draft of GDD**
 - Send the game design document and git repository link to pierluca.lanzi@polimi.it.
 
 ### Week 5-9 (November 6 - December 12, 2023)
+
 - **Prototype Development**
 - **Aesthetics Implementation**
 - **Regular Playtesting**, testing and refining gameplay mechanics
 - **Prototype Submission** (December 10)
 
 ### Week 10 (December 12 - December 20, 2023)
+
 - **Prototype Evaluation**
 - **Feedback Gathering**
 
 ### Week 11-13 (December 20, 2023 - January 13, 2024)
+
 - **Beta Development**
 - **Bug Fixing**
 
 ### Week 14-16 (January 13 - February 23, 2024)
+
 - **Beta Testing**
 - **Feedback Implementation**
 
 ### Week 17 (February 23 - February 27, 2024)
+
 - Final touches and last-minute refinements.
 - Submit the final project.
