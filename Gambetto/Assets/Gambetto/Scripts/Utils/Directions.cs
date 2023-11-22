@@ -9,14 +9,14 @@ namespace Gambetto.Scripts.Utils
         /// <summary>
         /// Directions used for both Roomslayouts and Cells in GridManager
         /// </summary>
-        public static readonly Vector2 North = new Vector2(1f, 0f);
-        public static readonly Vector2 South = new Vector2(-1f, 0f);
-        public static readonly Vector2 East = new Vector2(0f, -1f);
-        public static readonly Vector2 West = new Vector2(0f, 1f);
-        public static readonly Vector2 NorthWest= new Vector2(1f, 1f);
-        public static readonly Vector2 NorthEast = new Vector2(1f, -1f);
-        public static readonly Vector2 SouthEast = new Vector2(-1f, -1f);
-        public static readonly Vector2 SouthWest = new Vector2(-1f, 1f);
+        public static readonly Vector2Int North = new Vector2Int(1, 0);
+        public static readonly Vector2Int South = new Vector2Int(-1, 0);
+        public static readonly Vector2Int East = new Vector2Int(0, -1);
+        public static readonly Vector2Int West = new Vector2Int(0, 1);
+        public static readonly Vector2Int NorthWest= new Vector2Int(1, 1);
+        public static readonly Vector2Int NorthEast = new Vector2Int(1, -1);
+        public static readonly Vector2Int SouthEast = new Vector2Int(-1, -1);
+        public static readonly Vector2Int SouthWest = new Vector2Int(-1, 1);
     }
     
 }

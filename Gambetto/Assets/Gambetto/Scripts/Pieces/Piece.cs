@@ -10,7 +10,7 @@ namespace Gambetto.Scripts.Pieces
     {
         private protected PieceType _pieceType;
         [SerializeField] private protected PieceRole pieceRole;
-        [SerializeField] private protected List<Vector2> possibleMoves;
+        [SerializeField] private protected List<Vector2Int> possibleMoves;
 
         [Range(Constants.MinPieceCountdown, Constants.MaxPieceCountdown)] [SerializeField]
         private protected int countdown;
@@ -25,9 +25,9 @@ namespace Gambetto.Scripts.Pieces
         /// <summary>
         /// List of possible moves for the piece.
         /// </summary>
-        public List<Vector2> PossibleMoves
+        public List<Vector2Int> PossibleMoves
         {
-            get => possibleMoves ?? new List<Vector2>();
+            get => possibleMoves ?? new List<Vector2Int>();
             set => possibleMoves = value;
         }
 

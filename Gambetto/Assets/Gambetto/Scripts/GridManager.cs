@@ -248,7 +248,7 @@ namespace Gambetto.Scripts
         }
     
 
-        private void SolveInterRoomConsistencies(Cell cell, int rowNumber, int columnNumber, Vector2 borderCheckDirection,
+        private void SolveInterRoomConsistencies(Cell cell, int rowNumber, int columnNumber, Vector2Int borderCheckDirection,
             List<Cell> border, int roomRowsSize, int roomColumnsSize)
         {
             //the border direction answers: "from which direction respect to the cell in the current room, the previous room is?
