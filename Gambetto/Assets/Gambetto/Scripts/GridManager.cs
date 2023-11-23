@@ -14,24 +14,31 @@ namespace Gambetto.Scripts
         private GameObject _roomPrefab;
         private int _lastColor = 1;
         private bool _changed = false;
-        [FormerlySerializedAs("_playerControllerGambetto")] public PlayerController playerController; 
+        public PlayerController playerController; 
 
-        private readonly List<List<Cell>> _grid = new List<List<Cell>>();
-        private Dictionary<Piece, Cell> _pieces = new Dictionary<Piece, Cell>();
+        private readonly List<List<Cell>> _grid = new List<List<Cell>>(); //maybe we can remove _grid? (never used)
+        private readonly Dictionary<Piece, Cell> _enemies = new Dictionary<Piece, Cell>();
         
-        public GameObject prefabTest;
+        [SerializeField] public GameObject prefabPawn;
+        [SerializeField] public GameObject prefabBishop;
+        [SerializeField] public GameObject prefabKnight;
+        [SerializeField] public GameObject prefabRook;
+        [SerializeField] public GameObject prefabKing;
+        [SerializeField] public GameObject prefabQueen;
+        public Material lightMaterial;
+        public Material darkMaterial;
+        
         private GameObject _spawnGameObject;
 
         private Cell _playerCell = null;
-        public GameObject pawnTest = null;
+        private Piece _playerPiece = null;
         
-        public Piece pieceTry = null;
-        public bool gridFinished = false;
+        private bool _gridFinished = false;
 
         public void Start()
         {
-            pawnTest = Instantiate(prefabTest, new Vector3(1,0,1), quaternion.identity);
-            pieceTry = pawnTest.GetComponent<Piece>();
+            //pawnTest = Instantiate(prefabTest, new Vector3(1,0,1), quaternion.identity);
+            //pieceTry = pawnTest.GetComponent<Piece>();
             GameClock.Instance.ClockTick += OnClockTick;
             GameClock.Instance.StartClock();
         }
@@ -43,18 +50,18 @@ namespace Gambetto.Scripts
         /// <param name="args"></param>
         private void OnClockTick(object source,ClockEventArgs args)
         {
-            if (!gridFinished) return;
+            if (!_gridFinished) return;
             if (playerController.ChosenMove == null)
             {
-                _playerCell = _grid[0][10];
+                //_playerCell = _grid[0][10];
                 playerController.ChosenMove = _playerCell;
             }
             // apply movements from the previous tick
             UpdatePiecesPosition();
             
             // Compute Cpu behaviour and Start the choosing animation for the player
-            ComputeCpuBehaviour(_pieces); //todo: implement cpu behaviour
-            playerController.StartChoosing(pieceTry, _playerCell);
+            ComputeCpuBehaviour(_enemies); //todo: implement cpu behaviour
+            playerController.StartChoosing(_playerPiece, _playerCell);
         }
 
         private void ComputeCpuBehaviour(Dictionary<Piece, Cell> pieces)
@@ -77,7 +84,7 @@ namespace Gambetto.Scripts
             _playerCell = nextCellPlayer;
             var list = new List<Vector3>();
             list.Add(nextCellPlayer.getGlobalCoordinates());
-            pieceTry.Move(list);
+            _playerPiece.Move(list);
         }
 
         public void CreateGrid(List<RoomLayout> roomLayouts)
@@ -132,7 +139,7 @@ namespace Gambetto.Scripts
             }
             
             //Debug.Log("grid finished");
-            gridFinished = true;
+            _gridFinished = true;
         }
 
         private int ColorConsistencyUpdate(RoomLayout roomLayout, bool changed)
@@ -170,22 +177,65 @@ namespace Gambetto.Scripts
 
                     var cell = CreateCell(coordinateOrigin, roomLayout.GetExit(), rowNumber, columnNumber, roomId, roomLayout,
                             currentCellBorder);
-                        if (square == -1) cell.setEmpty();
-                        roomCells.Add(cell); //add cell to current room cells
-                        matrixCells[rowNumber, columnNumber] = cell; //temporary matrix as helper to update links between cells
+                        
+                    if (square == -1) cell.setEmpty();
+                    else if (square != 0) InstantiatePiece(cell, square);
                     
-                        SolveLinksNeighbors(cell, rowNumber, columnNumber,matrixCells, roomLayout.GetSizeColumn());
+                    roomCells.Add(cell); //add cell to current room cells
+                    matrixCells[rowNumber, columnNumber] = cell; //temporary matrix as helper to update links between cells
                     
-                        //set all the neighbors links at BORDER updating also neighbors links in PREVIOUS ROOM
-                        if (roomId > 0) //check if it's not the first room.
-                            SolveInterRoomConsistencies(cell, rowNumber, columnNumber, previousRoomLayout.GetExit() * -1,
-                                _cellBorder, roomLayout.GetSizeRow(),roomLayout.GetSizeColumn());
+                    SolveLinksNeighbors(cell, rowNumber, columnNumber,matrixCells, roomLayout.GetSizeColumn());
                     
+                    //set all the neighbors links at BORDER updating also neighbors links in PREVIOUS ROOM
+                    if (roomId > 0) //check if it's not the first room.
+                        SolveInterRoomConsistencies(cell, rowNumber, columnNumber, previousRoomLayout.GetExit() * -1, 
+                            _cellBorder, roomLayout.GetSizeRow(),roomLayout.GetSizeColumn());
                 }
             }
 
             _cellBorder = currentCellBorder;
             return roomCells;
+        }
+        
+        
+        private void InstantiatePiece(Cell cell, int type)
+        {
+            if (type==99) //it's the player
+            {
+                _playerCell = cell;
+                var playerObj = Instantiate(prefabPawn, cell.getGlobalCoordinates(), quaternion.identity);
+                playerObj.GetComponent<MeshRenderer>().material=lightMaterial;
+                _playerPiece = playerObj.GetComponent<Piece>();
+            }
+            else
+            {
+                var prefab = prefabPawn;
+                switch (type)
+                {
+                    case 1:
+                        prefab = prefabPawn;
+                        break;
+                    case 2:
+                        prefab = prefabBishop;
+                        break;
+                    case 3:
+                        prefab = prefabKnight;
+                        break;
+                    case 5:
+                        prefab = prefabRook;
+                        break;
+                    case 8:
+                        prefab = prefabQueen;
+                        break;
+                    case 9:
+                        prefab = prefabKing;
+                        break;
+                }
+                //todo instantiate enemy based on *type*
+                var pieceObj = Instantiate(prefab, cell.getGlobalCoordinates(), quaternion.identity);
+                pieceObj.GetComponent<MeshRenderer>().material=darkMaterial;
+                _enemies.Add(pieceObj.GetComponent<Piece>(),cell);
+            }
         }
 
         private static Cell CreateCell(Vector3 coordinateOrigin, Vector2 borderDirection, int rowNumber, int columnNumber, int roomId, RoomLayout r, List<Cell> currentCellBorder)

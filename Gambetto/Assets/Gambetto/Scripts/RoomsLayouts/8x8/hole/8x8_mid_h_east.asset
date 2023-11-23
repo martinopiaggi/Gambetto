@@ -12,12 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 030530086e85cb745a146f3a7806b1b7, type: 3}
   m_Name: 8x8_mid_h_east
   m_EditorClassIdentifier: 
-  _description: 8x8 room with holes in the middle| empty at borders north south west
+  _topologyDescription: 8x8 holed with empty cells (so 10x10) except at East (exit)
+  _enemyDescription: Player at south/east corner || rook at west
   rows:
   - columns: ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+  - columns: 630000000000000000000000000000000000000000000000000000000000000000000000ffffffff
   - columns: 000000000000000000000000000000000000000000000000000000000000000000000000ffffffff
-  - columns: 000000000000000000000000000000000000000000000000000000000000000000000000ffffffff
-  - columns: 000000000000000000000000ffffffffffffffffffffffffffffffff0000000000000000ffffffff
+  - columns: 000000000000000000000000ffffffffffffffffffffffffffffffff0000000001000000ffffffff
   - columns: 000000000000000000000000ffffffffffffffffffffffffffffffff0000000000000000ffffffff
   - columns: 000000000000000000000000ffffffffffffffffffffffffffffffff0000000000000000ffffffff
   - columns: 000000000000000000000000ffffffffffffffffffffffffffffffff0000000000000000ffffffff
