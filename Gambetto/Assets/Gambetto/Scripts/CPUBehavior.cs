@@ -9,6 +9,7 @@ namespace Gambetto.Scripts
     {
         private GameObject _selectedSquare;
         private Cell _chosenMoves;
+        private Cell _playerCell;
 
         public Cell ChosenMoves
         {
@@ -17,7 +18,7 @@ namespace Gambetto.Scripts
         }
 
 
-        private Cell _playerCell;
+        
         // Start is called before the first frame update
         void Start()
         {
@@ -53,8 +54,7 @@ namespace Gambetto.Scripts
                     choosenMove = move;
                 }
             }
-            
-            Debug.Log("CPU has chosen");
+            Debug.Log("Old position: " + cell.getGlobalCoordinates() + "\nCPU has chosen: " + choosenMove.getGlobalCoordinates() + " as next move");
             _chosenMoves = choosenMove; //todo now for testing
             yield return null;
         }
