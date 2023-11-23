@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using Gambetto.Scripts.Pieces;
-using Pieces;
 using UnityEngine;
 
 namespace Gambetto.Scripts
@@ -57,11 +56,12 @@ namespace Gambetto.Scripts
             _selectedSquare.SetActive(false);
         }
         
-        
 
         //Now this function suppose that in the grid there are cell with values -1 that resembles the fact that 
         // are empty
-        private List<Cell> GetPossibleMovements(Piece player, Cell currentPosition)
+        //static just because now we are reusing it in the CPUBehavior 
+        // todo: maybe considering to move to another class 
+        public static List<Cell> GetPossibleMovements(Piece player, Cell currentPosition)
         {
             List<Cell> possibleMovement = new List<Cell>();
             Cell startingCell = currentPosition;
@@ -167,17 +167,7 @@ namespace Gambetto.Scripts
                     }
                     break;
             }
-            
             return possibleMovement;
-        }
-
-        IEnumerator WaitForFrames(int framesToWait)
-        {
-            // Aspetta il numero desiderato di frame
-            for (int i = 0; i < framesToWait; i++)
-            {
-                yield return null; // Aspetta un frame
-            }
         }
     }
 }
