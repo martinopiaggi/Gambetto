@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Gambetto.Scripts.Pieces;
@@ -7,13 +8,12 @@ namespace Gambetto.Scripts
 {
     public class PlayerController : MonoBehaviour
     {
-        public GridManager GridManager;
-        private Light playerLight;
-        private List<Cell> possibleMovements;
-        private Cell possibleChoice;
+        private Light _playerLight;
+        private List<Cell> _possibleMovements;
+        private Cell _possibleChoice;
         private GameObject _selectedSquare;
         
-        private bool _choosing = false;
+        private bool _choosing;
 
         private void Start()
         {
@@ -22,13 +22,13 @@ namespace Gambetto.Scripts
             _selectedSquare = Instantiate(selectedSquarePrefab);
             _selectedSquare.SetActive(false);
             
-            possibleMovements = new List<Cell>();
+            _possibleMovements = new List<Cell>();
         }
 
         private void Update()
         {
             if (!Input.GetKeyDown(KeyCode.Space) || !_choosing) return;
-            ChosenMove = possibleChoice;
+            ChosenMove = _possibleChoice;
             _choosing = false;
         }
         
@@ -37,8 +37,8 @@ namespace Gambetto.Scripts
         public void StartChoosing(Piece piece, Cell currentCell)
         {
             ChosenMove = currentCell;
-            possibleMovements.Clear();
-            possibleMovements = GetPossibleMovements(piece, currentCell);
+            _possibleMovements.Clear();
+            _possibleMovements = GetPossibleMovements(piece, currentCell);
             StartCoroutine(CycleMoves());
         }
         
@@ -46,13 +46,13 @@ namespace Gambetto.Scripts
         {
             var clockPeriod = GameClock.Instance.ClockPeriod;
             _choosing = true;
-            foreach (var move in possibleMovements)
+            foreach (var move in _possibleMovements)
             {
                 if(_choosing == false) break;
                 _selectedSquare.SetActive(true);
                 _selectedSquare.transform.position = move.getGlobalCoordinates() + new Vector3(0, 0.05f, 0);
-                possibleChoice = move;
-                yield return new WaitForSeconds((clockPeriod/possibleMovements.Count)*0.9f); 
+                _possibleChoice = move;
+                yield return new WaitForSeconds((clockPeriod/_possibleMovements.Count)*0.9f); 
             }
             _selectedSquare.SetActive(false);
         }
@@ -64,10 +64,10 @@ namespace Gambetto.Scripts
         // todo: maybe considering to move to another class 
         public static List<Cell> GetPossibleMovements(Piece player, Cell currentPosition)
         {
-            List<Cell> possibleMovement = new List<Cell>();
-            Cell startingCell = currentPosition;
-            Cell tempCell = startingCell;
-            List<Vector2Int> directions = player.PossibleMoves;
+            var possibleMovement = new List<Cell>();
+            Cell tempCell;
+            var directions = player.PossibleMoves;
+            //todo: si può togliere?
             if (currentPosition.isEmpty())
             {
                 //Debug.Log("starting cell is empty");
@@ -77,57 +77,49 @@ namespace Gambetto.Scripts
             switch (player.PieceType)
             {
                 case PieceType.Bishop:
-                    //Debug.Log("bishop");
-                    foreach (Vector2Int direction in directions)
+                case PieceType.Queen:
+                case PieceType.Rook:
+                    foreach (var direction in directions)
                     {
-                        tempCell = startingCell;
-                        while (tempCell != null)
+                        tempCell = currentPosition;
+                        while (tempCell?.getNext(direction) != null)
                         {
                             tempCell = tempCell.getNext(direction);
-                            if (tempCell != null)
-                            {
-                                possibleMovement.Add(tempCell);
-                            }
+                            possibleMovement.Add(tempCell);
                         }
                     }
-
                     break;
                 case PieceType.King:
-                    //Debug.Log("king");
-                    foreach (Vector2Int direction in directions)
+                    foreach (var direction in directions)
                     {
-                        tempCell = startingCell;
+                        tempCell = currentPosition;
                         tempCell = tempCell.getNext(direction);
                         if (tempCell != null)
                         {
                             possibleMovement.Add(tempCell);
                         }
                     }
-
                     break;
+                    
                 case PieceType.Knight:
-                    //Debug.Log("knight");
-                    int i = 0;
+                    var i = 0;
                     while (i < directions.Count)
                     {
-                        tempCell = startingCell;
-                        for (int j = 0; j < 3; j++)
+                        tempCell = currentPosition;
+                        for (var j = 0; j < 3; j++)
                         {
                             tempCell = tempCell.getNext(directions[i + j]);
                             if (tempCell == null) break;
                         }
 
-                        i = i + 3;
+                        i = 3 + i;
                         if (tempCell != null) possibleMovement.Add(tempCell);
                     }
-
                     break;
-
                 case PieceType.Pawn:
-                    //Debug.Log("pawn");
-                    foreach (Vector2Int direction in directions)
+                    foreach (var direction in directions)
                     {
-                        tempCell = startingCell;
+                        tempCell = currentPosition;
                         tempCell = tempCell.getNext(direction);
                         if (tempCell != null)
                         {
@@ -136,37 +128,8 @@ namespace Gambetto.Scripts
                     }
 
                     break;
-                case PieceType.Queen:
-                    //Debug.Log("queen");
-                    foreach (Vector2Int direction in directions)
-                    {
-                        tempCell = startingCell;
-                        while (tempCell != null)
-                        {
-                            tempCell = tempCell.getNext(direction);
-                            if (tempCell != null)
-                            {
-                                possibleMovement.Add(tempCell);
-                            }
-                        }
-                    }
-
-                    break;
-                case PieceType.Rook:
-                    //Debug.Log("rook");
-                    foreach (Vector2Int direction in directions)
-                    {
-                        tempCell = startingCell;
-                        while (tempCell != null)
-                        {
-                            tempCell = tempCell.getNext(direction);
-                            if (tempCell != null)
-                            {
-                                possibleMovement.Add(tempCell);
-                            }
-                        }
-                    }
-                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
             return possibleMovement;
         }
