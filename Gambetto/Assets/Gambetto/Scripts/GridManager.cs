@@ -71,11 +71,9 @@ namespace Gambetto.Scripts
 
         private void UpdatePiecesPosition()
         {
-            var enemiesNewCells = CPUBehavior.ChosenMoves;
-            
-           
+            cellRookTestCpu = CPUBehavior.ChosenMoves;
             //_enemies[enemy.Key] = enemiesNewCells[enemy.Key]; //update the cell of the enemy
-            MovePiece(rookTestCpu,enemiesNewCells);
+            MovePiece(rookTestCpu, CPUBehavior.ChosenMoves);
             
 
             _playerCell = playerController.ChosenMove;
