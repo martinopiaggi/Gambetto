@@ -6,14 +6,15 @@ using Pieces;
 using UnityEngine;
 using UnityEditor;
 using Gambetto.Scripts.Utils;
+using UnityEngine.Serialization;
 
 [CreateAssetMenu(fileName = "RoomLayout", menuName = "ScriptableObjects/RoomLayout")]
 public class RoomLayout : ScriptableObject
 {
-   [SerializeField]
-   private string _description;
+   
+   [SerializeField]private string _topologyDescription;
+   [SerializeField] private string _enemyDescription;
    [SerializeField] private List<Column> rows = new List<Column>();
-   [SerializeField] private List<Position> initialPositions;
 
    [SerializeField]  private Vector2Int exitSide = Directions.North;
    
@@ -38,12 +39,7 @@ public class RoomLayout : ScriptableObject
    {
       return rows[0].GetColumns().Count;
    }
-   public List<Position> GetInitialPositions()
-   {
-      return initialPositions;
-   }
-   
-   
+
    
    [Serializable]
    public class Column

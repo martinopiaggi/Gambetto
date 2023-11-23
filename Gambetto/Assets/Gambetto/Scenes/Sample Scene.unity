@@ -153,7 +153,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerController: {fileID: 1275976313}
-  prefabTest: {fileID: 2952612582261332343, guid: 5b441d7bd4ccf7545aaf540eb3b2a605,
+  prefabTest: {fileID: 2952612582261332343, guid: 1dbd3a4a16968e445b4881f1ee2998e1,
     type: 3}
   pawnTest: {fileID: 0}
   pieceTry: {fileID: 0}
