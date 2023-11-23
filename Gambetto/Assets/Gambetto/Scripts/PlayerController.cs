@@ -57,42 +57,36 @@ namespace Gambetto.Scripts
             _selectedSquare.SetActive(false);
         }
         
-
-        //Now this function suppose that in the grid there are cell with values -1 that resembles the fact that 
-        // are empty
         //static just because now we are reusing it in the CPUBehavior 
         // todo: maybe considering to move to another class 
-        public static List<Cell> GetPossibleMovements(Piece player, Cell currentPosition)
+        public static List<Cell> GetPossibleMovements(Piece piece, Cell currentCell)
         {
             var possibleMovement = new List<Cell>();
             Cell tempCell;
-            var directions = player.PossibleMoves;
-            //todo: si può togliere?
-            if (currentPosition.isEmpty())
-            {
-                //Debug.Log("starting cell is empty");
-                return possibleMovement;
-            }
+            var directions = piece.PossibleMoves;
 
-            switch (player.PieceType)
+            switch (piece.PieceType)
             {
                 case PieceType.Bishop:
                 case PieceType.Queen:
                 case PieceType.Rook:
                     foreach (var direction in directions)
                     {
-                        tempCell = currentPosition;
+                        tempCell = currentCell;
                         while (tempCell?.getNext(direction) != null)
                         {
-                            tempCell = tempCell.getNext(direction);
+                            var nextCell = tempCell.getNext(direction);
+                            if (tempCell.isEmpty() && nextCell.isEmpty()) break;
+                            tempCell = nextCell;
                             possibleMovement.Add(tempCell);
                         }
                     }
                     break;
+                case PieceType.Pawn:
                 case PieceType.King:
                     foreach (var direction in directions)
                     {
-                        tempCell = currentPosition;
+                        tempCell = currentCell;
                         tempCell = tempCell.getNext(direction);
                         if (tempCell != null)
                         {
@@ -100,12 +94,11 @@ namespace Gambetto.Scripts
                         }
                     }
                     break;
-                    
                 case PieceType.Knight:
                     var i = 0;
                     while (i < directions.Count)
                     {
-                        tempCell = currentPosition;
+                        tempCell = currentCell;
                         for (var j = 0; j < 3; j++)
                         {
                             tempCell = tempCell.getNext(directions[i + j]);
@@ -115,18 +108,6 @@ namespace Gambetto.Scripts
                         i = 3 + i;
                         if (tempCell != null) possibleMovement.Add(tempCell);
                     }
-                    break;
-                case PieceType.Pawn:
-                    foreach (var direction in directions)
-                    {
-                        tempCell = currentPosition;
-                        tempCell = tempCell.getNext(direction);
-                        if (tempCell != null)
-                        {
-                            possibleMovement.Add(tempCell);
-                        }
-                    }
-
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
