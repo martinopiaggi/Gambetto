@@ -34,10 +34,11 @@ namespace Gambetto.Scripts
         
         public Cell ChosenMove { get; set; }
 
-        public void StartChoosing(Piece piece, Cell currentPosition)
+        public void StartChoosing(Piece piece, Cell currentCell)
         {
+            ChosenMove = currentCell;
             possibleMovements.Clear();
-            possibleMovements = GetPossibleMovements(piece, currentPosition);
+            possibleMovements = GetPossibleMovements(piece, currentCell);
             StartCoroutine(CycleMoves());
         }
         

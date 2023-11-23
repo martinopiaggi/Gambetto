@@ -14,10 +14,13 @@ namespace Gambetto.Scripts
         private GameObject _roomPrefab;
         private int _lastColor = 1;
         private bool _changed = false;
-        public PlayerController playerController; 
-
+        public PlayerController playerController;
+        public CPUBehavior CPUBehavior; 
+        
         private readonly List<List<Cell>> _grid = new List<List<Cell>>(); //maybe we can remove _grid? (never used)
         private readonly Dictionary<Piece, Cell> _enemies = new Dictionary<Piece, Cell>();
+        private Piece rookTestCpu;
+        private Cell cellRookTestCpu;
         
         [SerializeField] public GameObject prefabPawn;
         [SerializeField] public GameObject prefabBishop;
@@ -37,8 +40,6 @@ namespace Gambetto.Scripts
 
         public void Start()
         {
-            //pawnTest = Instantiate(prefabTest, new Vector3(1,0,1), quaternion.identity);
-            //pieceTry = pawnTest.GetComponent<Piece>();
             GameClock.Instance.ClockTick += OnClockTick;
             GameClock.Instance.StartClock();
         }
@@ -51,40 +52,46 @@ namespace Gambetto.Scripts
         private void OnClockTick(object source,ClockEventArgs args)
         {
             if (!_gridFinished) return;
+            if (CPUBehavior.ChosenMoves == null)
+            {
+                CPUBehavior.ChosenMoves = cellRookTestCpu;
+            }
             if (playerController.ChosenMove == null)
             {
-                //_playerCell = _grid[0][10];
                 playerController.ChosenMove = _playerCell;
             }
             // apply movements from the previous tick
             UpdatePiecesPosition();
             
             // Compute Cpu behaviour and Start the choosing animation for the player
-            ComputeCpuBehaviour(_enemies); //todo: implement cpu behaviour
+            CPUBehavior.StartComputing(rookTestCpu, cellRookTestCpu, _playerCell); //todo for test we are not using _enemies
             playerController.StartChoosing(_playerPiece, _playerCell);
         }
-
-        private void ComputeCpuBehaviour(Dictionary<Piece, Cell> pieces)
-        {
-            //cpu behaviour stuff/
-        }
         
+
         private void UpdatePiecesPosition()
         {
-            // todo: fetch movements from cpubehaviour
-            // for each piece in cpubehaviour move
-            UpdatePlayerPosition();
+            var enemiesNewCells = CPUBehavior.ChosenMoves;
+            
+           
+            //_enemies[enemy.Key] = enemiesNewCells[enemy.Key]; //update the cell of the enemy
+            MovePiece(rookTestCpu,enemiesNewCells);
+            
+
+            _playerCell = playerController.ChosenMove;
+            MovePiece(_playerPiece, _playerCell);
         }
         
-        private void UpdatePlayerPosition()
+        private void MovePiece(Piece piece, Cell nextCell)
         {
-            var nextCellPlayer = playerController.ChosenMove;
-            //At the start of the level the player has not chosen a cell, it remains in the same position
-            if(nextCellPlayer == null) return;
-            _playerCell = nextCellPlayer;
+            if (nextCell == null)
+            {
+                Debug.Log("new cell is null!!");
+                return;
+            }
             var list = new List<Vector3>();
-            list.Add(nextCellPlayer.getGlobalCoordinates());
-            _playerPiece.Move(list);
+            list.Add(nextCell.getGlobalCoordinates());
+            piece.Move(list);
         }
 
         public void CreateGrid(List<RoomLayout> roomLayouts)
@@ -234,7 +241,10 @@ namespace Gambetto.Scripts
                 //todo instantiate enemy based on *type*
                 var pieceObj = Instantiate(prefab, cell.getGlobalCoordinates(), quaternion.identity);
                 pieceObj.GetComponent<MeshRenderer>().material=darkMaterial;
-                _enemies.Add(pieceObj.GetComponent<Piece>(),cell);
+                //todo
+                //_enemies.Add(pieceObj.GetComponent<Piece>(),cell); 
+                rookTestCpu = pieceObj.GetComponent<Piece>();
+                cellRookTestCpu = cell;
             }
         }
 
