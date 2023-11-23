@@ -8,7 +8,16 @@ namespace Gambetto.Scripts
     public class CPUBehavior : MonoBehaviour
     {
         private GameObject _selectedSquare;
+        private Cell _chosenMoves;
 
+        public Cell ChosenMoves
+        {
+            get => _chosenMoves;
+            set => _chosenMoves = value;
+        }
+
+
+        private Cell _playerCell;
         // Start is called before the first frame update
         void Start()
         {
@@ -19,30 +28,36 @@ namespace Gambetto.Scripts
         }
         
         
-        public void StartComputing(Dictionary<Piece, Cell> enemies)
+        public void StartComputing(Piece enemy, Cell enemyCell, Cell playerCell) //todo enemies!
         {
-            foreach (var enemyRef in enemies)
-            {
-                StartCoroutine(ComputeNextMove(enemyRef.Key, enemyRef.Value));
-            }
+            _playerCell = playerCell;
+            //foreach (var enemyRef in enemies)
+            //{
+            StartCoroutine(ComputeNextMove(enemy, enemyCell));
+         //   }
         }
 
         private IEnumerator ComputeNextMove(Piece piece,Cell cell)
         {
             var clockPeriod = GameClock.Instance.ClockPeriod;
             var possibleMovements = PlayerController.GetPossibleMovements(piece, cell);
+            var choosenMove = cell;
+            var minDist = float.MaxValue;
+            
             foreach (var move in possibleMovements)
             {
-                if (_choosing == false) break;
-                _selectedSquare.SetActive(true);
-                _selectedSquare.transform.position = move.getGlobalCoordinates() + new Vector3(0, 0.05f, 0);
-                possibleChoice = move;
-                yield return new WaitForSeconds((clockPeriod / possibleMovements.Count) * 0.9f);
+                var dist = move.getGlobalCoordinates() - _playerCell.getGlobalCoordinates();
+                if (dist.magnitude < minDist)
+                {
+                    minDist = dist.magnitude;
+                    choosenMove = move;
+                }
             }
             
-
-            _selectedSquare.SetActive(false);
             Debug.Log("CPU has chosen");
+            _chosenMoves = choosenMove; //todo now for testing
+            yield return null;
         }
+        
     }
 }
