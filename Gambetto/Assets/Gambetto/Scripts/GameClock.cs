@@ -16,7 +16,7 @@ namespace Gambetto.Scripts
         public static GameClock Instance { get; private set; }
 
 
-        private const float DefaultClockPeriod = 4.0f;
+        private const float DefaultClockPeriod = 2.3f;
         private bool _isRunning;
         private float _clockPeriod = DefaultClockPeriod; // clock period in seconds
         private Thread _clockThread;
