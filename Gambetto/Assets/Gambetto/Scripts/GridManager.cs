@@ -18,7 +18,7 @@ namespace Gambetto.Scripts
         public CPUBehavior CPUBehavior; 
         
         private readonly List<List<Cell>> _grid = new List<List<Cell>>(); //maybe we can remove _grid? (never used)
-        private readonly Dictionary<Piece, Cell> _enemies = new Dictionary<Piece, Cell>();
+        private Dictionary<Piece, Cell> _enemies = new Dictionary<Piece, Cell>();
         private Piece rookTestCpu;
         private Cell cellRookTestCpu;
         
@@ -52,9 +52,12 @@ namespace Gambetto.Scripts
         private void OnClockTick(object source,ClockEventArgs args)
         {
             if (!_gridFinished) return;
-            if (CPUBehavior.ChosenMoves == null)
+            if (CPUBehavior.ChosenMoves.Count != _enemies.Count)
             {
-                CPUBehavior.ChosenMoves = cellRookTestCpu;
+                foreach (var enemy in _enemies)
+                {
+                    CPUBehavior.ChosenMoves[enemy.Key] = enemy.Value;
+                }
             }
             if (playerController.ChosenMove == null)
             {
@@ -64,18 +67,23 @@ namespace Gambetto.Scripts
             UpdatePiecesPosition();
             
             // Compute Cpu behaviour and Start the choosing animation for the player
-            CPUBehavior.StartComputing(rookTestCpu, cellRookTestCpu, _playerCell); //todo for test we are not using _enemies
+            CPUBehavior.StartComputing(_playerCell,_enemies); 
             playerController.StartChoosing(_playerPiece, _playerCell);
         }
         
 
         private void UpdatePiecesPosition()
         {
-            cellRookTestCpu = CPUBehavior.ChosenMoves;
-            //_enemies[enemy.Key] = enemiesNewCells[enemy.Key]; //update the cell of the enemy
-            MovePiece(rookTestCpu, CPUBehavior.ChosenMoves);
+            var temp = new Dictionary<Piece, Cell>(_enemies);
+            foreach (var enemy in _enemies)
+            {
+                var enemiesNewCells = CPUBehavior.ChosenMoves;
+                temp[enemy.Key] = enemiesNewCells[enemy.Key]; //update the cell of the enemy
+                MovePiece(enemy.Key, enemiesNewCells[enemy.Key]);
+            }
+            _enemies.Clear();
+            _enemies = temp;
             
-
             _playerCell = playerController.ChosenMove;
             MovePiece(_playerPiece, _playerCell);
         }
@@ -239,10 +247,7 @@ namespace Gambetto.Scripts
                 //todo instantiate enemy based on *type*
                 var pieceObj = Instantiate(prefab, cell.getGlobalCoordinates(), quaternion.identity);
                 pieceObj.GetComponent<MeshRenderer>().material=darkMaterial;
-                //todo
-                //_enemies.Add(pieceObj.GetComponent<Piece>(),cell); 
-                rookTestCpu = pieceObj.GetComponent<Piece>();
-                cellRookTestCpu = cell;
+                _enemies.Add(pieceObj.GetComponent<Piece>(),cell); 
             }
         }
 
@@ -442,8 +447,7 @@ namespace Gambetto.Scripts
                 }
             }
         }
-    
-    
+
         private void Awake()
         {
             _roomPrefab = Resources.Load<GameObject>("Prefabs/Room");
