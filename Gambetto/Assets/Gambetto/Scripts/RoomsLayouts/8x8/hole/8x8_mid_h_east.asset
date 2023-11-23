@@ -18,13 +18,12 @@ MonoBehaviour:
   - columns: ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
   - columns: 630000000000000000000000000000000000000000000000000000000000000000000000ffffffff
   - columns: 000000000000000000000000000000000000000000000000000000000000000000000000ffffffff
-  - columns: 000000000000000000000000ffffffffffffffffffffffffffffffff0000000001000000ffffffff
   - columns: 000000000000000000000000ffffffffffffffffffffffffffffffff0000000000000000ffffffff
   - columns: 000000000000000000000000ffffffffffffffffffffffffffffffff0000000000000000ffffffff
+  - columns: 000000000000000000000000ffffffffffffffffffffffffffffffff0500000000000000ffffffff
   - columns: 000000000000000000000000ffffffffffffffffffffffffffffffff0000000000000000ffffffff
   - columns: 000000000000000000000000ffffffffffffffffffffffffffffffff0000000000000000ffffffff
   - columns: 000000000000000000000000000000000000000000000000000000000000000000000000ffffffff
   - columns: 000000000000000000000000000000000000000000000000000000000000000000000000ffffffff
   - columns: ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
-  initialPositions: []
   exitSide: {x: 0, y: -1}
