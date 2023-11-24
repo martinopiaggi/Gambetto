@@ -53,7 +53,7 @@ namespace Gambetto.Scripts
             {
                 for (int j = 0; j < gridWidth; j++)
                 {
-                    Vector3 position = new Vector3(i, 0.0f, j);
+                    Vector3 position = new Vector3(i, cubePrefab.transform.position.y, j);
                     matrix[i, j] = 0;
                     if (_layout.GetRows()[i].GetColumns()[j] == -1)
                     {
