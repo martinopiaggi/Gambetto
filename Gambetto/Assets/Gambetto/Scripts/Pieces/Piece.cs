@@ -98,6 +98,11 @@ namespace Gambetto.Scripts.Pieces
                 var direction = destPosition - _tr.position;
                 while (direction != Vector3.zero)
                 {
+                    if (!IsGrounded())
+                    {
+                        GetComponent<Rigidbody>().AddForce(direction.normalized * 10f, ForceMode.Impulse);
+                        break;
+                    }
                     var piecePos = _tr.position;
                     piecePos = Vector3.MoveTowards(piecePos, destPosition, Constants.PieceSpeed);
                     _tr.position = piecePos;
@@ -105,6 +110,10 @@ namespace Gambetto.Scripts.Pieces
                     yield return null;
                 }
             }
+        }
+        private bool IsGrounded()
+        {
+            return Physics.Raycast(transform.position, Vector3.down, 0.1f);
         }
     }
 
