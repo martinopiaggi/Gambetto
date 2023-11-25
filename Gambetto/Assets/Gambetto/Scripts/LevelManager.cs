@@ -9,6 +9,7 @@ public class LevelManager : MonoBehaviour
 {
     public static LevelManager Instance;
     
+    
     public List<RoomLayout> rooms;
     [SerializeField] private GameObject gridManager;
     
@@ -34,9 +35,5 @@ public class LevelManager : MonoBehaviour
         gridManager.GetComponent<GridManager>().CreateGrid(rooms);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    
 }

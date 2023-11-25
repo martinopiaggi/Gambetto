@@ -4,6 +4,7 @@ using Gambetto.Scripts.Pieces;
 using Gambetto.Scripts.Utils;
 using Pieces;
 using Unity.Mathematics;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -19,6 +20,7 @@ namespace Gambetto.Scripts
 
         private readonly List<List<Cell>> _grid = new List<List<Cell>>(); //maybe we can remove _grid? (never used)
         private Dictionary<Piece, Cell> _enemies = new Dictionary<Piece, Cell>();
+        private Dictionary<Piece, Cell> _initialEnemiesPositions = new Dictionary<Piece, Cell>();
         private Piece rookTestCpu;
         private Cell cellRookTestCpu;
 
@@ -31,9 +33,12 @@ namespace Gambetto.Scripts
         public Material lightMaterial;
         public Material darkMaterial;
 
+        public bool isDead = false;
+        
         private GameObject _spawnGameObject;
 
         private Cell _playerCell = null;
+        private Cell _initialplayerCell = null;
         private Piece _playerPiece = null;
 
         private bool _gridFinished = false;
@@ -64,28 +69,58 @@ namespace Gambetto.Scripts
             {
                 playerController.ChosenMove = _playerCell;
             }
-
-            // apply movements from the previous tick
-            UpdatePiecesPosition();
-
+            
             // Compute Cpu behaviour and Start the choosing animation for the player
-            CPUBehavior.StartComputing(_playerCell, _enemies);
-            playerController.StartChoosing(_playerPiece, _playerCell);
+            if (!isDead) UpdatePiecesPosition();  // apply movements from the previous tick
+                
+            if (_playerCell.isEmpty()) {
+                isDead = true;
+                GameClock.Instance.StopClock();
+                StartCoroutine(restartLevel());
+            }
+                
+            if (!isDead){
+                CPUBehavior.StartComputing(_playerCell, _enemies);
+                playerController.StartChoosing(_playerPiece, _playerCell);
+            }
         }
 
 
-        private void UpdatePiecesPosition()
+        private IEnumerator restartLevel()
         {
-            var temp = new Dictionary<Piece, Cell>(_enemies);
+            _enemies.Clear();
+            _enemies = new Dictionary<Piece, Cell>(_initialEnemiesPositions);
+            
+            _playerCell = _initialplayerCell;
+            playerController.ChosenMove = null;
+            CPUBehavior.ChosenMoves.Clear();
+            
+            yield return new WaitForSeconds(2.5f);
+            
             foreach (var enemy in _enemies)
             {
-                var enemiesNewCells = CPUBehavior.ChosenMoves;
-                temp[enemy.Key] = enemiesNewCells[enemy.Key]; //update the cell of the enemy
-                MovePiece(enemy.Key, enemiesNewCells[enemy.Key]);
+                MovePiece(enemy.Key,enemy.Value);
             }
+            
+            //MovePiece(_playerPiece, _playerCell);
+            Destroy(_playerPiece.gameObject);
+            var playerObj = Instantiate(prefabPawn, _playerCell.getGlobalCoordinates(), quaternion.identity);
+            playerObj.GetComponent<MeshRenderer>().material = lightMaterial;
+            _playerPiece = playerObj.GetComponent<Piece>();
+            
+            
+            GameClock.Instance.StartClock();
+            isDead = false;
+        }
 
-            _enemies.Clear();
-            _enemies = temp;
+        private void UpdatePiecesPosition()
+        {
+            _enemies = new Dictionary<Piece, Cell>(CPUBehavior.ChosenMoves);
+            
+            foreach (var enemy in _enemies)
+            {
+                MovePiece(enemy.Key, _enemies[enemy.Key]);
+            }
 
             _playerCell = playerController.ChosenMove;
             MovePiece(_playerPiece, _playerCell);
@@ -222,6 +257,7 @@ namespace Gambetto.Scripts
             if (type == 99) //it's the player
             {
                 _playerCell = cell;
+                _initialplayerCell = cell;
                 var playerObj = Instantiate(prefabPawn, cell.getGlobalCoordinates(), quaternion.identity);
                 playerObj.GetComponent<MeshRenderer>().material = lightMaterial;
                 _playerPiece = playerObj.GetComponent<Piece>();
@@ -255,6 +291,7 @@ namespace Gambetto.Scripts
                 var pieceObj = Instantiate(prefab, cell.getGlobalCoordinates(), quaternion.identity);
                 pieceObj.GetComponent<MeshRenderer>().material = darkMaterial;
                 _enemies.Add(pieceObj.GetComponent<Piece>(), cell);
+                _initialEnemiesPositions.Add(pieceObj.GetComponent<Piece>(), cell);
             }
         }
 
