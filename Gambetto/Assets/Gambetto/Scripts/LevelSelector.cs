@@ -4,53 +4,57 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class LevelSelector : MonoBehaviour
+namespace Gambetto.Scripts
 {
-    // Start is called before the first frame update
-
-    public static LevelSelector Instance;
-
-    public int currentLevel;
-
-    //boolean list to keep track of completed levels
-    private bool[] completedLevels = new bool[10];
-    
-    
-    
-    //awake method makes sure that LevelSelector is not destroyed
-    private void Awake()
+    public class LevelSelector : MonoBehaviour
     {
-        if (Instance == null)
+        // Start is called before the first frame update
+
+        public static LevelSelector Instance;
+
+        public int currentLevel;
+
+        //boolean list to keep track of completed levels
+        private bool[] completedLevels = new bool[10];
+    
+    
+    
+        //awake method makes sure that LevelSelector is not destroyed
+        private void Awake()
         {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
+            if (Instance == null)
+            {
+                Instance = this;
+                DontDestroyOnLoad(gameObject);
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
         }
-        else
+
+        public void LoadLevel1()
         {
-            Destroy(gameObject);
+            currentLevel = 1;
+            SceneManager.LoadScene("Sample Scene");
         }
-    }
-
-    public void LoadLevel1()
-    {
-        currentLevel = 1;
-        SceneManager.LoadScene("Sample Scene");
-    }
     
     
-    //method used by the back button
-    public void backToMainMenu()
-    {
-        SceneManager.LoadScene("MainMenu");
-    }
-    void Start()
-    {
+        //method used by the back button
+        public void BackToMainMenu()
+        {
+            SceneManager.LoadScene("MainMenu");
+        }
+        void Start()
+        {
         
-    }
+        }
 
-    // Update is called once per frame
-    void Update()
-    {
+        // Update is called once per frame
+        void Update()
+        {
         
+        }
     }
 }
+

@@ -12,7 +12,7 @@ namespace Gambetto.Scripts
         private List<Cell> _possibleMovements;
         private Cell _possibleChoice;
         private GameObject _selectedSquare;
-        
+
         private bool _choosing;
 
         private void Start()
@@ -21,17 +21,19 @@ namespace Gambetto.Scripts
             //In start I create the light used to illuminate the grid
             _selectedSquare = Instantiate(selectedSquarePrefab);
             _selectedSquare.SetActive(false);
-            
+
             _possibleMovements = new List<Cell>();
         }
 
         private void Update()
         {
-            if (!Input.GetKeyDown(KeyCode.Space) || !_choosing) return;
+            if (!Input.GetKeyDown(KeyCode.Space) || !_choosing)
+                return;
             ChosenMove = _possibleChoice;
             _choosing = false;
+            Debug.Log("Ciao");
         }
-        
+
         public Cell ChosenMove { get; set; }
 
         public void StartChoosing(Piece piece, Cell currentCell)
@@ -41,24 +43,26 @@ namespace Gambetto.Scripts
             _possibleMovements = GetPossibleMovements(piece, currentCell);
             StartCoroutine(CycleMoves());
         }
-        
+
         private IEnumerator CycleMoves()
         {
             var clockPeriod = GameClock.Instance.ClockPeriod;
             _choosing = true;
             foreach (var move in _possibleMovements)
             {
-                if(_choosing == false) break;
+                if (_choosing == false)
+                    break;
                 _selectedSquare.SetActive(true);
-                _selectedSquare.transform.position = move.getGlobalCoordinates() + new Vector3(0, 0.05f, 0);
+                _selectedSquare.transform.position =
+                    move.getGlobalCoordinates() + new Vector3(0, 0.05f, 0);
                 _possibleChoice = move;
-                yield return new WaitForSeconds((clockPeriod/_possibleMovements.Count)*0.9f); 
+                yield return new WaitForSeconds((clockPeriod / _possibleMovements.Count) * 0.9f);
             }
             _selectedSquare.SetActive(false);
         }
-        
-        //static just because now we are reusing it in the CPUBehavior 
-        // todo: maybe considering to move to another class 
+
+        //static just because now we are reusing it in the CPUBehavior
+        // todo: maybe considering to move to another class
         public static List<Cell> GetPossibleMovements(Piece piece, Cell currentCell)
         {
             var possibleMovement = new List<Cell>();
@@ -76,7 +80,8 @@ namespace Gambetto.Scripts
                         while (tempCell?.getNext(direction) != null)
                         {
                             var nextCell = tempCell.getNext(direction);
-                            if (tempCell.isEmpty() && nextCell.isEmpty()) break;
+                            if (tempCell.isEmpty() && nextCell.isEmpty())
+                                break;
                             tempCell = nextCell;
                             possibleMovement.Add(tempCell);
                         }
@@ -102,11 +107,13 @@ namespace Gambetto.Scripts
                         for (var j = 0; j < 3; j++)
                         {
                             tempCell = tempCell.getNext(directions[i + j]);
-                            if (tempCell == null) break;
+                            if (tempCell == null)
+                                break;
                         }
 
                         i = 3 + i;
-                        if (tempCell != null) possibleMovement.Add(tempCell);
+                        if (tempCell != null)
+                            possibleMovement.Add(tempCell);
                     }
                     break;
                 default:
