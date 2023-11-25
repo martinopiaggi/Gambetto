@@ -1,9 +1,13 @@
 using System;
 using UnityEngine;
 
-public class AudioManager : MonoBehaviour
+namespace Gambetto.Scripts
+{
+    public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance;
+
+    public float music = 0.5f, sfx = 0.5f;
     
     [Header("---- Audio Source ----")]
     [SerializeField] AudioSource musicSource;
@@ -18,11 +22,27 @@ public class AudioManager : MonoBehaviour
     public AudioClip pawnMovement;
 
     
-    //start method to play background music in menu
+    //start method to play background music in menu and to load player volumes previously set
     public void Start()
     {
+        //load floats
+        try
+        {
+            music = PlayerPrefs.GetFloat("MusicVolume");
+            sfx = PlayerPrefs.GetFloat("SFXVolume");
+        }
+        catch (Exception e)
+        {
+            Debug.Log(e);
+            throw;
+        }
+        //set values
+        EditMusicVolume(music);
+        EditSfxVolume(sfx);
+        //play background music
         musicSource.clip = menuBackground;
         musicSource.Play();
+        
     }
 
     //awake method makes sure that AudioManager is not destroyed
@@ -54,14 +74,22 @@ public class AudioManager : MonoBehaviour
     }
     
     //method used to change music volume
-    public void MusicVolume(float volume)
+    public void EditMusicVolume(float volume)
     {
+        music = volume;
         musicSource.volume = volume;
+        //save value into PlayerPrefs
+        PlayerPrefs.SetFloat("MusicVolume", music);
     }
     
     //method used to change sfx volume
-    public void SfxVolume(float volume)
+    public void EditSfxVolume(float volume)
     {
+        sfx = volume;
         sfxSource.volume = volume;
+        //save value into PlayerPrefs
+        PlayerPrefs.SetFloat("SFXVolume", sfx);
     }
+}
+
 }
