@@ -80,7 +80,7 @@ namespace Gambetto.Scripts
                         while (tempCell?.getNext(direction) != null)
                         {
                             var nextCell = tempCell.getNext(direction);
-                            if (tempCell.isEmpty() && nextCell.isEmpty())
+                            if (tempCell.isEmpty())
                                 break;
                             tempCell = nextCell;
                             possibleMovement.Add(tempCell);
