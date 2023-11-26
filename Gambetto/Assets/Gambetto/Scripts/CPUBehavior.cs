@@ -30,7 +30,7 @@ namespace Gambetto.Scripts
 
         public void StartComputing(Cell playerCell, Dictionary<Piece, Cell> enemies) //todo enemies!
         {
-            if (_computingCoroutine != null)
+               if (_computingCoroutine != null)
                 StopCoroutine(_computingCoroutine);
 
             _computingCoroutine = StartCoroutine(ComputingCoroutine(playerCell, enemies));

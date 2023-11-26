@@ -16,7 +16,7 @@ namespace Gambetto.Scripts
     {
         public static GameClock Instance { get; private set; }
 
-        private const float DefaultClockPeriod = 2.3f;
+        private const float DefaultClockPeriod = 5f;
         private bool _isRunning;
         private float _clockPeriod = DefaultClockPeriod; // clock period in seconds
         private Thread _clockThread;
@@ -62,9 +62,9 @@ namespace Gambetto.Scripts
         
         public void ForceClockTick()
         {
+            Debug.Log("game clock forced to tick");
             StopCoroutine(_clockCoroutine);
-            MakeClockTick();
-            StartCoroutine(ClockRoutine());
+            _clockCoroutine = StartCoroutine(ClockRoutine());
         }
         
         /// <summary>
@@ -74,6 +74,7 @@ namespace Gambetto.Scripts
         {
             _currentTick = 0;
             _isRunning = false;
+            StopCoroutine(_clockCoroutine);
         }
 
         /// <summary>
@@ -110,7 +111,7 @@ namespace Gambetto.Scripts
                         "currentTick = " + _currentTick,
                         Color.white,
                         Debugger.Position.UpperRight,
-                        printConsole: false
+                        printConsole: true
                     );
         }
     }
