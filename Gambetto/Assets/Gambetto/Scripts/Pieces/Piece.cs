@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Gambetto.Scripts.Utils;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.Serialization;
 using Utils;
 
@@ -25,7 +26,9 @@ namespace Gambetto.Scripts.Pieces
         private protected Constants.PieceCountdown countdownStartValue;
         private Transform _tr;
         private Rigidbody _rb;
-        private protected Mesh _mesh;
+
+        private Coroutine _moveCoroutine;
+        private List<Vector3> _oldPositions;
 
         public PieceRole PieceRole
         {
@@ -87,7 +90,6 @@ namespace Gambetto.Scripts.Pieces
         private protected void Awake()
         {
             _tr = GetComponent<Transform>();
-            _mesh = GetComponent<MeshFilter>().mesh;
             _rb = GetComponent<Rigidbody>();
         }
 
@@ -100,7 +102,13 @@ namespace Gambetto.Scripts.Pieces
          */
         public void Move(List<Vector3> positions, bool gravity = true)
         {
-            StartCoroutine(MoveCoroutine(positions, gravity));
+            if (_moveCoroutine != null)
+            { // if a piece is still moving, stop it and force the position
+                StopCoroutine(_moveCoroutine);
+                _tr.position = _oldPositions[_oldPositions.Count - 1];
+            }
+            _oldPositions = positions;
+            _moveCoroutine = StartCoroutine(MoveCoroutine(positions, gravity));
             //AudioManager.Instance.PlaySfx(AudioManager.Instance.pawnMovement);
         }
 
