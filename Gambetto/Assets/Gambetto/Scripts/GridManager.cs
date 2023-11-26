@@ -113,7 +113,7 @@ namespace Gambetto.Scripts
 
             foreach (var enemy in _enemies)
             {
-                MovePiece(enemy.Key, enemy.Value, true);
+                MovePiece(enemy.Key, enemy.Value, false);
             }
 
             //MovePiece(_playerPiece, _playerCell);
@@ -143,14 +143,14 @@ namespace Gambetto.Scripts
             MovePiece(_playerPiece, _playerCell);
         }
 
-        private void MovePiece(Piece piece, Cell nextCell, bool noGravity = false)
+        private void MovePiece(Piece piece, Cell nextCell, bool gravity = true)
         {
             //todo: nextCell should be null when the piece isn't moving this is a temporary fix
             if (nextCell.getGlobalCoordinates() == piece.transform.position)
                 return;
             var list = new List<Vector3>();
             list.Add(nextCell.getGlobalCoordinates());
-            piece.Move(list, noGravity);
+            piece.Move(list, gravity);
         }
 
         public void CreateGrid(List<RoomLayout> roomLayouts)
