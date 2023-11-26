@@ -71,8 +71,8 @@ namespace Utils
         public static readonly List<Vector2Int> BishopPossibleMoves = new List<Vector2Int>
         {
             new Vector2Int(1, 1),
-            new Vector2Int(-1, -1),
             new Vector2Int(1, -1),
+            new Vector2Int(-1, -1),
             new Vector2Int(-1, 1)
         };
         
