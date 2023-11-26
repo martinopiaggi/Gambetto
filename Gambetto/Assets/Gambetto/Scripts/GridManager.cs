@@ -21,8 +21,6 @@ namespace Gambetto.Scripts
         private readonly List<List<Cell>> _grid = new List<List<Cell>>(); //maybe we can remove _grid? (never used)
         private Dictionary<Piece, Cell> _enemies = new Dictionary<Piece, Cell>();
         private Dictionary<Piece, Cell> _initialEnemiesPositions = new Dictionary<Piece, Cell>();
-        private Piece rookTestCpu;
-        private Cell cellRookTestCpu;
 
         [SerializeField]
         public GameObject prefabPawn;
@@ -146,7 +144,7 @@ namespace Gambetto.Scripts
         private void MovePiece(Piece piece, Cell nextCell, bool gravity = true)
         {
             //todo: this is a temporary fix pieces should always be in correct position
-            if (Vector3.Distance(nextCell.getGlobalCoordinates(),piece.transform.position) < 0.1f)
+            if (Vector3.Distance(nextCell.getGlobalCoordinates(), piece.transform.position) < 0.1f)
                 return;
             var list = new List<Vector3>();
             list.Add(nextCell.getGlobalCoordinates());
@@ -314,7 +312,7 @@ namespace Gambetto.Scripts
                 _playerCell = cell;
                 _initialplayerCell = cell;
                 var playerObj = Instantiate(
-                    prefabBishop,
+                    prefabPawn,
                     cell.getGlobalCoordinates(),
                     quaternion.identity
                 );
@@ -354,7 +352,8 @@ namespace Gambetto.Scripts
                     quaternion.identity
                 );
                 pieceObj.GetComponent<MeshRenderer>().material = darkMaterial;
-                pieceObj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
+                pieceObj.GetComponent<Rigidbody>().constraints =
+                    RigidbodyConstraints.FreezeRotation;
                 _enemies.Add(pieceObj.GetComponent<Piece>(), cell);
                 _initialEnemiesPositions.Add(pieceObj.GetComponent<Piece>(), cell);
             }

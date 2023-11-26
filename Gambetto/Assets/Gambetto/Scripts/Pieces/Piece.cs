@@ -139,8 +139,6 @@ namespace Gambetto.Scripts.Pieces
                     yield return null;
                 }
             }
-            // if (GameClock.Instance != null && PieceRole.Equals(PieceRole.Player))
-            //     GameClock.Instance.ForceClockTick();
         }
 
         private bool IsGrounded()
