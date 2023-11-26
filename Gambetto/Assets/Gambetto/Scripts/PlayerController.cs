@@ -12,6 +12,7 @@ namespace Gambetto.Scripts
         private List<Cell> _possibleMovements;
         private Cell _possibleChoice;
         private GameObject _selectedSquare;
+        private Coroutine _cycleMovesCoroutine;
 
         private bool _choosing;
 
@@ -31,17 +32,20 @@ namespace Gambetto.Scripts
                 return;
             ChosenMove = _possibleChoice;
             _choosing = false;
-            Debug.Log("Ciao");
+            GameClock.Instance.ForceClockTick();
         }
 
         public Cell ChosenMove { get; set; }
 
         public void StartChoosing(Piece piece, Cell currentCell)
         {
+            if (_cycleMovesCoroutine != null)
+                StopCoroutine(_cycleMovesCoroutine);
+
             ChosenMove = currentCell;
             _possibleMovements.Clear();
             _possibleMovements = GetPossibleMovements(piece, currentCell);
-            StartCoroutine(CycleMoves());
+            _cycleMovesCoroutine = StartCoroutine(CycleMoves());
         }
 
         private IEnumerator CycleMoves()
