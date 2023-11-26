@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Gambetto.Scripts.Utils;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Utils;
 
 namespace Gambetto.Scripts.Pieces
@@ -26,7 +27,11 @@ namespace Gambetto.Scripts.Pieces
         private Rigidbody _rb;
         private protected Mesh _mesh;
 
-        public PieceRole PieceRole => pieceRole;
+        public PieceRole PieceRole
+        {
+            get => pieceRole;
+            set => pieceRole = value;
+        }
         public PieceType PieceType => _pieceType;
 
         /// <summary>
@@ -101,32 +106,41 @@ namespace Gambetto.Scripts.Pieces
 
         private IEnumerator MoveCoroutine(IList<Vector3> positions, bool gravity = true)
         {
-            if (!gravity)
-                _rb.useGravity = false;
+            _rb.useGravity = gravity; // enable/disable gravity
+
             foreach (var destPosition in positions)
             {
-                yield return new WaitForSeconds(0.1f);
                 var text = "moving piece to " + destPosition;
                 if (Debugger.Instance != null)
                     Debugger.Instance.Show(text, printConsole: false);
+
                 var direction = destPosition - _tr.position;
                 while (direction != Vector3.zero)
                 {
                     if (!IsGrounded() && gravity)
                     {
+                        // if piece is not grounded and is affected by gravity, add a force to it like it was falling
                         var boost = 2f;
-                        if (Random.Range(0f,1f) > 0.9) boost = 10f;
-                        _rb.AddForce(direction.normalized*boost, ForceMode.Impulse);
+                        if (Random.Range(0f, 1f) > 0.9)
+                            boost = 10f; // easter egg :)
+
+                        _rb.AddForce(direction.normalized * boost, ForceMode.Impulse);
                         break;
                     }
+
                     var piecePos = _tr.position;
-                    piecePos = Vector3.MoveTowards(piecePos, destPosition, Constants.PieceSpeed * Time.deltaTime);
+                    piecePos = Vector3.MoveTowards(
+                        piecePos,
+                        destPosition,
+                        Constants.PieceSpeed * Time.deltaTime
+                    );
                     _tr.position = piecePos;
                     direction = destPosition - piecePos;
                     yield return null;
                 }
             }
-            _rb.useGravity = true;
+            // if (GameClock.Instance != null && PieceRole.Equals(PieceRole.Player))
+            //     GameClock.Instance.ForceClockTick();
         }
 
         private bool IsGrounded()

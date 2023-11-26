@@ -11,21 +11,23 @@ namespace Gambetto.Scripts
     {
         public int CurrentTick { get; set; }
     }
+
     public class GameClock : MonoBehaviour
     {
         public static GameClock Instance { get; private set; }
-
 
         private const float DefaultClockPeriod = 2.3f;
         private bool _isRunning;
         private float _clockPeriod = DefaultClockPeriod; // clock period in seconds
         private Thread _clockThread;
+        private int _currentTick;
+        private Coroutine _clockCoroutine;
 
         // Defines event delegate (signature of the method that will be called by the event)
         public delegate void ClockTickEventHandler(object sender, ClockEventArgs args);
 
         public event ClockTickEventHandler ClockTick;
-        
+
         private void Awake()
         {
             if (Instance == null)
@@ -55,29 +57,22 @@ namespace Gambetto.Scripts
 
             _clockPeriod = clockPeriod;
             _isRunning = true;
+            _clockCoroutine = StartCoroutine(ClockRoutine());
+        }
+        
+        public void ForceClockTick()
+        {
+            StopCoroutine(_clockCoroutine);
+            MakeClockTick();
             StartCoroutine(ClockRoutine());
         }
-        
-        private IEnumerator ClockRoutine()
-        {
-            var i = 0;
-            while (_isRunning)
-            {
-                OnClockTick(new ClockEventArgs() { CurrentTick = i });
-                i++;
-                var text = "currentTick = " + i;
-                if (Debugger.Instance != null)
-                    Debugger.Instance.Show(text, Color.white, Debugger.Position.UpperRight,printConsole: false);
-                yield return new WaitForSeconds(_clockPeriod);
-            }
-        }
-        
         
         /// <summary>
         /// Stops the clock thread.
         /// </summary>
         public void StopClock()
         {
+            _currentTick = 0;
             _isRunning = false;
         }
 
@@ -90,12 +85,33 @@ namespace Gambetto.Scripts
             _clockPeriod = clockPeriod;
         }
 
-        
-
         private void OnClockTick(ClockEventArgs e)
         {
             ClockTick?.Invoke(null, e);
         }
+        
+        private IEnumerator ClockRoutine()
+        {
+            while (_isRunning)
+            {
+                MakeClockTick();
+                yield return new WaitForSeconds(_clockPeriod);
+            }
+        }
+        
+        private void MakeClockTick()
+        {
+            OnClockTick(new ClockEventArgs() { CurrentTick = _currentTick });
+            _currentTick++;
+            if (Debugger.Instance != null)
+                Debugger
+                    .Instance
+                    .Show(
+                        "currentTick = " + _currentTick,
+                        Color.white,
+                        Debugger.Position.UpperRight,
+                        printConsole: false
+                    );
+        }
     }
-    
 }
