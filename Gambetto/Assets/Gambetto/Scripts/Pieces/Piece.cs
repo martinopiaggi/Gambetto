@@ -91,16 +91,17 @@ namespace Gambetto.Scripts.Pieces
          * Moves the piece smoothly following a given list of positions when <see cref="Countdown"/> reaches <see cref="Constants.MinPieceCountdown"/>.
          * </summary>
          * <param name="positions">The list of positions to follow</param>
+         * <param name="gravity">Whether the piece should be affected by gravity or not</param>
          */
-        public void Move(List<Vector3> positions, bool noGravity = false)
+        public void Move(List<Vector3> positions, bool gravity = true)
         {
-            StartCoroutine(MoveCoroutine(positions, noGravity));
+            StartCoroutine(MoveCoroutine(positions, gravity));
             //AudioManager.Instance.PlaySfx(AudioManager.Instance.pawnMovement);
         }
 
-        private IEnumerator MoveCoroutine(IList<Vector3> positions, bool noGravity = false)
+        private IEnumerator MoveCoroutine(IList<Vector3> positions, bool gravity = true)
         {
-            if (noGravity)
+            if (!gravity)
                 _rb.useGravity = false;
             foreach (var destPosition in positions)
             {
@@ -111,7 +112,7 @@ namespace Gambetto.Scripts.Pieces
                 var direction = destPosition - _tr.position;
                 while (direction != Vector3.zero)
                 {
-                    if (!IsGrounded() && !noGravity)
+                    if (!IsGrounded() && gravity)
                     {
                         var boost = 2f;
                         if (Random.Range(0f,1f) > 0.9) boost = 10f;
