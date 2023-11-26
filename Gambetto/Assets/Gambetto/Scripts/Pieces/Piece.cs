@@ -120,7 +120,7 @@ namespace Gambetto.Scripts.Pieces
                         break;
                     }
                     var piecePos = _tr.position;
-                    piecePos = Vector3.MoveTowards(piecePos, destPosition, Constants.PieceSpeed);
+                    piecePos = Vector3.MoveTowards(piecePos, destPosition, Constants.PieceSpeed * Time.deltaTime);
                     _tr.position = piecePos;
                     direction = destPosition - piecePos;
                     yield return null;
