@@ -9,14 +9,21 @@ namespace Gambetto.Scripts.Pieces
     public abstract class Piece : MonoBehaviour
     {
         private protected PieceType _pieceType;
-        [SerializeField] private protected PieceRole pieceRole;
-        [SerializeField] private protected List<Vector2Int> possibleMoves;
 
-        [Range(Constants.MinPieceCountdown, Constants.MaxPieceCountdown)] [SerializeField]
+        [SerializeField]
+        private protected PieceRole pieceRole;
+
+        [SerializeField]
+        private protected List<Vector2Int> possibleMoves;
+
+        [Range(Constants.MinPieceCountdown, Constants.MaxPieceCountdown)]
+        [SerializeField]
         private protected int countdown;
 
-        [SerializeField] private protected Constants.PieceCountdown countdownStartValue;
+        [SerializeField]
+        private protected Constants.PieceCountdown countdownStartValue;
         private Transform _tr;
+        private Rigidbody _rb;
         private protected Mesh _mesh;
 
         public PieceRole PieceRole => pieceRole;
@@ -42,11 +49,15 @@ namespace Gambetto.Scripts.Pieces
                 switch (value)
                 {
                     case < Constants.MinPieceCountdown:
-                        Debug.LogError("Piece countdown cannot be less than " + Constants.MinPieceCountdown);
+                        Debug.LogError(
+                            "Piece countdown cannot be less than " + Constants.MinPieceCountdown
+                        );
                         countdown = Constants.MinPieceCountdown;
                         break;
                     case > Constants.MaxPieceCountdown:
-                        Debug.LogError("Piece countdown cannot be more than " + Constants.MaxPieceCountdown);
+                        Debug.LogError(
+                            "Piece countdown cannot be more than " + Constants.MaxPieceCountdown
+                        );
                         countdown = Constants.MaxPieceCountdown;
                         break;
                     default:
@@ -65,7 +76,6 @@ namespace Gambetto.Scripts.Pieces
             set => countdownStartValue = value;
         }
 
-        
         ///<summary>
         ///  <para> On Awake, sets the references to the Transform and Mesh components.</para>
         /// </summary>
@@ -73,22 +83,25 @@ namespace Gambetto.Scripts.Pieces
         {
             _tr = GetComponent<Transform>();
             _mesh = GetComponent<MeshFilter>().mesh;
+            _rb = GetComponent<Rigidbody>();
         }
 
         /**
          * <summary>
-         * Moves the piece smoothly following a given list of positions when <see cref="Countdown"/> reaches <see cref="Constants.MinPieceCountdown"/>. 
+         * Moves the piece smoothly following a given list of positions when <see cref="Countdown"/> reaches <see cref="Constants.MinPieceCountdown"/>.
          * </summary>
          * <param name="positions">The list of positions to follow</param>
          */
-        public void Move(List<Vector3> positions)
+        public void Move(List<Vector3> positions, bool noGravity = false)
         {
-            StartCoroutine(MoveCoroutine(positions));
+            StartCoroutine(MoveCoroutine(positions, noGravity));
             //AudioManager.Instance.PlaySfx(AudioManager.Instance.pawnMovement);
         }
 
-        private IEnumerator MoveCoroutine(IList<Vector3> positions)
+        private IEnumerator MoveCoroutine(IList<Vector3> positions, bool noGravity = false)
         {
+            if (noGravity)
+                _rb.useGravity = false;
             foreach (var destPosition in positions)
             {
                 yield return new WaitForSeconds(0.1f);
@@ -98,9 +111,11 @@ namespace Gambetto.Scripts.Pieces
                 var direction = destPosition - _tr.position;
                 while (direction != Vector3.zero)
                 {
-                    if (!IsGrounded())
+                    if (!IsGrounded() && !noGravity)
                     {
-                        GetComponent<Rigidbody>().AddForce(direction.normalized * 10f, ForceMode.Impulse);
+                        var boost = 2f;
+                        if (Random.Range(0f,1f) > 0.9) boost = 10f;
+                        _rb.AddForce(direction.normalized*boost, ForceMode.Impulse);
                         break;
                     }
                     var piecePos = _tr.position;
@@ -110,10 +125,12 @@ namespace Gambetto.Scripts.Pieces
                     yield return null;
                 }
             }
+            _rb.useGravity = true;
         }
+
         private bool IsGrounded()
         {
-            return Physics.Raycast(transform.position, Vector3.down, 0.1f);
+            return Physics.Raycast(transform.position, Vector3.down, 10.0f);
         }
     }
 
