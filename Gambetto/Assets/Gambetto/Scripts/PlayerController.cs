@@ -13,13 +13,15 @@ namespace Gambetto.Scripts
         private Cell _possibleChoice;
         private GameObject _selectedSquare;
         private Coroutine _cycleMovesCoroutine;
+        private Vector3 _lastDirection;
 
         private bool _choosing;
+        private Cell _currentCell; // TODD: no need to pass it to methods
 
         private void Start()
         {
             var selectedSquarePrefab = Resources.Load<GameObject>("Prefabs/Square");
-            //In start I create the light used to illuminate the grid
+            // In start I create the light used to illuminate the grid
             _selectedSquare = Instantiate(selectedSquarePrefab);
             _selectedSquare.SetActive(false);
 
@@ -28,11 +30,14 @@ namespace Gambetto.Scripts
 
         private void Update()
         {
-            if (!Input.GetKeyDown(KeyCode.Space) || !_choosing)
-                return;
-            ChosenMove = _possibleChoice;
-            _choosing = false;
-            GameClock.Instance.ForceClockTick();
+            if (Input.GetKeyDown(KeyCode.Space) && _choosing)
+            {
+                ChosenMove = _possibleChoice;
+                _lastDirection =
+                    ChosenMove.getGlobalCoordinates() - _currentCell.getGlobalCoordinates();
+                _choosing = false;
+                GameClock.Instance.ForceClockTick();
+            }
         }
 
         public Cell ChosenMove { get; set; }
@@ -42,7 +47,8 @@ namespace Gambetto.Scripts
             if (_cycleMovesCoroutine != null)
                 StopCoroutine(_cycleMovesCoroutine);
 
-            ChosenMove = currentCell;
+            _currentCell = currentCell;
+            ChosenMove = _currentCell;
             _possibleMovements.Clear();
             _possibleMovements = GetPossibleMovements(piece, currentCell);
             _cycleMovesCoroutine = StartCoroutine(CycleMoves());
@@ -52,15 +58,28 @@ namespace Gambetto.Scripts
         {
             var clockPeriod = GameClock.Instance.ClockPeriod;
             _choosing = true;
-            foreach (var move in _possibleMovements)
+            // find the index of the first move in the direction of the last move
+            var firstMove = _possibleMovements.FindIndex(
+                cell =>
+                    (cell.getGlobalCoordinates() - _currentCell.getGlobalCoordinates())
+                    == _lastDirection
+            );
+
+            var i = firstMove == -1 ? 0 : firstMove;
+            var j = 0;
+            // start the cycle from the first move in the direction of the last move
+            while (j < _possibleMovements.Count)
             {
+                var move = _possibleMovements[i];
                 if (_choosing == false)
                     break;
                 _selectedSquare.SetActive(true);
                 _selectedSquare.transform.position =
                     move.getGlobalCoordinates() + new Vector3(0, 0.05f, 0);
                 _possibleChoice = move;
-                yield return new WaitForSeconds((clockPeriod / _possibleMovements.Count) * 0.9f);
+                yield return new WaitForSeconds((clockPeriod / _possibleMovements.Count));
+                i = (i + 1) % _possibleMovements.Count;
+                j++;
             }
             _selectedSquare.SetActive(false);
         }

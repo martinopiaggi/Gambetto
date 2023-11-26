@@ -107,7 +107,7 @@ namespace Gambetto.Scripts
             playerController.ChosenMove = null;
             CPUBehavior.ChosenMoves.Clear();
 
-            yield return new WaitForSeconds(2.5f);
+            yield return new WaitForSeconds(GameClock.Instance.ClockPeriod + 0.5f);
 
             foreach (var enemy in _enemies)
             {
@@ -312,7 +312,7 @@ namespace Gambetto.Scripts
                 _playerCell = cell;
                 _initialplayerCell = cell;
                 var playerObj = Instantiate(
-                    prefabPawn,
+                    prefabBishop,
                     cell.getGlobalCoordinates(),
                     quaternion.identity
                 );
