@@ -125,7 +125,7 @@ namespace Gambetto.Scripts
             );
             playerObj.GetComponent<MeshRenderer>().material = lightMaterial;
             _playerPiece = playerObj.GetComponent<Piece>();
-
+            _playerPiece.PieceRole = PieceRole.Player;
             GameClock.Instance.StartClock();
             isDead = false;
         }
@@ -145,8 +145,8 @@ namespace Gambetto.Scripts
 
         private void MovePiece(Piece piece, Cell nextCell, bool gravity = true)
         {
-            //todo: nextCell should be null when the piece isn't moving this is a temporary fix
-            if (nextCell.getGlobalCoordinates() == piece.transform.position)
+            //todo: this is a temporary fix pieces should always be in correct position
+            if (Vector3.Distance(nextCell.getGlobalCoordinates(),piece.transform.position) < 0.1f)
                 return;
             var list = new List<Vector3>();
             list.Add(nextCell.getGlobalCoordinates());
@@ -320,6 +320,7 @@ namespace Gambetto.Scripts
                 );
                 playerObj.GetComponent<MeshRenderer>().material = lightMaterial;
                 _playerPiece = playerObj.GetComponent<Piece>();
+                _playerPiece.PieceRole = PieceRole.Player;
             }
             else
             {
