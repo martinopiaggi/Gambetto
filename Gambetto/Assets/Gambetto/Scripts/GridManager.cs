@@ -98,6 +98,11 @@ namespace Gambetto.Scripts
             }
         }
 
+        public Vector3 getPlayerPosition()
+        {
+            return _playerCell.getGlobalCoordinates();
+        }
+
         private IEnumerator restartLevel()
         {
             _enemies.Clear();
