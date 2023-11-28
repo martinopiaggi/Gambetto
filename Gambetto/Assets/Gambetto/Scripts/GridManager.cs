@@ -357,11 +357,13 @@ namespace Gambetto.Scripts
                     cell.getGlobalCoordinates(),
                     quaternion.identity
                 );
+                var pieceScript = pieceObj.GetComponent<Piece>();
                 pieceObj.tag = "Enemy"; // tag the enemy for collision detection
+                pieceScript.PieceRole = PieceRole.Enemy;
                 pieceObj.GetComponent<MeshRenderer>().material = darkMaterial;
                 pieceObj.GetComponent<Rigidbody>().constraints =
                     RigidbodyConstraints.FreezeRotation;
-                _enemies.Add(pieceObj.GetComponent<Piece>(), cell);
+                _enemies.Add(pieceScript, cell);
                 _initialEnemiesPositions.Add(pieceObj.GetComponent<Piece>(), cell);
             }
         }
