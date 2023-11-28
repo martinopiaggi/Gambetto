@@ -12,18 +12,14 @@ namespace Gambetto.Scripts.Pieces
     {
         private protected PieceType _pieceType;
 
-        [SerializeField]
-        private protected PieceRole pieceRole;
+        [SerializeField] private protected PieceRole pieceRole;
 
-        [SerializeField]
-        private protected List<Vector2Int> possibleMoves;
+        [SerializeField] private protected List<Vector2Int> possibleMoves;
 
-        [Range(Constants.MinPieceCountdown, Constants.MaxPieceCountdown)]
-        [SerializeField]
+        [Range(Constants.MinPieceCountdown, Constants.MaxPieceCountdown)] [SerializeField]
         private protected int countdown;
 
-        [SerializeField]
-        private protected Constants.PieceCountdown countdownStartValue;
+        [SerializeField] private protected Constants.PieceCountdown countdownStartValue;
         private Transform _tr;
         private Rigidbody _rb;
 
@@ -35,6 +31,7 @@ namespace Gambetto.Scripts.Pieces
             get => pieceRole;
             set => pieceRole = value;
         }
+
         public PieceType PieceType => _pieceType;
 
         /// <summary>
@@ -103,10 +100,12 @@ namespace Gambetto.Scripts.Pieces
         public void Move(List<Vector3> positions, bool gravity = true)
         {
             if (_moveCoroutine != null)
-            { // if a piece is still moving, stop it and force the position
+            {
+                // if a piece is still moving, stop it and force the position
                 StopCoroutine(_moveCoroutine);
                 _tr.position = _oldPositions[_oldPositions.Count - 1];
             }
+
             _oldPositions = positions;
             _moveCoroutine = StartCoroutine(MoveCoroutine(positions, gravity));
             //AudioManager.Instance.PlaySfx(AudioManager.Instance.pawnMovement);
@@ -128,11 +127,12 @@ namespace Gambetto.Scripts.Pieces
                     if (!IsGrounded() && gravity)
                     {
                         // if piece is not grounded and is affected by gravity, add a force to it like it was falling
-                        var boost = 2f;
+                        var boost = 8f;
                         if (Random.Range(0f, 1f) > 0.9)
-                            boost = 10f; // easter egg :)
+                            boost = 16f; // easter egg :)
 
                         _rb.AddForce(direction.normalized * boost, ForceMode.Impulse);
+                        _rb.AddTorque(Vector3.Cross(Vector3.up, direction.normalized) * boost, ForceMode.Impulse);
                         break;
                     }
 
