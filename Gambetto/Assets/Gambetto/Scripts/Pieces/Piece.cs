@@ -96,9 +96,9 @@ namespace Gambetto.Scripts.Pieces
         {
             if(collision.gameObject.CompareTag("Enemy") && pieceRole == PieceRole.Player)
             {
-                Debug.Log("Enemy hit");
+                // Debug.Log("Enemy hit");
                 var direction = collision.transform.position - _tr.position;
-                // add a force to the player in the opposite direction of the enemy and make him 
+                // add a force to the player in the opposite direction of the enemy to simulate a hit
                 _rb.AddForce(-direction.normalized * 8f + Vector3.up, ForceMode.Impulse);
                 var gridManger = FindObjectOfType<GridManager>();
                 StartCoroutine(gridManger.restartLevel());
@@ -132,9 +132,9 @@ namespace Gambetto.Scripts.Pieces
 
             foreach (var destPosition in positions)
             {
-                var text = "moving piece to " + destPosition;
-                if (Debugger.Instance != null)
-                    Debugger.Instance.Show(text, printConsole: false);
+                // var text = "moving piece to " + destPosition;
+                // if (Debugger.Instance != null)
+                //     Debugger.Instance.Show(text, printConsole: false);
 
                 var direction = destPosition - _tr.position;
                 while (direction != Vector3.zero)
