@@ -94,7 +94,7 @@ namespace Gambetto.Scripts.Pieces
 
         private void OnCollisionEnter(Collision collision)
         {
-            if(collision.gameObject.CompareTag("Enemy"))
+            if(collision.gameObject.CompareTag("Enemy") && pieceRole == PieceRole.Player)
             {
                 Debug.Log("Enemy hit");
                 var direction = collision.transform.position - _tr.position;
