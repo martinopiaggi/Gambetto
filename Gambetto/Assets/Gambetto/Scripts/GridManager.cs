@@ -98,7 +98,7 @@ namespace Gambetto.Scripts
             }
         }
 
-        private IEnumerator restartLevel()
+        public IEnumerator restartLevel()
         {
             _enemies.Clear();
             _enemies = new Dictionary<Piece, Cell>(_initialEnemiesPositions);
@@ -351,6 +351,7 @@ namespace Gambetto.Scripts
                     cell.getGlobalCoordinates(),
                     quaternion.identity
                 );
+                pieceObj.tag = "Enemy"; // tag the enemy for collision detection
                 pieceObj.GetComponent<MeshRenderer>().material = darkMaterial;
                 pieceObj.GetComponent<Rigidbody>().constraints =
                     RigidbodyConstraints.FreezeRotation;

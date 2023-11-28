@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Gambetto.Scripts.Utils;
@@ -5,6 +6,7 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Serialization;
 using Utils;
+using Random = UnityEngine.Random;
 
 namespace Gambetto.Scripts.Pieces
 {
@@ -88,6 +90,19 @@ namespace Gambetto.Scripts.Pieces
         {
             _tr = GetComponent<Transform>();
             _rb = GetComponent<Rigidbody>();
+        }
+
+        private void OnCollisionEnter(Collision collision)
+        {
+            if(collision.gameObject.CompareTag("Enemy"))
+            {
+                Debug.Log("Enemy hit");
+                var direction = collision.transform.position - _tr.position;
+                // add a force to the player in the opposite direction of the enemy and make him 
+                _rb.AddForce(-direction.normalized * 8f + Vector3.up, ForceMode.Impulse);
+                var gridManger = FindObjectOfType<GridManager>();
+                StartCoroutine(gridManger.restartLevel());
+            }
         }
 
         /**
