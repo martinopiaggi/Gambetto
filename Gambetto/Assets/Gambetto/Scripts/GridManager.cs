@@ -97,6 +97,11 @@ namespace Gambetto.Scripts
             }
         }
 
+        public Vector3 getPlayerPosition()
+        {
+            return _playerCell.getGlobalCoordinates();
+        }
+
         public IEnumerator restartLevel()
         {
             GameClock.Instance.StopClock();
