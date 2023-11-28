@@ -87,7 +87,6 @@ namespace Gambetto.Scripts
             if (_playerCell.isEmpty())
             {
                 isDead = true;
-                GameClock.Instance.StopClock();
                 StartCoroutine(restartLevel());
             }
 
@@ -100,6 +99,7 @@ namespace Gambetto.Scripts
 
         public IEnumerator restartLevel()
         {
+            GameClock.Instance.StopClock();
             _enemies.Clear();
             _enemies = new Dictionary<Piece, Cell>(_initialEnemiesPositions);
 
@@ -107,7 +107,7 @@ namespace Gambetto.Scripts
             playerController.ChosenMove = null;
             CPUBehavior.ChosenMoves.Clear();
 
-            yield return new WaitForSeconds(GameClock.Instance.ClockPeriod + 0.5f);
+            //yield return new WaitForSeconds(GameClock.Instance.ClockPeriod + 0.5f);
 
             foreach (var enemy in _enemies)
             {
@@ -126,6 +126,7 @@ namespace Gambetto.Scripts
             _playerPiece.PieceRole = PieceRole.Player;
             GameClock.Instance.StartClock();
             isDead = false;
+            yield return null;
         }
 
         private void UpdatePiecesPosition()

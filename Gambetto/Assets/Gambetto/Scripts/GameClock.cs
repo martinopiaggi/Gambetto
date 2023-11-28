@@ -51,22 +51,33 @@ namespace Gambetto.Scripts
         {
             if (_isRunning)
             {
-                Debug.LogWarning("Trying to start clock while it's already running.");
+                Debug.LogWarning("BUGGON");
                 return;
             }
-
+            
+            try
+            {
+                //StopCoroutine(_clockCoroutine);
+                StopAllCoroutines();
+            }
+            catch (Exception e)
+            {
+                Debug.Log(("No couroutine to stop"));
+            }
+            _currentTick = 0;
             _clockPeriod = clockPeriod;
             _isRunning = true;
             _clockCoroutine = StartCoroutine(ClockRoutine());
         }
-        
+
         public void ForceClockTick()
         {
             Debug.Log("game clock forced to tick");
-            StopCoroutine(_clockCoroutine);
+            //StopCoroutine(_clockCoroutine);
+            StopAllCoroutines();
             _clockCoroutine = StartCoroutine(ClockRoutine());
         }
-        
+
         /// <summary>
         /// Stops the clock thread.
         /// </summary>
@@ -74,7 +85,8 @@ namespace Gambetto.Scripts
         {
             _currentTick = 0;
             _isRunning = false;
-            StopCoroutine(_clockCoroutine);
+            //StopCoroutine(_clockCoroutine);
+            StopAllCoroutines();
         }
 
         /// <summary>
@@ -90,16 +102,17 @@ namespace Gambetto.Scripts
         {
             ClockTick?.Invoke(null, e);
         }
-        
+
         private IEnumerator ClockRoutine()
         {
             while (_isRunning)
             {
                 MakeClockTick();
+                Debug.Log(ClockRoutine().GetHashCode());
                 yield return new WaitForSeconds(_clockPeriod);
             }
         }
-        
+
         private void MakeClockTick()
         {
             OnClockTick(new ClockEventArgs() { CurrentTick = _currentTick });
