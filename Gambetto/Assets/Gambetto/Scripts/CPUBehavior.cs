@@ -78,8 +78,8 @@ namespace Gambetto.Scripts
 
         public bool ThereIsSomeone(Cell here)
         {
-            if (_playerCell == here)
-                return true;
+            //if (_playerCell == here)
+            //    return true;
             foreach (var enemy in _chosenMoves)
             {
                 if (enemy.Value == here)

@@ -112,7 +112,7 @@ namespace Gambetto.Scripts
             playerController.ChosenMove = null;
             CPUBehavior.ChosenMoves.Clear();
 
-            //yield return new WaitForSeconds(GameClock.Instance.ClockPeriod + 0.5f);
+            yield return new WaitForSeconds(2f);
 
             foreach (var enemy in _enemies)
             {
