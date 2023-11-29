@@ -11,6 +11,8 @@ namespace Gambetto.Scripts
         private Light _playerLight;
         private List<Cell> _possibleMovements;
         private Cell _possibleChoice;
+        private List<Vector3> _possiblePath;
+        private List<List<Vector3>> _possibleMovementsPath;
         private GameObject _selectedSquare;
         private Coroutine _cycleMovesCoroutine;
         private Vector3 _lastDirection;
@@ -26,6 +28,7 @@ namespace Gambetto.Scripts
             _selectedSquare.SetActive(false);
 
             _possibleMovements = new List<Cell>();
+            _possibleMovementsPath = new List<List<Vector3>>();
         }
 
         private void Update()
@@ -33,6 +36,7 @@ namespace Gambetto.Scripts
             if (Input.GetKeyDown(KeyCode.Space) && _choosing)
             {
                 ChosenMove = _possibleChoice;
+                MovePath = _possiblePath;
                 _lastDirection =
                     ChosenMove.getGlobalCoordinates() - _currentCell.getGlobalCoordinates();
                 _choosing = false;
@@ -41,6 +45,7 @@ namespace Gambetto.Scripts
         }
 
         public Cell ChosenMove { get; set; }
+        public List<Vector3> MovePath { get; set; }
 
         public void StartChoosing(Piece piece, Cell currentCell)
         {
@@ -49,8 +54,11 @@ namespace Gambetto.Scripts
 
             _currentCell = currentCell;
             ChosenMove = _currentCell;
+            MovePath = new List<Vector3>();
+            MovePath.Add(_currentCell.getGlobalCoordinates());
             _possibleMovements.Clear();
-            _possibleMovements = GetPossibleMovements(piece, currentCell);
+            _possibleMovementsPath.Clear();
+            _possibleMovements = GetPossibleMovementsP(piece, currentCell);
             _cycleMovesCoroutine = StartCoroutine(CycleMoves());
         }
 
@@ -71,12 +79,14 @@ namespace Gambetto.Scripts
             while (j < _possibleMovements.Count)
             {
                 var move = _possibleMovements[i];
+                var movePath = _possibleMovementsPath[i];
                 if (_choosing == false)
                     break;
                 _selectedSquare.SetActive(true);
                 _selectedSquare.transform.position =
                     move.getGlobalCoordinates() + new Vector3(0, 0.05f, 0);
                 _possibleChoice = move;
+                _possiblePath = movePath;
                 yield return new WaitForSeconds((clockPeriod / _possibleMovements.Count));
                 i = (i + 1) % _possibleMovements.Count;
                 j++;
@@ -142,6 +152,84 @@ namespace Gambetto.Scripts
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+            return possibleMovement;
+        }
+        
+        public List<Cell> GetPossibleMovementsP(Piece piece, Cell currentCell)
+        {
+            var possibleMovement = new List<Cell>();
+            var possibleMovementPath = new List<List<Vector3>>();
+            Cell tempCell;
+            List<Vector3> tempPath;
+            var directions = piece.PossibleMoves;
+
+            switch (piece.PieceType)
+            {
+                case PieceType.Bishop:
+                case PieceType.Queen:
+                case PieceType.Rook:
+                    foreach (var direction in directions)
+                    {
+                        tempCell = currentCell;
+                        while (tempCell?.getNext(direction) != null)
+                        {
+                            var nextCell = tempCell.getNext(direction);
+                            if (tempCell.isEmpty())
+                                break;
+                            tempCell = nextCell;
+                            tempPath = new List<Vector3>();
+                            tempPath.Add(tempCell.getGlobalCoordinates());
+                            possibleMovement.Add(tempCell);
+                            possibleMovementPath.Add(tempPath);
+                        }
+                    }
+                    break;
+                case PieceType.Pawn:
+                case PieceType.King:
+                    foreach (var direction in directions)
+                    {
+                        tempCell = currentCell;
+                        tempCell = tempCell.getNext(direction);
+                        if (tempCell != null)
+                        {
+                            tempPath = new List<Vector3>();
+                            possibleMovement.Add(tempCell);
+                            tempPath.Add(tempCell.getGlobalCoordinates());
+                            possibleMovementPath.Add(tempPath);
+                        }
+                    }
+                    break;
+                case PieceType.Knight:
+                    var i = 0;
+                    while (i < directions.Count)
+                    {
+                        tempCell = currentCell;
+                        tempPath = new List<Vector3>();
+                        for (var j = 0; j < 3; j++)
+                        {
+                            tempCell = tempCell.getNext(directions[i + j]);
+                            if (tempCell == null)
+                                break;
+                            if (j == 1)
+                            {
+                                tempPath.Add(tempCell.getGlobalCoordinates());
+                            }
+                        }
+
+                        i = 3 + i;
+                        if (tempCell != null)
+                        {
+                            possibleMovement.Add(tempCell);
+                            tempPath.Add(tempCell.getGlobalCoordinates());
+                            possibleMovementPath.Add(tempPath);
+                        }
+                    }
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            _possibleMovementsPath = possibleMovementPath;
             return possibleMovement;
         }
     }
