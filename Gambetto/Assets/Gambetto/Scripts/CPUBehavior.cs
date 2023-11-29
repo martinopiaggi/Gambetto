@@ -65,14 +65,13 @@ namespace Gambetto.Scripts
                     chosenMove = move;
                 }
             }
-
-            Debug.Log(
-                "Old position: "
-                    + cell.getGlobalCoordinates()
-                    + "\nCPU has chosen: "
-                    + chosenMove.getGlobalCoordinates()
-                    + " as next move"
-            );
+            // Debug.Log(
+            //     "Old position: "
+            //         + cell.getGlobalCoordinates()
+            //         + "\nCPU has chosen: "
+            //         + chosenMove.getGlobalCoordinates()
+            //         + " as next move"
+            // );
             _chosenMoves[piece] = chosenMove; //todo now for testing
         }
 
