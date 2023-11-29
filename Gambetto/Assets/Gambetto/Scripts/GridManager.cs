@@ -328,7 +328,7 @@ namespace Gambetto.Scripts
                 _playerCell = cell;
                 _initialplayerCell = cell;
                 var playerObj = Instantiate(
-                    prefabBishop,
+                    prefabKnight,
                     cell.getGlobalCoordinates(),
                     quaternion.identity
                 );
