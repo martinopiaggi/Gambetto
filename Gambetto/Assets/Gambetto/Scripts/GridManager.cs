@@ -49,6 +49,7 @@ namespace Gambetto.Scripts
         private Cell _playerCell = null;
         private Cell _initialplayerCell = null;
         private Piece _playerPiece = null;
+        private List<Vector3> _playerPath = null;
 
         private bool _gridFinished = false;
 
@@ -122,7 +123,7 @@ namespace Gambetto.Scripts
             //MovePiece(_playerPiece, _playerCell);
             Destroy(_playerPiece.gameObject);
             var playerObj = Instantiate(
-                prefabPawn,
+                prefabKnight,
                 _playerCell.getGlobalCoordinates(),
                 quaternion.identity
             );
@@ -144,9 +145,10 @@ namespace Gambetto.Scripts
             }
 
             _playerCell = playerController.ChosenMove;
-            MovePiece(_playerPiece, _playerCell);
+            _playerPath = playerController.MovePath;
+            MovePiece(_playerPiece, _playerCell, _playerPath);
         }
-
+        
         private void MovePiece(Piece piece, Cell nextCell, bool gravity = true)
         {
             //todo: this is a temporary fix pieces should always be in correct position
@@ -155,6 +157,14 @@ namespace Gambetto.Scripts
             var list = new List<Vector3>();
             list.Add(nextCell.getGlobalCoordinates());
             piece.Move(list, gravity);
+        }
+
+        private void MovePiece(Piece piece, Cell nextCell, List<Vector3> path, bool gravity = true)
+        {
+            //todo: this is a temporary fix pieces should always be in correct position
+            if (Vector3.Distance(nextCell.getGlobalCoordinates(), piece.transform.position) < 0.1f)
+                return;
+            piece.Move(path, gravity);
         }
 
         public void CreateGrid(List<RoomLayout> roomLayouts)
