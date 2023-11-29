@@ -22,8 +22,8 @@ namespace Gambetto.Scripts.Pieces
         private protected int countdown;
 
         [SerializeField] private protected Constants.PieceCountdown countdownStartValue;
-        private Transform _tr;
-        private Rigidbody _rb;
+        private protected Transform _tr;
+        private protected Rigidbody _rb;
 
         private Coroutine _moveCoroutine;
         private List<Vector3> _oldPositions;
@@ -96,9 +96,10 @@ namespace Gambetto.Scripts.Pieces
         {
             if(collision.gameObject.CompareTag("Enemy") && pieceRole == PieceRole.Player)
             {
-                Debug.Log("Enemy hit");
+                _rb.useGravity = true; // force gravity (needed for the knight)
+                // Debug.Log("Enemy hit");
                 var direction = collision.transform.position - _tr.position;
-                // add a force to the player in the opposite direction of the enemy and make him 
+                // add a force to the player in the opposite direction of the enemy to simulate a hit
                 _rb.AddForce(-direction.normalized * 8f + Vector3.up, ForceMode.Impulse);
                 var gridManger = FindObjectOfType<GridManager>();
                 StartCoroutine(gridManger.restartLevel());
@@ -126,21 +127,22 @@ namespace Gambetto.Scripts.Pieces
             //AudioManager.Instance.PlaySfx(AudioManager.Instance.pawnMovement);
         }
 
-        private IEnumerator MoveCoroutine(IList<Vector3> positions, bool gravity = true)
+        private protected virtual IEnumerator MoveCoroutine(IList<Vector3> positions, bool gravity = true)
         {
             _rb.useGravity = gravity; // enable/disable gravity
 
             foreach (var destPosition in positions)
             {
-                var text = "moving piece to " + destPosition;
-                if (Debugger.Instance != null)
-                    Debugger.Instance.Show(text, printConsole: false);
+                // var text = "moving piece to " + destPosition;
+                // if (Debugger.Instance != null)
+                //     Debugger.Instance.Show(text, printConsole: false);
 
                 var direction = destPosition - _tr.position;
                 while (direction != Vector3.zero)
                 {
                     if (!IsGrounded() && gravity)
                     {
+                        _rb.useGravity = true; // force gravity (needed for the knight)
                         // if piece is not grounded and is affected by gravity, add a force to it like it was falling
                         var boost = 8f;
                         if (Random.Range(0f, 1f) > 0.9)
@@ -164,7 +166,7 @@ namespace Gambetto.Scripts.Pieces
             }
         }
 
-        private bool IsGrounded()
+        private protected bool IsGrounded()
         {
             return Physics.Raycast(transform.position, Vector3.down, 10.0f);
         }

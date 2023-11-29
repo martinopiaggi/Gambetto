@@ -108,7 +108,6 @@ namespace Gambetto.Scripts
             while (_isRunning)
             {
                 MakeClockTick();
-                Debug.Log(ClockRoutine().GetHashCode());
                 yield return new WaitForSeconds(_clockPeriod);
             }
         }
