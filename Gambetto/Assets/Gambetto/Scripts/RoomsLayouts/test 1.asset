@@ -12,26 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 030530086e85cb745a146f3a7806b1b7, type: 3}
   m_Name: test 1
   m_EditorClassIdentifier: 
-<<<<<<< Updated upstream:Gambetto/Assets/Gambetto/Scripts/RoomsLayouts/8x8/filled/8x8_east.asset
   topologyDescription: test
-  roomCsvTextAsset: {fileID: 4900000, guid: fff987d50bccd5f49bd6dd7e18649eeb, type: 3}
-=======
-<<<<<<< Updated upstream:Gambetto/Assets/Gambetto/Scripts/RoomsLayouts/8x8/filled/8x8_east.asset
-  _description: 8x8 filled, exit east, empty cells at north and south border.
-  rows:
-  - columns: 0000000000000000000000000000000000000000000000000000000000000000
-  - columns: 0000000000000000000000000000000000000000000000000000000000000000
-  - columns: 0000000000000000000000000000000000000000000000000000000000000000
-  - columns: 0000000000000000000000000000000000000000000000000000000000000000
-  - columns: 0000000000000000000000000000000000000000000000000000000000000000
-  - columns: 0000000000000000000000000000000000000000000000000000000000000000
-  - columns: 0000000000000000000000000000000000000000000000000000000000000000
-  - columns: 0000000000000000000000000000000000000000000000000000000000000000
-  initialPositions: []
->>>>>>> Stashed changes:Gambetto/Assets/Gambetto/Scripts/RoomsLayouts/test 1.asset
+  roomCsvTextAsset: {fileID: 4900000, guid: 4fb650e79831c044a91c59ec222f4731, type: 3}
   exitSide: {x: 0, y: -1}
-=======
-  topologyDescription: test
-  roomCsvTextAsset: {fileID: 4900000, guid: fff987d50bccd5f49bd6dd7e18649eeb, type: 3}
-  exitSide: {x: 0, y: 1}
->>>>>>> Stashed changes:Gambetto/Assets/Gambetto/Scripts/RoomsLayouts/test 1.asset
