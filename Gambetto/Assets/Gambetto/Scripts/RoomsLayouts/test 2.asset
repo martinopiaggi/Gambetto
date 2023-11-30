@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   topologyDescription: test
   roomCsvTextAsset: {fileID: 4900000, guid: 4fb650e79831c044a91c59ec222f4731, type: 3}
-  exitSide: {x: 0, y: -1}
+  exitSide: {x: 1, y: 0}
