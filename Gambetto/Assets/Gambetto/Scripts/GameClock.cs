@@ -51,10 +51,10 @@ namespace Gambetto.Scripts
         {
             if (_isRunning)
             {
-                Debug.LogWarning("BUGGON");
+                Debug.LogWarning("clock already running");
                 return;
             }
-            
+
             try
             {
                 //StopCoroutine(_clockCoroutine);
@@ -73,7 +73,6 @@ namespace Gambetto.Scripts
         public void ForceClockTick()
         {
             Debug.Log("game clock forced to tick");
-            //StopCoroutine(_clockCoroutine);
             StopAllCoroutines();
             _clockCoroutine = StartCoroutine(ClockRoutine());
         }
@@ -85,9 +84,18 @@ namespace Gambetto.Scripts
         {
             _currentTick = 0;
             _isRunning = false;
-            //StopCoroutine(_clockCoroutine);
             StopAllCoroutines();
         }
+
+        /// <summary>
+        /// Pauses the clock thread.
+        /// </summary>
+        public void PauseClock() { }
+
+        /// <summary>
+        /// Resumes the clock thread.
+        /// </summary>
+        public void ResumeClock() { }
 
         /// <summary>
         /// Changes the clock period.

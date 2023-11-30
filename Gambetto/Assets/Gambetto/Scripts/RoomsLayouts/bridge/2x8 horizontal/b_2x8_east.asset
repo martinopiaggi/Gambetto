@@ -12,17 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 030530086e85cb745a146f3a7806b1b7, type: 3}
   m_Name: b_2x8_east
   m_EditorClassIdentifier: 
-  _description: west to east bridge wide 2, empty at north and south
+  _topologyDescription: 
+  _enemyDescription: 
   rows:
   - columns: ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
   - columns: ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
   - columns: ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
   - columns: ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
   - columns: 0000000000000000000000000000000000000000000000000000000000000000
-  - columns: 0000000000000000000000000000000000000000000000000000000000000000
+  - columns: 000000000000000000000000000000000000000000000000000000009a020000
   - columns: ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
   - columns: ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
   - columns: ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
   - columns: ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
-  initialPositions: []
   exitSide: {x: 0, y: -1}
