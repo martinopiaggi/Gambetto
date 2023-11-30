@@ -35,6 +35,7 @@ namespace Gambetto.Scripts
         {
             if (Input.GetKeyDown(KeyCode.Space) && _choosing)
             {
+                AudioManager.Instance.PlaySfx(AudioManager.Instance.chosenMove);
                 ChosenMove = _possibleChoice;
                 MovePath = _possiblePath;
                 _lastDirection =
@@ -78,13 +79,14 @@ namespace Gambetto.Scripts
             // start the cycle from the first move in the direction of the last move
             while (j < _possibleMovements.Count)
             {
+                AudioManager.Instance.PlaySfx(AudioManager.Instance.clockTick);
                 var move = _possibleMovements[i];
                 var movePath = _possibleMovementsPath[i];
                 if (_choosing == false)
                     break;
                 _selectedSquare.SetActive(true);
                 _selectedSquare.transform.position =
-                    move.getGlobalCoordinates() + new Vector3(0, 0.05f, 0);
+                    move.getGlobalCoordinates() + new Vector3(0, 0.02f, 0);
                 _possibleChoice = move;
                 _possiblePath = movePath;
                 yield return new WaitForSeconds((clockPeriod / _possibleMovements.Count));
@@ -154,7 +156,7 @@ namespace Gambetto.Scripts
             }
             return possibleMovement;
         }
-        
+
         public List<Cell> GetPossibleMovementsP(Piece piece, Cell currentCell)
         {
             var possibleMovement = new List<Cell>();

@@ -124,7 +124,6 @@ namespace Gambetto.Scripts.Pieces
 
             _oldPositions = positions;
             _moveCoroutine = StartCoroutine(MoveCoroutine(positions, gravity));
-            //AudioManager.Instance.PlaySfx(AudioManager.Instance.pawnMovement);
         }
 
         private protected virtual IEnumerator MoveCoroutine(IList<Vector3> positions, bool gravity = true)

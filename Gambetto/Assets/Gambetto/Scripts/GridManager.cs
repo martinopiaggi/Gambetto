@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Numerics;
 using Gambetto.Scripts.Pieces;
 using Gambetto.Scripts.Utils;
 using Pieces;
@@ -7,6 +8,9 @@ using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
+using Quaternion = UnityEngine.Quaternion;
+using Vector2 = UnityEngine.Vector2;
+using Vector3 = UnityEngine.Vector3;
 
 namespace Gambetto.Scripts
 {
@@ -21,6 +25,7 @@ namespace Gambetto.Scripts
         private readonly List<List<Cell>> _grid = new List<List<Cell>>(); //maybe we can remove _grid? (never used)
         private Dictionary<Piece, Cell> _enemies = new Dictionary<Piece, Cell>();
         private Dictionary<Piece, Cell> _initialEnemiesPositions = new Dictionary<Piece, Cell>();
+        private Dictionary<PieceType, Cell> powerUps = new Dictionary<PieceType, Cell>();
 
         [SerializeField]
         public GameObject prefabPawn;
@@ -39,6 +44,22 @@ namespace Gambetto.Scripts
 
         [SerializeField]
         public GameObject prefabQueen;
+
+        [SerializeField]
+        public GameObject knightPowerUp;
+
+        [SerializeField]
+        public GameObject rookPowerUp;
+
+        [SerializeField]
+        public GameObject bishopPowerUp;
+
+        [SerializeField]
+        public GameObject queenPowerUp;
+
+        [SerializeField]
+        public GameObject endLevel;
+
         public Material lightMaterial;
         public Material darkMaterial;
 
@@ -48,6 +69,7 @@ namespace Gambetto.Scripts
 
         private Cell _playerCell = null;
         private Cell _initialplayerCell = null;
+        private Cell _endLevelCell = null;
         private Piece _playerPiece = null;
         private List<Vector3> _playerPath = null;
 
@@ -83,7 +105,9 @@ namespace Gambetto.Scripts
 
             // Compute Cpu behaviour and Start the choosing animation for the player
             if (!isDead)
-                UpdatePiecesPosition(); // apply movements from the previous tick
+            {
+                UpdatePiecesPosition();
+            } // apply movements from the previous tick
 
             if (_playerCell.isEmpty())
             {
@@ -148,7 +172,7 @@ namespace Gambetto.Scripts
             _playerPath = playerController.MovePath;
             MovePiece(_playerPiece, _playerCell, _playerPath);
         }
-        
+
         private void MovePiece(Piece piece, Cell nextCell, bool gravity = true)
         {
             //todo: this is a temporary fix pieces should always be in correct position
@@ -290,7 +314,10 @@ namespace Gambetto.Scripts
                     if (square == -1)
                         cell.setEmpty();
                     else if (square != 0)
+                    {
                         InstantiatePiece(cell, square);
+                        InstantiateOther(cell, square);
+                    }
 
                     roomCells.Add(cell); //add cell to current room cells
                     matrixCells[rowNumber, columnNumber] = cell; //temporary matrix as helper to update links between cells
@@ -336,7 +363,7 @@ namespace Gambetto.Scripts
                 _playerPiece = playerObj.GetComponent<Piece>();
                 _playerPiece.PieceRole = PieceRole.Player;
             }
-            else
+            else if (type < 100)
             {
                 var prefab = prefabPawn;
                 switch (type)
@@ -375,6 +402,71 @@ namespace Gambetto.Scripts
                     RigidbodyConstraints.FreezeRotation;
                 _enemies.Add(pieceScript, cell);
                 _initialEnemiesPositions.Add(pieceObj.GetComponent<Piece>(), cell);
+            }
+        }
+
+        private void InstantiateOther(Cell cell, int type)
+        {
+            switch (type)
+            {
+                case (
+                    102
+                ) //Bishop power up
+                :
+                    powerUps.Add(PieceType.Bishop, cell);
+                    var bishopPowerUpObj = Instantiate(
+                        bishopPowerUp,
+                        cell.getGlobalCoordinates() + new Vector3(0, 0.05f, 0),
+                        quaternion.identity
+                    );
+                    break;
+                case (
+                    103
+                ) //Knight power up
+                :
+                    powerUps.Add(PieceType.Knight, cell);
+                    var knightPowerUpObj = Instantiate(
+                        knightPowerUp,
+                        cell.getGlobalCoordinates() + new Vector3(0, 0.05f, 0),
+                        quaternion.identity
+                    );
+                    break;
+
+                case (
+                    105
+                ) //Rook power up
+                :
+                    powerUps.Add(PieceType.Rook, cell);
+                    var rookPowerUpObj = Instantiate(
+                        rookPowerUp,
+                        cell.getGlobalCoordinates() + new Vector3(0, 0.05f, 0),
+                        quaternion.identity
+                    );
+                    break;
+
+                case (
+                    108
+                ) //Queen power up
+                :
+                    powerUps.Add(PieceType.Queen, cell);
+                    var queenPowerUpObj = Instantiate(
+                        queenPowerUp,
+                        cell.getGlobalCoordinates() + new Vector3(0, 0.05f, 0),
+                        quaternion.identity
+                    );
+                    break;
+
+                case (
+                    666
+                ) //End of level
+                :
+                    _endLevelCell = cell;
+                    var powerUpObj = Instantiate(
+                        endLevel,
+                        cell.getGlobalCoordinates() + new Vector3(0, 0.05f, 0),
+                        quaternion.identity
+                    );
+                    break;
             }
         }
 
