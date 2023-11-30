@@ -183,18 +183,14 @@ namespace Gambetto.Scripts
         public void CreateGrid(List<RoomLayout> roomLayouts)
         {
             var translation = new Vector3(0, 0, 0);
-
+            RoomLayout previousRoomLayout = null;
+            
             for (var roomIdx = 0; roomIdx < roomLayouts.Count; roomIdx++)
             {
                 var roomLayout = roomLayouts[roomIdx];
 
-                RoomLayout previousRoomLayout = null;
-                if (roomIdx != 0)
-                    previousRoomLayout = roomLayouts[roomIdx - 1];
-                
-                var roomObj = Instantiate(_roomPrefab, transform.position, Quaternion.identity);
+                var roomObj = Instantiate(_roomPrefab, translation, Quaternion.identity);
 
-                
                 //if the last color is 0 (white) the starting color will be changed in 1 (blue)
                 if (_lastColor == 1)
                 {
@@ -208,38 +204,36 @@ namespace Gambetto.Scripts
                 }
 
                 roomObj.GetComponent<RoomBuilder>().InitializeRoom(roomLayout);
-                roomObj.transform.position = translation;
-                
-                _grid.Add(PopulateRoomGraph(roomLayout, translation, roomIdx, previousRoomLayout));
-                
-                //change the translation of the next room according to the exit of the previous room
-                if (
-                    roomLayout.GetExit() != Directions.South
-                    && roomLayout.GetExit() != Directions.East
-                )
-                {
-                    translation += new Vector3(
-                        roomLayout.GetExit().x * roomLayout.GetSizeRow(),
-                        0,
-                        roomLayout.GetExit().y * roomLayout.GetSizeColumn()
-                    );
-                }
-                else
-                {
-                    //we have to compute the correct translation considering **next** roomLayout size in case of South/East
-                    if (roomIdx != (roomLayouts.Count - 1))
+            
+                if (roomIdx != 0) {
+                    previousRoomLayout = roomLayouts[roomIdx - 1];
+
+                    //change the translation of the current room
+                    if (
+                        previousRoomLayout.GetExit() != Directions.South
+                        && previousRoomLayout.GetExit() != Directions.East
+                    )
                     {
-                        var nextRoomLayout = roomLayouts[roomIdx + 1];
-                        translation =
-                            translation
-                            + new Vector3(
-                                roomLayout.GetExit().x * nextRoomLayout.GetSizeRow(),
-                                0,
-                                roomLayout.GetExit().y * nextRoomLayout.GetSizeColumn()
-                            );
+                        translation += new Vector3(
+                            previousRoomLayout.GetExit().x * previousRoomLayout.GetSizeRow(),
+                            0,
+                            previousRoomLayout.GetExit().y * previousRoomLayout.GetSizeColumn()
+                        );
+                    }
+                    else
+                    {
+                        //we have to compute the correct translation considering **this** roomLayout size in case of South/East
+                        translation += new Vector3(
+                            previousRoomLayout.GetExit().x * roomLayout.GetSizeRow(),
+                            0,
+                            previousRoomLayout.GetExit().y * roomLayout.GetSizeColumn());
                     }
                 }
+                
+                roomObj.GetComponent<Transform>().SetPositionAndRotation(translation, Quaternion.identity);
 
+                _grid.Add(PopulateRoomGraph(roomLayout, translation, roomIdx, previousRoomLayout));
+                
                 _lastColor = ColorConsistencyUpdate(roomLayout, _changed);
             }
 
