@@ -10,15 +10,8 @@ namespace Gambetto.Scripts
         [SerializeField] private Material light;
         [SerializeField] private Material dark;
         [SerializeField] private bool isBuilt = false;
-
-        private GameObject fog;
-
+        
         private int colorStart = 0;
-        private int gridLength;
-        private int gridWidth;
-    
-
-        private int[,] matrix; // The matrix to store the cubes
 
         [SerializeField] private GameObject cubePrefab; // Reference to the Cube prefab
 
@@ -26,7 +19,6 @@ namespace Gambetto.Scripts
         private void Update()
         {
             if(isBuilt) return;
-            fog = GameObject.FindGameObjectWithTag("Fog"); // Reference to the fog, in order to access it and change material
             InitializeRoom(_layout);
         }
 
@@ -37,10 +29,8 @@ namespace Gambetto.Scripts
     
         public void InitializeRoom(RoomLayout layout)
         {
+            layout.LoadRoom();
             _layout = layout;
-            gridLength = layout.GetSizeRow();
-            gridWidth = layout.GetSizeColumn();
-            matrix = new int[gridLength, gridWidth];
             FillMatrixWithCubes();
             isBuilt = true;
             
@@ -49,18 +39,16 @@ namespace Gambetto.Scripts
 
         void FillMatrixWithCubes()
         {
-            for (int i = 0; i < gridLength; i++)
+            for (int i = 0; i < _layout.GetSizeRow(); i++)
             {
-                for (int j = 0; j < gridWidth; j++)
+                for (int j = 0; j < _layout.GetSizeColumn(); j++)
                 {
                     Vector3 position = new Vector3(i, cubePrefab.transform.position.y, j);
-                    matrix[i, j] = 0;
-                    if (_layout.GetRows()[i].GetColumns()[j] == -1)
+                    if (_layout.Squares[i,j].Value == RoomLayout.MatrixValue.Empty )
                     {
                         continue;
                     }
-
-                    GameObject cubeInstance = Instantiate(cubePrefab, position, Quaternion.identity);
+                    var cubeInstance = Instantiate(cubePrefab, position, Quaternion.identity);
                     cubeInstance.GetComponent<MeshRenderer>().material = (i + j + colorStart) % 2 == 0 ? light : dark;
                     cubeInstance.transform.parent = gameObject.transform;
                 }

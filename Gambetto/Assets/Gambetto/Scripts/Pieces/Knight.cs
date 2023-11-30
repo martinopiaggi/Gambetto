@@ -20,7 +20,7 @@ namespace Gambetto.Scripts.Pieces
             Countdown = (int)Constants.PieceCountdown.Knight;
             GetComponent<MeshFilter>().mesh = Resources.Load<Mesh>("Models/Knight");
         }
-
+        
         private protected override IEnumerator MoveCoroutine(
             IList<Vector3> positions,
             bool gravity = true
