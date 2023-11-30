@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.3069224, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -953,8 +953,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rooms:
-  - {fileID: 11400000, guid: 05e4685576840a442877b2fc9e467203, type: 2}
-  - {fileID: 11400000, guid: 5b918be347f9ef5418a819fe5e527b66, type: 2}
+  - {fileID: 11400000, guid: 0b51b9151e564594b9877f68fe861ddc, type: 2}
   gridManager: {fileID: 295756828}
 --- !u!4 &1181219728
 Transform:
@@ -1280,7 +1279,8 @@ MonoBehaviour:
   sfxSource: {fileID: 250930079}
   menuBackground: {fileID: 8300000, guid: 2032c3a359b93324291c5c478ae4a3f4, type: 3}
   pawnMovement: {fileID: 8300000, guid: e7c00806e1a055b469409fbc5f9da034, type: 3}
-  clockTick: {fileID: 8300000, guid: 3bac9f0b06a11a44cbdffe93f20c31dc, type: 3}
+  clockTick: {fileID: 0}
+  chosenMove: {fileID: 0}
 --- !u!4 &2104195323
 Transform:
   m_ObjectHideFlags: 0
