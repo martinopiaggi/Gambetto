@@ -57,13 +57,13 @@ public class RoomLayout : ScriptableObject
 
         Square[,] matrix = new Square[rows, cols];
 
-        for (int i = 0; i < rows; i++)
+        for (int i = rows-1; i >= 0; i--)
         {
-            string[] cells = lines[i].Split(',');
+            string[] cells = lines[rows-1-i].Split(',');
 
-            for (int j = 0; j < cells.Length; j++)
+            for (int j = cells.Length-1; j >= 0; j--)
             {
-                matrix[i, j] = ParseCellValue(cells[j].Trim());
+                matrix[i, j] = ParseCellValue(cells[cells.Length-1-j].Trim());
             }
         }
         return matrix;
@@ -72,7 +72,8 @@ public class RoomLayout : ScriptableObject
     private Square ParseCellValue(string cellValue)
     {
         var identifier = 0; // Default value if no number is found
-        if (cellValue == "")
+        cellValue = cellValue.Replace(" ", ""); // Remove spaces
+        if (cellValue.Length == 0)
             return new Square(MatrixValue.Floor, identifier);
 
         foreach (var mapping in CellValueMappings)
