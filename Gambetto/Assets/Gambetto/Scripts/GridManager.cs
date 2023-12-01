@@ -147,7 +147,7 @@ namespace Gambetto.Scripts
             //MovePiece(_playerPiece, _playerCell);
             Destroy(_playerPiece.gameObject);
             var playerObj = Instantiate(
-                prefabKnight,
+                prefabQueen,
                 _playerCell.getGlobalCoordinates(),
                 quaternion.identity
             );
