@@ -308,7 +308,8 @@ namespace Gambetto.Scripts
                         cell.setEmpty();
                     else if (square.Value != RoomLayout.MatrixValue.Floor)
                     {
-                        InstantiatePiece(cell, square, roomLayout.Behaviours);
+                        var behaviour = roomLayout.Behaviours[square.Identifier];
+                        InstantiatePiece(cell, square, behaviour);
                         InstantiateOther(cell, square);
                     }
 
@@ -335,7 +336,7 @@ namespace Gambetto.Scripts
             return roomCells;
         }
 
-        private void InstantiatePiece(Cell cell, RoomLayout.Square square, List<Behaviour> behaviours)
+        private void InstantiatePiece(Cell cell, RoomLayout.Square square, Behaviour behaviour)
         {
             GameObject prefab = null;
             
@@ -382,9 +383,6 @@ namespace Gambetto.Scripts
             
             if (square.Identifier != 0)
             {
-                if (square.Identifier > behaviours.Count)
-                    throw new System.Exception("Behaviour patterns wrongly defined");
-                var behaviour = behaviours[square.Identifier];
                 pieceScript.Pattern = behaviour;
                 pieceScript.PatternAI = true;
             }
