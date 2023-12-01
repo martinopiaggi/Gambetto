@@ -17,6 +17,22 @@ namespace Gambetto.Scripts.Pieces
         [SerializeField]
         private protected PieceRole pieceRole;
 
+        private bool _patternAI = false;
+        private Behaviour _pattern = null;
+        private int _patternIndex = 0;
+        
+        public bool PatternAI
+        {
+            get => _patternAI;
+            set => _patternAI = value;
+        }
+        
+        public Behaviour Pattern
+        {
+            set => _pattern = value;
+        }
+        
+        
         [SerializeField]
         private protected List<Vector2Int> possibleMoves;
 

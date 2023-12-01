@@ -308,7 +308,7 @@ namespace Gambetto.Scripts
                         cell.setEmpty();
                     else if (square.Value != RoomLayout.MatrixValue.Floor)
                     {
-                        InstantiatePiece(cell, square);
+                        InstantiatePiece(cell, square, roomLayout.Behaviours);
                         InstantiateOther(cell, square);
                     }
 
@@ -335,9 +335,10 @@ namespace Gambetto.Scripts
             return roomCells;
         }
 
-        private void InstantiatePiece(Cell cell, RoomLayout.Square square)
+        private void InstantiatePiece(Cell cell, RoomLayout.Square square, List<Behaviour> behaviours)
         {
             GameObject prefab = null;
+            
             switch (square.Value)
             {
                 case RoomLayout.MatrixValue.Spawn:
@@ -378,6 +379,16 @@ namespace Gambetto.Scripts
             var pieceScript = pieceObj.GetComponent<Piece>();
             pieceObj.tag = "Enemy"; // tag the enemy for collision detection
             pieceScript.PieceRole = PieceRole.Enemy;
+            
+            if (square.Identifier != 0)
+            {
+                if (square.Identifier > behaviours.Count)
+                    throw new System.Exception("Behaviour patterns wrongly defined");
+                var behaviour = behaviours[square.Identifier];
+                pieceScript.Pattern = behaviour;
+                pieceScript.PatternAI = true;
+            }
+
             pieceObj.GetComponent<MeshRenderer>().material = darkMaterial;
             pieceObj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
             _enemies.Add(pieceScript, cell);
