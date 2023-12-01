@@ -8,13 +8,9 @@ namespace Gambetto.Scripts.UI
 {
     public class MainMenu : MonoBehaviour
     {
-        public SceneTransition transition;
-        
-
         public void PlayGame()
         {
-            transition.CrossFade("Level Selection");
-            //SceneManager.LoadScene("Level selection");
+            SceneTransition.Instance.CrossFade("Level Selection");
         }
 
         public void QuitGame()
@@ -22,8 +18,5 @@ namespace Gambetto.Scripts.UI
             Debug.Log("Quit");
             Application.Quit();
         }
-        
-    
-    }  
+    }
 }
-

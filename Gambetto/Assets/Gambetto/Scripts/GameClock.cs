@@ -90,12 +90,19 @@ namespace Gambetto.Scripts
         /// <summary>
         /// Pauses the clock thread.
         /// </summary>
-        public void PauseClock() { }
+        public void PauseClock()
+        {
+            _isRunning = false;
+            StopAllCoroutines();
+        }
 
         /// <summary>
         /// Resumes the clock thread.
         /// </summary>
-        public void ResumeClock() { }
+        public void ResumeClock()
+        {
+            //TODO
+        }
 
         /// <summary>
         /// Changes the clock period.
