@@ -106,7 +106,7 @@ namespace Gambetto.Scripts
             // Compute Cpu behaviour and Start the choosing animation for the player
             if (!isDead)
             {
-                UpdatePiecesPosition();
+                UpdatePlayerPosition();
             } // apply movements from the previous tick
 
             if (_playerCell.isEmpty())
@@ -117,7 +117,8 @@ namespace Gambetto.Scripts
 
             if (!isDead)
             {
-                CPUBehavior.StartComputing(_playerCell, _enemies);
+                CPUBehavior.ComputeCPUMoves(_playerCell, _enemies);
+                UpdateEnemiesPosition();
                 playerController.StartChoosing(_playerPiece, _playerCell);
             }
         }
@@ -159,19 +160,22 @@ namespace Gambetto.Scripts
             yield return null;
         }
 
-        private void UpdatePiecesPosition()
+        private void UpdateEnemiesPosition()
         {
             _enemies = new Dictionary<Piece, Cell>(CPUBehavior.ChosenMoves);
-
             foreach (var enemy in _enemies)
             {
                 MovePiece(enemy.Key, _enemies[enemy.Key]);
             }
-
+        }
+        
+        private void UpdatePlayerPosition()
+        {
             _playerCell = playerController.ChosenMove;
             _playerPath = playerController.MovePath;
             MovePiece(_playerPiece, _playerCell, _playerPath);
         }
+        
 
         private void MovePiece(Piece piece, Cell nextCell, bool gravity = true)
         {
@@ -350,7 +354,7 @@ namespace Gambetto.Scripts
                     _playerCell = cell;
                     _initialplayerCell = cell;
                     var playerObj = Instantiate(
-                        prefabPawn,
+                        prefabKnight,
                         cell.getGlobalCoordinates(),
                         quaternion.identity
                     );
