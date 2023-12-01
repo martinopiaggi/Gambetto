@@ -12,7 +12,7 @@ using UnityEngine.Serialization;
 public class RoomLayout : ScriptableObject
 {
     [SerializeField]
-    private string topologyDescription;
+    public string topologyDescription;
 
     [SerializeField]
     private TextAsset roomCsvTextAsset;
@@ -39,7 +39,11 @@ public class RoomLayout : ScriptableObject
         return _roomSquares.GetLength(1);
     }
 
-    public Square[,] LoadRoom()
+    /// <summary>
+    /// Loads the room data from the CSV file. And loads the default behaviours for the pieces.
+    /// </summary>
+    /// <returns>The created square matrix</returns>
+    public Square[,] LoadRoomData()
     {
         _roomSquares = ParseCSV();
         // Load default behaviours
@@ -57,13 +61,13 @@ public class RoomLayout : ScriptableObject
 
         Square[,] matrix = new Square[rows, cols];
 
-        for (int i = rows-1; i >= 0; i--)
+        for (int i = rows - 1; i >= 0; i--)
         {
-            string[] cells = lines[rows-1-i].Split(',');
+            string[] cells = lines[rows - 1 - i].Split(',');
 
-            for (int j = cells.Length-1; j >= 0; j--)
+            for (int j = cells.Length - 1; j >= 0; j--)
             {
-                matrix[i, j] = ParseCellValue(cells[cells.Length-1-j].Trim());
+                matrix[i, j] = ParseCellValue(cells[cells.Length - 1 - j].Trim());
             }
         }
         return matrix;
