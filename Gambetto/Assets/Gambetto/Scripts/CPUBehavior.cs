@@ -28,22 +28,13 @@ namespace Gambetto.Scripts
             _chosenMoves = new Dictionary<Piece, Cell>();
         }
 
-        public void StartComputing(Cell playerCell, Dictionary<Piece, Cell> enemies) //todo enemies!
-        {
-               if (_computingCoroutine != null)
-                StopCoroutine(_computingCoroutine);
-
-            _computingCoroutine = StartCoroutine(ComputingCoroutine(playerCell, enemies));
-        }
-
-        public IEnumerator ComputingCoroutine(Cell playerCell, Dictionary<Piece, Cell> enemies)
+        public void ComputeCPUMoves(Cell playerCell, Dictionary<Piece, Cell> enemies) //todo enemies!
         {
             _playerCell = playerCell;
             foreach (var enemyRef in enemies)
             {
                 ComputeNextMove(enemyRef.Key, enemyRef.Value);
             }
-            yield return null;
         }
 
         private void ComputeNextMove(Piece piece, Cell cell)
