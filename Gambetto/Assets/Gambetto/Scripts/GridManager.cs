@@ -308,7 +308,11 @@ namespace Gambetto.Scripts
                         cell.setEmpty();
                     else if (square.Value != RoomLayout.MatrixValue.Floor)
                     {
-                        var behaviour = roomLayout.Behaviours[square.Identifier];
+                        Behaviour behaviour = null;
+                        if (square.Identifier != 0)
+                        {
+                            behaviour = roomLayout.Behaviours[square.Identifier];
+                        }
                         InstantiatePiece(cell, square, behaviour);
                         InstantiateOther(cell, square);
                     }
