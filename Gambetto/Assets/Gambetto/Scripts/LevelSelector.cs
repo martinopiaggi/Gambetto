@@ -16,9 +16,7 @@ namespace Gambetto.Scripts
 
         //boolean list to keep track of completed levels
         private bool[] completedLevels = new bool[10];
-    
-    
-    
+
         //awake method makes sure that LevelSelector is not destroyed
         private void Awake()
         {
@@ -36,25 +34,20 @@ namespace Gambetto.Scripts
         public void LoadLevel1()
         {
             currentLevel = 1;
-            SceneManager.LoadScene("Sample Scene");
+            SceneTransition.Instance.CrossFade("Sample Scene");
+            //SceneManager.LoadScene("Sample Scene");
         }
-    
-    
+
         //method used by the back button
         public void BackToMainMenu()
         {
-            SceneManager.LoadScene("MainMenu");
+            SceneTransition.Instance.CrossFade("MainMenu");
+            //SceneManager.LoadScene("MainMenu");
         }
-        void Start()
-        {
-        
-        }
+
+        void Start() { }
 
         // Update is called once per frame
-        void Update()
-        {
-        
-        }
+        void Update() { }
     }
 }
-

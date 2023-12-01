@@ -195,7 +195,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &8035206
 RectTransform:
   m_ObjectHideFlags: 0
@@ -256,8 +256,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: 3af7bdef3a28ec14dafbb98c16a32e6a, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -324,14 +324,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.5188679, g: 0.5188679, b: 0.5188679, a: 1}
+  m_Color: {r: 0.055802777, g: 0.06103928, b: 0.20754719, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: fd9eb74efb961f748bb47e2fbebdc4f1, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1139,6 +1139,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a13301033bdcb1047ae622adcf66715f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sceneTransition: {fileID: 0}
 --- !u!4 &675283270
 Transform:
   m_ObjectHideFlags: 0
@@ -2050,7 +2051,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96e538baad63bc24683170d44c7d9cd7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  transition: {fileID: 1691216244}
 --- !u!1 &981631656
 GameObject:
   m_ObjectHideFlags: 0
@@ -3293,6 +3293,8 @@ MonoBehaviour:
   sfxSource: {fileID: 656006930}
   menuBackground: {fileID: 8300000, guid: 2032c3a359b93324291c5c478ae4a3f4, type: 3}
   pawnMovement: {fileID: 8300000, guid: e7c00806e1a055b469409fbc5f9da034, type: 3}
+  clockTick: {fileID: 0}
+  chosenMove: {fileID: 0}
 --- !u!4 &1611169588
 Transform:
   m_ObjectHideFlags: 0
@@ -3455,6 +3457,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1691216243}
   - component: {fileID: 1691216244}
+  - component: {fileID: 1691216245}
   m_Layer: 0
   m_Name: SceneTransition
   m_TagString: Untagged
@@ -3491,6 +3494,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   crossfadeAnimator: {fileID: 8035207}
+--- !u!95 &1691216245
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1691216242}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 562f4660b2bfc89499b75ec4c1ba5bb0, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1752234401
 GameObject:
   m_ObjectHideFlags: 0

@@ -8,20 +8,29 @@ namespace Gambetto.Scripts
 {
     public class SceneTransition : MonoBehaviour
     {
-        public Animator crossfadeAnimator;
-    
-        // Start is called before the first frame update
-        void Start()
+        public static SceneTransition Instance;
+
+        private void Awake()
         {
-        
+            if (Instance == null)
+            {
+                Instance = this;
+                DontDestroyOnLoad(gameObject);
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
         }
 
+        //add here other animations
+        public Animator crossfadeAnimator;
+
+        // Start is called before the first frame update
+        void Start() { }
+
         // Update is called once per frame
-        void Update()
-        {
-        
-        
-        }
+        void Update() { }
 
         public void CrossFade(String scene)
         {
@@ -33,7 +42,7 @@ namespace Gambetto.Scripts
             crossfadeAnimator.SetTrigger("end");
             yield return new WaitForSeconds(1f);
             SceneManager.LoadScene(scene);
+            crossfadeAnimator.SetTrigger("start");
         }
     }
 }
-
