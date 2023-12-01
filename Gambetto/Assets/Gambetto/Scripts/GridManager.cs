@@ -24,6 +24,7 @@ namespace Gambetto.Scripts
 
         private readonly List<List<Cell>> _grid = new List<List<Cell>>(); //maybe we can remove _grid? (never used)
         private Dictionary<Piece, Cell> _enemies = new Dictionary<Piece, Cell>();
+        private Dictionary<Piece, List<Vector3>> _enemiesPath = new Dictionary<Piece, List<Vector3>>();
         private Dictionary<Piece, Cell> _initialEnemiesPositions = new Dictionary<Piece, Cell>();
         private Dictionary<PieceType, Cell> powerUps = new Dictionary<PieceType, Cell>();
 
@@ -95,6 +96,7 @@ namespace Gambetto.Scripts
                 foreach (var enemy in _enemies)
                 {
                     CPUBehavior.ChosenMoves[enemy.Key] = enemy.Value;
+                    CPUBehavior.MovePaths[enemy.Key] = new List<Vector3> { enemy.Value.getGlobalCoordinates() };;
                 }
             }
 
@@ -162,10 +164,11 @@ namespace Gambetto.Scripts
         private void UpdatePiecesPosition()
         {
             _enemies = new Dictionary<Piece, Cell>(CPUBehavior.ChosenMoves);
+            _enemiesPath = new Dictionary<Piece, List<Vector3>>(CPUBehavior.MovePaths);
 
             foreach (var enemy in _enemies)
             {
-                MovePiece(enemy.Key, _enemies[enemy.Key]);
+                MovePiece(enemy.Key, _enemies[enemy.Key], _enemiesPath[enemy.Key]);
             }
 
             _playerCell = playerController.ChosenMove;
