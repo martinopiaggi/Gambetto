@@ -5,20 +5,28 @@ namespace Gambetto.Scripts
 {
     public class RoomBuilder : MonoBehaviour
     {
-        [SerializeField] private RoomLayout _layout;
+        [SerializeField]
+        private RoomLayout _layout;
 
-        [SerializeField] private Material light;
-        [SerializeField] private Material dark;
-        [SerializeField] private bool isBuilt = false;
-        
+        [SerializeField]
+        private Material light;
+
+        [SerializeField]
+        private Material dark;
+
+        [SerializeField]
+        private bool isBuilt = false;
+
         private int colorStart = 0;
 
-        [SerializeField] private GameObject cubePrefab; // Reference to the Cube prefab
-
+        [SerializeField]
+        private GameObject cubePrefab; // Reference to the Cube prefab
 
         private void Update()
         {
-            if(isBuilt) return;
+            //todo: does this need to be here?
+            if (isBuilt)
+                return;
             InitializeRoom(_layout);
         }
 
@@ -26,16 +34,13 @@ namespace Gambetto.Scripts
         {
             colorStart = value;
         }
-    
+
         public void InitializeRoom(RoomLayout layout)
         {
-            layout.LoadRoom();
             _layout = layout;
             FillMatrixWithCubes();
             isBuilt = true;
-            
         }
-
 
         void FillMatrixWithCubes()
         {
@@ -44,13 +49,15 @@ namespace Gambetto.Scripts
                 for (int j = 0; j < _layout.GetSizeColumn(); j++)
                 {
                     Vector3 position = new Vector3(i, cubePrefab.transform.position.y, j);
-                    if (_layout.Squares[i,j].Value == RoomLayout.MatrixValue.Empty )
+                    if (_layout.Squares[i, j].Value == RoomLayout.MatrixValue.Empty)
                     {
                         continue;
                     }
-                    var cubeInstance = Instantiate(cubePrefab, position, Quaternion.identity);
-                    cubeInstance.GetComponent<MeshRenderer>().material = (i + j + colorStart) % 2 == 0 ? light : dark;
-                    cubeInstance.transform.parent = gameObject.transform;
+                    var cubeInstance = Instantiate(cubePrefab, gameObject.transform, true);
+                    cubeInstance.transform.localPosition = position;
+                    cubeInstance.transform.rotation = Quaternion.identity;
+                    cubeInstance.GetComponent<MeshRenderer>().material =
+                        (i + j + colorStart) % 2 == 0 ? light : dark;
                 }
             }
         }

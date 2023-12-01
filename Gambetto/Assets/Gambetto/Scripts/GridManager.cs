@@ -27,27 +27,38 @@ namespace Gambetto.Scripts
         private Dictionary<Piece, Cell> _initialEnemiesPositions = new Dictionary<Piece, Cell>();
         private Dictionary<PieceType, Cell> powerUps = new Dictionary<PieceType, Cell>();
 
-        [SerializeField] public GameObject prefabPawn;
+        [SerializeField]
+        public GameObject prefabPawn;
 
-        [SerializeField] public GameObject prefabBishop;
+        [SerializeField]
+        public GameObject prefabBishop;
 
-        [SerializeField] public GameObject prefabKnight;
+        [SerializeField]
+        public GameObject prefabKnight;
 
-        [SerializeField] public GameObject prefabRook;
+        [SerializeField]
+        public GameObject prefabRook;
 
-        [SerializeField] public GameObject prefabKing;
+        [SerializeField]
+        public GameObject prefabKing;
 
-        [SerializeField] public GameObject prefabQueen;
+        [SerializeField]
+        public GameObject prefabQueen;
 
-        [SerializeField] public GameObject knightPowerUp;
+        [SerializeField]
+        public GameObject knightPowerUp;
 
-        [SerializeField] public GameObject rookPowerUp;
+        [SerializeField]
+        public GameObject rookPowerUp;
 
-        [SerializeField] public GameObject bishopPowerUp;
+        [SerializeField]
+        public GameObject bishopPowerUp;
 
-        [SerializeField] public GameObject queenPowerUp;
+        [SerializeField]
+        public GameObject queenPowerUp;
 
-        [SerializeField] public GameObject endLevel;
+        [SerializeField]
+        public GameObject endLevel;
 
         public Material lightMaterial;
         public Material darkMaterial;
@@ -164,9 +175,6 @@ namespace Gambetto.Scripts
 
         private void MovePiece(Piece piece, Cell nextCell, bool gravity = true)
         {
-            //todo: this is a temporary fix pieces should always be in correct position
-            if (Vector3.Distance(nextCell.getGlobalCoordinates(), piece.transform.position) < 0.1f)
-                return;
             var list = new List<Vector3>();
             list.Add(nextCell.getGlobalCoordinates());
             piece.Move(list, gravity);
@@ -174,9 +182,6 @@ namespace Gambetto.Scripts
 
         private void MovePiece(Piece piece, Cell nextCell, List<Vector3> path, bool gravity = true)
         {
-            //todo: this is a temporary fix pieces should always be in correct position
-            if (Vector3.Distance(nextCell.getGlobalCoordinates(), piece.transform.position) < 0.1f)
-                return;
             piece.Move(path, gravity);
         }
 
@@ -184,10 +189,13 @@ namespace Gambetto.Scripts
         {
             var translation = new Vector3(0, 0, 0);
             RoomLayout previousRoomLayout = null;
-            
+
+            // for each room in the level
             for (var roomIdx = 0; roomIdx < roomLayouts.Count; roomIdx++)
             {
                 var roomLayout = roomLayouts[roomIdx];
+
+                roomLayout.LoadRoomData();
 
                 var roomObj = Instantiate(_roomPrefab, translation, Quaternion.identity);
 
@@ -204,8 +212,9 @@ namespace Gambetto.Scripts
                 }
 
                 roomObj.GetComponent<RoomBuilder>().InitializeRoom(roomLayout);
-            
-                if (roomIdx != 0) {
+                // Compute the translation of the current room considering the previous room exit
+                if (roomIdx != 0)
+                {
                     previousRoomLayout = roomLayouts[roomIdx - 1];
 
                     //change the translation of the current room
@@ -226,14 +235,17 @@ namespace Gambetto.Scripts
                         translation += new Vector3(
                             previousRoomLayout.GetExit().x * roomLayout.GetSizeRow(),
                             0,
-                            previousRoomLayout.GetExit().y * roomLayout.GetSizeColumn());
+                            previousRoomLayout.GetExit().y * roomLayout.GetSizeColumn()
+                        );
                     }
                 }
-                
-                roomObj.GetComponent<Transform>().SetPositionAndRotation(translation, Quaternion.identity);
+
+                roomObj
+                    .GetComponent<Transform>()
+                    .SetPositionAndRotation(translation, Quaternion.identity);
 
                 _grid.Add(PopulateRoomGraph(roomLayout, translation, roomIdx, previousRoomLayout));
-                
+
                 _lastColor = ColorConsistencyUpdate(roomLayout, _changed);
             }
 
@@ -271,7 +283,7 @@ namespace Gambetto.Scripts
             var currentCellBorder = new List<Cell>();
 
             var roomSquares = roomLayout.Squares;
-            
+
             //building first a temporary matrix to build easily the graph of cells
             var matrixCells = new Cell[roomLayout.GetSizeRow(), roomLayout.GetSizeColumn()];
             var roomCells = new List<Cell>();
@@ -303,13 +315,7 @@ namespace Gambetto.Scripts
                     roomCells.Add(cell); //add cell to current room cells
                     matrixCells[i, j] = cell; //temporary matrix as helper to update links between cells
 
-                    SolveLinksNeighbors(
-                        cell,
-                        i,
-                        j,
-                        matrixCells,
-                        roomLayout.GetSizeColumn()
-                    );
+                    SolveLinksNeighbors(cell, i, j, matrixCells, roomLayout.GetSizeColumn());
 
                     //set all the neighbors links at BORDER updating also neighbors links in PREVIOUS ROOM
                     if (roomId > 0) //check if it's not the first room.
@@ -368,22 +374,15 @@ namespace Gambetto.Scripts
                     return;
             }
 
-
-            var pieceObj = Instantiate(
-                prefab,
-                cell.getGlobalCoordinates(),
-                quaternion.identity
-            );
+            var pieceObj = Instantiate(prefab, cell.getGlobalCoordinates(), quaternion.identity);
             var pieceScript = pieceObj.GetComponent<Piece>();
             pieceObj.tag = "Enemy"; // tag the enemy for collision detection
             pieceScript.PieceRole = PieceRole.Enemy;
             pieceObj.GetComponent<MeshRenderer>().material = darkMaterial;
-            pieceObj.GetComponent<Rigidbody>().constraints =
-                RigidbodyConstraints.FreezeRotation;
+            pieceObj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
             _enemies.Add(pieceScript, cell);
             _initialEnemiesPositions.Add(pieceObj.GetComponent<Piece>(), cell);
         }
-
 
         private void InstantiateOther(Cell cell, RoomLayout.Square square)
         {
@@ -450,7 +449,7 @@ namespace Gambetto.Scripts
         {
             var cell = new Cell(
                 new Vector2(coordinateOrigin.x, coordinateOrigin.z)
-                + new Vector2(rowNumber, columnNumber),
+                    + new Vector2(rowNumber, columnNumber),
                 roomId
             );
 
