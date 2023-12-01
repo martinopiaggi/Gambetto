@@ -24,6 +24,11 @@ public class RoomLayout : ScriptableObject
 
     public Square[,] Squares => _roomSquares;
 
+    [SerializeField]
+    private List<Behaviour> _behaviours;
+    
+    public List<Behaviour> Behaviours => _behaviours;
+    
     public Vector2Int GetExit()
     {
         return exitSide;
