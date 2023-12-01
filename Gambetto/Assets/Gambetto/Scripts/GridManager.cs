@@ -100,7 +100,7 @@ namespace Gambetto.Scripts
 
             if (playerController.ChosenMove == null)
             {
-                playerController.ChosenMove = _playerCell;
+                playerController.ChosenMove = _initialplayerCell;
             }
 
             // Compute Cpu behaviour and Start the choosing animation for the player
@@ -137,7 +137,7 @@ namespace Gambetto.Scripts
             playerController.ChosenMove = null;
             CPUBehavior.ChosenMoves.Clear();
 
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(1f);
 
             foreach (var enemy in _enemies)
             {
@@ -147,7 +147,7 @@ namespace Gambetto.Scripts
             //MovePiece(_playerPiece, _playerCell);
             Destroy(_playerPiece.gameObject);
             var playerObj = Instantiate(
-                prefabKnight,
+                prefabPawn,
                 _playerCell.getGlobalCoordinates(),
                 quaternion.identity
             );
@@ -343,14 +343,14 @@ namespace Gambetto.Scripts
         private void InstantiatePiece(Cell cell, RoomLayout.Square square, Behaviour behaviour)
         {
             GameObject prefab = null;
-            
+
             switch (square.Value)
             {
                 case RoomLayout.MatrixValue.Spawn:
                     _playerCell = cell;
                     _initialplayerCell = cell;
                     var playerObj = Instantiate(
-                        prefabKnight,
+                        prefabPawn,
                         cell.getGlobalCoordinates(),
                         quaternion.identity
                     );
@@ -384,7 +384,7 @@ namespace Gambetto.Scripts
             var pieceScript = pieceObj.GetComponent<Piece>();
             pieceObj.tag = "Enemy"; // tag the enemy for collision detection
             pieceScript.PieceRole = PieceRole.Enemy;
-            
+
             if (square.Identifier != 0)
             {
                 pieceScript.Pattern = behaviour;
