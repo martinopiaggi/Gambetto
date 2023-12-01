@@ -39,8 +39,7 @@ namespace Gambetto.Scripts
                 AudioManager.Instance.PlaySfx(AudioManager.Instance.chosenMove);
                 ChosenMove = _possibleChoice;
                 MovePath = _possiblePath;
-                _lastDirection =
-                    ChosenMove.getGlobalCoordinates() - _currentCell.getGlobalCoordinates();
+                _lastDirection = ChosenMove.getGlobalCoordinates() - _currentCell.getGlobalCoordinates();
                 _choosing = false;
                 GameClock.Instance.ForceClockTick();
             }
@@ -58,7 +57,6 @@ namespace Gambetto.Scripts
             ChosenMove = _currentCell;
             MovePath = new List<Vector3>();
             MovePath.Add(_currentCell.getGlobalCoordinates());
-            _possibleMovements.Clear();
             _possibleMovementsPath.Clear();
             _possibleMovements = PieceMovement.GetPossibleMovements(piece, currentCell, _possibleMovementsPath);
             _cycleMovesCoroutine = StartCoroutine(CycleMoves());

@@ -103,6 +103,7 @@ namespace Gambetto.Scripts
             if (playerController.ChosenMove == null)
             {
                 playerController.ChosenMove = _playerCell;
+                playerController.MovePath = new List<Vector3> { _playerCell.getGlobalCoordinates() };
             }
 
             // Compute Cpu behaviour and Start the choosing animation for the player
@@ -143,7 +144,7 @@ namespace Gambetto.Scripts
 
             foreach (var enemy in _enemies)
             {
-                MovePiece(enemy.Key, enemy.Value, false);
+                MovePiece(enemy.Key,new List<Vector3>{enemy.Value.getGlobalCoordinates()}, false);
             }
 
             //MovePiece(_playerPiece, _playerCell);
@@ -168,29 +169,16 @@ namespace Gambetto.Scripts
 
             foreach (var enemy in _enemies)
             {
-                MovePiece(enemy.Key, _enemies[enemy.Key], _enemiesPath[enemy.Key]);
+                MovePiece(enemy.Key, _enemiesPath[enemy.Key]);
             }
 
             _playerCell = playerController.ChosenMove;
             _playerPath = playerController.MovePath;
-            MovePiece(_playerPiece, _playerCell, _playerPath);
+            MovePiece(_playerPiece, _playerPath);
         }
 
-        private void MovePiece(Piece piece, Cell nextCell, bool gravity = true)
+        private void MovePiece(Piece piece, List<Vector3> path, bool gravity = true)
         {
-            //todo: this is a temporary fix pieces should always be in correct position
-            if (Vector3.Distance(nextCell.getGlobalCoordinates(), piece.transform.position) < 0.1f)
-                return;
-            var list = new List<Vector3>();
-            list.Add(nextCell.getGlobalCoordinates());
-            piece.Move(list, gravity);
-        }
-
-        private void MovePiece(Piece piece, Cell nextCell, List<Vector3> path, bool gravity = true)
-        {
-            //todo: this is a temporary fix pieces should always be in correct position
-            if (Vector3.Distance(nextCell.getGlobalCoordinates(), piece.transform.position) < 0.1f)
-                return;
             piece.Move(path, gravity);
         }
 
