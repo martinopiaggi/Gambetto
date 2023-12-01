@@ -24,6 +24,7 @@ namespace Gambetto.Scripts
 
         private readonly List<List<Cell>> _grid = new List<List<Cell>>(); //maybe we can remove _grid? (never used)
         private Dictionary<Piece, Cell> _enemies = new Dictionary<Piece, Cell>();
+        private Dictionary<Piece, List<Vector3>> _enemiesPath = new Dictionary<Piece, List<Vector3>>();
         private Dictionary<Piece, Cell> _initialEnemiesPositions = new Dictionary<Piece, Cell>();
         private Dictionary<PieceType, Cell> powerUps = new Dictionary<PieceType, Cell>();
 
@@ -95,12 +96,14 @@ namespace Gambetto.Scripts
                 foreach (var enemy in _enemies)
                 {
                     CPUBehavior.ChosenMoves[enemy.Key] = enemy.Value;
+                    CPUBehavior.MovePaths[enemy.Key] = new List<Vector3> { enemy.Value.getGlobalCoordinates() };;
                 }
             }
 
             if (playerController.ChosenMove == null)
             {
                 playerController.ChosenMove = _playerCell;
+                playerController.MovePath = new List<Vector3> { _playerCell.getGlobalCoordinates() };
             }
 
             // Compute Cpu behaviour and Start the choosing animation for the player
@@ -141,13 +144,13 @@ namespace Gambetto.Scripts
 
             foreach (var enemy in _enemies)
             {
-                MovePiece(enemy.Key, enemy.Value, false);
+                MovePiece(enemy.Key,new List<Vector3>{enemy.Value.getGlobalCoordinates()}, false);
             }
 
             //MovePiece(_playerPiece, _playerCell);
             Destroy(_playerPiece.gameObject);
             var playerObj = Instantiate(
-                prefabKnight,
+                prefabQueen,
                 _playerCell.getGlobalCoordinates(),
                 quaternion.identity
             );
@@ -162,32 +165,20 @@ namespace Gambetto.Scripts
         private void UpdatePiecesPosition()
         {
             _enemies = new Dictionary<Piece, Cell>(CPUBehavior.ChosenMoves);
+            _enemiesPath = new Dictionary<Piece, List<Vector3>>(CPUBehavior.MovePaths);
 
             foreach (var enemy in _enemies)
             {
-                MovePiece(enemy.Key, _enemies[enemy.Key]);
+                MovePiece(enemy.Key, _enemiesPath[enemy.Key]);
             }
 
             _playerCell = playerController.ChosenMove;
             _playerPath = playerController.MovePath;
-            MovePiece(_playerPiece, _playerCell, _playerPath);
+            MovePiece(_playerPiece, _playerPath);
         }
 
-        private void MovePiece(Piece piece, Cell nextCell, bool gravity = true)
+        private void MovePiece(Piece piece, List<Vector3> path, bool gravity = true)
         {
-            //todo: this is a temporary fix pieces should always be in correct position
-            if (Vector3.Distance(nextCell.getGlobalCoordinates(), piece.transform.position) < 0.1f)
-                return;
-            var list = new List<Vector3>();
-            list.Add(nextCell.getGlobalCoordinates());
-            piece.Move(list, gravity);
-        }
-
-        private void MovePiece(Piece piece, Cell nextCell, List<Vector3> path, bool gravity = true)
-        {
-            //todo: this is a temporary fix pieces should always be in correct position
-            if (Vector3.Distance(nextCell.getGlobalCoordinates(), piece.transform.position) < 0.1f)
-                return;
             piece.Move(path, gravity);
         }
 

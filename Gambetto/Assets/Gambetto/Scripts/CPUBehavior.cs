@@ -1,7 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Gambetto.Scripts.Pieces;
+using Gambetto.Scripts.Utils;
 using UnityEngine;
+using Vector3 = UnityEngine.Vector3;
 
 namespace Gambetto.Scripts
 {
@@ -9,6 +12,8 @@ namespace Gambetto.Scripts
     {
         private GameObject _selectedSquare;
         private Dictionary<Piece, Cell> _chosenMoves;
+        private Dictionary<Piece, List<Vector3>> _movePaths;
+        private List<List<Vector3>> _possiblePaths;
         private Cell _playerCell;
         private Coroutine _computingCoroutine;
 
@@ -16,6 +21,12 @@ namespace Gambetto.Scripts
         {
             get => _chosenMoves;
             set => _chosenMoves = value;
+        }
+        
+        public Dictionary<Piece, List<Vector3>> MovePaths
+        {
+            get => _movePaths;
+            set => _movePaths = value;
         }
 
         // Start is called before the first frame update
@@ -26,6 +37,8 @@ namespace Gambetto.Scripts
             _selectedSquare = Instantiate(selectedSquarePrefab);
             _selectedSquare.SetActive(false);
             _chosenMoves = new Dictionary<Piece, Cell>();
+            _movePaths = new Dictionary<Piece, List<Vector3>>();
+            _possiblePaths = new List<List<Vector3>>();
         }
 
         public void StartComputing(Cell playerCell, Dictionary<Piece, Cell> enemies) //todo enemies!
@@ -33,7 +46,7 @@ namespace Gambetto.Scripts
                if (_computingCoroutine != null)
                 StopCoroutine(_computingCoroutine);
 
-            _computingCoroutine = StartCoroutine(ComputingCoroutine(playerCell, enemies));
+               _computingCoroutine = StartCoroutine(ComputingCoroutine(playerCell, enemies));
         }
 
         public IEnumerator ComputingCoroutine(Cell playerCell, Dictionary<Piece, Cell> enemies)
@@ -48,12 +61,16 @@ namespace Gambetto.Scripts
 
         private void ComputeNextMove(Piece piece, Cell cell)
         {
-            var possibleMovements = PlayerController.GetPossibleMovements(piece, cell);
+            _possiblePaths.Clear();
+            var possibleMovements = PieceMovement.GetPossibleMovements(piece, cell, _possiblePaths);
             var chosenMove = cell;
             var minDist = float.MaxValue;
 
+            int index = 0;
+            int chosenIndex = 0;
             foreach (var move in possibleMovements)
             {
+                index++;
                 var dist = move.getGlobalCoordinates() - _playerCell.getGlobalCoordinates();
                 if (move.isEmpty())
                     continue;
@@ -63,6 +80,7 @@ namespace Gambetto.Scripts
                 {
                     minDist = dist.magnitude;
                     chosenMove = move;
+                    chosenIndex = index-1;
                 }
             }
             // Debug.Log(
@@ -73,6 +91,7 @@ namespace Gambetto.Scripts
             //         + " as next move"
             // );
             _chosenMoves[piece] = chosenMove; //todo now for testing
+            _movePaths[piece] = _possiblePaths[chosenIndex];
         }
 
         public bool ThereIsSomeone(Cell here)
