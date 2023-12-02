@@ -24,7 +24,8 @@ namespace Gambetto.Scripts
 
         private readonly List<List<Cell>> _grid = new List<List<Cell>>(); //maybe we can remove _grid? (never used)
         private Dictionary<Piece, Cell> _enemies = new Dictionary<Piece, Cell>();
-        private Dictionary<Piece, List<Vector3>> _enemiesPath = new Dictionary<Piece, List<Vector3>>();
+        private Dictionary<Piece, List<Vector3>> _enemiesPath =
+            new Dictionary<Piece, List<Vector3>>();
         private Dictionary<Piece, Cell> _initialEnemiesPositions = new Dictionary<Piece, Cell>();
         private Dictionary<PieceType, Cell> powerUps = new Dictionary<PieceType, Cell>();
 
@@ -96,13 +97,20 @@ namespace Gambetto.Scripts
                 foreach (var enemy in _enemies)
                 {
                     CPUBehavior.ChosenMoves[enemy.Key] = enemy.Value;
-                    CPUBehavior.MovePaths[enemy.Key] = new List<Vector3> { enemy.Value.getGlobalCoordinates() };;
+                    CPUBehavior.MovePaths[enemy.Key] = new List<Vector3>
+                    {
+                        enemy.Value.GetGlobalCoordinates()
+                    };
+                    ;
                 }
             }
 
             if (playerController.ChosenMove == null)
             {
-                playerController.MovePath = new List<Vector3> { _playerCell.getGlobalCoordinates() };
+                playerController.MovePath = new List<Vector3>
+                {
+                    _playerCell.GetGlobalCoordinates()
+                };
                 playerController.ChosenMove = _initialplayerCell;
             }
 
@@ -112,7 +120,7 @@ namespace Gambetto.Scripts
                 UpdatePlayerPosition();
             } // apply movements from the previous tick
 
-            if (_playerCell.isEmpty())
+            if (_playerCell.IsEmpty())
             {
                 isDead = true;
                 StartCoroutine(restartLevel());
@@ -128,7 +136,7 @@ namespace Gambetto.Scripts
 
         public Vector3 getPlayerPosition()
         {
-            return _playerCell.getGlobalCoordinates();
+            return _playerCell.GetGlobalCoordinates();
         }
 
         public IEnumerator restartLevel()
@@ -146,14 +154,18 @@ namespace Gambetto.Scripts
 
             foreach (var enemy in _enemies)
             {
-                MovePiece(enemy.Key,new List<Vector3>{enemy.Value.getGlobalCoordinates()}, false);
+                MovePiece(
+                    enemy.Key,
+                    new List<Vector3> { enemy.Value.GetGlobalCoordinates() },
+                    false
+                );
             }
 
             //MovePiece(_playerPiece, _playerCell);
             Destroy(_playerPiece.gameObject);
             var playerObj = Instantiate(
                 prefabPawn,
-                _playerCell.getGlobalCoordinates(),
+                _playerCell.GetGlobalCoordinates(),
                 quaternion.identity
             );
             playerObj.GetComponent<MeshRenderer>().material = lightMaterial;
@@ -174,23 +186,22 @@ namespace Gambetto.Scripts
                 MovePiece(enemy.Key, _enemiesPath[enemy.Key]);
             }
         }
-        
+
         private void UpdatePlayerPosition()
         {
             _playerCell = playerController.ChosenMove;
             _playerPath = playerController.MovePath;
             MovePiece(_playerPiece, _playerPath);
         }
-        
 
         private void MovePiece(Piece piece, List<Vector3> path, bool gravity = true)
         {
             // Check if the piece is already in the destination
-            if (Vector3.Distance(piece.transform.position,  path[^1]) < 0.1f) 
+            if (Vector3.Distance(piece.transform.position, path[^1]) < 0.1f)
                 return;
             piece.Move(path, gravity);
         }
-        
+
         public void CreateGrid(List<RoomLayout> roomLayouts)
         {
             var translation = new Vector3(0, 0, 0);
@@ -311,13 +322,14 @@ namespace Gambetto.Scripts
                     );
 
                     if (square.Value == RoomLayout.MatrixValue.Empty)
-                        cell.setEmpty();
+                        cell.SetEmpty();
                     else if (square.Value != RoomLayout.MatrixValue.Floor)
                     {
                         Behaviour behaviour = null;
                         if (square.Identifier != 0)
                         {
-                            behaviour = roomLayout.Behaviours[square.Identifier];
+                            behaviour = roomLayout.Behaviours.Find(b => b.Id == square.Identifier);
+                            //behaviour = roomLayout.Behaviours[square.Identifier];
                         }
                         InstantiatePiece(cell, square, behaviour);
                         InstantiateOther(cell, square);
@@ -357,7 +369,7 @@ namespace Gambetto.Scripts
                     _initialplayerCell = cell;
                     var playerObj = Instantiate(
                         prefabKnight,
-                        cell.getGlobalCoordinates(),
+                        cell.GetGlobalCoordinates(),
                         quaternion.identity
                     );
                     playerObj.GetComponent<MeshRenderer>().material = lightMaterial;
@@ -386,7 +398,7 @@ namespace Gambetto.Scripts
                     return;
             }
 
-            var pieceObj = Instantiate(prefab, cell.getGlobalCoordinates(), quaternion.identity);
+            var pieceObj = Instantiate(prefab, cell.GetGlobalCoordinates(), quaternion.identity);
             var pieceScript = pieceObj.GetComponent<Piece>();
             pieceObj.tag = "Enemy"; // tag the enemy for collision detection
             pieceScript.PieceRole = PieceRole.Enemy;
@@ -411,7 +423,7 @@ namespace Gambetto.Scripts
                     powerUps.Add(PieceType.Bishop, cell);
                     var bishopPowerUpObj = Instantiate(
                         bishopPowerUp,
-                        cell.getGlobalCoordinates() + new Vector3(0, 0.05f, 0),
+                        cell.GetGlobalCoordinates() + new Vector3(0, 0.05f, 0),
                         quaternion.identity
                     );
                     break;
@@ -420,7 +432,7 @@ namespace Gambetto.Scripts
                     powerUps.Add(PieceType.Knight, cell);
                     var knightPowerUpObj = Instantiate(
                         knightPowerUp,
-                        cell.getGlobalCoordinates() + new Vector3(0, 0.05f, 0),
+                        cell.GetGlobalCoordinates() + new Vector3(0, 0.05f, 0),
                         quaternion.identity
                     );
                     break;
@@ -428,7 +440,7 @@ namespace Gambetto.Scripts
                     powerUps.Add(PieceType.Rook, cell);
                     var rookPowerUpObj = Instantiate(
                         rookPowerUp,
-                        cell.getGlobalCoordinates() + new Vector3(0, 0.05f, 0),
+                        cell.GetGlobalCoordinates() + new Vector3(0, 0.05f, 0),
                         quaternion.identity
                     );
                     break;
@@ -447,7 +459,7 @@ namespace Gambetto.Scripts
                     _endLevelCell = cell;
                     var powerUpObj = Instantiate(
                         endLevel,
-                        cell.getGlobalCoordinates() + new Vector3(0, 0.05f, 0),
+                        cell.GetGlobalCoordinates() + new Vector3(0, 0.05f, 0),
                         quaternion.identity
                     );
                     break;
@@ -503,8 +515,8 @@ namespace Gambetto.Scripts
                 var nextEast = matrixCells[rowNumber, columnNumber - 1];
                 if (nextEast != null)
                 {
-                    cell.setNext(Directions.East, nextEast);
-                    nextEast.setNext(Directions.West, cell);
+                    cell.SetNext(Directions.East, nextEast);
+                    nextEast.SetNext(Directions.West, cell);
                 }
 
                 if (rowNumber >= 1)
@@ -512,8 +524,8 @@ namespace Gambetto.Scripts
                     var nextSouthEast = matrixCells[rowNumber - 1, columnNumber - 1];
                     if (nextSouthEast != null)
                     {
-                        cell.setNext(Directions.SouthEast, nextSouthEast);
-                        nextSouthEast.setNext(Directions.NorthWest, cell);
+                        cell.SetNext(Directions.SouthEast, nextSouthEast);
+                        nextSouthEast.SetNext(Directions.NorthWest, cell);
                     }
                 }
             }
@@ -523,8 +535,8 @@ namespace Gambetto.Scripts
                 var nextSouth = matrixCells[rowNumber - 1, columnNumber];
                 if (nextSouth != null)
                 {
-                    cell.setNext(Directions.South, nextSouth);
-                    nextSouth.setNext(Directions.North, cell);
+                    cell.SetNext(Directions.South, nextSouth);
+                    nextSouth.SetNext(Directions.North, cell);
                 }
 
                 if (columnNumber < roomColumnSize - 1)
@@ -532,8 +544,8 @@ namespace Gambetto.Scripts
                     var nextSouthWest = matrixCells[rowNumber - 1, columnNumber + 1];
                     if (nextSouthWest != null)
                     {
-                        cell.setNext(Directions.SouthWest, nextSouthWest);
-                        nextSouthWest.setNext(Directions.NorthEast, cell);
+                        cell.SetNext(Directions.SouthWest, nextSouthWest);
+                        nextSouthWest.SetNext(Directions.NorthEast, cell);
                     }
                 }
             }
@@ -556,29 +568,29 @@ namespace Gambetto.Scripts
                     if (columnNumber < _cellBorder.Count)
                     {
                         var foreignCell = _cellBorder[columnNumber];
-                        cell.setNext(Directions.South, foreignCell);
-                        foreignCell.setNext(Directions.North, cell);
+                        cell.SetNext(Directions.South, foreignCell);
+                        foreignCell.SetNext(Directions.North, cell);
 
                         if (columnNumber + 1 < _cellBorder.Count)
                         {
                             foreignCell = _cellBorder[columnNumber + 1];
-                            cell.setNext(Directions.SouthWest, foreignCell);
-                            foreignCell.setNext(Directions.NorthEast, cell);
+                            cell.SetNext(Directions.SouthWest, foreignCell);
+                            foreignCell.SetNext(Directions.NorthEast, cell);
                         }
 
                         if (columnNumber - 1 >= 0)
                         {
                             foreignCell = _cellBorder[columnNumber - 1];
-                            cell.setNext(Directions.SouthEast, foreignCell);
-                            foreignCell.setNext(Directions.NorthWest, cell);
+                            cell.SetNext(Directions.SouthEast, foreignCell);
+                            foreignCell.SetNext(Directions.NorthWest, cell);
                         }
                     }
 
                     if (columnNumber - 1 >= 0)
                     {
                         var foreignCell = _cellBorder[columnNumber - 1];
-                        cell.setNext(Directions.SouthEast, foreignCell);
-                        foreignCell.setNext(Directions.NorthWest, cell);
+                        cell.SetNext(Directions.SouthEast, foreignCell);
+                        foreignCell.SetNext(Directions.NorthWest, cell);
                     }
                 }
 
@@ -588,29 +600,29 @@ namespace Gambetto.Scripts
                     if (columnNumber < _cellBorder.Count)
                     {
                         var foreignCell = _cellBorder[columnNumber];
-                        cell.setNext(Directions.North, foreignCell);
-                        foreignCell.setNext(Directions.South, cell);
+                        cell.SetNext(Directions.North, foreignCell);
+                        foreignCell.SetNext(Directions.South, cell);
 
                         if (columnNumber - 1 > 0)
                         {
                             foreignCell = _cellBorder[columnNumber - 1];
-                            cell.setNext(Directions.NorthEast, foreignCell);
-                            foreignCell.setNext(Directions.SouthWest, cell);
+                            cell.SetNext(Directions.NorthEast, foreignCell);
+                            foreignCell.SetNext(Directions.SouthWest, cell);
                         }
 
                         if (columnNumber + 1 < _cellBorder.Count)
                         {
                             foreignCell = _cellBorder[columnNumber + 1];
-                            cell.setNext(Directions.NorthWest, foreignCell);
-                            foreignCell.setNext(Directions.SouthEast, cell);
+                            cell.SetNext(Directions.NorthWest, foreignCell);
+                            foreignCell.SetNext(Directions.SouthEast, cell);
                         }
                     }
 
                     if (columnNumber - 1 >= 0)
                     {
                         var foreignCell = _cellBorder[columnNumber - 1];
-                        cell.setNext(Directions.NorthEast, foreignCell);
-                        foreignCell.setNext(Directions.SouthWest, cell);
+                        cell.SetNext(Directions.NorthEast, foreignCell);
+                        foreignCell.SetNext(Directions.SouthWest, cell);
                     }
                 }
 
@@ -623,29 +635,29 @@ namespace Gambetto.Scripts
                 if (rowNumber < _cellBorder.Count)
                 {
                     var foreignCell = _cellBorder[rowNumber];
-                    cell.setNext(Directions.East, foreignCell);
-                    foreignCell.setNext(Directions.West, cell);
+                    cell.SetNext(Directions.East, foreignCell);
+                    foreignCell.SetNext(Directions.West, cell);
 
                     if (rowNumber - 1 >= 0)
                     {
                         foreignCell = _cellBorder[rowNumber - 1];
-                        cell.setNext(Directions.SouthEast, foreignCell);
-                        foreignCell.setNext(Directions.NorthWest, cell);
+                        cell.SetNext(Directions.SouthEast, foreignCell);
+                        foreignCell.SetNext(Directions.NorthWest, cell);
                     }
 
                     if (rowNumber + 1 < _cellBorder.Count)
                     {
                         foreignCell = _cellBorder[rowNumber + 1];
-                        cell.setNext(Directions.NorthEast, foreignCell);
-                        foreignCell.setNext(Directions.SouthWest, cell);
+                        cell.SetNext(Directions.NorthEast, foreignCell);
+                        foreignCell.SetNext(Directions.SouthWest, cell);
                     }
                 }
 
                 if (rowNumber - 1 >= 0)
                 {
                     var foreignCell = _cellBorder[rowNumber - 1];
-                    cell.setNext(Directions.SouthEast, foreignCell);
-                    foreignCell.setNext(Directions.NorthWest, cell);
+                    cell.SetNext(Directions.SouthEast, foreignCell);
+                    foreignCell.SetNext(Directions.NorthWest, cell);
                 }
             }
 
@@ -657,21 +669,21 @@ namespace Gambetto.Scripts
                 if (rowNumber < _cellBorder.Count)
                 {
                     var foreignCell = _cellBorder[rowNumber];
-                    cell.setNext(Directions.West, foreignCell);
-                    foreignCell.setNext(Directions.East, cell);
+                    cell.SetNext(Directions.West, foreignCell);
+                    foreignCell.SetNext(Directions.East, cell);
 
                     if (rowNumber - 1 > 0)
                     {
                         foreignCell = _cellBorder[rowNumber - 1];
-                        cell.setNext(Directions.SouthWest, foreignCell);
-                        foreignCell.setNext(Directions.NorthEast, cell);
+                        cell.SetNext(Directions.SouthWest, foreignCell);
+                        foreignCell.SetNext(Directions.NorthEast, cell);
                     }
 
                     if (rowNumber + 1 < _cellBorder.Count)
                     {
                         foreignCell = _cellBorder[rowNumber + 1];
-                        cell.setNext(Directions.NorthWest, foreignCell);
-                        foreignCell.setNext(Directions.SouthEast, cell);
+                        cell.SetNext(Directions.NorthWest, foreignCell);
+                        foreignCell.SetNext(Directions.SouthEast, cell);
                     }
                 }
 
@@ -679,8 +691,8 @@ namespace Gambetto.Scripts
                     return;
                 {
                     var foreignCell = _cellBorder[rowNumber - 1];
-                    cell.setNext(Directions.SouthWest, foreignCell);
-                    foreignCell.setNext(Directions.NorthEast, cell);
+                    cell.SetNext(Directions.SouthWest, foreignCell);
+                    foreignCell.SetNext(Directions.NorthEast, cell);
                 }
             }
         }

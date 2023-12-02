@@ -23,14 +23,14 @@ namespace Gambetto.Scripts.Utils
                     foreach (var direction in directions)
                     {
                         tempCell = currentCell;
-                        while (tempCell?.getNext(direction) != null)
+                        while (tempCell?.GetNext(direction) != null)
                         {
-                            var nextCell = tempCell.getNext(direction);
-                            if (tempCell.isEmpty())
+                            var nextCell = tempCell.GetNext(direction);
+                            if (tempCell.IsEmpty())
                                 break;
                             tempCell = nextCell;
                             tempPath = new List<Vector3>();
-                            tempPath.Add(tempCell.getGlobalCoordinates());
+                            tempPath.Add(tempCell.GetGlobalCoordinates());
                             possibleMovement.Add(tempCell);
                             possibleMovementPath.Add(tempPath);
                         }
@@ -41,12 +41,12 @@ namespace Gambetto.Scripts.Utils
                     foreach (var direction in directions)
                     {
                         tempCell = currentCell;
-                        tempCell = tempCell.getNext(direction);
+                        tempCell = tempCell.GetNext(direction);
                         if (tempCell != null)
                         {
                             tempPath = new List<Vector3>();
                             possibleMovement.Add(tempCell);
-                            tempPath.Add(tempCell.getGlobalCoordinates());
+                            tempPath.Add(tempCell.GetGlobalCoordinates());
                             possibleMovementPath.Add(tempPath);
                         }
                     }
@@ -59,12 +59,12 @@ namespace Gambetto.Scripts.Utils
                         tempPath = new List<Vector3>();
                         for (var j = 0; j < 3; j++)
                         {
-                            tempCell = tempCell.getNext(directions[i + j]);
+                            tempCell = tempCell.GetNext(directions[i + j]);
                             if (tempCell == null)
                                 break;
                             if (j == 1)
                             {
-                                tempPath.Add(tempCell.getGlobalCoordinates());
+                                tempPath.Add(tempCell.GetGlobalCoordinates());
                             }
                         }
 
@@ -72,7 +72,7 @@ namespace Gambetto.Scripts.Utils
                         if (tempCell != null)
                         {
                             possibleMovement.Add(tempCell);
-                            tempPath.Add(tempCell.getGlobalCoordinates());
+                            tempPath.Add(tempCell.GetGlobalCoordinates());
                             possibleMovementPath.Add(tempPath);
                         }
                     }

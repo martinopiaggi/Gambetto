@@ -29,14 +29,14 @@ public class Cell
         globalCoordinates2D = new Vector2(coordinates.x, coordinates.y);
     }
     
-    public bool isEmpty() => _empty;
+    public bool IsEmpty() => _empty;
 
-    public void setEmpty()
+    public void SetEmpty()
     {
         _empty = true;
     }
     
-    public void setNext(Vector2Int dir,Cell next)
+    public void SetNext(Vector2Int dir,Cell next)
     {
         //with a switch I have an error :( @todo/refactor
         if (dir == Directions.North) north = next;
@@ -49,32 +49,33 @@ public class Cell
         if (dir == Directions.SouthWest) southWest = next;
     }
     
-    public Cell getNext(Vector2Int dir)
+    public Cell GetNext(Vector2Int dir)
     {
-        //with a switch I have an error :( @todo/refactor
-        if (dir == Directions.North) return north;
-        if (dir == Directions.South) return south;
-        if (dir == Directions.East) return east;
-        if (dir == Directions.West) return west;
-        if (dir == Directions.NorthWest)  return northWest;
-        if (dir == Directions.NorthEast) return northEast;
-        if (dir == Directions.SouthEast ) return southEast;
-        return southWest;
+        //TODO extend to multiple next cells 
+            //with a switch I have an error :( @todo/refactor
+            if (dir == Directions.North) return north;
+            if (dir == Directions.South) return south;
+            if (dir == Directions.East) return east;
+            if (dir == Directions.West) return west;
+            if (dir == Directions.NorthWest)  return northWest;
+            if (dir == Directions.NorthEast) return northEast;
+            if (dir == Directions.SouthEast ) return southEast;
+            return southWest;
     }
 
 
     //roomId depends by the level, not by the roomLayout
     //same roomLayout can have different ID in different levels
-    public int getRoomNumber()
+    public int GetRoomNumber()
     {
         return _roomId;
     }
     
-    public Vector3 getGlobalCoordinates()
+    public Vector3 GetGlobalCoordinates()
     {
         return globalCoordinates;
     }
-    public Vector2 getGlobalCoordinates2D()
+    public Vector2 GetGlobalCoordinates2D()
     {
         return globalCoordinates2D;
     }
