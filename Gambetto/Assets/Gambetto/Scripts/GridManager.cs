@@ -102,14 +102,14 @@ namespace Gambetto.Scripts
 
             if (playerController.ChosenMove == null)
             {
-                playerController.ChosenMove = _playerCell;
                 playerController.MovePath = new List<Vector3> { _playerCell.getGlobalCoordinates() };
+                playerController.ChosenMove = _initialplayerCell;
             }
 
             // Compute Cpu behaviour and Start the choosing animation for the player
             if (!isDead)
             {
-                UpdatePiecesPosition();
+                UpdatePlayerPosition();
             } // apply movements from the previous tick
 
             if (_playerCell.isEmpty())
@@ -120,7 +120,8 @@ namespace Gambetto.Scripts
 
             if (!isDead)
             {
-                CPUBehavior.StartComputing(_playerCell, _enemies);
+                CPUBehavior.ComputeCPUMoves(_playerCell, _enemies);
+                UpdateEnemiesPosition();
                 playerController.StartChoosing(_playerPiece, _playerCell);
             }
         }
@@ -140,7 +141,7 @@ namespace Gambetto.Scripts
             playerController.ChosenMove = null;
             CPUBehavior.ChosenMoves.Clear();
 
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(1f);
 
             foreach (var enemy in _enemies)
             {
@@ -150,7 +151,7 @@ namespace Gambetto.Scripts
             //MovePiece(_playerPiece, _playerCell);
             Destroy(_playerPiece.gameObject);
             var playerObj = Instantiate(
-                prefabQueen,
+                prefabPawn,
                 _playerCell.getGlobalCoordinates(),
                 quaternion.identity
             );
@@ -162,7 +163,7 @@ namespace Gambetto.Scripts
             yield return null;
         }
 
-        private void UpdatePiecesPosition()
+        private void UpdateEnemiesPosition()
         {
             _enemies = new Dictionary<Piece, Cell>(CPUBehavior.ChosenMoves);
             _enemiesPath = new Dictionary<Piece, List<Vector3>>(CPUBehavior.MovePaths);
@@ -171,32 +172,34 @@ namespace Gambetto.Scripts
             {
                 MovePiece(enemy.Key, _enemiesPath[enemy.Key]);
             }
-
+        }
+        
+        private void UpdatePlayerPosition()
+        {
             _playerCell = playerController.ChosenMove;
             _playerPath = playerController.MovePath;
             MovePiece(_playerPiece, _playerPath);
         }
+        
 
         private void MovePiece(Piece piece, List<Vector3> path, bool gravity = true)
         {
             piece.Move(path, gravity);
         }
-
+        
         public void CreateGrid(List<RoomLayout> roomLayouts)
         {
             var translation = new Vector3(0, 0, 0);
+            RoomLayout previousRoomLayout = null;
 
+            // for each room in the level
             for (var roomIdx = 0; roomIdx < roomLayouts.Count; roomIdx++)
             {
                 var roomLayout = roomLayouts[roomIdx];
 
-                RoomLayout previousRoomLayout = null;
-                if (roomIdx != 0)
-                    previousRoomLayout = roomLayouts[roomIdx - 1];
+                roomLayout.LoadRoomData();
 
-                _grid.Add(PopulateRoomGraph(roomLayout, translation, roomIdx, previousRoomLayout));
-
-                var roomObj = Instantiate(_roomPrefab, transform.position, Quaternion.identity);
+                var roomObj = Instantiate(_roomPrefab, translation, Quaternion.identity);
 
                 //if the last color is 0 (white) the starting color will be changed in 1 (blue)
                 if (_lastColor == 1)
@@ -211,35 +214,39 @@ namespace Gambetto.Scripts
                 }
 
                 roomObj.GetComponent<RoomBuilder>().InitializeRoom(roomLayout);
-                roomObj.transform.position = translation;
+                // Compute the translation of the current room considering the previous room exit
+                if (roomIdx != 0)
+                {
+                    previousRoomLayout = roomLayouts[roomIdx - 1];
 
-                //change the translation of the next room according to the exit of the previous room
-                if (
-                    roomLayout.GetExit() != Directions.South
-                    && roomLayout.GetExit() != Directions.East
-                )
-                {
-                    translation += new Vector3(
-                        roomLayout.GetExit().x * roomLayout.GetSizeRow(),
-                        0,
-                        roomLayout.GetExit().y * roomLayout.GetSizeColumn()
-                    );
-                }
-                else
-                {
-                    //we have to compute the correct translation considering **next** roomLayout size in case of South/East
-                    if (roomIdx != (roomLayouts.Count - 1))
+                    //change the translation of the current room
+                    if (
+                        previousRoomLayout.GetExit() != Directions.South
+                        && previousRoomLayout.GetExit() != Directions.East
+                    )
                     {
-                        var nextRoomLayout = roomLayouts[roomIdx + 1];
-                        translation =
-                            translation
-                            + new Vector3(
-                                roomLayout.GetExit().x * nextRoomLayout.GetSizeRow(),
-                                0,
-                                roomLayout.GetExit().y * nextRoomLayout.GetSizeColumn()
-                            );
+                        translation += new Vector3(
+                            previousRoomLayout.GetExit().x * previousRoomLayout.GetSizeRow(),
+                            0,
+                            previousRoomLayout.GetExit().y * previousRoomLayout.GetSizeColumn()
+                        );
+                    }
+                    else
+                    {
+                        //we have to compute the correct translation considering **this** roomLayout size in case of South/East
+                        translation += new Vector3(
+                            previousRoomLayout.GetExit().x * roomLayout.GetSizeRow(),
+                            0,
+                            previousRoomLayout.GetExit().y * roomLayout.GetSizeColumn()
+                        );
                     }
                 }
+
+                roomObj
+                    .GetComponent<Transform>()
+                    .SetPositionAndRotation(translation, Quaternion.identity);
+
+                _grid.Add(PopulateRoomGraph(roomLayout, translation, roomIdx, previousRoomLayout));
 
                 _lastColor = ColorConsistencyUpdate(roomLayout, _changed);
             }
@@ -275,58 +282,54 @@ namespace Gambetto.Scripts
             RoomLayout previousRoomLayout
         )
         {
-            var borderDirection = roomLayout.GetExit(); //border direction of this room
             var currentCellBorder = new List<Cell>();
+
+            var roomSquares = roomLayout.Squares;
 
             //building first a temporary matrix to build easily the graph of cells
             var matrixCells = new Cell[roomLayout.GetSizeRow(), roomLayout.GetSizeColumn()];
             var roomCells = new List<Cell>();
 
-            for (var rowNumber = 0; rowNumber < roomLayout.GetSizeRow(); rowNumber++)
+            for (var i = 0; i < roomLayout.GetSizeRow(); i++)
             {
-                for (
-                    var columnNumber = 0;
-                    columnNumber < roomLayout.GetSizeColumn();
-                    columnNumber++
-                )
+                for (var j = 0; j < roomLayout.GetSizeColumn(); j++)
                 {
-                    var square = roomLayout.GetRows()[rowNumber].GetColumns()[columnNumber];
+                    var square = roomSquares[i, j];
 
                     var cell = CreateCell(
                         coordinateOrigin,
                         roomLayout.GetExit(),
-                        rowNumber,
-                        columnNumber,
+                        i,
+                        j,
                         roomId,
-                        roomLayout,
+                        roomLayout, //todo: maybe we can remove this parameter
                         currentCellBorder
                     );
 
-                    if (square == -1)
+                    if (square.Value == RoomLayout.MatrixValue.Empty)
                         cell.setEmpty();
-                    else if (square != 0)
+                    else if (square.Value != RoomLayout.MatrixValue.Floor)
                     {
-                        InstantiatePiece(cell, square);
+                        Behaviour behaviour = null;
+                        if (square.Identifier != 0)
+                        {
+                            behaviour = roomLayout.Behaviours[square.Identifier];
+                        }
+                        InstantiatePiece(cell, square, behaviour);
                         InstantiateOther(cell, square);
                     }
 
                     roomCells.Add(cell); //add cell to current room cells
-                    matrixCells[rowNumber, columnNumber] = cell; //temporary matrix as helper to update links between cells
+                    matrixCells[i, j] = cell; //temporary matrix as helper to update links between cells
 
-                    SolveLinksNeighbors(
-                        cell,
-                        rowNumber,
-                        columnNumber,
-                        matrixCells,
-                        roomLayout.GetSizeColumn()
-                    );
+                    SolveLinksNeighbors(cell, i, j, matrixCells, roomLayout.GetSizeColumn());
 
                     //set all the neighbors links at BORDER updating also neighbors links in PREVIOUS ROOM
                     if (roomId > 0) //check if it's not the first room.
                         SolveInterRoomConsistencies(
                             cell,
-                            rowNumber,
-                            columnNumber,
+                            i,
+                            j,
                             previousRoomLayout.GetExit() * -1,
                             _cellBorder,
                             roomLayout.GetSizeRow(),
@@ -339,71 +342,68 @@ namespace Gambetto.Scripts
             return roomCells;
         }
 
-        private void InstantiatePiece(Cell cell, int type)
+        private void InstantiatePiece(Cell cell, RoomLayout.Square square, Behaviour behaviour)
         {
-            if (type == 99) //it's the player
-            {
-                _playerCell = cell;
-                _initialplayerCell = cell;
-                var playerObj = Instantiate(
-                    prefabKnight,
-                    cell.getGlobalCoordinates(),
-                    quaternion.identity
-                );
-                playerObj.GetComponent<MeshRenderer>().material = lightMaterial;
-                _playerPiece = playerObj.GetComponent<Piece>();
-                _playerPiece.PieceRole = PieceRole.Player;
-            }
-            else if (type < 100)
-            {
-                var prefab = prefabPawn;
-                switch (type)
-                {
-                    case 1:
-                        prefab = prefabPawn;
-                        break;
-                    case 2:
-                        prefab = prefabBishop;
-                        break;
-                    case 3:
-                        prefab = prefabKnight;
-                        break;
-                    case 5:
-                        prefab = prefabRook;
-                        break;
-                    case 8:
-                        prefab = prefabQueen;
-                        break;
-                    case 9:
-                        prefab = prefabKing;
-                        break;
-                }
+            GameObject prefab = null;
 
-                //todo instantiate enemy based on *type*
-                var pieceObj = Instantiate(
-                    prefab,
-                    cell.getGlobalCoordinates(),
-                    quaternion.identity
-                );
-                var pieceScript = pieceObj.GetComponent<Piece>();
-                pieceObj.tag = "Enemy"; // tag the enemy for collision detection
-                pieceScript.PieceRole = PieceRole.Enemy;
-                pieceObj.GetComponent<MeshRenderer>().material = darkMaterial;
-                pieceObj.GetComponent<Rigidbody>().constraints =
-                    RigidbodyConstraints.FreezeRotation;
-                _enemies.Add(pieceScript, cell);
-                _initialEnemiesPositions.Add(pieceObj.GetComponent<Piece>(), cell);
+            switch (square.Value)
+            {
+                case RoomLayout.MatrixValue.Spawn:
+                    _playerCell = cell;
+                    _initialplayerCell = cell;
+                    var playerObj = Instantiate(
+                        prefabKnight,
+                        cell.getGlobalCoordinates(),
+                        quaternion.identity
+                    );
+                    playerObj.GetComponent<MeshRenderer>().material = lightMaterial;
+                    _playerPiece = playerObj.GetComponent<Piece>();
+                    _playerPiece.PieceRole = PieceRole.Player;
+                    return;
+                case RoomLayout.MatrixValue.Pawn:
+                    prefab = prefabPawn;
+                    break;
+                case RoomLayout.MatrixValue.Bishop:
+                    prefab = prefabBishop;
+                    break;
+                case RoomLayout.MatrixValue.Knight:
+                    prefab = prefabKnight;
+                    break;
+                case RoomLayout.MatrixValue.Rook:
+                    prefab = prefabRook;
+                    break;
+                case RoomLayout.MatrixValue.Queen:
+                    prefab = prefabQueen;
+                    break;
+                case RoomLayout.MatrixValue.King:
+                    prefab = prefabKing;
+                    break;
+                default:
+                    return;
             }
+
+            var pieceObj = Instantiate(prefab, cell.getGlobalCoordinates(), quaternion.identity);
+            var pieceScript = pieceObj.GetComponent<Piece>();
+            pieceObj.tag = "Enemy"; // tag the enemy for collision detection
+            pieceScript.PieceRole = PieceRole.Enemy;
+
+            if (square.Identifier != 0)
+            {
+                pieceScript.Pattern = behaviour;
+                pieceScript.PatternAI = true;
+            }
+
+            pieceObj.GetComponent<MeshRenderer>().material = darkMaterial;
+            pieceObj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
+            _enemies.Add(pieceScript, cell);
+            _initialEnemiesPositions.Add(pieceObj.GetComponent<Piece>(), cell);
         }
 
-        private void InstantiateOther(Cell cell, int type)
+        private void InstantiateOther(Cell cell, RoomLayout.Square square)
         {
-            switch (type)
+            switch (square.Value)
             {
-                case (
-                    102
-                ) //Bishop power up
-                :
+                case RoomLayout.MatrixValue.PB: //Bishop power up
                     powerUps.Add(PieceType.Bishop, cell);
                     var bishopPowerUpObj = Instantiate(
                         bishopPowerUp,
@@ -411,10 +411,8 @@ namespace Gambetto.Scripts
                         quaternion.identity
                     );
                     break;
-                case (
-                    103
-                ) //Knight power up
-                :
+                case RoomLayout.MatrixValue.PK: //Knight power up
+
                     powerUps.Add(PieceType.Knight, cell);
                     var knightPowerUpObj = Instantiate(
                         knightPowerUp,
@@ -422,11 +420,7 @@ namespace Gambetto.Scripts
                         quaternion.identity
                     );
                     break;
-
-                case (
-                    105
-                ) //Rook power up
-                :
+                case RoomLayout.MatrixValue.PR: //Rook power up
                     powerUps.Add(PieceType.Rook, cell);
                     var rookPowerUpObj = Instantiate(
                         rookPowerUp,
@@ -435,22 +429,17 @@ namespace Gambetto.Scripts
                     );
                     break;
 
-                case (
-                    108
-                ) //Queen power up
-                :
-                    powerUps.Add(PieceType.Queen, cell);
-                    var queenPowerUpObj = Instantiate(
-                        queenPowerUp,
-                        cell.getGlobalCoordinates() + new Vector3(0, 0.05f, 0),
-                        quaternion.identity
-                    );
-                    break;
+                // case RoomLayout.MatrixValue.PB //Queen power up
+                // :
+                //     powerUps.Add(PieceType.Queen, cell);
+                //     var queenPowerUpObj = Instantiate(
+                //         queenPowerUp,
+                //         cell.getGlobalCoordinates() + new Vector3(0, 0.05f, 0),
+                //         quaternion.identity
+                //     );
+                //     break;
 
-                case (
-                    666
-                ) //End of level
-                :
+                case RoomLayout.MatrixValue.Exit: //End of level
                     _endLevelCell = cell;
                     var powerUpObj = Instantiate(
                         endLevel,
@@ -458,6 +447,8 @@ namespace Gambetto.Scripts
                         quaternion.identity
                     );
                     break;
+                default:
+                    return;
             }
         }
 

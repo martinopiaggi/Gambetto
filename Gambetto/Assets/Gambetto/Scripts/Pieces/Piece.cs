@@ -14,14 +14,34 @@ namespace Gambetto.Scripts.Pieces
     {
         private protected PieceType _pieceType;
 
-        [SerializeField] private protected PieceRole pieceRole;
+        [SerializeField]
+        private protected PieceRole pieceRole;
 
-        [SerializeField] private protected List<Vector2Int> possibleMoves;
+        private bool _patternAI = false;
+        private Behaviour _pattern = null;
+        private int _patternIndex = 0;
+        
+        public bool PatternAI
+        {
+            get => _patternAI;
+            set => _patternAI = value;
+        }
+        
+        public Behaviour Pattern
+        {
+            set => _pattern = value;
+        }
+        
+        
+        [SerializeField]
+        private protected List<Vector2Int> possibleMoves;
 
-        [Range(Constants.MinPieceCountdown, Constants.MaxPieceCountdown)] [SerializeField]
+        [Range(Constants.MinPieceCountdown, Constants.MaxPieceCountdown)]
+        [SerializeField]
         private protected int countdown;
 
-        [SerializeField] private protected Constants.PieceCountdown countdownStartValue;
+        [SerializeField]
+        private protected Constants.PieceCountdown countdownStartValue;
         private protected Transform _tr;
         private protected Rigidbody _rb;
 
@@ -94,7 +114,7 @@ namespace Gambetto.Scripts.Pieces
 
         private void OnCollisionEnter(Collision collision)
         {
-            if(collision.gameObject.CompareTag("Enemy") && pieceRole == PieceRole.Player)
+            if (collision.gameObject.CompareTag("Enemy") && pieceRole == PieceRole.Player)
             {
                 _rb.useGravity = true; // force gravity (needed for the knight)
                 // Debug.Log("Enemy hit");
@@ -109,6 +129,7 @@ namespace Gambetto.Scripts.Pieces
         /**
          * <summary>
          * Moves the piece smoothly following a given list of positions when <see cref="Countdown"/> reaches <see cref="Constants.MinPieceCountdown"/>.
+         * The piece is moved ONLY if the distance between the current position and the destination is greater than 0.1f.
          * </summary>
          * <param name="positions">The list of positions to follow</param>
          * <param name="gravity">Whether the piece should be affected by gravity or not</param>
@@ -133,7 +154,10 @@ namespace Gambetto.Scripts.Pieces
             _moveCoroutine = StartCoroutine(MoveCoroutine(positions, gravity));
         }
 
-        private protected virtual IEnumerator MoveCoroutine(IList<Vector3> positions, bool gravity = true)
+        private protected virtual IEnumerator MoveCoroutine(
+            IList<Vector3> positions,
+            bool gravity = true
+        )
         {
             _rb.useGravity = gravity; // enable/disable gravity
 
@@ -155,7 +179,10 @@ namespace Gambetto.Scripts.Pieces
                             boost = 16f; // easter egg :)
 
                         _rb.AddForce(direction.normalized * boost, ForceMode.Impulse);
-                        _rb.AddTorque(Vector3.Cross(Vector3.up, direction.normalized) * boost, ForceMode.Impulse);
+                        _rb.AddTorque(
+                            Vector3.Cross(Vector3.up, direction.normalized) * boost,
+                            ForceMode.Impulse
+                        );
                         break;
                     }
 
