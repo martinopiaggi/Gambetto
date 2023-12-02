@@ -136,10 +136,6 @@ namespace Gambetto.Scripts.Pieces
          */
         public void Move(List<Vector3> positions, bool gravity = true)
         {
-            if (positions == null)
-                return;
-            if (Vector3.Distance(positions[0], _tr.position) < 0.1f) // Check if the piece is already in the destination
-                return;
             if (_moveCoroutine != null)
             {
                 // if a piece is still moving, stop it and force the position
