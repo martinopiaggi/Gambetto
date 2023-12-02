@@ -39,7 +39,7 @@ namespace Gambetto.Scripts
                 AudioManager.Instance.PlaySfx(AudioManager.Instance.chosenMove);
                 ChosenMove = _possibleChoice;
                 MovePath = _possiblePath;
-                _lastDirection = ChosenMove.getGlobalCoordinates() - _currentCell.getGlobalCoordinates();
+                _lastDirection = ChosenMove.GetGlobalCoordinates() - _currentCell.GetGlobalCoordinates();
                 _choosing = false;
                 GameClock.Instance.ForceClockTick();
             }
@@ -56,7 +56,7 @@ namespace Gambetto.Scripts
             _currentCell = currentCell;
             ChosenMove = _currentCell;
             MovePath = new List<Vector3>();
-            MovePath.Add(_currentCell.getGlobalCoordinates());
+            MovePath.Add(_currentCell.GetGlobalCoordinates());
             _possibleMovementsPath.Clear();
             _possibleMovements = PieceMovement.GetPossibleMovements(piece, currentCell, _possibleMovementsPath);
             _cycleMovesCoroutine = StartCoroutine(CycleMoves());
@@ -82,7 +82,7 @@ namespace Gambetto.Scripts
             // find the index of the first move in the direction of the last move
             var firstMove = _possibleMovements.FindIndex(
                 cell =>
-                    (cell.getGlobalCoordinates() - _currentCell.getGlobalCoordinates())
+                    (cell.GetGlobalCoordinates() - _currentCell.GetGlobalCoordinates())
                     == _lastDirection
             );
 
@@ -98,7 +98,7 @@ namespace Gambetto.Scripts
                     break;
                 _selectedSquare.SetActive(true);
                 _selectedSquare.transform.position =
-                    move.getGlobalCoordinates() + new Vector3(0, 0.02f, 0);
+                    move.GetGlobalCoordinates() + new Vector3(0, 0.02f, 0);
                 _possibleChoice = move;
                 _possiblePath = movePath;
                 yield return new WaitForSeconds((clockPeriod / _possibleMovements.Count));
