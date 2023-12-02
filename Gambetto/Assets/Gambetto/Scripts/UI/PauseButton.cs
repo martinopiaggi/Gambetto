@@ -6,15 +6,12 @@ namespace Gambetto.Scripts.UI
     {
         public void OpenSettings()
         {
-            //pause clock
-            GameClock.Instance.PauseClock();
-            //show settings menu
+            Time.timeScale = 0f;
         }
 
         public void ResumeGame()
         {
-            //resume clock
-            GameClock.Instance.ResumeClock();
+            Time.timeScale = 1f;
         }
     }
 }
