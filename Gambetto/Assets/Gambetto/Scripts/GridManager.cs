@@ -138,7 +138,8 @@ namespace Gambetto.Scripts
             _enemies = new Dictionary<Piece, Cell>(_initialEnemiesPositions);
 
             _playerCell = _initialplayerCell;
-            playerController.ChosenMove = null;
+            
+            playerController.ResetController();
             CPUBehavior.ChosenMoves.Clear();
 
             yield return new WaitForSeconds(1f);

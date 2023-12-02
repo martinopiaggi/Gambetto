@@ -20,7 +20,7 @@ namespace Gambetto.Scripts
 
         private bool _choosing;
         private Cell _currentCell; // TODD: no need to pass it to methods
-
+        
         private void Start()
         {
             var selectedSquarePrefab = Resources.Load<GameObject>("Prefabs/Square");
@@ -60,6 +60,18 @@ namespace Gambetto.Scripts
             _possibleMovementsPath.Clear();
             _possibleMovements = PieceMovement.GetPossibleMovements(piece, currentCell, _possibleMovementsPath);
             _cycleMovesCoroutine = StartCoroutine(CycleMoves());
+        }
+        
+        /// <summary>
+        /// reset the controller to its initial state
+        /// </summary>
+        public void ResetController()
+        {
+            _choosing = false;
+            ChosenMove = null;
+            _selectedSquare.SetActive(false);
+            if (_cycleMovesCoroutine != null)
+                StopCoroutine(_cycleMovesCoroutine);
         }
 
         private IEnumerator CycleMoves()
