@@ -15,3 +15,5 @@ MonoBehaviour:
   topologyDescription: test1
   roomCsvTextAsset: {fileID: 4900000, guid: fff987d50bccd5f49bd6dd7e18649eeb, type: 3}
   exitSide: {x: 1, y: 0}
+  _behaviours:
+  - {fileID: 11400000, guid: 349f979f89446714a8118aea5533198e, type: 2}
