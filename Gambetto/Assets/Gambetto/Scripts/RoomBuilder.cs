@@ -5,28 +5,28 @@ namespace Gambetto.Scripts
 {
     public class RoomBuilder : MonoBehaviour
     {
-        [SerializeField] private RoomLayout _layout;
+        [SerializeField]
+        private RoomLayout _layout;
 
-        [SerializeField] private Material light;
-        [SerializeField] private Material dark;
-        [SerializeField] private bool isBuilt = false;
+        [SerializeField]
+        private Material light;
 
-        private GameObject fog;
+        [SerializeField]
+        private Material dark;
+
+        [SerializeField]
+        private bool isBuilt = false;
 
         private int colorStart = 0;
-        private int gridLength;
-        private int gridWidth;
-    
 
-        private int[,] matrix; // The matrix to store the cubes
-
-        [SerializeField] private GameObject cubePrefab; // Reference to the Cube prefab
-
+        [SerializeField]
+        private GameObject cubePrefab; // Reference to the Cube prefab
 
         private void Update()
         {
-            if(isBuilt) return;
-            fog = GameObject.FindGameObjectWithTag("Fog"); // Reference to the fog, in order to access it and change material
+            //todo: does this need to be here?
+            if (isBuilt)
+                return;
             InitializeRoom(_layout);
         }
 
@@ -34,35 +34,30 @@ namespace Gambetto.Scripts
         {
             colorStart = value;
         }
-    
+
         public void InitializeRoom(RoomLayout layout)
         {
             _layout = layout;
-            gridLength = layout.GetSizeRow();
-            gridWidth = layout.GetSizeColumn();
-            matrix = new int[gridLength, gridWidth];
             FillMatrixWithCubes();
             isBuilt = true;
-            
         }
-
 
         void FillMatrixWithCubes()
         {
-            for (int i = 0; i < gridLength; i++)
+            for (int i = 0; i < _layout.GetSizeRow(); i++)
             {
-                for (int j = 0; j < gridWidth; j++)
+                for (int j = 0; j < _layout.GetSizeColumn(); j++)
                 {
                     Vector3 position = new Vector3(i, cubePrefab.transform.position.y, j);
-                    matrix[i, j] = 0;
-                    if (_layout.GetRows()[i].GetColumns()[j] == -1)
+                    if (_layout.Squares[i, j].Value == RoomLayout.MatrixValue.Empty)
                     {
                         continue;
                     }
-
-                    GameObject cubeInstance = Instantiate(cubePrefab, position, Quaternion.identity);
-                    cubeInstance.GetComponent<MeshRenderer>().material = (i + j + colorStart) % 2 == 0 ? light : dark;
-                    cubeInstance.transform.parent = gameObject.transform;
+                    var cubeInstance = Instantiate(cubePrefab, gameObject.transform, true);
+                    cubeInstance.transform.localPosition = position;
+                    cubeInstance.transform.rotation = Quaternion.identity;
+                    cubeInstance.GetComponent<MeshRenderer>().material =
+                        (i + j + colorStart) % 2 == 0 ? light : dark;
                 }
             }
         }
