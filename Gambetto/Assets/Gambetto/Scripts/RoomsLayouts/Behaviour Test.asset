@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: Behaviour Test
   m_EditorClassIdentifier: 
   _movements:
-  - {x: 0, y: 1}
+  - {x: 2, y: -2}
   - {x: 1, y: 0}
+  - {x: 0, y: -2}
   - {x: -1, y: 0}
-  - {x: 0, y: -1}
   _offset: 0
+  id: 1
