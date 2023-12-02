@@ -179,6 +179,9 @@ namespace Gambetto.Scripts
 
         private void MovePiece(Piece piece, Cell nextCell, bool gravity = true)
         {
+            // Check if the piece is already in the destination
+            if (Vector3.Distance(piece.transform.position,  nextCell.getGlobalCoordinates()) < 0.1f) 
+                return;
             var list = new List<Vector3>();
             list.Add(nextCell.getGlobalCoordinates());
             piece.Move(list, gravity);
@@ -186,6 +189,9 @@ namespace Gambetto.Scripts
 
         private void MovePiece(Piece piece, Cell nextCell, List<Vector3> path, bool gravity = true)
         {
+            // Check if the piece is already in the destination
+            if (Vector3.Distance(piece.transform.position,  nextCell.getGlobalCoordinates()) < 0.1f) 
+                return;
             piece.Move(path, gravity);
         }
 
