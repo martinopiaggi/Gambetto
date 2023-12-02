@@ -184,6 +184,9 @@ namespace Gambetto.Scripts
 
         private void MovePiece(Piece piece, List<Vector3> path, bool gravity = true)
         {
+            // Check if the piece is already in the destination
+            if (Vector3.Distance(piece.transform.position,  path[^1]) < 0.1f) 
+                return;
             piece.Move(path, gravity);
         }
         

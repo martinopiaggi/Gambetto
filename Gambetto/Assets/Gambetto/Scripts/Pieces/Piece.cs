@@ -136,13 +136,6 @@ namespace Gambetto.Scripts.Pieces
          */
         public void Move(List<Vector3> positions, bool gravity = true)
         {
-            //Todo there is a todo because someone wanted to change these two if 
-            //if there is no movement just return
-            if (positions.Count == 0) return;
-            //this if doesn't execute the function if the piece remain in the same position
-            if (Vector3.Distance(positions[0], transform.position) < 0.05f && positions.Count == 1)
-                return;
-            
             if (_moveCoroutine != null)
             {
                 // if a piece is still moving, stop it and force the position
