@@ -10,12 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7ac34a7225b38244ebf91c84eb6a06c1, type: 3}
-  m_Name: Behaviour Test
+  m_Name: p2
   m_EditorClassIdentifier: 
   _movements:
-  - {x: 2, y: -2}
-  - {x: 1, y: 0}
-  - {x: 0, y: -2}
-  - {x: -1, y: 0}
-  _offset: 0
-  id: 1
+  - {x: 0, y: -1}
+  - {x: 0, y: -1}
+  - {x: 0, y: -1}
+  - {x: 0, y: -1}
+  - {x: 0, y: -1}
+  - {x: 0, y: 1}
+  - {x: 0, y: 1}
+  - {x: 0, y: 1}
+  - {x: 0, y: 1}
+  - {x: 0, y: 1}
+  _offset: 1
+  id: 2

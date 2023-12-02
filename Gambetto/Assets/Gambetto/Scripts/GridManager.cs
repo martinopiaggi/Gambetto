@@ -146,7 +146,7 @@ namespace Gambetto.Scripts
             _enemies = new Dictionary<Piece, Cell>(_initialEnemiesPositions);
 
             _playerCell = _initialplayerCell;
-            
+
             playerController.ResetController();
             CPUBehavior.ChosenMoves.Clear();
 
@@ -368,7 +368,7 @@ namespace Gambetto.Scripts
                     _playerCell = cell;
                     _initialplayerCell = cell;
                     var playerObj = Instantiate(
-                        prefabKnight,
+                        prefabPawn,
                         cell.GetGlobalCoordinates(),
                         quaternion.identity
                     );
