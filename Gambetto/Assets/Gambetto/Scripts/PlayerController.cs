@@ -70,6 +70,7 @@ namespace Gambetto.Scripts
             _choosing = false;
             ChosenMove = null;
             _selectedSquare.SetActive(false);
+            _lastDirection = default;
             if (_cycleMovesCoroutine != null)
                 StopCoroutine(_cycleMovesCoroutine);
         }
