@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Gambetto.Scripts.Pieces;
 using Gambetto.Scripts.Utils;
+using Unity.VisualScripting;
 using UnityEngine;
 using Vector3 = UnityEngine.Vector3;
 
@@ -22,7 +23,7 @@ namespace Gambetto.Scripts
             get => _chosenMoves;
             set => _chosenMoves = value;
         }
-        
+
         public Dictionary<Piece, List<Vector3>> MovePaths
         {
             get => _movePaths;
@@ -52,7 +53,50 @@ namespace Gambetto.Scripts
 
         private void ComputeNextMove(Piece piece, Cell cell)
         {
-            _possiblePaths.Clear();
+            //pattern based AI behavior
+            if (piece.PatternAI)
+            {
+                var i =
+                    GameClock.Instance.GetCurrentTick() - 1 > 0
+                        ? GameClock.Instance.GetCurrentTick() - 1
+                        : 0;
+
+                var move = piece.Pattern.Movements[
+                    (i + piece.Pattern.Offset) % piece.Pattern.Movements.Count
+                ];
+                Cell nextCell = cell;
+                
+                //code used to calculate next cell even in case the movement is not a single step
+                if (move.x != 0)
+                {
+                    for (
+                        var j = 1 * Sign(move.x);
+                        (j * Sign(j)) <= move.x * Sign(move.x);
+                        j += (1 * Sign(move.x))
+                    )
+                    {
+                        nextCell = nextCell.GetNext(new Vector2Int(1 * Sign(move.x), 0));
+                    }
+                }
+
+                if (move.y != 0)
+                {
+                    for (
+                        var k = 1 * Sign(move.y);
+                        (k * Sign(k)) <= move.y * Sign(move.y);
+                        k += (1 * Sign(k))
+                    )
+                    {
+                        nextCell = nextCell.GetNext(new Vector2Int(0, 1 * Sign(move.y)));
+                    }
+                }
+
+                _chosenMoves[piece] = nextCell;
+                _movePaths[piece] = new List<Vector3> { nextCell.GetGlobalCoordinates() };
+                return;
+            }
+
+            //standard behavior for the AI
             var possibleMovements = PieceMovement.GetPossibleMovements(piece, cell, _possiblePaths);
             var chosenMove = cell;
             var minDist = float.MaxValue;
@@ -62,8 +106,8 @@ namespace Gambetto.Scripts
             foreach (var move in possibleMovements)
             {
                 index++;
-                var dist = move.getGlobalCoordinates() - _playerCell.getGlobalCoordinates();
-                if (move.isEmpty())
+                var dist = move.GetGlobalCoordinates() - _playerCell.GetGlobalCoordinates();
+                if (move.IsEmpty())
                     continue;
                 if (ThereIsSomeone(move))
                     continue;
@@ -71,7 +115,7 @@ namespace Gambetto.Scripts
                 {
                     minDist = dist.magnitude;
                     chosenMove = move;
-                    chosenIndex = index-1;
+                    chosenIndex = index - 1;
                 }
             }
             // Debug.Log(
@@ -98,6 +142,11 @@ namespace Gambetto.Scripts
             }
 
             return false;
+        }
+
+        public int Sign(int x)
+        {
+            return Convert.ToInt32(x > 0) - Convert.ToInt32(x < 0);
         }
     }
 }

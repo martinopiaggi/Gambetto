@@ -30,6 +30,7 @@ namespace Gambetto.Scripts.Pieces
         public Behaviour Pattern
         {
             set => _pattern = value;
+            get => _pattern;
         }
         
         

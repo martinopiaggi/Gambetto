@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -547,7 +547,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0db5dd439da2ca44ca694826c7742f16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GridManager: {fileID: 295756829}
+  gridManager: {fileID: 295756829}
 --- !u!1001 &351143411
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2115,9 +2115,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rooms:
-  - {fileID: 11400000, guid: e6e6c2e7a95020d43ae6d8c3198d1355, type: 2}
-  - {fileID: 11400000, guid: c4ff865b80afa4b44a007a7f5590ad4a, type: 2}
-  - {fileID: 11400000, guid: c4ff865b80afa4b44a007a7f5590ad4a, type: 2}
+  - {fileID: 11400000, guid: 1e44a700a71c5274f878469e46284f12, type: 2}
   gridManager: {fileID: 295756828}
 --- !u!4 &1181219728
 Transform:
@@ -2472,7 +2470,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Back
+  m_text: Resume
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c3efa2c75376db74fa8233492c19fcae, type: 2}
   m_sharedMaterial: {fileID: -4195328265569836348, guid: c3efa2c75376db74fa8233492c19fcae,
