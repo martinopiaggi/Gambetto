@@ -435,7 +435,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.19607843, g: 0.29411766, b: 0.44705883, a: 0}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -485,7 +485,7 @@ Transform:
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
   m_LocalRotation: {x: 0.35355338, y: 0.35355338, z: -0.1464466, w: 0.8535535}
-  m_LocalPosition: {x: -17, y: 26, z: -18}
+  m_LocalPosition: {x: -22, y: 32.5, z: -18}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -725,8 +725,8 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 2
+  m_Color: {r: 0.49803922, g: 0.7294118, b: 1, a: 1}
+  m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -2115,7 +2115,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rooms:
-  - {fileID: 11400000, guid: 1e44a700a71c5274f878469e46284f12, type: 2}
+  - {fileID: 11400000, guid: 2c900a4dbe61bdc43963ea0767312364, type: 2}
+  - {fileID: 11400000, guid: b7f0054acb1727c4dbebf4a7d99bd93f, type: 2}
+  - {fileID: 11400000, guid: e4cc7573bac88eb449fcf9f3373caba3, type: 2}
   gridManager: {fileID: 295756828}
 --- !u!4 &1181219728
 Transform:

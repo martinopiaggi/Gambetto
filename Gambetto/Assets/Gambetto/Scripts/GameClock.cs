@@ -16,12 +16,14 @@ namespace Gambetto.Scripts
     {
         public static GameClock Instance { get; private set; }
 
-        private const float DefaultClockPeriod = 5f;
+        private const float DefaultClockPeriod = 2.5f;
         private bool _isRunning;
         private float _clockPeriod = DefaultClockPeriod; // clock period in seconds
         private Thread _clockThread;
         private int _currentTick;
+
         public int GetCurrentTick() => _currentTick;
+
         private Coroutine _clockCoroutine;
 
         // Defines event delegate (signature of the method that will be called by the event)
