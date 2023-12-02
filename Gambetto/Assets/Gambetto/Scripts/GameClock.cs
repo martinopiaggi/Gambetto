@@ -21,6 +21,7 @@ namespace Gambetto.Scripts
         private float _clockPeriod = DefaultClockPeriod; // clock period in seconds
         private Thread _clockThread;
         private int _currentTick;
+        public int GetCurrentTick() => _currentTick;
         private Coroutine _clockCoroutine;
 
         // Defines event delegate (signature of the method that will be called by the event)
@@ -101,7 +102,8 @@ namespace Gambetto.Scripts
         /// </summary>
         public void ResumeClock()
         {
-            //TODO
+            _isRunning = true;
+            _clockCoroutine = StartCoroutine(ClockRoutine());
         }
 
         /// <summary>
