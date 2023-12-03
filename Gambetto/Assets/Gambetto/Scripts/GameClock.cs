@@ -22,7 +22,7 @@ namespace Gambetto.Scripts
         private Thread _clockThread;
         private int _currentTick;
 
-        public int GetCurrentTick() => _currentTick;
+        public int CurrentTick() => _currentTick;
 
         private Coroutine _clockCoroutine;
 

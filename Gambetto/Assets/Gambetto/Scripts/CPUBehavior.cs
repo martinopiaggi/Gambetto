@@ -57,8 +57,8 @@ namespace Gambetto.Scripts
             if (piece.PatternAI)
             {
                 var i =
-                    GameClock.Instance.GetCurrentTick() - 1 > 0
-                        ? GameClock.Instance.GetCurrentTick() - 1
+                    GameClock.Instance.CurrentTick() - 1 > 0
+                        ? GameClock.Instance.CurrentTick() - 1
                         : 0;
 
                 var move = piece.Pattern.Movements[
@@ -132,7 +132,7 @@ namespace Gambetto.Scripts
             //         + chosenMove.getGlobalCoordinates()
             //         + " as next move"
             // );
-            _chosenMoves[piece] = chosenMove; //todo now for testing
+            _chosenMoves[piece] = chosenMove;
             _movePaths[piece] = _possiblePaths[chosenIndex];
         }
 
