@@ -24,11 +24,11 @@ namespace Gambetto.Scripts
         {
             if (firstTime)
             {
-                oldPos = gridManager.getPlayerPosition();
+                oldPos = gridManager.GetPlayerPosition();
                 firstTime = false;
             }
 
-            newPos = gridManager.getPlayerPosition();
+            newPos = gridManager.GetPlayerPosition();
             offSet.x = newPos.x - oldPos.x;
             offSet.z = newPos.z - oldPos.z;
             offSet.y = 0;

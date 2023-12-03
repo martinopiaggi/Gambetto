@@ -65,7 +65,8 @@ namespace Gambetto.Scripts
                     (i + piece.Pattern.Offset) % piece.Pattern.Movements.Count
                 ];
                 Cell nextCell = cell;
-                
+                var tempListMoves = new List<Vector3>();
+
                 //code used to calculate next cell even in case the movement is not a single step
                 if (move.x != 0)
                 {
@@ -77,6 +78,11 @@ namespace Gambetto.Scripts
                     {
                         nextCell = nextCell.GetNext(new Vector2Int(1 * Sign(move.x), 0));
                     }
+                }
+
+                if (piece.PieceType == PieceType.Knight)
+                {
+                    tempListMoves.Add(nextCell.GetGlobalCoordinates());
                 }
 
                 if (move.y != 0)
@@ -91,8 +97,9 @@ namespace Gambetto.Scripts
                     }
                 }
 
+                tempListMoves.Add(nextCell.GetGlobalCoordinates());
                 _chosenMoves[piece] = nextCell;
-                _movePaths[piece] = new List<Vector3> { nextCell.GetGlobalCoordinates() };
+                _movePaths[piece] = tempListMoves;
                 return;
             }
 

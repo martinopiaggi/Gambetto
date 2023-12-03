@@ -1,11 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Numerics;
+using System.Linq;
 using Gambetto.Scripts.Pieces;
 using Gambetto.Scripts.Utils;
-using Pieces;
 using Unity.Mathematics;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Quaternion = UnityEngine.Quaternion;
@@ -18,16 +16,18 @@ namespace Gambetto.Scripts
     {
         private GameObject _roomPrefab;
         private int _lastColor = 1;
-        private bool _changed = false;
+        private bool _changed;
         public PlayerController playerController;
-        public CPUBehavior CPUBehavior;
+
+        [FormerlySerializedAs("CPUBehavior")]
+        public CPUBehavior cpuBehavior;
 
         private readonly List<List<Cell>> _grid = new List<List<Cell>>(); //maybe we can remove _grid? (never used)
         private Dictionary<Piece, Cell> _enemies = new Dictionary<Piece, Cell>();
         private Dictionary<Piece, List<Vector3>> _enemiesPath =
             new Dictionary<Piece, List<Vector3>>();
         private Dictionary<Piece, Cell> _initialEnemiesPositions = new Dictionary<Piece, Cell>();
-        private Dictionary<PieceType, Cell> powerUps = new Dictionary<PieceType, Cell>();
+        private Dictionary<PowerUp, Cell> _powerUps = new Dictionary<PowerUp, Cell>();
 
         [SerializeField]
         public GameObject prefabPawn;
@@ -65,17 +65,17 @@ namespace Gambetto.Scripts
         public Material lightMaterial;
         public Material darkMaterial;
 
-        public bool isDead = false;
+        public bool isDead;
 
         private GameObject _spawnGameObject;
 
-        private Cell _playerCell = null;
-        private Cell _initialplayerCell = null;
-        private Cell _endLevelCell = null;
-        private Piece _playerPiece = null;
-        private List<Vector3> _playerPath = null;
+        private Cell _playerCell;
+        private Cell _initialPlayerCell;
+        private Cell _endLevelCell;
+        private Piece _playerPiece;
+        private List<Vector3> _playerPath;
 
-        private bool _gridFinished = false;
+        private bool _gridFinished;
 
         public void Start()
         {
@@ -92,16 +92,15 @@ namespace Gambetto.Scripts
         {
             if (!_gridFinished)
                 return;
-            if (CPUBehavior.ChosenMoves.Count != _enemies.Count)
+            if (cpuBehavior.ChosenMoves.Count != _enemies.Count)
             {
                 foreach (var enemy in _enemies)
                 {
-                    CPUBehavior.ChosenMoves[enemy.Key] = enemy.Value;
-                    CPUBehavior.MovePaths[enemy.Key] = new List<Vector3>
+                    cpuBehavior.ChosenMoves[enemy.Key] = enemy.Value;
+                    cpuBehavior.MovePaths[enemy.Key] = new List<Vector3>
                     {
                         enemy.Value.GetGlobalCoordinates()
                     };
-                    ;
                 }
             }
 
@@ -111,7 +110,7 @@ namespace Gambetto.Scripts
                 {
                     _playerCell.GetGlobalCoordinates()
                 };
-                playerController.ChosenMove = _initialplayerCell;
+                playerController.ChosenMove = _initialPlayerCell;
             }
 
             // Compute Cpu behaviour and Start the choosing animation for the player
@@ -123,32 +122,33 @@ namespace Gambetto.Scripts
             if (_playerCell.IsEmpty())
             {
                 isDead = true;
-                StartCoroutine(restartLevel());
+                StartCoroutine(RestartLevel());
             }
 
             if (!isDead)
             {
-                CPUBehavior.ComputeCPUMoves(_playerCell, _enemies);
+                cpuBehavior.ComputeCPUMoves(_playerCell, _enemies);
                 UpdateEnemiesPosition();
+                CheckPowerUp();
                 playerController.StartChoosing(_playerPiece, _playerCell);
             }
         }
 
-        public Vector3 getPlayerPosition()
+        public Vector3 GetPlayerPosition()
         {
             return _playerCell.GetGlobalCoordinates();
         }
 
-        public IEnumerator restartLevel()
+        public IEnumerator RestartLevel()
         {
             GameClock.Instance.StopClock();
             _enemies.Clear();
             _enemies = new Dictionary<Piece, Cell>(_initialEnemiesPositions);
 
-            _playerCell = _initialplayerCell;
+            _playerCell = _initialPlayerCell;
 
             playerController.ResetController();
-            CPUBehavior.ChosenMoves.Clear();
+            cpuBehavior.ChosenMoves.Clear();
 
             yield return new WaitForSeconds(1f);
 
@@ -171,6 +171,7 @@ namespace Gambetto.Scripts
             playerObj.GetComponent<MeshRenderer>().material = lightMaterial;
             _playerPiece = playerObj.GetComponent<Piece>();
             _playerPiece.PieceRole = PieceRole.Player;
+            ResetPowerUps();
             GameClock.Instance.StartClock();
             isDead = false;
             yield return null;
@@ -178,8 +179,8 @@ namespace Gambetto.Scripts
 
         private void UpdateEnemiesPosition()
         {
-            _enemies = new Dictionary<Piece, Cell>(CPUBehavior.ChosenMoves);
-            _enemiesPath = new Dictionary<Piece, List<Vector3>>(CPUBehavior.MovePaths);
+            _enemies = new Dictionary<Piece, Cell>(cpuBehavior.ChosenMoves);
+            _enemiesPath = new Dictionary<Piece, List<Vector3>>(cpuBehavior.MovePaths);
 
             foreach (var enemy in _enemies)
             {
@@ -360,13 +361,13 @@ namespace Gambetto.Scripts
 
         private void InstantiatePiece(Cell cell, RoomLayout.Square square, Behaviour behaviour)
         {
-            GameObject prefab = null;
+            GameObject prefab;
 
             switch (square.Value)
             {
                 case RoomLayout.MatrixValue.Spawn:
                     _playerCell = cell;
-                    _initialplayerCell = cell;
+                    _initialPlayerCell = cell;
                     var playerObj = Instantiate(
                         prefabPawn,
                         cell.GetGlobalCoordinates(),
@@ -420,44 +421,37 @@ namespace Gambetto.Scripts
             switch (square.Value)
             {
                 case RoomLayout.MatrixValue.PB: //Bishop power up
-                    powerUps.Add(PieceType.Bishop, cell);
                     var bishopPowerUpObj = Instantiate(
                         bishopPowerUp,
                         cell.GetGlobalCoordinates() + new Vector3(0, 0.05f, 0),
                         quaternion.identity
                     );
+                    var bishop = new PowerUp(PieceType.Bishop, bishopPowerUpObj, cell);
+                    _powerUps.Add(bishop, cell);
                     break;
-                case RoomLayout.MatrixValue.PK: //Knight power up
 
-                    powerUps.Add(PieceType.Knight, cell);
+                case RoomLayout.MatrixValue.PK: //Knight power up
                     var knightPowerUpObj = Instantiate(
                         knightPowerUp,
                         cell.GetGlobalCoordinates() + new Vector3(0, 0.05f, 0),
                         quaternion.identity
                     );
+                    var knight = new PowerUp(PieceType.Knight, knightPowerUpObj, cell);
+                    _powerUps.Add(knight, cell);
                     break;
                 case RoomLayout.MatrixValue.PR: //Rook power up
-                    powerUps.Add(PieceType.Rook, cell);
                     var rookPowerUpObj = Instantiate(
                         rookPowerUp,
                         cell.GetGlobalCoordinates() + new Vector3(0, 0.05f, 0),
                         quaternion.identity
                     );
+                    var rook = new PowerUp(PieceType.Rook, rookPowerUpObj, cell);
+                    _powerUps.Add(rook, cell);
                     break;
-
-                // case RoomLayout.MatrixValue.PB //Queen power up
-                // :
-                //     powerUps.Add(PieceType.Queen, cell);
-                //     var queenPowerUpObj = Instantiate(
-                //         queenPowerUp,
-                //         cell.getGlobalCoordinates() + new Vector3(0, 0.05f, 0),
-                //         quaternion.identity
-                //     );
-                //     break;
 
                 case RoomLayout.MatrixValue.Exit: //End of level
                     _endLevelCell = cell;
-                    var powerUpObj = Instantiate(
+                    Instantiate(
                         endLevel,
                         cell.GetGlobalCoordinates() + new Vector3(0, 0.05f, 0),
                         quaternion.identity
@@ -700,6 +694,46 @@ namespace Gambetto.Scripts
         private void Awake()
         {
             _roomPrefab = Resources.Load<GameObject>("Prefabs/Room");
+        }
+
+        private void CheckPowerUp()
+        {
+            //check if the player has activated a power up
+            if (_powerUps.ContainsValue(_playerCell))
+            {
+                var powerUp = _powerUps.FirstOrDefault(x => x.Value == _playerCell).Key;
+                if (!powerUp.IsUsed)
+                {
+                    //change player piece
+                    var tempPrefab = powerUp.Type switch
+                    {
+                        PieceType.Bishop => prefabBishop,
+                        PieceType.Knight => prefabKnight,
+                        _ => prefabRook
+                    };
+
+                    Destroy(_playerPiece.gameObject);
+                    var playerObj = Instantiate(
+                        tempPrefab,
+                        _playerCell.GetGlobalCoordinates(),
+                        quaternion.identity
+                    );
+                    playerObj.GetComponent<MeshRenderer>().material = lightMaterial;
+                    _playerPiece = playerObj.GetComponent<Piece>();
+                    _playerPiece.PieceRole = PieceRole.Player;
+
+                    //set powerUp to used
+                    powerUp.SetActive();
+                }
+            }
+        }
+
+        public void ResetPowerUps()
+        {
+            foreach (var p in _powerUps.Keys)
+            {
+                p.SetInactive();
+            }
         }
     }
 }
