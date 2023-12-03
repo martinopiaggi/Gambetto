@@ -123,7 +123,7 @@ namespace Gambetto.Scripts.Pieces
                 // add a force to the player in the opposite direction of the enemy to simulate a hit
                 _rb.AddForce(-direction.normalized * 8f + Vector3.up, ForceMode.Impulse);
                 var gridManger = FindObjectOfType<GridManager>();
-                StartCoroutine(gridManger.restartLevel());
+                StartCoroutine(gridManger.RestartLevel());
             }
         }
 
