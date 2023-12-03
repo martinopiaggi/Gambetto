@@ -109,14 +109,17 @@ namespace Gambetto.Scripts.Pieces
         /// </summary>
         private protected void Awake()
         {
+            _hasCollided = false; //todo: temp solution for multiple collision issue
             _tr = GetComponent<Transform>();
             _rb = GetComponent<Rigidbody>();
         }
 
+        private bool _hasCollided;
         private void OnCollisionEnter(Collision collision)
         {
-            if (collision.gameObject.CompareTag("Enemy") && pieceRole == PieceRole.Player)
+            if (collision.gameObject.CompareTag("Enemy") && pieceRole == PieceRole.Player && !_hasCollided)
             {
+                _hasCollided = true; //todo: change this temp solution for multiple collision issue
                 _rb.useGravity = true; // force gravity (needed for the knight)
                 // Debug.Log("Enemy hit");
                 var direction = collision.transform.position - _tr.position;
@@ -125,6 +128,11 @@ namespace Gambetto.Scripts.Pieces
                 var gridManger = FindObjectOfType<GridManager>();
                 StartCoroutine(gridManger.RestartLevel());
             }
+        }
+
+        private void OnCollisionExit(Collision other)
+        {
+            
         }
 
         /**

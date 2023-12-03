@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Gambetto.Scripts.Pieces;
 using Gambetto.Scripts.Utils;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Gambetto.Scripts
@@ -21,7 +22,7 @@ namespace Gambetto.Scripts
         private bool _choosing;
         private Cell _currentCell; // TODD: no need to pass it to methods
         
-        private void Start()
+        private void Awake()
         {
             var selectedSquarePrefab = Resources.Load<GameObject>("Prefabs/Square");
             // In start I create the light used to illuminate the grid
@@ -31,7 +32,7 @@ namespace Gambetto.Scripts
             _possibleMovements = new List<Cell>();
             _possibleMovementsPath = new List<List<Vector3>>();
         }
-
+        
         private void Update()
         {
             if (Input.GetKeyDown(KeyCode.Space) && _choosing)

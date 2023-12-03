@@ -80,7 +80,6 @@ namespace Gambetto.Scripts
         public void Start()
         {
             GameClock.Instance.ClockTick += OnClockTick;
-            GameClock.Instance.StartClock();
         }
 
         /// <summary>
@@ -125,11 +124,16 @@ namespace Gambetto.Scripts
                 StartCoroutine(RestartLevel());
             }
 
-            if (!isDead)
+            if (!isDead )
             {
-                cpuBehavior.ComputeCPUMoves(_playerCell, _enemies);
-                UpdateEnemiesPosition();
-                CheckPowerUp();
+                
+                if (GameClock.Instance.CurrentTick() != 0)
+                {
+                    // if it's the first tick, don't compute the cpu moves and dont update the enemies position
+                    cpuBehavior.ComputeCPUMoves(_playerCell, _enemies);
+                    UpdateEnemiesPosition();
+                    CheckPowerUp();
+                }
                 playerController.StartChoosing(_playerPiece, _playerCell);
             }
         }
@@ -149,6 +153,7 @@ namespace Gambetto.Scripts
 
             playerController.ResetController();
             cpuBehavior.ChosenMoves.Clear();
+            cpuBehavior.MovePaths.Clear();
 
             yield return new WaitForSeconds(1f);
 
@@ -269,6 +274,9 @@ namespace Gambetto.Scripts
 
             //Debug.Log("grid finished");
             _gridFinished = true;
+            
+            // start the clock after the grid is created
+            GameClock.Instance.StartClock();
         }
 
         private int ColorConsistencyUpdate(RoomLayout roomLayout, bool changed)
