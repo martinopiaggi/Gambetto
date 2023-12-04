@@ -19,6 +19,9 @@ namespace Gambetto.Scripts
         private int _lastColor = 1;
         private bool _changed;
         public PlayerController playerController;
+        
+        //todo Think where to place it
+        private List<Vector3> _roomsCenter = new List<Vector3>();
 
         [FormerlySerializedAs("CPUBehavior")]
         public CPUBehavior cpuBehavior;
@@ -142,9 +145,14 @@ namespace Gambetto.Scripts
             }
         }
 
-        public Vector3 GetPlayerPosition()
+        public Cell GetPlayerPosition()
         {
-            return _playerCell.GetGlobalCoordinates();
+            return _playerCell;
+        }
+        
+        public List<Vector3> GetRoomsCenter()
+        {
+            return _roomsCenter;
         }
 
         public void RestartLevel()
@@ -276,7 +284,13 @@ namespace Gambetto.Scripts
                     .SetPositionAndRotation(translation, Quaternion.identity);
 
                 _grid.Add(PopulateRoomGraph(roomLayout, translation, roomIdx, previousRoomLayout));
-
+                // I find the center if the current room and store it in a list
+                Vector3 roomCenter = _grid[roomIdx][0].GetGlobalCoordinates() +
+                             _grid[roomIdx][_grid[roomIdx].Count - 1].GetGlobalCoordinates();
+                roomCenter.x /= 2.0f;
+                roomCenter.y = 0.0f;
+                roomCenter.z /= 2.0f;
+                _roomsCenter.Add(roomCenter);
                 _lastColor = ColorConsistencyUpdate(roomLayout, _changed);
             }
 
