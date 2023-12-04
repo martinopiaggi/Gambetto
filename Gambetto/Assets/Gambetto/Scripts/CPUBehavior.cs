@@ -56,6 +56,7 @@ namespace Gambetto.Scripts
             //pattern based AI behavior
             if (piece.PatternAI)
             {
+                Debug.Log("Sono qui");
                 var i =
                     GameClock.Instance.CurrentTick() - 1 > 0
                         ? GameClock.Instance.CurrentTick() - 1
