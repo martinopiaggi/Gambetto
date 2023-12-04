@@ -59,7 +59,7 @@ namespace Gambetto.Scripts
             MovePath = new List<Vector3>();
             MovePath.Add(_currentCell.GetGlobalCoordinates());
             _possibleMovementsPath.Clear();
-            _possibleMovements = PieceMovement.GetPossibleMovements(piece, currentCell, _possibleMovementsPath);
+            _possibleMovements = PieceMovement.GetPossibleMovements(piece, currentCell,out _possibleMovementsPath);
             _cycleMovesCoroutine = StartCoroutine(CycleMoves());
         }
         

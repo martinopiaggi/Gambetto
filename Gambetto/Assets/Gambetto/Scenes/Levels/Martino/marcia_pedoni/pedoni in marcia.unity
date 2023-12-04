@@ -473,6 +473,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gridManager: {fileID: 295756829}
+  modality: 0
+  distance: 46
 --- !u!1001 &351143411
 PrefabInstance:
   m_ObjectHideFlags: 0
