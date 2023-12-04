@@ -37,7 +37,7 @@ namespace Gambetto.Scripts
         {
             if (Input.GetKeyDown(KeyCode.Space) && _choosing)
             {
-                AudioManager.Instance.PlaySfx(AudioManager.Instance.chosenMove);
+                // AudioManager.Instance.PlaySfx(AudioManager.Instance.chosenMove);
                 ChosenMove = _possibleChoice;
                 MovePath = _possiblePath;
                 _lastDirection = ChosenMove.GetGlobalCoordinates() - _currentCell.GetGlobalCoordinates();
