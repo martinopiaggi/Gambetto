@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: stanzaGrande
   m_EditorClassIdentifier: 
   topologyDescription: stanzina piccola solo spawn
-  roomCsvTextAsset: {fileID: 4900000, guid: c0b9d772f62da7d48906cc2f8ff181a8, type: 3}
+  roomCsvTextAsset: {fileID: 4900000, guid: 2dd57ad49883a4f48b47058a9ac46e1c, type: 3}
   exitSide: {x: 1, y: 0}
-  behaviours: []
+  behaviours:
+  - {fileID: 11400000, guid: 349f979f89446714a8118aea5533198e, type: 2}
