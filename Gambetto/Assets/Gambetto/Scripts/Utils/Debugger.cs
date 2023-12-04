@@ -12,6 +12,10 @@ namespace Utils
 
     public class Debugger : Singleton<Debugger>
     {
+        private bool _isVisible = false;
+
+        private Canvas _canvas;
+
         public enum Position
         {
             UpperLeft,
@@ -27,20 +31,32 @@ namespace Utils
         [SerializeField] private TextMeshProUGUI lowerRight;
         [SerializeField] private TextMeshProUGUI center;
 
-        private void Start()
+        private new void Awake()
         {
+            base.Awake();
             upperLeft.text = "";
             upperRight.text = "";
             lowerLeft.text = "";
             lowerRight.text = "";
             center.text = "";
+            _canvas = gameObject.GetComponent<Canvas>();
+            _canvas.enabled = _isVisible;
+        }
+
+        public void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.F3))
+            {
+                _isVisible = !_isVisible;
+                _canvas.enabled = _isVisible;
+            }
         }
 
         public void Show(string text, Color color = default, Position position = Position.UpperLeft, bool printConsole = true)
         {
-            color = color == default ? Color.white : color;
-
             if (printConsole) Debug.Log(text);
+            
+            color = color == default ? Color.white : color;
             
             switch (position)
             {
