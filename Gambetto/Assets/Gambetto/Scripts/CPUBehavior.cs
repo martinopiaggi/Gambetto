@@ -1,9 +1,7 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using Gambetto.Scripts.Pieces;
 using Gambetto.Scripts.Utils;
-using Unity.VisualScripting;
 using UnityEngine;
 using Vector3 = UnityEngine.Vector3;
 
@@ -56,7 +54,6 @@ namespace Gambetto.Scripts
             //pattern based AI behavior
             if (piece.PatternAI)
             {
-                Debug.Log("Sono qui");
                 var i =
                     GameClock.Instance.CurrentTick() - 1 > 0
                         ? GameClock.Instance.CurrentTick() - 1
@@ -105,7 +102,7 @@ namespace Gambetto.Scripts
             }
 
             //standard behavior for the AI
-            var possibleMovements = PieceMovement.GetPossibleMovements(piece, cell, _possiblePaths);
+            var possibleMovements = PieceMovement.GetPossibleMovements(piece, cell, out _possiblePaths);
             var chosenMove = cell;
             var minDist = float.MaxValue;
 
@@ -132,7 +129,7 @@ namespace Gambetto.Scripts
             //         + "\nCPU has chosen: "
             //         + chosenMove.getGlobalCoordinates()
             //         + " as next move"
-            // );
+            // );   
             _chosenMoves[piece] = chosenMove;
             _movePaths[piece] = _possiblePaths[chosenIndex];
         }

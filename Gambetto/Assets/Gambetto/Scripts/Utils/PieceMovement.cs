@@ -7,10 +7,10 @@ namespace Gambetto.Scripts.Utils
 {
     public static class PieceMovement
     {
-        public static List<Cell> GetPossibleMovements(Piece piece, Cell currentCell,  List<List<Vector3>> possiblePaths)
+        public static List<Cell> GetPossibleMovements(Piece piece, Cell currentCell, out List<List<Vector3>> possiblePaths)
         {
             var possibleMovement = new List<Cell>();
-            var possibleMovementPath = possiblePaths;
+            possiblePaths = new List<List<Vector3>>();
             Cell tempCell;
             List<Vector3> tempPath;
             var directions = piece.PossibleMoves;
@@ -32,9 +32,10 @@ namespace Gambetto.Scripts.Utils
                             tempPath = new List<Vector3>();
                             tempPath.Add(tempCell.GetGlobalCoordinates());
                             possibleMovement.Add(tempCell);
-                            possibleMovementPath.Add(tempPath);
+                            possiblePaths.Add(tempPath);
                         }
                     }
+
                     break;
                 case PieceType.Pawn:
                 case PieceType.King:
@@ -47,9 +48,10 @@ namespace Gambetto.Scripts.Utils
                             tempPath = new List<Vector3>();
                             possibleMovement.Add(tempCell);
                             tempPath.Add(tempCell.GetGlobalCoordinates());
-                            possibleMovementPath.Add(tempPath);
+                            possiblePaths.Add(tempPath);
                         }
                     }
+
                     break;
                 case PieceType.Knight:
                     var i = 0;
@@ -73,13 +75,15 @@ namespace Gambetto.Scripts.Utils
                         {
                             possibleMovement.Add(tempCell);
                             tempPath.Add(tempCell.GetGlobalCoordinates());
-                            possibleMovementPath.Add(tempPath);
+                            possiblePaths.Add(tempPath);
                         }
                     }
+
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+
             return possibleMovement;
         }
     }
