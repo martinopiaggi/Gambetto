@@ -1,3 +1,4 @@
+using Gambetto.Scripts.Utils;
 using UnityEngine;
 
 namespace Gambetto.Scripts.UI
@@ -6,12 +7,12 @@ namespace Gambetto.Scripts.UI
     {
         public void OpenSettings()
         {
-            Time.timeScale = 0f;
+            TimeManager.StopTime();
         }
 
         public void ResumeGame()
         {
-            Time.timeScale = 1f;
+            TimeManager.ResumeTime();
         }
     }
 }
