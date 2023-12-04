@@ -124,7 +124,7 @@ namespace Gambetto.Scripts
             if (_playerCell.IsEmpty())
             {
                 isDead = true;
-                StartCoroutine(RestartLevel());
+                RestartLevel();
             }
 
             if (!isDead )
@@ -147,7 +147,11 @@ namespace Gambetto.Scripts
             return _playerCell.GetGlobalCoordinates();
         }
 
-        public IEnumerator RestartLevel()
+        public void RestartLevel()
+        {
+            StartCoroutine(RestartLevelCoroutine());
+        }
+        private IEnumerator RestartLevelCoroutine()
         {
             GameClock.Instance.StopClock();
             _enemies.Clear();
@@ -706,8 +710,7 @@ namespace Gambetto.Scripts
         private void Awake()
         {
             _roomPrefab = Resources.Load<GameObject>("Prefabs/Room");
-            var ui = GameObject.FindWithTag("UI");
-            _endLevelMenu = ui.transform.Find("EndOfLevelMenu").gameObject;
+            _endLevelMenu = GameObject.FindWithTag("UI").transform.Find("EndOfLevelMenu").gameObject;
         }
         
         private void CheckEndLevel()
