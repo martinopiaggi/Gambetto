@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Gambetto.Scripts.Pieces;
 using Gambetto.Scripts.Utils;
 using Unity.Mathematics;
@@ -77,6 +78,8 @@ namespace Gambetto.Scripts
 
         private bool _gridFinished;
 
+        
+        private GameObject _endLevelMenu;
         public void Start()
         {
             GameClock.Instance.ClockTick += OnClockTick;
@@ -132,6 +135,7 @@ namespace Gambetto.Scripts
                     // if it's the first tick, don't compute the cpu moves and dont update the enemies position
                     cpuBehavior.ComputeCPUMoves(_playerCell, _enemies);
                     UpdateEnemiesPosition();
+                    CheckEndLevel();
                     CheckPowerUp();
                 }
                 playerController.StartChoosing(_playerPiece, _playerCell);
@@ -341,7 +345,7 @@ namespace Gambetto.Scripts
                             //behaviour = roomLayout.Behaviours[square.Identifier];
                         }
                         InstantiatePiece(cell, square, behaviour);
-                        InstantiateOther(cell, square);
+                        InstantiateTiles(cell, square);
                     }
 
                     roomCells.Add(cell); //add cell to current room cells
@@ -424,7 +428,7 @@ namespace Gambetto.Scripts
             _initialEnemiesPositions.Add(pieceObj.GetComponent<Piece>(), cell);
         }
 
-        private void InstantiateOther(Cell cell, RoomLayout.Square square)
+        private void InstantiateTiles(Cell cell, RoomLayout.Square square)
         {
             switch (square.Value)
             {
@@ -702,8 +706,27 @@ namespace Gambetto.Scripts
         private void Awake()
         {
             _roomPrefab = Resources.Load<GameObject>("Prefabs/Room");
+            var ui = GameObject.FindWithTag("UI");
+            _endLevelMenu = ui.transform.Find("EndOfLevelMenu").gameObject;
         }
-
+        
+        private void CheckEndLevel()
+        {
+            if (_playerCell == _endLevelCell)
+            {
+                GameClock.Instance.StopClock();
+                // we need to wait a bit before showing the end level menu and stopping time
+                StartCoroutine(DelayedMethods());
+            }
+        }
+        
+        private IEnumerator DelayedMethods()
+        {
+            yield return new WaitForSeconds(0.5f);
+            _endLevelMenu.SetActive(true);
+            TimeManager.StopTime();
+        }
+        
         private void CheckPowerUp()
         {
             //check if the player has activated a power up

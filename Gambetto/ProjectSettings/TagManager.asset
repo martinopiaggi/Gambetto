@@ -7,6 +7,7 @@ TagManager:
   - Fog
   - Audio
   - Enemy
+  - UI
   layers:
   - Default
   - TransparentFX
