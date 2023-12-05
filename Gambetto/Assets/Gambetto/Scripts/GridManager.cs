@@ -127,6 +127,7 @@ namespace Gambetto.Scripts
             if (_playerCell.IsEmpty())
             {
                 isDead = true;
+                AudioManager.Instance.PlaySfx(AudioManager.Instance.deathByFall);
                 RestartLevel();
             }
 
@@ -734,6 +735,7 @@ namespace Gambetto.Scripts
             {
                 GameClock.Instance.StopClock();
                 // we need to wait a bit before showing the end level menu and stopping time
+                AudioManager.Instance.PlaySfx(AudioManager.Instance.levelFinished);
                 StartCoroutine(DelayedMethods());
             }
         }
@@ -750,6 +752,7 @@ namespace Gambetto.Scripts
             //check if the player has activated a power up
             if (_powerUps.ContainsValue(_playerCell))
             {
+                AudioManager.Instance.PlaySfx(AudioManager.Instance.powerUp);
                 var powerUp = _powerUps.FirstOrDefault(x => x.Value == _playerCell).Key;
                 if (!powerUp.IsUsed)
                 {
