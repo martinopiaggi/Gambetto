@@ -311,3 +311,6 @@ MonoBehaviour:
   clockTick: {fileID: 8300000, guid: 3bac9f0b06a11a44cbdffe93f20c31dc, type: 3}
   chosenMove: {fileID: 8300000, guid: 8cb9608285129b04f8e92464138ea332, type: 3}
   deathByCollision: {fileID: 8300000, guid: e5c95eb92e9406247a59ed7c2447fec1, type: 3}
+  deathByFall: {fileID: 8300000, guid: 8bbe111330c0871499f58d9680dda37e, type: 3}
+  levelFinished: {fileID: 8300000, guid: c9d717b4fba7dd741ac7ce02ecd33be2, type: 3}
+  powerUp: {fileID: 8300000, guid: a525336893dd89e4997cc73a80e856aa, type: 3}
