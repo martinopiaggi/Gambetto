@@ -1221,6 +1221,9 @@ MonoBehaviour:
   pawnMovement: {fileID: 8300000, guid: e7c00806e1a055b469409fbc5f9da034, type: 3}
   clockTick: {fileID: 8300000, guid: 3bac9f0b06a11a44cbdffe93f20c31dc, type: 3}
   chosenMove: {fileID: 8300000, guid: 8cb9608285129b04f8e92464138ea332, type: 3}
+  deathByCollision: {fileID: 0}
+  deathByFall: {fileID: 0}
+  levelFinished: {fileID: 0}
 --- !u!4 &2104195323
 Transform:
   m_ObjectHideFlags: 0
