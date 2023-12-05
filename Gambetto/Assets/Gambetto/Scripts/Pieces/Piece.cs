@@ -14,37 +14,37 @@ namespace Gambetto.Scripts.Pieces
     {
         private protected PieceType _pieceType;
 
-        [SerializeField]
-        private protected PieceRole pieceRole;
+        [SerializeField] private protected PieceRole pieceRole;
 
         private bool _patternAI = false;
         private Behaviour _pattern = null;
         private int _patternIndex = 0;
-        
+
         public bool PatternAI
         {
             get => _patternAI;
             set => _patternAI = value;
         }
-        
+
         public Behaviour Pattern
         {
             set => _pattern = value;
             get => _pattern;
         }
-        
-        
-        [SerializeField]
-        private protected List<Vector2Int> possibleMoves;
 
-        [Range(Constants.MinPieceCountdown, Constants.MaxPieceCountdown)]
-        [SerializeField]
+
+        [SerializeField] private protected List<Vector2Int> possibleMoves;
+
+        [Range(Constants.MinPieceCountdown, Constants.MaxPieceCountdown)] [SerializeField]
         private protected int countdown;
 
-        [SerializeField]
-        private protected Constants.PieceCountdown countdownStartValue;
+        [SerializeField] private protected Constants.PieceCountdown countdownStartValue;
         private protected Transform _tr;
         private protected Rigidbody _rb;
+        private protected Collider[] _colliders;
+        
+        
+        public Rigidbody Rigidbody => _rb;
 
         private Coroutine _moveCoroutine;
         private List<Vector3> _oldPositions;
@@ -109,18 +109,21 @@ namespace Gambetto.Scripts.Pieces
         /// </summary>
         private protected void Awake()
         {
-            _hasCollided = false; //todo: temp solution for multiple collision issue
             _tr = GetComponent<Transform>();
             _rb = GetComponent<Rigidbody>();
+            _colliders = GetComponents<Collider>();
+            _hasCollided = false; //todo: temp solution for multiple collision issue
         }
+        
 
         private bool _hasCollided;
+
         private void OnCollisionEnter(Collision collision)
         {
-            if(collision.gameObject.CompareTag("Enemy") && pieceRole == PieceRole.Player && !_hasCollided)
+            if (collision.gameObject.CompareTag("Enemy") && pieceRole == PieceRole.Player && !_hasCollided)
             {
                 // stop the piece from moving
-                if(_moveCoroutine != null)
+                if (_moveCoroutine != null)
                     StopCoroutine(_moveCoroutine);
                 _hasCollided = true; //todo: change this temp solution for multiple triggered collision issue
                 _rb.useGravity = true; // force gravity (needed for the knight)
@@ -128,14 +131,10 @@ namespace Gambetto.Scripts.Pieces
                 var direction = collision.transform.position - _tr.position;
                 // add a force to the player in the opposite direction of the enemy to simulate a hit
                 _rb.AddForce(-direction.normalized * 8f + Vector3.up, ForceMode.Impulse);
+                AudioManager.Instance.PlaySfx(AudioManager.Instance.deathByCollision);
                 var gridManger = FindObjectOfType<GridManager>();
                 gridManger.RestartLevel();
             }
-        }
-
-        private void OnCollisionExit(Collision other)
-        {
-            
         }
 
         /**
@@ -164,6 +163,8 @@ namespace Gambetto.Scripts.Pieces
             bool gravity = true
         )
         {
+            if (!gravity) DisableColliders();
+             // disable collider if gravity is disabled
             _rb.useGravity = gravity; // enable/disable gravity
 
             foreach (var destPosition in positions)
@@ -201,6 +202,7 @@ namespace Gambetto.Scripts.Pieces
                     direction = destPosition - piecePos;
                     yield return null;
                 }
+                EnableColliders(); //Renable colliders
             }
         }
 
@@ -208,7 +210,25 @@ namespace Gambetto.Scripts.Pieces
         {
             return Physics.Raycast(transform.position, Vector3.down, 10.0f);
         }
+
+        private void DisableColliders()
+        {
+            foreach (var col in _colliders)
+            {
+                col.enabled = false;
+            }
+        }
+
+        private void EnableColliders()
+        {
+            foreach (var col in _colliders)
+            {
+                col.enabled = true;
+            }
+        }
     }
+    
+    
 
     public enum PieceType
     {
