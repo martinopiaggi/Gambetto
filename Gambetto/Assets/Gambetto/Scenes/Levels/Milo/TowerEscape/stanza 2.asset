@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: stanza 2
   m_EditorClassIdentifier: 
   topologyDescription: Stanza iniziale con PWUP
-  roomCsvTextAsset: {fileID: 4900000, guid: 90cafccf7334df943af2004d3f9e0406, type: 3}
+  roomCsvTextAsset: {fileID: 4900000, guid: d5e03579e39cdf2448455a63795dcc85, type: 3}
   exitSide: {x: 1, y: 0}
-  behaviours:
-  - {fileID: 11400000, guid: 82dea76867005ca49883eac9c5ca7ba6, type: 2}
+  behaviours: []
