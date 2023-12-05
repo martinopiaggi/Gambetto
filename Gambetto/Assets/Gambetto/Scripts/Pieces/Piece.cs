@@ -180,9 +180,9 @@ namespace Gambetto.Scripts.Pieces
                     {
                         _rb.useGravity = true; // force gravity (needed for the knight)
                         // if piece is not grounded and is affected by gravity, add a force to it like it was falling
-                        var boost = 8f;
+                        var boost = 5f;
                         if (Random.Range(0f, 1f) > 0.9)
-                            boost = 16f; // easter egg :)
+                            boost = 12f; // easter egg :)
 
                         _rb.AddForce(direction.normalized * boost, ForceMode.Impulse);
                         _rb.AddTorque(

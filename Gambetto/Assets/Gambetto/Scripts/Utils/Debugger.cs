@@ -1,4 +1,5 @@
 using Unity.VisualScripting;
+using UnityEngine.Serialization;
 
 namespace Utils
 {
@@ -12,7 +13,8 @@ namespace Utils
 
     public class Debugger : Singleton<Debugger>
     {
-        private bool _isVisible = false;
+        [SerializeField]
+        private bool isVisible = false;
 
         private Canvas _canvas;
 
@@ -40,15 +42,15 @@ namespace Utils
             lowerRight.text = "";
             center.text = "";
             _canvas = gameObject.GetComponent<Canvas>();
-            _canvas.enabled = _isVisible;
+            _canvas.enabled = isVisible;
         }
 
         public void Update()
         {
             if (Input.GetKeyDown(KeyCode.F3))
             {
-                _isVisible = !_isVisible;
-                _canvas.enabled = _isVisible;
+                isVisible = !isVisible;
+                _canvas.enabled = isVisible;
             }
         }
 
