@@ -442,6 +442,7 @@ namespace Gambetto.Scripts
 
             pieceObj.GetComponent<MeshRenderer>().material = darkMaterial;
             pieceObj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
+            pieceObj.GetComponent<Rigidbody>().isKinematic = true;
             _enemies.Add(pieceScript, cell);
             _initialEnemiesPositions.Add(pieceObj.GetComponent<Piece>(), cell);
         }
