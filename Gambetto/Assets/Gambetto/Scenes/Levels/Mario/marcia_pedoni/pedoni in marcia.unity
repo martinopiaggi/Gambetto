@@ -356,7 +356,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerController: {fileID: 1275976313}
-  CPUBehavior: {fileID: 2087794330}
+  cpuBehavior: {fileID: 2087794330}
   prefabPawn: {fileID: 2952612582261332343, guid: e89488c1ad9092a449c0ed41c38eb9f8,
     type: 3}
   prefabBishop: {fileID: 2952612582261332343, guid: 09e86d3c84e88d0419f223a7eb2a99ca,
@@ -548,6 +548,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gridManager: {fileID: 295756829}
+  modality: 0
+  distance: 46
 --- !u!1001 &351143411
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3291,6 +3293,9 @@ MonoBehaviour:
   pawnMovement: {fileID: 8300000, guid: e7c00806e1a055b469409fbc5f9da034, type: 3}
   clockTick: {fileID: 8300000, guid: 3bac9f0b06a11a44cbdffe93f20c31dc, type: 3}
   chosenMove: {fileID: 8300000, guid: 8cb9608285129b04f8e92464138ea332, type: 3}
+  deathByCollision: {fileID: 0}
+  deathByFall: {fileID: 0}
+  levelFinished: {fileID: 0}
 --- !u!4 &2104195323
 Transform:
   m_ObjectHideFlags: 0
