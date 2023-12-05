@@ -10,13 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 030530086e85cb745a146f3a7806b1b7, type: 3}
-  m_Name: stanzaGrande
+  m_Name: rooks room
   m_EditorClassIdentifier: 
   topologyDescription: stanzina piccola solo spawn
-  roomCsvTextAsset: {fileID: 4900000, guid: 2dd57ad49883a4f48b47058a9ac46e1c, type: 3}
+  roomCsvTextAsset: {fileID: 4900000, guid: 1ef33ff418d152f498c93151d3997f5f, type: 3}
   exitSide: {x: 1, y: 0}
-  behaviours:
-  - {fileID: 11400000, guid: 349f979f89446714a8118aea5533198e, type: 2}
-  - {fileID: 11400000, guid: a25cb6ceb94d4e94498cdebbd71c16a4, type: 2}
-  - {fileID: 11400000, guid: 377526814f8910c4c9c477110ab7699b, type: 2}
-  - {fileID: 11400000, guid: 2780faeb83acc92478fbb1a8a8d4b574, type: 2}
+  behaviours: []
