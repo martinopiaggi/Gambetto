@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 030530086e85cb745a146f3a7806b1b7, type: 3}
+  m_Name: 2
+  m_EditorClassIdentifier: 
+  topologyDescription: stanza grande girotondo
+  roomCsvTextAsset: {fileID: 4900000, guid: f1c5bca23c0c6e34388d1f0286542be0, type: 3}
+  exitSide: {x: 1, y: 0}
+  behaviours:
+  - {fileID: 11400000, guid: ea2db5b729f1ef94fb2f9667e2740d56, type: 2}
+  - {fileID: 11400000, guid: 167fd867b37ef054cb668c845f603d89, type: 2}
+  - {fileID: 11400000, guid: 85f2ca67354e0bb4cbf90d38ce2ad3cc, type: 2}
+  - {fileID: 11400000, guid: d055024b73b28094d87ae868deadbb9a, type: 2}
+  - {fileID: 11400000, guid: b622fa0830539174294a4220605826fa, type: 2}
+  - {fileID: 11400000, guid: 540e2c5148c107741964d4ae97a444bb, type: 2}
+  - {fileID: 11400000, guid: 25cbd33ad6ce24144980e49bee7ad95f, type: 2}
+  - {fileID: 11400000, guid: d11da0227a67a0141adb6029e01812c5, type: 2}
+  - {fileID: 11400000, guid: 3def8e132786b9548ba8387a298bccce, type: 2}
