@@ -25,6 +25,9 @@ namespace Gambetto.Scripts
         public AudioClip pawnMovement;
         public AudioClip clockTick;
         public AudioClip chosenMove;
+        public AudioClip deathByCollision;
+        public AudioClip deathByFall;
+        public AudioClip levelFinished;
 
         //start method to play background music in menu and to load player volumes previously set
         public void Start()
