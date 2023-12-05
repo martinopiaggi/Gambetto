@@ -10,18 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7ac34a7225b38244ebf91c84eb6a06c1, type: 3}
-  m_Name: p4
+  m_Name: t2
   m_EditorClassIdentifier: 
   _movements:
-  - {x: 0, y: -1}
-  - {x: 0, y: -1}
-  - {x: 0, y: -1}
-  - {x: 0, y: -1}
-  - {x: 0, y: -1}
+  - {x: 2, y: 0}
   - {x: 0, y: 1}
-  - {x: 0, y: 1}
-  - {x: 0, y: 1}
-  - {x: 0, y: 1}
-  - {x: 0, y: 1}
-  _offset: 3
-  id: 4
+  - {x: 2, y: 0}
+  - {x: 0, y: 2}
+  - {x: -4, y: 0}
+  - {x: 0, y: -3}
+  _offset: 0
+  id: 2

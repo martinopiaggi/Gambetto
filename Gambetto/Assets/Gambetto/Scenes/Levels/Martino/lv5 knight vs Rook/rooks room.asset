@@ -15,4 +15,7 @@ MonoBehaviour:
   topologyDescription: stanzina piccola solo spawn
   roomCsvTextAsset: {fileID: 4900000, guid: 1ef33ff418d152f498c93151d3997f5f, type: 3}
   exitSide: {x: 1, y: 0}
-  behaviours: []
+  behaviours:
+  - {fileID: 11400000, guid: c5ac7a6fc4fd50d4dac0612b65b429a8, type: 2}
+  - {fileID: 11400000, guid: 2c1cb4d2f2d1fe34cbfe9fc76cb0d478, type: 2}
+  - {fileID: 11400000, guid: 3c7b21671aba7e146aa7c390ab4cba92, type: 2}
