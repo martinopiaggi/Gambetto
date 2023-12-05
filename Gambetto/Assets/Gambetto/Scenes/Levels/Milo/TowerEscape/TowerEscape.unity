@@ -826,6 +826,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rooms:
   - {fileID: 11400000, guid: 73bee6335a5dd614cb1c19743d6a8071, type: 2}
+  - {fileID: 11400000, guid: f29e1812275aaf24b86d720bc96a311b, type: 2}
   gridManager: {fileID: 295756828}
 --- !u!4 &1181219728
 Transform:
