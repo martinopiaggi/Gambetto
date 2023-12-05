@@ -117,9 +117,12 @@ namespace Gambetto.Scripts.Pieces
         private bool _hasCollided;
         private void OnCollisionEnter(Collision collision)
         {
-            if (collision.gameObject.CompareTag("Enemy") && pieceRole == PieceRole.Player && !_hasCollided)
+            if(collision.gameObject.CompareTag("Enemy") && pieceRole == PieceRole.Player && !_hasCollided)
             {
-                _hasCollided = true; //todo: change this temp solution for multiple collision issue
+                // stop the piece from moving
+                if(_moveCoroutine != null)
+                    StopCoroutine(_moveCoroutine);
+                _hasCollided = true; //todo: change this temp solution for multiple triggered collision issue
                 _rb.useGravity = true; // force gravity (needed for the knight)
                 // Debug.Log("Enemy hit");
                 var direction = collision.transform.position - _tr.position;
