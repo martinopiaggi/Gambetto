@@ -10,9 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 030530086e85cb745a146f3a7806b1b7, type: 3}
-  m_Name: stanzaGrande
+  m_Name: stanza 1
   m_EditorClassIdentifier: 
-  topologyDescription: stanzina piccola solo spawn
-  roomCsvTextAsset: {fileID: 4900000, guid: 2dd57ad49883a4f48b47058a9ac46e1c, type: 3}
+  topologyDescription: Stanza iniziale con PWUP
+  roomCsvTextAsset: {fileID: 4900000, guid: 90cafccf7334df943af2004d3f9e0406, type: 3}
   exitSide: {x: 1, y: 0}
-  behaviours: []
+  behaviours:
+  - {fileID: 11400000, guid: 82dea76867005ca49883eac9c5ca7ba6, type: 2}
