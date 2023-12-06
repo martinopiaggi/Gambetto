@@ -106,7 +106,7 @@ namespace Gambetto.Scripts
             MinimumPath(piece, cell);
         }
         /// <summary>
-        /// This method is used to calculate the minimum path between the current cell and the player cell.
+        /// This method is used to calculate the minimum path between the enemy's current cell and the player cell.
         /// It uses a BFS algorithm to calculate the minimum path.
         /// </summary>
         /// <param name="piece">Current enemy piece.</param>
