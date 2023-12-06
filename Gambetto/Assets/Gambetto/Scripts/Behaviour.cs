@@ -15,7 +15,7 @@ public class Behaviour : ScriptableObject
     [SerializeField] private List<Vector2Int> _movements;
     [SerializeField] private int _offset;
     [SerializeField] private int id;
-    [SerializeField] private bool aggressive;
+    [SerializeField] private bool aggressive = true;
     
     
     public int Id => id;
