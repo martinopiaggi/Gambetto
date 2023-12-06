@@ -103,10 +103,49 @@ namespace Gambetto.Scripts
             }
 
             //standard behavior for the AI
-            var possibleMovements = PieceMovement.GetPossibleMovements(piece, cell, out _possiblePaths);
-            var chosenMove = cell;
-            var minDist = float.MaxValue;
+            MinimumPath(piece, cell);
+        }
+        /// <summary>
+        /// This method is used to calculate the minimum path between the current cell and the player cell.
+        /// It uses a BFS algorithm to calculate the minimum path.
+        /// </summary>
+        /// <param name="piece">Current enemy piece.</param>
+        /// <param name="startCell">Starting cell of the enemy piece.</param>
+        private void MinimumPath(Piece piece, Cell startCell)
+        {
+            var playerCell = _playerCell;
+            var tempListMoves = new List<Vector3>();
+            var queue = new Queue<(Cell, List<Cell>)>();
+            var visited = new HashSet<Cell>();
+            queue.Enqueue((startCell, new List<Cell>()));
 
+            while (queue.Count > 0)
+            {
+                var (currentCell, path) = queue.Dequeue();
+                if (currentCell.Equals(playerCell)) // end of the algorithm
+                {
+                    startCell = path[0];
+                    tempListMoves.Add(startCell.GetGlobalCoordinates());
+                    _chosenMoves[piece] = startCell;
+                    _movePaths[piece] = tempListMoves;
+                    return;
+                }
+
+                var possibleMovements = PieceMovement.GetPossibleMovements(piece, currentCell, out _possiblePaths);
+                
+                foreach (var nextCell in possibleMovements.Where(nextCell => !visited.Contains(nextCell)))
+                {
+                    visited.Add(nextCell);
+                    var newPath = new List<Cell>(path) { nextCell };
+                    queue.Enqueue((nextCell, newPath));
+                }
+            }
+        }
+        [Obsolete("MinimumDistance is deprecated, please use MinimumPath instead.", true)]
+        private void MinimumDistance(Piece piece, Cell cell)
+        {
+            var possibleMovements = PieceMovement.GetPossibleMovements(piece, cell, out _possiblePaths);
+            var minDist = float.MaxValue;
             var index = 0;
             var chosenIndex = 0;
             foreach (var move in possibleMovements)
@@ -116,14 +155,13 @@ namespace Gambetto.Scripts
                 if (move.IsEmpty() || IsOccupied(move) || !(dist.magnitude < minDist))
                     continue;
                 minDist = dist.magnitude;
-                chosenMove = move;
+                cell = move;
                 chosenIndex = index - 1;
             }
-
-            _chosenMoves[piece] = chosenMove;
+            _chosenMoves[piece] = cell;
             _movePaths[piece] = _possiblePaths[chosenIndex];
         }
-
+        
         private bool IsOccupied(Cell cell)
         {
             return _chosenMoves.Any(enemy => enemy.Value == cell);
