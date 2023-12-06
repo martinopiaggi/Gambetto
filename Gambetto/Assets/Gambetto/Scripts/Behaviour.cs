@@ -12,7 +12,7 @@ using UnityEngine.Serialization;
 public class Behaviour : ScriptableObject
 {
 
-    [SerializeField] private List<Vector2Int> _movements;
+    [SerializeField] private List<Vector2Int> _movements = new();
     [SerializeField] private int _offset;
     [SerializeField] private int id;
     [SerializeField] private bool aggressive = true;
