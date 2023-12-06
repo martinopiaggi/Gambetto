@@ -104,9 +104,16 @@ namespace Gambetto.Scripts
 
             //standard behavior for the AI
             var dist = (cell.GetGlobalCoordinates() - _playerCell.GetGlobalCoordinates()).magnitude;
-            if (dist <= 6.0f && piece.Pattern.Aggressive) 
+            var moves = new List<Vector3>();
+            if (dist <= 6.0f && true) // todo: piece.Pattern.Aggressive instead of "true"
                 MinimumPath(piece, cell);
+            else
+            {
+                moves.Add(cell.GetGlobalCoordinates());
+                _movePaths[piece] = moves;
+            }
         }
+
         /// <summary>
         /// This method is used to calculate the minimum path between the enemy's current cell and the player cell.
         /// It uses a BFS algorithm to calculate the minimum path.
@@ -116,10 +123,10 @@ namespace Gambetto.Scripts
         private void MinimumPath(Piece piece, Cell startCell)
         {
             var playerCell = _playerCell;
-            var tempListMoves = new List<Vector3>();
             var queue = new Queue<(Cell, List<Cell>)>();
             var visited = new HashSet<Cell>();
             queue.Enqueue((startCell, new List<Cell>()));
+            var tempListMoves = new List<Vector3>();
 
             while (queue.Count > 0)
             {
@@ -128,13 +135,13 @@ namespace Gambetto.Scripts
                 {
                     startCell = path[0];
                     tempListMoves.Add(startCell.GetGlobalCoordinates());
-                    _chosenMoves[piece] = startCell;
+                    _chosenMoves[piece] = startCell; //todo: deprecated?
                     _movePaths[piece] = tempListMoves;
                     return;
                 }
 
                 var possibleMovements = PieceMovement.GetPossibleMovements(piece, currentCell, out _possiblePaths);
-                
+
                 foreach (var nextCell in possibleMovements.Where(nextCell => !visited.Contains(nextCell)))
                 {
                     visited.Add(nextCell);
@@ -143,6 +150,7 @@ namespace Gambetto.Scripts
                 }
             }
         }
+
         [Obsolete("MinimumDistance is deprecated, please use MinimumPath instead.", true)]
         private void MinimumDistance(Piece piece, Cell cell)
         {
@@ -160,10 +168,11 @@ namespace Gambetto.Scripts
                 cell = move;
                 chosenIndex = index - 1;
             }
+
             _chosenMoves[piece] = cell;
             _movePaths[piece] = _possiblePaths[chosenIndex];
         }
-        
+
         private bool IsOccupied(Cell cell)
         {
             return _chosenMoves.Any(enemy => enemy.Value == cell);
