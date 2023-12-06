@@ -29,7 +29,7 @@ namespace Gambetto.Scripts
         }
 
         // Start is called before the first frame update
-        void Awake()
+        private void Awake()
         {
             var selectedSquarePrefab = Resources.Load<GameObject>("Prefabs/Square");
             //In start I create the light used to illuminate the grid
@@ -106,35 +106,24 @@ namespace Gambetto.Scripts
             var chosenMove = cell;
             var minDist = float.MaxValue;
 
-            int index = 0;
-            int chosenIndex = 0;
+            var index = 0;
+            var chosenIndex = 0;
             foreach (var move in possibleMovements)
             {
                 index++;
                 var dist = move.GetGlobalCoordinates() - _playerCell.GetGlobalCoordinates();
-                if (move.IsEmpty())
+                if (move.IsEmpty() || IsOccupied(move) || !(dist.magnitude < minDist))
                     continue;
-                if (ThereIsSomeone(move))
-                    continue;
-                if (dist.magnitude < minDist)
-                {
-                    minDist = dist.magnitude;
-                    chosenMove = move;
-                    chosenIndex = index - 1;
-                }
+                minDist = dist.magnitude;
+                chosenMove = move;
+                chosenIndex = index - 1;
             }
-            // Debug.Log(
-            //     "Old position: "
-            //         + cell.getGlobalCoordinates()
-            //         + "\nCPU has chosen: "
-            //         + chosenMove.getGlobalCoordinates()
-            //         + " as next move"
-            // );   
+
             _chosenMoves[piece] = chosenMove;
             _movePaths[piece] = _possiblePaths[chosenIndex];
         }
 
-        public bool ThereIsSomeone(Cell here)
+        private bool IsOccupied(Cell here)
         {
             //if (_playerCell == here)
             //    return true;
@@ -149,7 +138,7 @@ namespace Gambetto.Scripts
             return false;
         }
 
-        public int Sign(int x)
+        private static int Sign(int x)
         {
             return Convert.ToInt32(x > 0) - Convert.ToInt32(x < 0);
         }
