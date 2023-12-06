@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Gambetto.Scripts.Pieces;
 using Gambetto.Scripts.Utils;
 using UnityEngine;
@@ -123,19 +124,9 @@ namespace Gambetto.Scripts
             _movePaths[piece] = _possiblePaths[chosenIndex];
         }
 
-        private bool IsOccupied(Cell here)
+        private bool IsOccupied(Cell cell)
         {
-            //if (_playerCell == here)
-            //    return true;
-            foreach (var enemy in _chosenMoves)
-            {
-                if (enemy.Value == here)
-                {
-                    return true;
-                }
-            }
-
-            return false;
+            return _chosenMoves.Any(enemy => enemy.Value == cell);
         }
 
         private static int Sign(int x)
