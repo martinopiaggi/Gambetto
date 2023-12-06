@@ -68,6 +68,9 @@ namespace Gambetto.Scripts.GameCore.Grid
         [SerializeField]
         public GameObject endLevel;
 
+        [SerializeField]
+        public GameObject deathScreen;
+
         public Material lightMaterial;
         public Material darkMaterial;
 
@@ -130,7 +133,8 @@ namespace Gambetto.Scripts.GameCore.Grid
             {
                 isDead = true;
                 AudioManager.Instance.PlaySfx(AudioManager.Instance.deathByFall);
-                RestartLevel();
+                GameClock.Instance.StopClock();
+                StartCoroutine(DelayedMethods(deathScreen));
             }
 
             if (!isDead)
@@ -308,8 +312,8 @@ namespace Gambetto.Scripts.GameCore.Grid
         private int ColorConsistencyUpdate(RoomLayout roomLayout, bool changed)
         {
             //this if determine what is the last color of the room, 1 (dark), 0 (bright)
-            //if the room has an even lenght and was not changed its last color is 1 (dark)
-            //if the room has an odd lenght and was not changed its last color is 0 (bright)
+            //if the room has an even length and was not changed its last color is 1 (dark)
+            //if the room has an odd length and was not changed its last color is 0 (bright)
             if (roomLayout.GetExit() == Directions.East || roomLayout.GetExit() == Directions.West)
             {
                 if (roomLayout.GetSizeColumn() % 2 == 0)
@@ -753,14 +757,14 @@ namespace Gambetto.Scripts.GameCore.Grid
                 GameClock.Instance.StopClock();
                 // we need to wait a bit before showing the end level menu and stopping time
                 AudioManager.Instance.PlaySfx(AudioManager.Instance.levelFinished);
-                StartCoroutine(DelayedMethods());
+                StartCoroutine(DelayedMethods(_endLevelMenu));
             }
         }
 
-        private IEnumerator DelayedMethods()
+        public IEnumerator DelayedMethods(GameObject g)
         {
             yield return new WaitForSeconds(0.5f);
-            _endLevelMenu.SetActive(true);
+            g.SetActive(true);
             TimeManager.StopTime();
         }
 
@@ -798,7 +802,7 @@ namespace Gambetto.Scripts.GameCore.Grid
             }
         }
 
-        public void ResetPowerUps()
+        private void ResetPowerUps()
         {
             foreach (var p in _powerUps.Keys)
             {

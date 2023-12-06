@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028334, g: 0.22571328, b: 0.3069217, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -172,10 +172,11 @@ MonoBehaviour:
     type: 3}
   bishopPowerUp: {fileID: 6760961586210498684, guid: c7f34c419f9ae634d8fc1684c99eed37,
     type: 3}
-  queenPowerUp: {fileID: 6760961586210498684, guid: 3a26561a5facac54d8eeed2e51fdf8d1,
+  pawnPowerUp: {fileID: 6760961586210498684, guid: b2427193ecb56f947ae456c2f221d294,
     type: 3}
   endLevel: {fileID: 6760961586210498684, guid: 2e790e3ab25499f4f83f49b62edf91bc,
     type: 3}
+  deathScreen: {fileID: 1251387346}
   lightMaterial: {fileID: 2100000, guid: cf4f19fd0a10ee044a41c976ddca337a, type: 2}
   darkMaterial: {fileID: 2100000, guid: a778dca5d3731a24ba57709c077ce4e1, type: 2}
   isDead: 0
@@ -598,6 +599,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1251387346 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7326510614949386879, guid: 6bba10dfd64d5194495e02f475b0c3c2,
+    type: 3}
+  m_PrefabInstance: {fileID: 304911346726008954}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1254502430
 GameObject:
   m_ObjectHideFlags: 0

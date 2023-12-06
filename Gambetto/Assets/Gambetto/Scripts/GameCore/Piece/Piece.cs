@@ -136,8 +136,9 @@ namespace Gambetto.Scripts.GameCore.Piece
                 // add a force to the player in the opposite direction of the enemy to simulate a hit
                 _rb.AddForce(-direction.normalized * 8f + Vector3.up, ForceMode.Impulse);
                 AudioManager.Instance.PlaySfx(AudioManager.Instance.deathByCollision);
-                var gridManger = FindObjectOfType<GridManager>();
-                gridManger.RestartLevel();
+                var gridManager = FindObjectOfType<GridManager>();
+                GameClock.Instance.StopClock();
+                gridManager.StartCoroutine(gridManager.DelayedMethods(gridManager.deathScreen));
             }
         }
 

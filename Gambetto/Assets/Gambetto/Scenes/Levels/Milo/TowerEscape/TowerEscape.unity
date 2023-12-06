@@ -123,6 +123,12 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &67878285 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7326510614949386879, guid: 6bba10dfd64d5194495e02f475b0c3c2,
+    type: 3}
+  m_PrefabInstance: {fileID: 304911346726008954}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &295756828
 GameObject:
   m_ObjectHideFlags: 0
@@ -176,6 +182,7 @@ MonoBehaviour:
     type: 3}
   endLevel: {fileID: 6760961586210498684, guid: 2e790e3ab25499f4f83f49b62edf91bc,
     type: 3}
+  deathScreen: {fileID: 67878285}
   lightMaterial: {fileID: 2100000, guid: cf4f19fd0a10ee044a41c976ddca337a, type: 2}
   darkMaterial: {fileID: 2100000, guid: a778dca5d3731a24ba57709c077ce4e1, type: 2}
   isDead: 0
@@ -1132,6 +1139,43 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3743725960343298887, guid: 6bba10dfd64d5194495e02f475b0c3c2,
+        type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 3db50f811b4e918499f3bfc71d9a9220,
+        type: 2}
+    - target: {fileID: 3743725960343298887, guid: 6bba10dfd64d5194495e02f475b0c3c2,
+        type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4769184525344530694, guid: 6bba10dfd64d5194495e02f475b0c3c2,
+        type: 3}
+      propertyPath: m_Color.a
+      value: 0.8666667
+      objectReference: {fileID: 0}
+    - target: {fileID: 4996392296468633078, guid: 6bba10dfd64d5194495e02f475b0c3c2,
+        type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 3db50f811b4e918499f3bfc71d9a9220,
+        type: 2}
+    - target: {fileID: 4996392296468633078, guid: 6bba10dfd64d5194495e02f475b0c3c2,
+        type: 3}
+      propertyPath: m_fontStyle
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4996392296468633078, guid: 6bba10dfd64d5194495e02f475b0c3c2,
+        type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6004737597285440260, guid: 6bba10dfd64d5194495e02f475b0c3c2,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 29.567505
+      objectReference: {fileID: 0}
     - target: {fileID: 6257559280549801734, guid: 6bba10dfd64d5194495e02f475b0c3c2,
         type: 3}
       propertyPath: m_Name
@@ -1181,6 +1225,17 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 9140856750872544901, guid: 6bba10dfd64d5194495e02f475b0c3c2,
+        type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 3db50f811b4e918499f3bfc71d9a9220,
+        type: 2}
+    - target: {fileID: 9140856750872544901, guid: 6bba10dfd64d5194495e02f475b0c3c2,
+        type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
