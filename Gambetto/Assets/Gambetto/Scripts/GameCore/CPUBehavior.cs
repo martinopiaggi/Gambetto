@@ -1,29 +1,29 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Gambetto.Scripts.Pieces;
-using Gambetto.Scripts.Utils;
+using Gambetto.Scripts.GameCore.Grid;
+using Gambetto.Scripts.GameCore.Piece;
 using UnityEngine;
 using Vector3 = UnityEngine.Vector3;
 
-namespace Gambetto.Scripts
+namespace Gambetto.Scripts.GameCore
 {
     public class CPUBehavior : MonoBehaviour
     {
         private GameObject _selectedSquare;
-        private Dictionary<Piece, Cell> _chosenMoves;
-        private Dictionary<Piece, List<Vector3>> _movePaths;
+        private Dictionary<Piece.Piece, Cell> _chosenMoves;
+        private Dictionary<Piece.Piece, List<Vector3>> _movePaths;
         private List<List<Vector3>> _possiblePaths;
         private Cell _playerCell;
         private Coroutine _computingCoroutine;
 
-        public Dictionary<Piece, Cell> ChosenMoves
+        public Dictionary<Piece.Piece, Cell> ChosenMoves
         {
             get => _chosenMoves;
             set => _chosenMoves = value;
         }
 
-        public Dictionary<Piece, List<Vector3>> MovePaths
+        public Dictionary<Piece.Piece, List<Vector3>> MovePaths
         {
             get => _movePaths;
             set => _movePaths = value;
@@ -36,12 +36,12 @@ namespace Gambetto.Scripts
             //In start I create the light used to illuminate the grid
             _selectedSquare = Instantiate(selectedSquarePrefab);
             _selectedSquare.SetActive(false);
-            _chosenMoves = new Dictionary<Piece, Cell>();
-            _movePaths = new Dictionary<Piece, List<Vector3>>();
+            _chosenMoves = new Dictionary<Piece.Piece, Cell>();
+            _movePaths = new Dictionary<Piece.Piece, List<Vector3>>();
             _possiblePaths = new List<List<Vector3>>();
         }
 
-        public void ComputeCPUMoves(Cell playerCell, Dictionary<Piece, Cell> enemies) //todo enemies!
+        public void ComputeCPUMoves(Cell playerCell, Dictionary<Piece.Piece, Cell> enemies) //todo enemies!
         {
             _playerCell = playerCell;
             foreach (var enemyRef in enemies)
@@ -50,7 +50,7 @@ namespace Gambetto.Scripts
             }
         }
 
-        private void ComputeNextMove(Piece piece, Cell cell)
+        private void ComputeNextMove(Piece.Piece piece, Cell cell)
         {
             //pattern based AI behavior
             if (piece.HasPattern)
@@ -122,7 +122,7 @@ namespace Gambetto.Scripts
         /// </summary>
         /// <param name="piece">Current enemy piece.</param>
         /// <param name="startCell">Starting cell of the enemy piece.</param>
-        private void MinimumPath(Piece piece, Cell startCell)
+        private void MinimumPath(Piece.Piece piece, Cell startCell)
         {
             var playerCell = _playerCell;
             var queue = new Queue<(Cell, List<Cell>)>();
@@ -154,7 +154,7 @@ namespace Gambetto.Scripts
         }
 
         [Obsolete("MinimumDistance is deprecated, please use MinimumPath instead.", true)]
-        private void MinimumDistance(Piece piece, Cell cell)
+        private void MinimumDistance(Piece.Piece piece, Cell cell)
         {
             var possibleMovements = PieceMovement.GetPossibleMovements(piece, cell, out _possiblePaths);
             var minDist = float.MaxValue;

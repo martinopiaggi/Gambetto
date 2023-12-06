@@ -1,31 +1,31 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Gambetto.Scripts;
+using Gambetto.Scripts.UI;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+namespace Gambetto.Scripts
 {
-    public static GameManager Instance;
-
-    public SceneTransition sceneTransition;
-
-    private void Awake()
+    public class GameManager : MonoBehaviour
     {
-        if (Instance == null)
+        public static GameManager Instance;
+
+        public SceneTransition sceneTransition;
+
+        private void Awake()
         {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
+            if (Instance == null)
+            {
+                Instance = this;
+                DontDestroyOnLoad(gameObject);
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
         }
-        else
-        {
-            Destroy(gameObject);
-        }
+
+        // Start is called before the first frame update
+        void Start() { }
+
+        // Update is called once per frame
+        void Update() { }
     }
-
-    // Start is called before the first frame update
-    void Start() { }
-
-    // Update is called once per frame
-    void Update() { }
 }

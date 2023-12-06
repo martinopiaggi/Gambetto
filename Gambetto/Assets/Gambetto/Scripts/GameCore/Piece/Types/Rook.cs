@@ -1,8 +1,6 @@
-using Gambetto.Scripts.Utils;
-using Pieces;
 using UnityEngine;
 
-namespace Gambetto.Scripts.Pieces
+namespace Gambetto.Scripts.GameCore.Piece.Types
 {
     public class Rook : Piece
     {
@@ -15,8 +13,8 @@ namespace Gambetto.Scripts.Pieces
             base.Awake();
             _pieceType = PieceType.Rook;
             // Set the possible moves for the piece
-            PossibleMoves = global::Utils.PossibleMoves.RookPossibleMoves;
-            Countdown = (int)Constants.PieceCountdown.Rook;
+            PossibleMoves = global::Gambetto.Scripts.GameCore.Grid.PossibleMoves.RookPossibleMoves;
+            Countdown = (int)PieceConstants.PieceCountdown.Rook;
             GetComponent<MeshFilter>().mesh = Resources.Load<Mesh>("Models/Rook");
         }
     }

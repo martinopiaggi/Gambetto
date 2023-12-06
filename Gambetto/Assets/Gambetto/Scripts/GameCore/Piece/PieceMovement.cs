@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using Gambetto.Scripts.Pieces;
+using Gambetto.Scripts.GameCore.Grid;
 using UnityEngine;
 
-namespace Gambetto.Scripts.Utils
+namespace Gambetto.Scripts.GameCore.Piece
 {
     public static class PieceMovement
     {

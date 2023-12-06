@@ -1,7 +1,6 @@
-using Gambetto.Scripts.Utils;
 using UnityEngine;
 
-namespace Gambetto.Scripts.Pieces
+namespace Gambetto.Scripts.GameCore.Piece.Types
 {
     public class King : Piece
     {
@@ -14,8 +13,8 @@ namespace Gambetto.Scripts.Pieces
             base.Awake();
             _pieceType = PieceType.King;
             // Set the possible moves for the piece
-            PossibleMoves = global::Utils.PossibleMoves.KingPossibleMoves;
-            Countdown = (int) Constants.PieceCountdown.King;
+            PossibleMoves = global::Gambetto.Scripts.GameCore.Grid.PossibleMoves.KingPossibleMoves;
+            Countdown = (int) PieceConstants.PieceCountdown.King;
             // Set the mesh for the piece
             GetComponent<MeshFilter>().mesh = Resources.Load<Mesh>("Models/King");
             

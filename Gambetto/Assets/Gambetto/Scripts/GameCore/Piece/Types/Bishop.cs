@@ -1,8 +1,6 @@
-using Gambetto.Scripts.Pieces;
-using Gambetto.Scripts.Utils;
 using UnityEngine;
 
-namespace Pieces
+namespace Gambetto.Scripts.GameCore.Piece.Types
 {
     public class Bishop : Piece
     {
@@ -15,8 +13,8 @@ namespace Pieces
             base.Awake();
             _pieceType = PieceType.Bishop;
             // Set the possible moves for the piece
-            PossibleMoves = Utils.PossibleMoves.BishopPossibleMoves;
-            Countdown = (int) Constants.PieceCountdown.Bishop;
+            PossibleMoves = Grid.PossibleMoves.BishopPossibleMoves;
+            Countdown = (int) PieceConstants.PieceCountdown.Bishop;
             GetComponent<MeshFilter>().mesh = Resources.Load<Mesh>("Models/Bishop");
         }
     }

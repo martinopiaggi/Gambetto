@@ -1,39 +1,40 @@
-using System.Collections;
 using System.Collections.Generic;
-using Gambetto.Scripts;
-using Unity.VisualScripting;
+using Gambetto.Scripts.GameCore.Grid;
+using Gambetto.Scripts.GameCore.Room;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
-public class LevelManager : MonoBehaviour
+namespace Gambetto.Scripts
 {
-    public static LevelManager Instance;
-    
-    
-    public List<RoomLayout> rooms;
-    [SerializeField] private GameObject gridManager;
-    
-    
-    //awake method makes sure that LevelManager is not destroyed
-    private void Awake()
+    public class LevelManager : MonoBehaviour
     {
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
+        public static LevelManager Instance;
     
     
-    // Start is called before the first frame update
-    void Start()
-    {
-        gridManager.GetComponent<GridManager>().CreateGrid(rooms);
-    }
+        public List<RoomLayout> rooms;
+        [SerializeField] private GameObject gridManager;
+    
+    
+        //awake method makes sure that LevelManager is not destroyed
+        private void Awake()
+        {
+            if (Instance == null)
+            {
+                Instance = this;
+                DontDestroyOnLoad(gameObject);
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
+        }
+    
+    
+        // Start is called before the first frame update
+        void Start()
+        {
+            gridManager.GetComponent<GridManager>().CreateGrid(rooms);
+        }
 
     
+    }
 }

@@ -1,21 +1,21 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Gambetto.Scripts;
+using Gambetto.Scripts.GameCore.Grid;
 using Gambetto.Scripts.Utils;
 using UnityEngine;
 
-public class EndOfLevelMenu : MonoBehaviour
+namespace Gambetto.Scripts.UI
 {
-    GridManager gridManager;
-    private void Awake()
+    public class EndOfLevelMenu : MonoBehaviour
     {
-        gridManager = FindObjectOfType<GridManager>();
-    }
+        GridManager gridManager;
+        private void Awake()
+        {
+            gridManager = FindObjectOfType<GridManager>();
+        }
 
-    public void Retry()
-    {
-        TimeManager.ResumeTime();
-        gridManager.RestartLevel();
+        public void Retry()
+        {
+            TimeManager.ResumeTime();
+            gridManager.RestartLevel();
+        }
     }
 }

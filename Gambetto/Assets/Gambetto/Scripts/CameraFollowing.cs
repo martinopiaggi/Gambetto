@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Gambetto.Scripts.GameCore.Grid;
 using UnityEngine;
 
 namespace Gambetto.Scripts
@@ -43,7 +44,7 @@ namespace Gambetto.Scripts
         private Cell _playerPosition;
         
         /**
-         * Center of the current move
+         * Center of the current room
          */
         private Vector3 _roomCenter;
         

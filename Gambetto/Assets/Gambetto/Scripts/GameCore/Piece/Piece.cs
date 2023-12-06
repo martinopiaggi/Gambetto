@@ -1,14 +1,11 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using Gambetto.Scripts.Utils;
+using Gambetto.Scripts.GameCore.Grid;
 using UnityEngine;
-using UnityEngine.Rendering;
-using UnityEngine.Serialization;
-using Utils;
+using Behaviour = Gambetto.Scripts.GameCore.Room.Behaviour;
 using Random = UnityEngine.Random;
 
-namespace Gambetto.Scripts.Pieces
+namespace Gambetto.Scripts.GameCore.Piece
 {
     public abstract class Piece : MonoBehaviour
     {
@@ -42,10 +39,10 @@ namespace Gambetto.Scripts.Pieces
 
         [SerializeField] private protected List<Vector2Int> possibleMoves;
 
-        [Range(Constants.MinPieceCountdown, Constants.MaxPieceCountdown)] [SerializeField]
+        [Range(PieceConstants.MinPieceCountdown, PieceConstants.MaxPieceCountdown)] [SerializeField]
         private protected int countdown;
 
-        [SerializeField] private protected Constants.PieceCountdown countdownStartValue;
+        [SerializeField] private protected PieceConstants.PieceCountdown countdownStartValue;
         private protected Transform _tr;
         private protected Rigidbody _rb;
         private protected Collider[] _colliders;
@@ -83,17 +80,17 @@ namespace Gambetto.Scripts.Pieces
             {
                 switch (value)
                 {
-                    case < Constants.MinPieceCountdown:
+                    case < PieceConstants.MinPieceCountdown:
                         Debug.LogError(
-                            "Piece countdown cannot be less than " + Constants.MinPieceCountdown
+                            "Piece countdown cannot be less than " + PieceConstants.MinPieceCountdown
                         );
-                        countdown = Constants.MinPieceCountdown;
+                        countdown = PieceConstants.MinPieceCountdown;
                         break;
-                    case > Constants.MaxPieceCountdown:
+                    case > PieceConstants.MaxPieceCountdown:
                         Debug.LogError(
-                            "Piece countdown cannot be more than " + Constants.MaxPieceCountdown
+                            "Piece countdown cannot be more than " + PieceConstants.MaxPieceCountdown
                         );
-                        countdown = Constants.MaxPieceCountdown;
+                        countdown = PieceConstants.MaxPieceCountdown;
                         break;
                     default:
                         countdown = value;
@@ -105,7 +102,7 @@ namespace Gambetto.Scripts.Pieces
         /// <summary>
         ///  Value of the countdown when <see cref="Piece"/> gets initialized.
         /// </summary>
-        public Constants.PieceCountdown CountDownStartValue
+        public PieceConstants.PieceCountdown CountDownStartValue
         {
             get => countdownStartValue;
             set => countdownStartValue = value;
@@ -146,7 +143,7 @@ namespace Gambetto.Scripts.Pieces
 
         /**
          * <summary>
-         * Moves the piece smoothly following a given list of positions when <see cref="Countdown"/> reaches <see cref="Constants.MinPieceCountdown"/>.
+         * Moves the piece smoothly following a given list of positions when <see cref="Countdown"/> reaches <see cref="PieceConstants.MinPieceCountdown"/>.
          * The piece is moved ONLY if the distance between the current position and the destination is greater than 0.1f.
          * </summary>
          * <param name="positions">The list of positions to follow</param>
@@ -203,7 +200,7 @@ namespace Gambetto.Scripts.Pieces
                     piecePos = Vector3.MoveTowards(
                         piecePos,
                         destPosition,
-                        Constants.PieceSpeed * Time.deltaTime
+                        PieceConstants.PieceSpeed * Time.deltaTime
                     );
                     _tr.position = piecePos;
                     direction = destPosition - piecePos;

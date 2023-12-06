@@ -1,17 +1,9 @@
-using Unity.VisualScripting;
-using UnityEngine.Serialization;
+using TMPro;
+using UnityEngine;
 
-namespace Utils
+namespace Gambetto.Scripts.Utils
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Text;
-    using UnityEngine;
-    using TMPro;
-    using UnityEngine.UI;
-
-    public class Debugger : Singleton<Debugger>
+    public class Debugger : POLIMIGameCollective.Scripts.Singleton.Singleton<Debugger>
     {
         [SerializeField]
         private bool isVisible = false;
