@@ -300,7 +300,7 @@ MonoBehaviour:
     type: 3}
   bishopPowerUp: {fileID: 6760961586210498684, guid: c7f34c419f9ae634d8fc1684c99eed37,
     type: 3}
-  queenPowerUp: {fileID: 6760961586210498684, guid: 3a26561a5facac54d8eeed2e51fdf8d1,
+  pawnPowerUp: {fileID: 6760961586210498684, guid: b2427193ecb56f947ae456c2f221d294,
     type: 3}
   endLevel: {fileID: 6760961586210498684, guid: 2e790e3ab25499f4f83f49b62edf91bc,
     type: 3}
@@ -1221,6 +1221,10 @@ MonoBehaviour:
   pawnMovement: {fileID: 8300000, guid: e7c00806e1a055b469409fbc5f9da034, type: 3}
   clockTick: {fileID: 8300000, guid: 3bac9f0b06a11a44cbdffe93f20c31dc, type: 3}
   chosenMove: {fileID: 8300000, guid: 8cb9608285129b04f8e92464138ea332, type: 3}
+  deathByCollision: {fileID: 0}
+  deathByFall: {fileID: 0}
+  levelFinished: {fileID: 0}
+  powerUp: {fileID: 0}
 --- !u!4 &2104195323
 Transform:
   m_ObjectHideFlags: 0
