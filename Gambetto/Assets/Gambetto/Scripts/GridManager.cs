@@ -357,12 +357,10 @@ namespace Gambetto.Scripts
                         cell.SetEmpty();
                     else if (square.Value != RoomLayout.MatrixValue.Floor)
                     {
-                        Behaviour behaviour = null;
-                        if (square.Identifier != 0)
-                        {
-                            behaviour = roomLayout.Behaviours.Find(b => b.Id == square.Identifier);
-                            //behaviour = roomLayout.Behaviours[square.Identifier];
-                        }
+                        Behaviour behaviour = ScriptableObject.CreateInstance<Behaviour>();
+                        
+                        behaviour = roomLayout.Behaviours.Find(b => b.Id == square.Identifier);
+                        
                         InstantiatePiece(cell, square, behaviour);
                         InstantiateTiles(cell, square);
                     }
@@ -434,13 +432,13 @@ namespace Gambetto.Scripts
             var pieceScript = pieceObj.GetComponent<Piece>();
             pieceObj.tag = "Enemy"; // tag the enemy for collision detection
             pieceScript.PieceRole = PieceRole.Enemy;
-
-            if (square.Identifier != 0)
+            
+            pieceScript.Behaviour = behaviour;
+            if (pieceScript.Behaviour.Movements.Count != 0)
             {
-                pieceScript.Pattern = behaviour;
-                pieceScript.PatternAI = true;
+                pieceScript.HasPattern = true;
             }
-
+            
             pieceObj.GetComponent<MeshRenderer>().material = darkMaterial;
             pieceObj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
             pieceObj.GetComponent<Rigidbody>().isKinematic = true;

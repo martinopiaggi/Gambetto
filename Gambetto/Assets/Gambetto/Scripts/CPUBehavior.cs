@@ -53,15 +53,15 @@ namespace Gambetto.Scripts
         private void ComputeNextMove(Piece piece, Cell cell)
         {
             //pattern based AI behavior
-            if (piece.PatternAI)
+            if (piece.HasPattern)
             {
                 var i =
                     GameClock.Instance.CurrentTick() - 1 > 0
                         ? GameClock.Instance.CurrentTick() - 1
                         : 0;
 
-                var move = piece.Pattern.Movements[
-                    (i + piece.Pattern.Offset) % piece.Pattern.Movements.Count
+                var move = piece.Behaviour.Movements[
+                    (i + piece.Behaviour.Offset) % piece.Behaviour.Movements.Count
                 ];
                 Cell nextCell = cell;
                 var tempListMoves = new List<Vector3>();
@@ -105,7 +105,9 @@ namespace Gambetto.Scripts
             //standard behavior for the AI
             var dist = (cell.GetGlobalCoordinates() - _playerCell.GetGlobalCoordinates()).magnitude;
             var moves = new List<Vector3>();
-            if (dist <= 6.0f && true) // todo: piece.Pattern.Aggressive instead of "true"
+            
+            
+            if (dist <= 6.0f || piece.Behaviour.Aggressive) 
                 MinimumPath(piece, cell);
             else
             {

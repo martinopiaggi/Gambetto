@@ -16,20 +16,27 @@ namespace Gambetto.Scripts.Pieces
 
         [SerializeField] private protected PieceRole pieceRole;
 
-        private bool _patternAI = false;
-        private Behaviour _pattern = null;
+        private bool hasPattern = false;
+        private bool _aggresive = false;
+        private Behaviour behaviour = null;
         private int _patternIndex = 0;
-
-        public bool PatternAI
+        
+        public bool Aggresive
         {
-            get => _patternAI;
-            set => _patternAI = value;
+            get => _aggresive;
+            set => _aggresive = value;
+        }
+        
+        public bool HasPattern
+        {
+            get => hasPattern;
+            set => hasPattern = value;
         }
 
-        public Behaviour Pattern
+        public Behaviour Behaviour
         {
-            set => _pattern = value;
-            get => _pattern;
+            set => behaviour = value;
+            get => behaviour;
         }
 
 
