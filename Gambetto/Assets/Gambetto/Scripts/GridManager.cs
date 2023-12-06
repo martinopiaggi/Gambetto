@@ -357,9 +357,13 @@ namespace Gambetto.Scripts
                         cell.SetEmpty();
                     else if (square.Value != RoomLayout.MatrixValue.Floor)
                     {
-                        Behaviour behaviour = ScriptableObject.CreateInstance<Behaviour>();
                         
-                        behaviour = roomLayout.Behaviours.Find(b => b.Id == square.Identifier);
+                        var behaviour = roomLayout.Behaviours.Find(b => b.Id == square.Identifier);
+                        
+                        if (behaviour == null)
+                        {
+                            behaviour = ScriptableObject.CreateInstance<Behaviour>();
+                        }
                         
                         InstantiatePiece(cell, square, behaviour);
                         InstantiateTiles(cell, square);
