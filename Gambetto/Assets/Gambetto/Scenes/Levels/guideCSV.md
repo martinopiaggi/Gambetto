@@ -15,6 +15,7 @@ Possible values for CSV:
 - pk = PK // powerup knight
 - pb = PB // powerup bishop
 - pr = PR // powerup rook
+- pp = PP // "powerup" pawn
 
 If for each piece symbol (♟♘♗♛♚)
 you write an identifier (a number from 1 )
