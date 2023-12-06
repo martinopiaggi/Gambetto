@@ -1,7 +1,6 @@
-using Gambetto.Scripts.Utils;
 using UnityEngine;
 
-namespace Gambetto.Scripts.Pieces
+namespace Gambetto.Scripts.GameCore.Piece.Types
 {
     public class Pawn : Piece
     {
@@ -14,8 +13,8 @@ namespace Gambetto.Scripts.Pieces
             base.Awake();
             _pieceType = PieceType.Pawn;
             // Set the possible moves for the piece
-            PossibleMoves = global::Utils.PossibleMoves.PawnPossibleMoves;
-            Countdown = (int)Constants.PieceCountdown.Pawn;
+            PossibleMoves = global::Gambetto.Scripts.GameCore.Grid.PossibleMoves.PawnPossibleMoves;
+            Countdown = (int)PieceConstants.PieceCountdown.Pawn;
             GetComponent<MeshFilter>().mesh = Resources.Load<Mesh>("Models/pawn");
         }
     }

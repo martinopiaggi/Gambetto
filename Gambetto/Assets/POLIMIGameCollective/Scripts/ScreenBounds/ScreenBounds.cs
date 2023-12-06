@@ -3,7 +3,7 @@
 /// <summary>
 /// Contains static methods and fields for determining screen bounds
 /// </summary>
-namespace POLIMIGameCollective
+namespace POLIMIGameCollective.Scripts.ScreenBounds
 {
         
     public class ScreenBounds

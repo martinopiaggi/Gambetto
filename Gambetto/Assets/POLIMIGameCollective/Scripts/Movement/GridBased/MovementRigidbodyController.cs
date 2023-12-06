@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace GridBasedMovement
+namespace POLIMIGameCollective.Scripts.Movement.GridBased
 {
     public class MovementRigidbodyController : MonoBehaviour
     {

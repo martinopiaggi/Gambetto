@@ -7,7 +7,7 @@
 
 using UnityEngine;
 
-namespace RoboRyanTron.Unite2017.Sets
+namespace POLIMIGameCollective.Scripts.ScriptableObjects
 {
     public class Thing : MonoBehaviour
     {

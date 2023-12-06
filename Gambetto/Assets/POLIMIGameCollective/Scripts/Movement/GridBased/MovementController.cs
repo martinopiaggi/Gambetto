@@ -1,7 +1,6 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace GridBasedMovement
+namespace POLIMIGameCollective.Scripts.Movement.GridBased
 {
     public class MovementController : MonoBehaviour
     {

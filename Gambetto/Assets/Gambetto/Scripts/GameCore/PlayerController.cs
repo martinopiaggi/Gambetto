@@ -1,12 +1,10 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using Gambetto.Scripts.Pieces;
-using Gambetto.Scripts.Utils;
-using Unity.VisualScripting;
+using Gambetto.Scripts.GameCore.Grid;
+using Gambetto.Scripts.GameCore.Piece;
 using UnityEngine;
 
-namespace Gambetto.Scripts
+namespace Gambetto.Scripts.GameCore
 {
     public class PlayerController : MonoBehaviour
     {
@@ -49,7 +47,7 @@ namespace Gambetto.Scripts
         public Cell ChosenMove { get; set; }
         public List<Vector3> MovePath { get; set; }
 
-        public void StartChoosing(Piece piece, Cell currentCell)
+        public void StartChoosing(Piece.Piece piece, Cell currentCell)
         {
             if (_cycleMovesCoroutine != null)
                 StopCoroutine(_cycleMovesCoroutine);

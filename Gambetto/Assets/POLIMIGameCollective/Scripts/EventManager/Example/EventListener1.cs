@@ -1,22 +1,23 @@
 ﻿using UnityEngine;
-using POLIMIGameCollective;
-using UnityEngine.UI;
-    
-public class EventListener1 : MonoBehaviour {
 
-	// Use this for initialization
-	void OnEnable () {
-		EventManager.StartListening ("Explode",Explode);
-		EventManager.StartListening ("RunAway",RunAway);
-	}
+namespace POLIMIGameCollective.Scripts.EventManager.Example
+{
+	public class EventListener1 : MonoBehaviour {
 
-	void Explode () {
-		EventManager.StopListening ("Explode", Explode);
-		Debug.Log ("Explode");
-	}
+		// Use this for initialization
+		void OnEnable () {
+			EventManager.StartListening ("Explode",Explode);
+			EventManager.StartListening ("RunAway",RunAway);
+		}
 
-	void RunAway () {
-		EventManager.StopListening ("RunAway", RunAway);
-		Debug.Log ("RunAway");
+		void Explode () {
+			EventManager.StopListening ("Explode", Explode);
+			Debug.Log ("Explode");
+		}
+
+		void RunAway () {
+			EventManager.StopListening ("RunAway", RunAway);
+			Debug.Log ("RunAway");
+		}
 	}
 }

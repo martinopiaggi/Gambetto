@@ -8,7 +8,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace RoboRyanTron.Unite2017.Variables
+namespace POLIMIGameCollective.Scripts.ScriptableObjects.Editor
 {
     [CustomPropertyDrawer(typeof(FloatReference))]
     public class FloatReferenceDrawer : PropertyDrawer

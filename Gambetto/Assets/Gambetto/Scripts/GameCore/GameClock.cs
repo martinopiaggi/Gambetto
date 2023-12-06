@@ -1,11 +1,10 @@
 using System;
 using System.Collections;
 using System.Threading;
-using JetBrains.Annotations;
+using Gambetto.Scripts.Utils;
 using UnityEngine;
-using Utils;
 
-namespace Gambetto.Scripts
+namespace Gambetto.Scripts.GameCore
 {
     public class ClockEventArgs : EventArgs
     {

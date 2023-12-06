@@ -1,6 +1,6 @@
-﻿namespace Gambetto.Scripts.Utils
+﻿namespace Gambetto.Scripts.GameCore.Piece
 {
-    public static class Constants
+    public static class PieceConstants
     {
         public const int MaxPieceCountdown = 20;
         public const int MinPieceCountdown = 1;

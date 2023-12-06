@@ -8,7 +8,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace RoboRyanTron.Unite2017.Sets
+namespace POLIMIGameCollective.Scripts.ScriptableObjects
 {
     public class ThingMonitor : MonoBehaviour
     {

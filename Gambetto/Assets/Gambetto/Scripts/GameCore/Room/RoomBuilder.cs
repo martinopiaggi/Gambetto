@@ -1,7 +1,6 @@
-using System;
 using UnityEngine;
 
-namespace Gambetto.Scripts
+namespace Gambetto.Scripts.GameCore.Room
 {
     public class RoomBuilder : MonoBehaviour
     {

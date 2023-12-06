@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace GridBasedMovement
+namespace POLIMIGameCollective.Scripts.Movement.GridBased
 {
     public class Movepoint : MonoBehaviour
     {

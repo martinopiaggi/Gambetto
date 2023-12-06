@@ -1,10 +1,9 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace Gambetto.Scripts
+namespace Gambetto.Scripts.UI
 {
     public class SceneTransition : MonoBehaviour
     {

@@ -1,9 +1,8 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.Events;
-using System.Collections;
-using System.Collections.Generic;
 
-namespace POLIMIGameCollective
+namespace POLIMIGameCollective.Scripts.EventManager
 {
 	class IntUnityEvent : UnityEvent<int> { }
 	class FloatUnityEvent : UnityEvent<float> { }

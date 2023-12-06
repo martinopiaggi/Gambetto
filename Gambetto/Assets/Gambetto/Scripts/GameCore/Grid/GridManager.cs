@@ -1,17 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Gambetto.Scripts.Pieces;
+using Gambetto.Scripts.GameCore.Piece;
+using Gambetto.Scripts.GameCore.Room;
 using Gambetto.Scripts.Utils;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Serialization;
+using Behaviour = Gambetto.Scripts.GameCore.Room.Behaviour;
 using Quaternion = UnityEngine.Quaternion;
 using Vector2 = UnityEngine.Vector2;
 using Vector3 = UnityEngine.Vector3;
 
-namespace Gambetto.Scripts
+namespace Gambetto.Scripts.GameCore.Grid
 {
     public class GridManager : MonoBehaviour
     {
@@ -19,7 +20,7 @@ namespace Gambetto.Scripts
         private int _lastColor = 1;
         private bool _changed;
         public PlayerController playerController;
-        
+
         //todo Think where to place it
         private List<Vector3> _roomsCenter = new List<Vector3>();
 
@@ -27,10 +28,11 @@ namespace Gambetto.Scripts
         public CPUBehavior cpuBehavior;
 
         private readonly List<List<Cell>> _grid = new List<List<Cell>>(); //maybe we can remove _grid? (never used)
-        private Dictionary<Piece, Cell> _enemies = new Dictionary<Piece, Cell>();
-        private Dictionary<Piece, List<Vector3>> _enemiesPath =
-            new Dictionary<Piece, List<Vector3>>();
-        private Dictionary<Piece, Cell> _initialEnemiesPositions = new Dictionary<Piece, Cell>();
+        private Dictionary<Piece.Piece, Cell> _enemies = new Dictionary<Piece.Piece, Cell>();
+        private Dictionary<Piece.Piece, List<Vector3>> _enemiesPath =
+            new Dictionary<Piece.Piece, List<Vector3>>();
+        private Dictionary<Piece.Piece, Cell> _initialEnemiesPositions =
+            new Dictionary<Piece.Piece, Cell>();
         private Dictionary<PowerUp, Cell> _powerUps = new Dictionary<PowerUp, Cell>();
 
         [SerializeField]
@@ -61,7 +63,7 @@ namespace Gambetto.Scripts
         public GameObject bishopPowerUp;
 
         [SerializeField]
-        public GameObject queenPowerUp;
+        public GameObject pawnPowerUp;
 
         [SerializeField]
         public GameObject endLevel;
@@ -76,13 +78,13 @@ namespace Gambetto.Scripts
         private Cell _playerCell;
         private Cell _initialPlayerCell;
         private Cell _endLevelCell;
-        private Piece _playerPiece;
+        private Piece.Piece _playerPiece;
         private List<Vector3> _playerPath;
 
         private bool _gridFinished;
 
-        
         private GameObject _endLevelMenu;
+
         public void Start()
         {
             GameClock.Instance.ClockTick += OnClockTick;
@@ -131,9 +133,8 @@ namespace Gambetto.Scripts
                 RestartLevel();
             }
 
-            if (!isDead )
+            if (!isDead)
             {
-                
                 if (GameClock.Instance.CurrentTick() != 0)
                 {
                     // if it's the first tick, don't compute the cpu moves and dont update the enemies position
@@ -150,7 +151,7 @@ namespace Gambetto.Scripts
         {
             return _playerCell;
         }
-        
+
         public List<Vector3> GetRoomsCenter()
         {
             return _roomsCenter;
@@ -160,11 +161,12 @@ namespace Gambetto.Scripts
         {
             StartCoroutine(RestartLevelCoroutine());
         }
+
         private IEnumerator RestartLevelCoroutine()
         {
             GameClock.Instance.StopClock();
             _enemies.Clear();
-            _enemies = new Dictionary<Piece, Cell>(_initialEnemiesPositions);
+            _enemies = new Dictionary<Piece.Piece, Cell>(_initialEnemiesPositions);
 
             _playerCell = _initialPlayerCell;
 
@@ -191,7 +193,7 @@ namespace Gambetto.Scripts
                 quaternion.identity
             );
             playerObj.GetComponent<MeshRenderer>().material = lightMaterial;
-            _playerPiece = playerObj.GetComponent<Piece>();
+            _playerPiece = playerObj.GetComponent<Piece.Piece>();
             _playerPiece.PieceRole = PieceRole.Player;
             ResetPowerUps();
             GameClock.Instance.StartClock();
@@ -201,8 +203,8 @@ namespace Gambetto.Scripts
 
         private void UpdateEnemiesPosition()
         {
-            _enemies = new Dictionary<Piece, Cell>(cpuBehavior.ChosenMoves);
-            _enemiesPath = new Dictionary<Piece, List<Vector3>>(cpuBehavior.MovePaths);
+            _enemies = new Dictionary<Piece.Piece, Cell>(cpuBehavior.ChosenMoves);
+            _enemiesPath = new Dictionary<Piece.Piece, List<Vector3>>(cpuBehavior.MovePaths);
 
             foreach (var enemy in _enemies)
             {
@@ -217,7 +219,7 @@ namespace Gambetto.Scripts
             MovePiece(_playerPiece, _playerPath);
         }
 
-        private void MovePiece(Piece piece, List<Vector3> path, bool gravity = true)
+        private void MovePiece(Piece.Piece piece, List<Vector3> path, bool gravity = true)
         {
             // Check if the piece is already in the destination
             if (Vector3.Distance(piece.transform.position, path[^1]) < 0.1f)
@@ -286,8 +288,9 @@ namespace Gambetto.Scripts
 
                 _grid.Add(PopulateRoomGraph(roomLayout, translation, roomIdx, previousRoomLayout));
                 // I find the center if the current room and store it in a list
-                Vector3 roomCenter = _grid[roomIdx][0].GetGlobalCoordinates() +
-                             _grid[roomIdx][_grid[roomIdx].Count - 1].GetGlobalCoordinates();
+                Vector3 roomCenter =
+                    _grid[roomIdx][0].GetGlobalCoordinates()
+                    + _grid[roomIdx][_grid[roomIdx].Count - 1].GetGlobalCoordinates();
                 roomCenter.x /= 2.0f;
                 roomCenter.y = 0.0f;
                 roomCenter.z /= 2.0f;
@@ -297,7 +300,7 @@ namespace Gambetto.Scripts
 
             //Debug.Log("grid finished");
             _gridFinished = true;
-            
+
             // start the clock after the grid is created
             GameClock.Instance.StartClock();
         }
@@ -357,14 +360,13 @@ namespace Gambetto.Scripts
                         cell.SetEmpty();
                     else if (square.Value != RoomLayout.MatrixValue.Floor)
                     {
-                        
                         var behaviour = roomLayout.Behaviours.Find(b => b.Id == square.Identifier);
-                        
+
                         if (behaviour == null)
                         {
                             behaviour = ScriptableObject.CreateInstance<Behaviour>();
                         }
-                        
+
                         InstantiatePiece(cell, square, behaviour);
                         InstantiateTiles(cell, square);
                     }
@@ -407,7 +409,7 @@ namespace Gambetto.Scripts
                         quaternion.identity
                     );
                     playerObj.GetComponent<MeshRenderer>().material = lightMaterial;
-                    _playerPiece = playerObj.GetComponent<Piece>();
+                    _playerPiece = playerObj.GetComponent<Piece.Piece>();
                     _playerPiece.PieceRole = PieceRole.Player;
                     return;
                 case RoomLayout.MatrixValue.Pawn:
@@ -433,21 +435,21 @@ namespace Gambetto.Scripts
             }
 
             var pieceObj = Instantiate(prefab, cell.GetGlobalCoordinates(), quaternion.identity);
-            var pieceScript = pieceObj.GetComponent<Piece>();
+            var pieceScript = pieceObj.GetComponent<Piece.Piece>();
             pieceObj.tag = "Enemy"; // tag the enemy for collision detection
             pieceScript.PieceRole = PieceRole.Enemy;
-            
+
             pieceScript.Behaviour = behaviour;
             if (pieceScript.Behaviour.Movements.Count != 0)
             {
                 pieceScript.HasPattern = true;
             }
-            
+
             pieceObj.GetComponent<MeshRenderer>().material = darkMaterial;
             pieceObj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
             pieceObj.GetComponent<Rigidbody>().isKinematic = true;
             _enemies.Add(pieceScript, cell);
-            _initialEnemiesPositions.Add(pieceObj.GetComponent<Piece>(), cell);
+            _initialEnemiesPositions.Add(pieceObj.GetComponent<Piece.Piece>(), cell);
         }
 
         private void InstantiateTiles(Cell cell, RoomLayout.Square square)
@@ -481,6 +483,15 @@ namespace Gambetto.Scripts
                     );
                     var rook = new PowerUp(PieceType.Rook, rookPowerUpObj, cell);
                     _powerUps.Add(rook, cell);
+                    break;
+                case RoomLayout.MatrixValue.PP: //Pawn power up
+                    var pawnPowerUpObj = Instantiate(
+                        pawnPowerUp,
+                        cell.GetGlobalCoordinates() + new Vector3(0, 0.05f, 0),
+                        quaternion.identity
+                    );
+                    var pawn = new PowerUp(PieceType.Pawn, pawnPowerUpObj, cell);
+                    _powerUps.Add(pawn, cell);
                     break;
 
                 case RoomLayout.MatrixValue.Exit: //End of level
@@ -728,9 +739,13 @@ namespace Gambetto.Scripts
         private void Awake()
         {
             _roomPrefab = Resources.Load<GameObject>("Prefabs/Room");
-            _endLevelMenu = GameObject.FindWithTag("UI").transform.Find("EndOfLevelMenu").gameObject;
+            _endLevelMenu = GameObject
+                .FindWithTag("UI")
+                .transform
+                .Find("EndOfLevelMenu")
+                .gameObject;
         }
-        
+
         private void CheckEndLevel()
         {
             if (_playerCell == _endLevelCell)
@@ -741,14 +756,14 @@ namespace Gambetto.Scripts
                 StartCoroutine(DelayedMethods());
             }
         }
-        
+
         private IEnumerator DelayedMethods()
         {
             yield return new WaitForSeconds(0.5f);
             _endLevelMenu.SetActive(true);
             TimeManager.StopTime();
         }
-        
+
         private void CheckPowerUp()
         {
             //check if the player has activated a power up
@@ -763,7 +778,8 @@ namespace Gambetto.Scripts
                     {
                         PieceType.Bishop => prefabBishop,
                         PieceType.Knight => prefabKnight,
-                        _ => prefabRook
+                        PieceType.Rook => prefabRook,
+                        _ => prefabPawn
                     };
 
                     Destroy(_playerPiece.gameObject);
@@ -773,7 +789,7 @@ namespace Gambetto.Scripts
                         quaternion.identity
                     );
                     playerObj.GetComponent<MeshRenderer>().material = lightMaterial;
-                    _playerPiece = playerObj.GetComponent<Piece>();
+                    _playerPiece = playerObj.GetComponent<Piece.Piece>();
                     _playerPiece.PieceRole = PieceRole.Player;
 
                     //set powerUp to used

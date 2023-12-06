@@ -7,7 +7,7 @@
 
 using UnityEngine;
 
-namespace RoboRyanTron.Unite2017.Variables
+namespace POLIMIGameCollective.Scripts.ScriptableObjects
 {
     [CreateAssetMenu]
     public class StringVariable : ScriptableObject

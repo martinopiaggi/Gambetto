@@ -1,9 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using Gambetto.Scripts.Utils;
 using UnityEngine;
 
-namespace Gambetto.Scripts.Pieces
+namespace Gambetto.Scripts.GameCore.Piece.Types
 {
     public class Knight : Piece
     {
@@ -16,8 +15,8 @@ namespace Gambetto.Scripts.Pieces
             base.Awake();
             _pieceType = PieceType.Knight;
             // Set the possible moves for the piece
-            PossibleMoves = global::Utils.PossibleMoves.KnightPossibleMoves;
-            Countdown = (int)Constants.PieceCountdown.Knight;
+            PossibleMoves = global::Gambetto.Scripts.GameCore.Grid.PossibleMoves.KnightPossibleMoves;
+            Countdown = (int)PieceConstants.PieceCountdown.Knight;
             GetComponent<MeshFilter>().mesh = Resources.Load<Mesh>("Models/Knight");
         }
         
@@ -41,7 +40,7 @@ namespace Gambetto.Scripts.Pieces
                     piecePos = Vector3.MoveTowards(
                         piecePos,
                         destPosition,
-                        Constants.PieceSpeed * Time.deltaTime
+                        PieceConstants.PieceSpeed * Time.deltaTime
                     );
                     _tr.position = piecePos;
                     direction = destPosition - piecePos;

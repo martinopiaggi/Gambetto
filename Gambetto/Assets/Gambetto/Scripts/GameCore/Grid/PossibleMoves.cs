@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace Utils
+namespace Gambetto.Scripts.GameCore.Grid
 {
     public static class PossibleMoves
     {

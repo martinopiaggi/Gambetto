@@ -1,10 +1,13 @@
-using Gambetto.Scripts.Pieces;
+using Gambetto.Scripts.GameCore.Grid;
+using Gambetto.Scripts.GameCore.Piece;
 using UnityEngine;
 
-namespace Gambetto.Scripts.Utils
+namespace Gambetto.Scripts.GameCore
 {
     public class PowerUp
     {
+        private Color personalizedDark = new Color(24f / 255f, 22f / 255f, 22f / 255f);
+
         //type of powerUp
         public PieceType Type;
 
@@ -34,7 +37,7 @@ namespace Gambetto.Scripts.Utils
         public void SetActive()
         {
             IsUsed = true;
-            _powerUpObject.GetComponentInChildren<SpriteRenderer>().color = Color.black;
+            _powerUpObject.GetComponentInChildren<SpriteRenderer>().color = personalizedDark;
         }
 
         public void SetInactive()

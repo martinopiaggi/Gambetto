@@ -1,32 +1,34 @@
-﻿using UnityEngine;
-using System.Collections;
-using POLIMIGameCollective;
+﻿using POLIMIGameCollective.Scripts.EventManagerWithScriptableObjects.ScriptableObjects;
+using UnityEngine;
 
-public class EventTriggerSO : MonoBehaviour
+namespace POLIMIGameCollective.Scripts.EventManagerWithScriptableObjects.Scripts
 {
-	[SerializeField] private VoidEventChannelSO spawnEvent;
-	[SerializeField] private VoidEventChannelSO explodeEvent;
-	[SerializeField] private VoidEventChannelSO runawayEvent;
+	public class EventTriggerSO : MonoBehaviour
+	{
+		[SerializeField] private VoidEventChannelSO spawnEvent;
+		[SerializeField] private VoidEventChannelSO explodeEvent;
+		[SerializeField] private VoidEventChannelSO runawayEvent;
 	
-	// Update is called once per frame
-	void Update () {
-		if (Input.GetKeyDown(KeyCode.E))
-		{
-			Debug.Log("Triggering Explode");
-			// EventManager.TriggerEvent("Explode");
-			explodeEvent.RaiseEvent();
-		}
+		// Update is called once per frame
+		void Update () {
+			if (Input.GetKeyDown(KeyCode.E))
+			{
+				Debug.Log("Triggering Explode");
+				// EventManager.TriggerEvent("Explode");
+				explodeEvent.RaiseEvent();
+			}
 
-		if (Input.GetKeyDown(KeyCode.R))
-		{
-			// EventManager.TriggerEvent ("RunAway");			
-			runawayEvent.RaiseEvent();
-		}
+			if (Input.GetKeyDown(KeyCode.R))
+			{
+				// EventManager.TriggerEvent ("RunAway");			
+				runawayEvent.RaiseEvent();
+			}
 
-		if (Input.GetKeyDown(KeyCode.S))
-		{
-			// EventManager.TriggerEvent("Spawn");
-			spawnEvent.RaiseEvent();
+			if (Input.GetKeyDown(KeyCode.S))
+			{
+				// EventManager.TriggerEvent("Spawn");
+				spawnEvent.RaiseEvent();
+			}
 		}
 	}
 }

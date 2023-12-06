@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace POLIMIGameCollective
+namespace POLIMIGameCollective.Scripts.UniqueIdentifier
 {
     public class UniqueIdentifier
     {
@@ -17,7 +15,7 @@ namespace POLIMIGameCollective
                 string DeviceID = PlayerPrefs.GetString("DeviceID", "null");
                 if (DeviceID == "null")
                 {
-                    DeviceID = Utility.RandomString(20);
+                    DeviceID = Utility.Utility.RandomString(20);
                     PlayerPrefs.SetString("DeviceId", DeviceID);
                 }
 

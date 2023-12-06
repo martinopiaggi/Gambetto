@@ -1,16 +1,19 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class CheckUDID : MonoBehaviour
+namespace POLIMIGameCollective.Scripts.Utility.UDID.Scripts
 {
-
-	public Text message;
-	
-	// Use this for initialization
-	void Start ()
+	public class CheckUDID : MonoBehaviour
 	{
 
-		message.text = "GENERATED THIS UDID " + UDID.GetUDID() + "\n" +
-		               "GUID " + UDID.GetGUID();
-	}	
+		public Text message;
+	
+		// Use this for initialization
+		void Start ()
+		{
+
+			message.text = "GENERATED THIS UDID " + UDID.GetUDID() + "\n" +
+			               "GUID " + UDID.GetGUID();
+		}	
+	}
 }

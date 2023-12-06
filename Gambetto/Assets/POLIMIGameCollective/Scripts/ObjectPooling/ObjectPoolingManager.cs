@@ -6,97 +6,100 @@
  *
  *
  */
-using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
+
 using System;
+using System.Collections.Generic;
+using UnityEngine;
 
-public class ObjectPoolingManager
+namespace POLIMIGameCollective.Scripts.ObjectPooling
 {
-
-	//the variable is declared to be volatile to ensure that
-	//assignment to the instance variable completes before the
-	//instance variable can be accessed.
-	private static volatile ObjectPoolingManager instance;
-
-	//look up list of various object pools.
-	private Dictionary<String, ObjectPool> objectPools;
-
-	//object for locking
-	private static object syncRoot = new System.Object();
-
-	/// <summary>
-	/// Constructor for the class.
-	/// </summary>
-	private ObjectPoolingManager()
+	public class ObjectPoolingManager
 	{
-		//Ensure object pools exists.
-		this.objectPools = new Dictionary<String, ObjectPool>();
-	}
 
-	/// <summary>
-	/// Property for retreiving the singleton.  See msdn documentation.
-	/// </summary>
-	public static ObjectPoolingManager Instance
-	{
-		get
+		//the variable is declared to be volatile to ensure that
+		//assignment to the instance variable completes before the
+		//instance variable can be accessed.
+		private static volatile ObjectPoolingManager instance;
+
+		//look up list of various object pools.
+		private Dictionary<String, ObjectPool> objectPools;
+
+		//object for locking
+		private static object syncRoot = new System.Object();
+
+		/// <summary>
+		/// Constructor for the class.
+		/// </summary>
+		private ObjectPoolingManager()
 		{
-			//check to see if it doesnt exist
-			if (instance == null)
+			//Ensure object pools exists.
+			this.objectPools = new Dictionary<String, ObjectPool>();
+		}
+
+		/// <summary>
+		/// Property for retreiving the singleton.  See msdn documentation.
+		/// </summary>
+		public static ObjectPoolingManager Instance
+		{
+			get
 			{
-				//lock access, if it is already locked, wait.
-				lock (syncRoot)
+				//check to see if it doesnt exist
+				if (instance == null)
 				{
-					//the instance could have been made between
-					//checking and waiting for a lock to release.
-					if (instance == null)
+					//lock access, if it is already locked, wait.
+					lock (syncRoot)
 					{
-						//create a new instance
-						instance = new ObjectPoolingManager();
+						//the instance could have been made between
+						//checking and waiting for a lock to release.
+						if (instance == null)
+						{
+							//create a new instance
+							instance = new ObjectPoolingManager();
+						}
 					}
 				}
+				//return either the new instance or the already built one.
+				return instance;
 			}
-			//return either the new instance or the already built one.
-			return instance;
 		}
-	}
 
-	/// <summary>
-	/// Create a new object pool of the objects you wish to pool
-	/// </summary>
-	/// <param name="objToPool">The object you wish to pool.  The name property of the object MUST be unique.</param>
-	/// <param name="initialPoolSize">Number of objects you wish to instantiate initially for the pool.</param>
-	/// <param name="maxPoolSize">Maximum number of objects allowed to exist in this pool.</param>
-	/// <param name="shouldShrink">Should this pool shrink back down to the initial size when it receives a shrink event.</param>
-	/// <returns></returns>
-	public bool CreatePool(GameObject objToPool, int initialPoolSize, int maxPoolSize, bool shouldShrink=false)
-	{
-		//Check to see if the pool already exists.
-		if (ObjectPoolingManager.Instance.objectPools.ContainsKey(objToPool.name))
+		/// <summary>
+		/// Create a new object pool of the objects you wish to pool
+		/// </summary>
+		/// <param name="objToPool">The object you wish to pool.  The name property of the object MUST be unique.</param>
+		/// <param name="initialPoolSize">Number of objects you wish to instantiate initially for the pool.</param>
+		/// <param name="maxPoolSize">Maximum number of objects allowed to exist in this pool.</param>
+		/// <param name="shouldShrink">Should this pool shrink back down to the initial size when it receives a shrink event.</param>
+		/// <returns></returns>
+		public bool CreatePool(GameObject objToPool, int initialPoolSize, int maxPoolSize, bool shouldShrink=false)
 		{
-			//let the caller know it already exists, just use the pool out there.
-			return false;
+			//Check to see if the pool already exists.
+			if (ObjectPoolingManager.Instance.objectPools.ContainsKey(objToPool.name))
+			{
+				//let the caller know it already exists, just use the pool out there.
+				return false;
+			}
+			else
+			{
+				//create a new pool using the properties
+				ObjectPool nPool = new ObjectPool(objToPool, initialPoolSize, maxPoolSize, shouldShrink);
+				//Add the pool to the dictionary of pools to manage
+				//using the object name as the key and the pool as the value.
+				ObjectPoolingManager.Instance.objectPools.Add(objToPool.name, nPool);
+				//We created a new pool!
+				return true;
+			}
 		}
-		else
-		{
-			//create a new pool using the properties
-			ObjectPool nPool = new ObjectPool(objToPool, initialPoolSize, maxPoolSize, shouldShrink);
-			//Add the pool to the dictionary of pools to manage
-			//using the object name as the key and the pool as the value.
-			ObjectPoolingManager.Instance.objectPools.Add(objToPool.name, nPool);
-			//We created a new pool!
-			return true;
-		}
-	}
 
-	/// <summary>
-	/// Get an object from the pool.
-	/// </summary>
-	/// <param name="objName">String name of the object you wish to have access to.</param>
-	/// <returns>A GameObject if one is available, else returns null if all are currently active and max size is reached.</returns>
-	public GameObject GetObject(string objName)
-	{
-		//Find the Right pool and ask it for an object.
-		return ObjectPoolingManager.Instance.objectPools[objName].GetObject();
+		/// <summary>
+		/// Get an object from the pool.
+		/// </summary>
+		/// <param name="objName">String name of the object you wish to have access to.</param>
+		/// <returns>A GameObject if one is available, else returns null if all are currently active and max size is reached.</returns>
+		public GameObject GetObject(string objName)
+		{
+			//Find the Right pool and ask it for an object.
+			return ObjectPoolingManager.Instance.objectPools[objName].GetObject();
+		}
 	}
 }

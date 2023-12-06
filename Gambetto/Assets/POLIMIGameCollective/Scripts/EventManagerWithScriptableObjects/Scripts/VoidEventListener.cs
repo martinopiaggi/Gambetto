@@ -1,31 +1,35 @@
+using POLIMIGameCollective.Scripts.EventManagerWithScriptableObjects.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.Events;
 
-/// <summary>
-/// A flexible handler for void events in the form of a MonoBehaviour. Responses can be connected directly from the Unity Inspector.
-/// </summary>
-
-public class VoidEventListener : MonoBehaviour
+namespace POLIMIGameCollective.Scripts.EventManagerWithScriptableObjects.Scripts
 {
-    [SerializeField] private VoidEventChannelSO _channel = default;
+    /// <summary>
+    /// A flexible handler for void events in the form of a MonoBehaviour. Responses can be connected directly from the Unity Inspector.
+    /// </summary>
 
-    public UnityEvent OnEventRaised;
-
-    private void OnEnable()
+    public class VoidEventListener : MonoBehaviour
     {
-        if (_channel != null)
-            _channel.OnEventRaised += Respond;
-    }
+        [SerializeField] private VoidEventChannelSO _channel = default;
 
-    private void OnDisable()
-    {
-        if (_channel != null)
-            _channel.OnEventRaised -= Respond;
-    }
+        public UnityEvent OnEventRaised;
 
-    private void Respond()
-    {
-        if (OnEventRaised != null)
-            OnEventRaised.Invoke();
+        private void OnEnable()
+        {
+            if (_channel != null)
+                _channel.OnEventRaised += Respond;
+        }
+
+        private void OnDisable()
+        {
+            if (_channel != null)
+                _channel.OnEventRaised -= Respond;
+        }
+
+        private void Respond()
+        {
+            if (OnEventRaised != null)
+                OnEventRaised.Invoke();
+        }
     }
 }
