@@ -103,7 +103,9 @@ namespace Gambetto.Scripts
             }
 
             //standard behavior for the AI
-            MinimumPath(piece, cell);
+            var dist = (cell.GetGlobalCoordinates() - _playerCell.GetGlobalCoordinates()).magnitude;
+            if (dist <= 6.0f && piece.Pattern.Aggressive) 
+                MinimumPath(piece, cell);
         }
         /// <summary>
         /// This method is used to calculate the minimum path between the enemy's current cell and the player cell.
