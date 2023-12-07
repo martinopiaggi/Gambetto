@@ -144,7 +144,7 @@ namespace Gambetto.Scripts.GameCore
 
                 var possibleMovements = PieceMovement.GetPossibleMovements(piece, currentCell, out _possiblePaths);
 
-                foreach (var nextCell in possibleMovements.Where(nextCell => !visited.Contains(nextCell)))
+                foreach (var nextCell in possibleMovements.Where(nextCell => !visited.Contains(nextCell) && IsAvailable(nextCell)))
                 {
                     visited.Add(nextCell);
                     var newPath = new List<Cell>(path) { nextCell };
@@ -164,7 +164,7 @@ namespace Gambetto.Scripts.GameCore
             {
                 index++;
                 var dist = move.GetGlobalCoordinates() - _playerCell.GetGlobalCoordinates();
-                if (move.IsEmpty() || IsOccupied(move) || !(dist.magnitude < minDist))
+                if (move.IsEmpty() || IsAvailable(move) || !(dist.magnitude < minDist))
                     continue;
                 minDist = dist.magnitude;
                 cell = move;
@@ -175,9 +175,9 @@ namespace Gambetto.Scripts.GameCore
             _movePaths[piece] = _possiblePaths[chosenIndex];
         }
 
-        private bool IsOccupied(Cell cell)
+        private bool IsAvailable(Cell cell)
         {
-            return _chosenMoves.Any(enemy => enemy.Value == cell);
+            return !cell.IsEmpty() && _chosenMoves.All(enemy => enemy.Value != cell);
         }
 
         private static int Sign(int x)
