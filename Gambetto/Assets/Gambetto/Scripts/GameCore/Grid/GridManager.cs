@@ -122,19 +122,18 @@ namespace Gambetto.Scripts.GameCore.Grid
                 };
                 playerController.ChosenMove = _initialPlayerCell;
             }
-
-            // Compute Cpu behaviour and Start the choosing animation for the player
+            
             if (!isDead)
             {
                 UpdatePlayerPosition();
-            } // apply movements from the previous tick
+            }
 
             if (_playerCell.IsEmpty())
             {
                 isDead = true;
                 AudioManager.Instance.PlaySfx(AudioManager.Instance.deathByFall);
                 GameClock.Instance.StopClock();
-                StartCoroutine(DelayedMethods(deathScreen));
+                StartCoroutine(ShowDelayed(deathScreen));
             }
 
             if (!isDead)
@@ -200,8 +199,8 @@ namespace Gambetto.Scripts.GameCore.Grid
             _playerPiece = playerObj.GetComponent<Piece.Piece>();
             _playerPiece.PieceRole = PieceRole.Player;
             ResetPowerUps();
-            GameClock.Instance.StartClock();
             isDead = false;
+            GameClock.Instance.StartClock();
             yield return null;
         }
 
@@ -757,11 +756,11 @@ namespace Gambetto.Scripts.GameCore.Grid
                 GameClock.Instance.StopClock();
                 // we need to wait a bit before showing the end level menu and stopping time
                 AudioManager.Instance.PlaySfx(AudioManager.Instance.levelFinished);
-                StartCoroutine(DelayedMethods(_endLevelMenu));
+                StartCoroutine(ShowDelayed(_endLevelMenu));
             }
         }
 
-        public IEnumerator DelayedMethods(GameObject g)
+        public IEnumerator ShowDelayed(GameObject g)
         {
             yield return new WaitForSeconds(0.5f);
             g.SetActive(true);
