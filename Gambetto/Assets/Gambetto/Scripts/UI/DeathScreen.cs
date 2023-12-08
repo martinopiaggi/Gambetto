@@ -23,7 +23,7 @@ namespace Gambetto.Scripts.UI
         public void BackToMainMenu()
         {
             TimeManager.ResumeTime();
-            SceneManager.LoadScene("MainMenu");
+            SceneManager.LoadScene("Level selection");
         }
     }
 }

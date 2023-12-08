@@ -105,9 +105,8 @@ namespace Gambetto.Scripts.GameCore
             //standard behavior for the AI
             var dist = (cell.GetGlobalCoordinates() - _playerCell.GetGlobalCoordinates()).magnitude;
             var moves = new List<Vector3>();
-            
-            
-            if (dist <= 6.0f || piece.Behaviour.Aggressive) 
+
+            if (dist <= 4.0f || piece.Behaviour.Aggressive)
                 MinimumPath(piece, cell);
             else
             {
@@ -142,9 +141,17 @@ namespace Gambetto.Scripts.GameCore
                     return;
                 }
 
-                var possibleMovements = PieceMovement.GetPossibleMovements(piece, currentCell, out _possiblePaths);
+                var possibleMovements = PieceMovement.GetPossibleMovements(
+                    piece,
+                    currentCell,
+                    out _possiblePaths
+                );
 
-                foreach (var nextCell in possibleMovements.Where(nextCell => !visited.Contains(nextCell) && IsAvailable(nextCell)))
+                foreach (
+                    var nextCell in possibleMovements.Where(
+                        nextCell => !visited.Contains(nextCell) && IsAvailable(nextCell)
+                    )
+                )
                 {
                     visited.Add(nextCell);
                     var newPath = new List<Cell>(path) { nextCell };
@@ -156,7 +163,11 @@ namespace Gambetto.Scripts.GameCore
         [Obsolete("MinimumDistance is deprecated, please use MinimumPath instead.", true)]
         private void MinimumDistance(Piece.Piece piece, Cell cell)
         {
-            var possibleMovements = PieceMovement.GetPossibleMovements(piece, cell, out _possiblePaths);
+            var possibleMovements = PieceMovement.GetPossibleMovements(
+                piece,
+                cell,
+                out _possiblePaths
+            );
             var minDist = float.MaxValue;
             var index = 0;
             var chosenIndex = 0;

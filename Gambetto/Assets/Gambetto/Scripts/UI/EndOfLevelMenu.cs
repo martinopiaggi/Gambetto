@@ -1,12 +1,14 @@
 using Gambetto.Scripts.GameCore.Grid;
 using Gambetto.Scripts.Utils;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Gambetto.Scripts.UI
 {
     public class EndOfLevelMenu : MonoBehaviour
     {
         GridManager gridManager;
+
         private void Awake()
         {
             gridManager = FindObjectOfType<GridManager>();
@@ -16,6 +18,12 @@ namespace Gambetto.Scripts.UI
         {
             TimeManager.ResumeTime();
             gridManager.RestartLevel();
+        }
+
+        public void BackToMainMenu()
+        {
+            TimeManager.ResumeTime();
+            SceneManager.LoadScene("Level selection");
         }
     }
 }

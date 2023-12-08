@@ -41,9 +41,5 @@ namespace Gambetto.Scripts.UI
             //SceneManager.LoadScene("MainMenu");
         }
 
-        void Start() { }
-
-        // Update is called once per frame
-        void Update() { }
     }
 }
