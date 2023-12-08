@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 030530086e85cb745a146f3a7806b1b7, type: 3}
-  m_Name: stanzaGrande
+  m_Name: enemyIntro
   m_EditorClassIdentifier: 
   topologyDescription: stanzina piccola solo spawn
-  roomCsvTextAsset: {fileID: 4900000, guid: 2dd57ad49883a4f48b47058a9ac46e1c, type: 3}
+  roomCsvTextAsset: {fileID: 4900000, guid: dcca28c82055d3c45ac8aebd9f431e4b, type: 3}
   exitSide: {x: 1, y: 0}
   behaviours:
-  - {fileID: 11400000, guid: c5ac7a6fc4fd50d4dac0612b65b429a8, type: 2}
+  - {fileID: 11400000, guid: cc5d29b572739114a949230a96132405, type: 2}

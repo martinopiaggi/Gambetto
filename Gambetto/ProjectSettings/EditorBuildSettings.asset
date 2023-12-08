@@ -11,7 +11,4 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Gambetto/Scenes/Level selection.unity
     guid: 55ec6f38368d6c044ba38962ce034777
-  - enabled: 0
-    path: Assets/Gambetto/Scenes/Sample Scene.unity
-    guid: cfd0ec3d64fdf954eb20db17ff8c4337
   m_configObjects: {}
