@@ -12,7 +12,10 @@ namespace Gambetto.Scripts
          * Modality of the camera, 0 simple, 1 midpoint
          */
         public bool modality;
-        public float smoothFactor = 0.9f; 
+
+        [Range(0, 1)]
+        public float smoothFactor = 0.9f;
+
         /**
          * Distance of the camera from the grid (we were using 46)
          */
@@ -148,8 +151,16 @@ namespace Gambetto.Scripts
             _offSet.z = _newPos.z - _oldPos.z;
             _offSet.y = 0;
             _totalOffset = _totalOffset + _offSet;
-            transform.position += new Vector3((1-smoothFactor) * _totalOffset.x, 0, (1-smoothFactor)* _totalOffset.z);
-            _totalOffset = new Vector3(_totalOffset.x * smoothFactor, 0, _totalOffset.z * smoothFactor);
+            transform.position += new Vector3(
+                (1 - smoothFactor) * _totalOffset.x,
+                0,
+                (1 - smoothFactor) * _totalOffset.z
+            );
+            _totalOffset = new Vector3(
+                _totalOffset.x * smoothFactor,
+                0,
+                _totalOffset.z * smoothFactor
+            );
             _oldPos = _newPos;
         }
     }
