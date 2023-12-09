@@ -1,9 +1,6 @@
-using System.Collections;
-using Gambetto.Scripts.GameCore;
 using Gambetto.Scripts.GameCore.Grid;
 using Gambetto.Scripts.Utils;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace Gambetto.Scripts.UI
 {
@@ -26,7 +23,6 @@ namespace Gambetto.Scripts.UI
         {
             TimeManager.ResumeTime();
             GameManager.Instance.sceneTransition.CrossFade("Level selection");
-            
         }
     }
 }

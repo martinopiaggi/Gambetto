@@ -11,9 +11,9 @@ namespace Gambetto.Scripts.GameCore.Piece.Types
         private protected new void Awake()
         {
             base.Awake();
-            _pieceType = PieceType.Pawn;
+            pieceType = PieceType.Pawn;
             // Set the possible moves for the piece
-            PossibleMoves = global::Gambetto.Scripts.GameCore.Grid.PossibleMoves.PawnPossibleMoves;
+            PossibleMoves = Grid.PossibleMoves.PawnPossibleMoves;
             Countdown = (int)PieceConstants.PieceCountdown.Pawn;
             GetComponent<MeshFilter>().mesh = Resources.Load<Mesh>("Models/pawn");
         }

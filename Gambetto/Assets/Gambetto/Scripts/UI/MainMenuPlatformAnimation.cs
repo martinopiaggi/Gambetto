@@ -5,8 +5,8 @@ namespace Gambetto.Scripts.UI
     public class MainMenuPlatformAnimation : MonoBehaviour
     {
         private Vector3 _finalPosition;
-        private bool _rotationFinished = false;
-        private bool _positionFinished = false;
+        private bool _rotationFinished;
+        private bool _positionFinished;
 
         // Start is called before the first frame update
         private void Awake()
@@ -14,11 +14,7 @@ namespace Gambetto.Scripts.UI
             var transform1 = transform;
             var position = transform1.position;
             _finalPosition = position;
-            position = new Vector3(
-                position.x,
-                position.y - 1f,
-                position.z
-            );
+            position = new Vector3(position.x, position.y - 1f, position.z);
             transform1.position = position;
             transform.Rotate(Vector3.up, -3f, Space.World);
         }
@@ -29,13 +25,17 @@ namespace Gambetto.Scripts.UI
             //lerp to final position
             if (transform.position.y <= _finalPosition.y)
             {
-                transform.position = Vector3.Lerp(transform.position, _finalPosition, Time.deltaTime * 2f);
+                transform.position = Vector3.Lerp(
+                    transform.position,
+                    _finalPosition,
+                    Time.deltaTime * 2f
+                );
             }
             else
             {
                 _positionFinished = true;
             }
-        
+
             //rotate
             if (transform.rotation.y <= 0.0f)
             {
@@ -45,13 +45,11 @@ namespace Gambetto.Scripts.UI
             {
                 _rotationFinished = true;
             }
-        
-        
-            if(_positionFinished && _rotationFinished)
+
+            if (_positionFinished && _rotationFinished)
             {
                 enabled = false;
             }
-
         }
     }
 }

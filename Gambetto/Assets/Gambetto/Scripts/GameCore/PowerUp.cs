@@ -6,7 +6,7 @@ namespace Gambetto.Scripts.GameCore
 {
     public class PowerUp
     {
-        private Color personalizedDark = new Color(24f / 255f, 22f / 255f, 22f / 255f);
+        private readonly Color personalizedDark = new Color(24f / 255f, 22f / 255f, 22f / 255f);
 
         //type of powerUp
         public PieceType Type;

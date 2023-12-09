@@ -11,13 +11,12 @@ namespace Gambetto.Scripts.GameCore.Piece.Types
         private protected new void Awake()
         {
             base.Awake();
-            _pieceType = PieceType.King;
+            pieceType = PieceType.King;
             // Set the possible moves for the piece
-            PossibleMoves = global::Gambetto.Scripts.GameCore.Grid.PossibleMoves.KingPossibleMoves;
-            Countdown = (int) PieceConstants.PieceCountdown.King;
+            PossibleMoves = Grid.PossibleMoves.KingPossibleMoves;
+            Countdown = (int)PieceConstants.PieceCountdown.King;
             // Set the mesh for the piece
             GetComponent<MeshFilter>().mesh = Resources.Load<Mesh>("Models/King");
-            
         }
     }
 }

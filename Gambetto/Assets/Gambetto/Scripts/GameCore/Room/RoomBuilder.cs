@@ -1,22 +1,24 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Gambetto.Scripts.GameCore.Room
 {
     public class RoomBuilder : MonoBehaviour
     {
+        [FormerlySerializedAs("_layout")]
         [SerializeField]
-        private RoomLayout _layout;
+        private RoomLayout layout;
 
         [SerializeField]
-        private Material light;
+        private new Material light;
 
         [SerializeField]
         private Material dark;
 
         [SerializeField]
-        private bool isBuilt = false;
+        private bool isBuilt;
 
-        private int colorStart = 0;
+        private int colorStart;
 
         [SerializeField]
         private GameObject cubePrefab; // Reference to the Cube prefab
@@ -26,29 +28,29 @@ namespace Gambetto.Scripts.GameCore.Room
             //todo: does this need to be here?
             if (isBuilt)
                 return;
-            InitializeRoom(_layout);
+            InitializeRoom(layout);
         }
 
-        public void setColorStart(int value)
+        public void SetColorStart(int value)
         {
             colorStart = value;
         }
 
-        public void InitializeRoom(RoomLayout layout)
+        public void InitializeRoom(RoomLayout l)
         {
-            _layout = layout;
+            this.layout = l;
             FillMatrixWithCubes();
             isBuilt = true;
         }
 
         void FillMatrixWithCubes()
         {
-            for (int i = 0; i < _layout.GetSizeRow(); i++)
+            for (int i = 0; i < layout.GetSizeRow(); i++)
             {
-                for (int j = 0; j < _layout.GetSizeColumn(); j++)
+                for (int j = 0; j < layout.GetSizeColumn(); j++)
                 {
                     Vector3 position = new Vector3(i, cubePrefab.transform.position.y, j);
-                    if (_layout.Squares[i, j].Value == RoomLayout.MatrixValue.Empty)
+                    if (layout.Squares[i, j].Value == RoomLayout.MatrixValue.Empty)
                     {
                         continue;
                     }

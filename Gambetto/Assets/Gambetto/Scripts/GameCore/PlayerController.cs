@@ -19,7 +19,7 @@ namespace Gambetto.Scripts.GameCore
 
         private bool _choosing;
         private Cell _currentCell; // TODD: no need to pass it to methods
-        
+
         private void Awake()
         {
             var selectedSquarePrefab = Resources.Load<GameObject>("Prefabs/Square");
@@ -30,7 +30,7 @@ namespace Gambetto.Scripts.GameCore
             _possibleMovements = new List<Cell>();
             _possibleMovementsPath = new List<List<Vector3>>();
         }
-        
+
         private void Update()
         {
             if (Input.GetKeyDown(KeyCode.Space) && _choosing)
@@ -38,7 +38,8 @@ namespace Gambetto.Scripts.GameCore
                 // AudioManager.Instance.PlaySfx(AudioManager.Instance.chosenMove);
                 ChosenMove = _possibleChoice;
                 MovePath = _possiblePath;
-                _lastDirection = ChosenMove.GetGlobalCoordinates() - _currentCell.GetGlobalCoordinates();
+                _lastDirection =
+                    ChosenMove.GetGlobalCoordinates() - _currentCell.GetGlobalCoordinates();
                 _choosing = false;
                 GameClock.Instance.ForceClockTick();
             }
@@ -54,13 +55,16 @@ namespace Gambetto.Scripts.GameCore
 
             _currentCell = currentCell;
             ChosenMove = _currentCell;
-            MovePath = new List<Vector3>();
-            MovePath.Add(_currentCell.GetGlobalCoordinates());
+            MovePath = new List<Vector3> { _currentCell.GetGlobalCoordinates() };
             _possibleMovementsPath.Clear();
-            _possibleMovements = PieceMovement.GetPossibleMovements(piece, currentCell,out _possibleMovementsPath);
+            _possibleMovements = PieceMovement.GetPossibleMovements(
+                piece,
+                currentCell,
+                out _possibleMovementsPath
+            );
             _cycleMovesCoroutine = StartCoroutine(CycleMoves());
         }
-        
+
         /// <summary>
         /// reset the controller to its initial state
         /// </summary>
@@ -106,6 +110,5 @@ namespace Gambetto.Scripts.GameCore
             }
             _selectedSquare.SetActive(false);
         }
-        
     }
 }

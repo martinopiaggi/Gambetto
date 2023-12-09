@@ -1,13 +1,12 @@
-using System;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Gambetto.Scripts.UI
 {
-    
     public class Sliders : MonoBehaviour
     {
-        public Slider musicSlider, sfxSlider;
+        public Slider musicSlider,
+            sfxSlider;
 
         private void Start()
         {
@@ -19,7 +18,7 @@ namespace Gambetto.Scripts.UI
         {
             AudioManager.Instance.EditMusicVolume(musicSlider.value);
         }
-    
+
         public void SfxVolume()
         {
             AudioManager.Instance.EditSfxVolume(sfxSlider.value);
