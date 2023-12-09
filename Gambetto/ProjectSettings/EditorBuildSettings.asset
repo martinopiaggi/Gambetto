@@ -11,4 +11,28 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Gambetto/Scenes/Level selection.unity
     guid: 55ec6f38368d6c044ba38962ce034777
+  - enabled: 1
+    path: Assets/Gambetto/Scenes/Levels/Final/lv0/livello0.unity
+    guid: 99f02b0c204960d45ab0dde71ce10aa9
+  - enabled: 1
+    path: Assets/Gambetto/Scenes/Levels/Final/lv1 knight/livello1.unity
+    guid: 8ed6571f5f72b7242a888075efbd627a
+  - enabled: 1
+    path: Assets/Gambetto/Scenes/Levels/Final/lv2 bishop/bishopIntro.unity
+    guid: 7ab2db2333edced43ab8511c2bfcdaad
+  - enabled: 1
+    path: Assets/Gambetto/Scenes/Levels/Final/lv3 marcia_pedoni/marcia pedoni.unity
+    guid: d8fbf2577c68dc349be8ad4d6376e7d6
+  - enabled: 1
+    path: Assets/Gambetto/Scenes/Levels/Final/lv4 AI intro/pawnEnemyIntro.unity
+    guid: 6303504d0cbff154197e93baaa1489ac
+  - enabled: 1
+    path: Assets/Gambetto/Scenes/Levels/Final/lv5 TowerEscape/TowerEscape.unity
+    guid: 35dbf8f2104a72f409606552e7b05819
+  - enabled: 1
+    path: Assets/Gambetto/Scenes/Levels/Final/lv7 girotondo/Girotondo.unity
+    guid: d690ba7d1e4860c40ad3e885517ff4ac
+  - enabled: 1
+    path: Assets/Gambetto/Scenes/Levels/Final/lv8 knight vs Rook/kn vs rook.unity
+    guid: e55a8a3779dc44b4d8a3cd4272528682
   m_configObjects: {}

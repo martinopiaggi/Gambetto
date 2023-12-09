@@ -1,41 +1,33 @@
 using System;
 using System.Collections;
+using Gambetto.Scripts.Utils;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 
 namespace Gambetto.Scripts.UI
 {
     public class SceneTransition : MonoBehaviour
     {
-        public static SceneTransition Instance;
-
-        private void Awake()
-        {
-            if (Instance == null)
-            {
-                Instance = this;
-                DontDestroyOnLoad(gameObject);
-            }
-            else
-            {
-                Destroy(gameObject);
-            }
-        }
-
         //add here other animations
-        public Animator crossfadeAnimator;
+        [FormerlySerializedAs("crossfadeAnimator")]
+        public Animator crossFadeAnimator;
 
-        public void CrossFade(String scene)
+        private static readonly int End = Animator.StringToHash("end");
+        private static readonly int Start = Animator.StringToHash("start");
+
+        public void CrossFade(string scene)
         {
             StartCoroutine(LoadScene(scene));
         }
 
-        IEnumerator LoadScene(String scene)
+        private IEnumerator LoadScene(string scene)
         {
-            crossfadeAnimator.SetTrigger("end");
+            crossFadeAnimator.SetTrigger(End);
             yield return new WaitForSeconds(1f);
             SceneManager.LoadScene(scene);
-            crossfadeAnimator.SetTrigger("start");
+            yield return new WaitForSeconds(0.5f);
+            crossFadeAnimator.SetTrigger(Start);
         }
     }
 }

@@ -10,7 +10,7 @@ namespace Gambetto.Scripts.UI
     {
         public void PlayGame()
         {
-            SceneTransition.Instance.CrossFade("Level Selection");
+            GameManager.Instance.sceneTransition.CrossFade("Level selection");
         }
 
         public void QuitGame()

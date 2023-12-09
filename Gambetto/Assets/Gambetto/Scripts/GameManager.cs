@@ -8,6 +8,7 @@ namespace Gambetto.Scripts
         public static GameManager Instance;
 
         public SceneTransition sceneTransition;
+        public AudioManager audioManager;
 
         private void Awake()
         {

@@ -27,19 +27,18 @@ namespace Gambetto.Scripts.UI
             }
         }
 
-        public void LoadLevel1()
+        public void LoadLevel(string level)
         {
             currentLevel = 1;
-            SceneTransition.Instance.CrossFade("Sample Scene");
+            GameManager.Instance.sceneTransition.CrossFade(level);
             //SceneManager.LoadScene("Sample Scene");
         }
 
         //method used by the back button
         public void BackToMainMenu()
         {
-            SceneTransition.Instance.CrossFade("MainMenu");
+            GameManager.Instance.sceneTransition.CrossFade("MainMenu");
             //SceneManager.LoadScene("MainMenu");
         }
-
     }
 }

@@ -12,10 +12,9 @@ namespace Gambetto.Scripts
 
         [Header("---- Audio Source ----")]
         [SerializeField]
-        AudioSource musicSource;
+        private AudioSource musicSource;
 
-        [SerializeField]
-        AudioSource sfxSource;
+        [SerializeField] private AudioSource sfxSource;
 
         [Header("---- Audio Clip ----")]
         [Header("--------Background Clips----------")]
