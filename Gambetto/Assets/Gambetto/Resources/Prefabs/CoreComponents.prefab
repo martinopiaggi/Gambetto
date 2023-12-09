@@ -1175,6 +1175,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8488956785076090191, guid: be0275c5c9d82b848ae081cc83d5cd20,
         type: 3}
+      propertyPath: modality
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8488956785076090191, guid: be0275c5c9d82b848ae081cc83d5cd20,
+        type: 3}
       propertyPath: gridManager
       value: 
       objectReference: {fileID: 9061501423218836835}

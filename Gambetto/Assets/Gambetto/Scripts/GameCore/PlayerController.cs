@@ -33,7 +33,7 @@ namespace Gambetto.Scripts.GameCore
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Space) && _choosing)
+            if ((Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0)) && _choosing)
             {
                 // AudioManager.Instance.PlaySfx(AudioManager.Instance.chosenMove);
                 ChosenMove = _possibleChoice;

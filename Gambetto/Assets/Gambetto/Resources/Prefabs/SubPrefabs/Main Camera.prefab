@@ -152,4 +152,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridManager: {fileID: 0}
   modality: 0
+  smoothFactor: 0.96
   distance: 46
