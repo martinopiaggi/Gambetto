@@ -130,6 +130,7 @@ namespace Gambetto.Scripts.GameCore.Piece
                 var gridManager = FindObjectOfType<GridManager>();
                 GameClock.Instance.StopClock();
                 gridManager.StartCoroutine(gridManager.ShowDelayed(gridManager.deathScreen));
+                gridManager.pauseButton.SetActive(false);
             }
         }
 
