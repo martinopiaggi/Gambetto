@@ -7,6 +7,7 @@ namespace Gambetto.Scripts
     {
         public static AudioManager Instance;
 
+        [Range(0, 1)]
         public float music = 0.5f,
             sfx = 0.5f;
 
@@ -14,7 +15,8 @@ namespace Gambetto.Scripts
         [SerializeField]
         private AudioSource musicSource;
 
-        [SerializeField] private AudioSource sfxSource;
+        [SerializeField]
+        private AudioSource sfxSource;
 
         [Header("---- Audio Clip ----")]
         [Header("--------Background Clips----------")]
