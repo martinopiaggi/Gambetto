@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 030530086e85cb745a146f3a7806b1b7, type: 3}
   m_Name: horsy
   m_EditorClassIdentifier: 
-  topologyDescription: horsyyy
+  topologyDescription: horsyyy horse
   roomCsvTextAsset: {fileID: 4900000, guid: ad94921547c44dc5bf75d40fa42a6071, type: 3}
   exitSide: {x: 1, y: 0}
   behaviours: []
