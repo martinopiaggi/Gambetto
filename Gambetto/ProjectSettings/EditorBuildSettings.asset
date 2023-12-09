@@ -30,6 +30,9 @@ EditorBuildSettings:
     path: Assets/Gambetto/Scenes/Levels/Final/lv5 TowerEscape/TowerEscape.unity
     guid: 35dbf8f2104a72f409606552e7b05819
   - enabled: 1
+    path: Assets/Gambetto/Scenes/Levels/Final/lv6 horsy/horsy.unity
+    guid: 6c769a97b6b583c49b5f8a60d3d09448
+  - enabled: 1
     path: Assets/Gambetto/Scenes/Levels/Final/lv7 girotondo/Girotondo.unity
     guid: d690ba7d1e4860c40ad3e885517ff4ac
   - enabled: 1
