@@ -71,6 +71,9 @@ namespace Gambetto.Scripts.GameCore.Grid
         [SerializeField]
         public GameObject deathScreen;
 
+        [SerializeField]
+        public GameObject pauseButton;
+
         public Material lightMaterial;
         public Material darkMaterial;
 
@@ -133,6 +136,7 @@ namespace Gambetto.Scripts.GameCore.Grid
                 isDead = true;
                 AudioManager.Instance.PlaySfx(AudioManager.Instance.deathByFall);
                 GameClock.Instance.StopClock();
+                pauseButton.SetActive(false);
                 StartCoroutine(ShowDelayed(deathScreen));
             }
 
@@ -201,6 +205,7 @@ namespace Gambetto.Scripts.GameCore.Grid
             _playerPiece.PieceRole = PieceRole.Player;
             ResetPowerUps();
             isDead = false;
+            pauseButton.SetActive(true);
             GameClock.Instance.StartClock();
             yield return null;
         }
@@ -758,7 +763,9 @@ namespace Gambetto.Scripts.GameCore.Grid
                 GameClock.Instance.StopClock();
                 // we need to wait a bit before showing the end level menu and stopping time
                 AudioManager.Instance.PlaySfx(AudioManager.Instance.levelFinished);
+                pauseButton.SetActive(false);
                 StartCoroutine(ShowDelayed(_endLevelMenu));
+                pauseButton.SetActive(false);
                 return true;
             }
 

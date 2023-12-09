@@ -698,6 +698,12 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 1402486499658254355}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &5056920518121956408 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6150624483173624875, guid: 6bba10dfd64d5194495e02f475b0c3c2,
+    type: 3}
+  m_PrefabInstance: {fileID: 1402486499658254355}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &8564259467980870252 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7326510614949386879, guid: 6bba10dfd64d5194495e02f475b0c3c2,
@@ -777,6 +783,11 @@ PrefabInstance:
       propertyPath: deathScreen
       value: 
       objectReference: {fileID: 8564259467980870252}
+    - target: {fileID: 7165094672426419033, guid: 327a3696743b7204dad75205fbd3e2c8,
+        type: 3}
+      propertyPath: pauseButton
+      value: 
+      objectReference: {fileID: 5056920518121956408}
     - target: {fileID: 7165094672426419033, guid: 327a3696743b7204dad75205fbd3e2c8,
         type: 3}
       propertyPath: playerController
