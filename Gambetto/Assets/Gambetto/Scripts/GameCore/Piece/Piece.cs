@@ -9,46 +9,32 @@ namespace Gambetto.Scripts.GameCore.Piece
 {
     public abstract class Piece : MonoBehaviour
     {
-        private protected PieceType _pieceType;
+        // ReSharper disable once InconsistentNaming
+        private protected PieceType pieceType;
 
-        [SerializeField] private protected PieceRole pieceRole;
+        [SerializeField]
+        private protected PieceRole pieceRole;
 
-        private bool hasPattern = false;
-        private bool _aggresive = false;
-        private Behaviour behaviour = null;
-        private int _patternIndex = 0;
-        
-        public bool Aggresive
-        {
-            get => _aggresive;
-            set => _aggresive = value;
-        }
-        
-        public bool HasPattern
-        {
-            get => hasPattern;
-            set => hasPattern = value;
-        }
+        //private int _patternIndex = 0;
 
-        public Behaviour Behaviour
-        {
-            set => behaviour = value;
-            get => behaviour;
-        }
+        public bool Aggressive { get; set; } = false;
 
+        public bool HasPattern { get; set; }
 
-        [SerializeField] private protected List<Vector2Int> possibleMoves;
+        public Behaviour Behaviour { set; get; }
 
-        [Range(PieceConstants.MinPieceCountdown, PieceConstants.MaxPieceCountdown)] [SerializeField]
+        [SerializeField]
+        private protected List<Vector2Int> possibleMoves;
+
+        [Range(PieceConstants.MinPieceCountdown, PieceConstants.MaxPieceCountdown)]
+        [SerializeField]
         private protected int countdown;
 
-        [SerializeField] private protected PieceConstants.PieceCountdown countdownStartValue;
-        private protected Transform _tr;
-        private protected Rigidbody _rb;
-        private protected Collider[] _colliders;
-        
-        
-        public Rigidbody Rigidbody => _rb;
+        [SerializeField]
+        private protected PieceConstants.PieceCountdown countdownStartValue;
+        private protected Transform TR;
+        private protected Rigidbody Rb;
+        private Collider[] _colliders;
 
         private Coroutine _moveCoroutine;
         private List<Vector3> _oldPositions;
@@ -59,7 +45,7 @@ namespace Gambetto.Scripts.GameCore.Piece
             set => pieceRole = value;
         }
 
-        public PieceType PieceType => _pieceType;
+        public PieceType PieceType => pieceType;
 
         /// <summary>
         /// List of possible moves for the piece.
@@ -82,13 +68,15 @@ namespace Gambetto.Scripts.GameCore.Piece
                 {
                     case < PieceConstants.MinPieceCountdown:
                         Debug.LogError(
-                            "Piece countdown cannot be less than " + PieceConstants.MinPieceCountdown
+                            "Piece countdown cannot be less than "
+                                + PieceConstants.MinPieceCountdown
                         );
                         countdown = PieceConstants.MinPieceCountdown;
                         break;
                     case > PieceConstants.MaxPieceCountdown:
                         Debug.LogError(
-                            "Piece countdown cannot be more than " + PieceConstants.MaxPieceCountdown
+                            "Piece countdown cannot be more than "
+                                + PieceConstants.MaxPieceCountdown
                         );
                         countdown = PieceConstants.MaxPieceCountdown;
                         break;
@@ -113,28 +101,31 @@ namespace Gambetto.Scripts.GameCore.Piece
         /// </summary>
         private protected void Awake()
         {
-            _tr = GetComponent<Transform>();
-            _rb = GetComponent<Rigidbody>();
+            TR = GetComponent<Transform>();
+            Rb = GetComponent<Rigidbody>();
             _colliders = GetComponents<Collider>();
             _hasCollided = false; //todo: temp solution for multiple collision issue
         }
-        
 
         private bool _hasCollided;
 
         private void OnCollisionEnter(Collision collision)
         {
-            if (collision.gameObject.CompareTag("Enemy") && pieceRole == PieceRole.Player && !_hasCollided)
+            if (
+                collision.gameObject.CompareTag("Enemy")
+                && pieceRole == PieceRole.Player
+                && !_hasCollided
+            )
             {
                 // stop the piece from moving
                 if (_moveCoroutine != null)
                     StopCoroutine(_moveCoroutine);
                 _hasCollided = true; //todo: change this temp solution for multiple triggered collision issue
-                _rb.useGravity = true; // force gravity (needed for the knight)
+                Rb.useGravity = true; // force gravity (needed for the knight)
                 // Debug.Log("Enemy hit");
-                var direction = collision.transform.position - _tr.position;
+                var direction = collision.transform.position - TR.position;
                 // add a force to the player in the opposite direction of the enemy to simulate a hit
-                _rb.AddForce(-direction.normalized * 8f + Vector3.up, ForceMode.Impulse);
+                Rb.AddForce(-direction.normalized * 8f + Vector3.up, ForceMode.Impulse);
                 AudioManager.Instance.PlaySfx(AudioManager.Instance.deathByCollision);
                 var gridManager = FindObjectOfType<GridManager>();
                 GameClock.Instance.StopClock();
@@ -156,7 +147,7 @@ namespace Gambetto.Scripts.GameCore.Piece
             {
                 // if a piece is still moving, stop it and force the position
                 StopCoroutine(_moveCoroutine);
-                _tr.position = _oldPositions[_oldPositions.Count - 1];
+                TR.position = _oldPositions[_oldPositions.Count - 1];
             }
 
             _oldPositions = positions;
@@ -168,9 +159,10 @@ namespace Gambetto.Scripts.GameCore.Piece
             bool gravity = true
         )
         {
-            if (!gravity) DisableColliders();
-             // disable collider if gravity is disabled
-            _rb.useGravity = gravity; // enable/disable gravity
+            if (!gravity)
+                DisableColliders();
+            // disable collider if gravity is disabled
+            Rb.useGravity = gravity; // enable/disable gravity
 
             foreach (var destPosition in positions)
             {
@@ -178,36 +170,36 @@ namespace Gambetto.Scripts.GameCore.Piece
                 // if (Debugger.Instance != null)
                 //     Debugger.Instance.Show(text, printConsole: false);
 
-                var direction = destPosition - _tr.position;
+                var direction = destPosition - TR.position;
                 while (direction != Vector3.zero)
                 {
                     if (!IsGrounded() && gravity)
                     {
-                        _rb.useGravity = true; // force gravity (needed for the knight)
+                        Rb.useGravity = true; // force gravity (needed for the knight)
                         // if piece is not grounded and is affected by gravity, add a force to it like it was falling
                         var boost = 5f;
                         if (Random.Range(0f, 1f) > 0.9)
                             boost = 12f; // easter egg :)
 
-                        _rb.AddForce(direction.normalized * boost, ForceMode.Impulse);
-                        _rb.AddTorque(
+                        Rb.AddForce(direction.normalized * boost, ForceMode.Impulse);
+                        Rb.AddTorque(
                             Vector3.Cross(Vector3.up, direction.normalized) * boost,
                             ForceMode.Impulse
                         );
                         break;
                     }
 
-                    var piecePos = _tr.position;
+                    var piecePos = TR.position;
                     piecePos = Vector3.MoveTowards(
                         piecePos,
                         destPosition,
                         PieceConstants.PieceSpeed * Time.deltaTime
                     );
-                    _tr.position = piecePos;
+                    TR.position = piecePos;
                     direction = destPosition - piecePos;
                     yield return null;
                 }
-                EnableColliders(); //Renable colliders
+                EnableColliders(); //Re-enable colliders
             }
         }
 
@@ -232,8 +224,6 @@ namespace Gambetto.Scripts.GameCore.Piece
             }
         }
     }
-    
-    
 
     public enum PieceType
     {

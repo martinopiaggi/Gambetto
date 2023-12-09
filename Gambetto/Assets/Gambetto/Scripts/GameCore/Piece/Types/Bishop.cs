@@ -11,10 +11,10 @@ namespace Gambetto.Scripts.GameCore.Piece.Types
         private protected new void Awake()
         {
             base.Awake();
-            _pieceType = PieceType.Bishop;
+            pieceType = PieceType.Bishop;
             // Set the possible moves for the piece
             PossibleMoves = Grid.PossibleMoves.BishopPossibleMoves;
-            Countdown = (int) PieceConstants.PieceCountdown.Bishop;
+            Countdown = (int)PieceConstants.PieceCountdown.Bishop;
             GetComponent<MeshFilter>().mesh = Resources.Load<Mesh>("Models/Bishop");
         }
     }

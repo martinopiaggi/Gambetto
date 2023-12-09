@@ -7,11 +7,13 @@ namespace Gambetto.Scripts.GameCore.Room
     [CreateAssetMenu(fileName = "Behaviour", menuName = "ScriptableObjects/Behaviour")]
     public class Behaviour : ScriptableObject
     {
-        [FormerlySerializedAs("_movements")] [SerializeField]
+        [FormerlySerializedAs("_movements")]
+        [SerializeField]
         private List<Vector2Int> movements = new();
 
+        [FormerlySerializedAs("_offset")]
         [SerializeField]
-        private int _offset;
+        private int offset;
 
         [SerializeField]
         private int id;
@@ -24,6 +26,6 @@ namespace Gambetto.Scripts.GameCore.Room
 
         public List<Vector2Int> Movements => movements;
 
-        public int Offset => _offset;
+        public int Offset => offset;
     }
 }

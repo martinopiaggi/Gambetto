@@ -1,6 +1,4 @@
-using System;
 using System.Collections;
-using Gambetto.Scripts.Utils;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;

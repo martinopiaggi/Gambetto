@@ -8,12 +8,12 @@ namespace Gambetto.Scripts
     public class LevelManager : MonoBehaviour
     {
         public static LevelManager Instance;
-    
-    
+
         public List<RoomLayout> rooms;
-        [SerializeField] private GameObject gridManager;
-    
-    
+
+        [SerializeField]
+        private GameObject gridManager;
+
         //awake method makes sure that LevelManager is not destroyed
         private void Awake()
         {
@@ -27,14 +27,11 @@ namespace Gambetto.Scripts
                 Destroy(gameObject);
             }
         }
-    
-    
+
         // Start is called before the first frame update
         void Start()
         {
             gridManager.GetComponent<GridManager>().CreateGrid(rooms);
         }
-
-    
     }
 }

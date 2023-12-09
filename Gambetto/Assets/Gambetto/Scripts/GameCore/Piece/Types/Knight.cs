@@ -13,19 +13,19 @@ namespace Gambetto.Scripts.GameCore.Piece.Types
         private protected new void Awake()
         {
             base.Awake();
-            _pieceType = PieceType.Knight;
+            pieceType = PieceType.Knight;
             // Set the possible moves for the piece
-            PossibleMoves = global::Gambetto.Scripts.GameCore.Grid.PossibleMoves.KnightPossibleMoves;
+            PossibleMoves = Grid.PossibleMoves.KnightPossibleMoves;
             Countdown = (int)PieceConstants.PieceCountdown.Knight;
             GetComponent<MeshFilter>().mesh = Resources.Load<Mesh>("Models/Knight");
         }
-        
+
         private protected override IEnumerator MoveCoroutine(
             IList<Vector3> positions,
             bool gravity = true
         )
         {
-            _rb.useGravity = false; // enable/disable gravity
+            Rb.useGravity = false; // enable/disable gravity
 
             foreach (var destPosition in positions)
             {
@@ -33,21 +33,21 @@ namespace Gambetto.Scripts.GameCore.Piece.Types
                 // if (Debugger.Instance != null)
                 //     Debugger.Instance.Show(text, printConsole: false);
 
-                var direction = destPosition - _tr.position;
+                var direction = destPosition - TR.position;
                 while (direction != Vector3.zero)
                 {
-                    var piecePos = _tr.position;
+                    var piecePos = TR.position;
                     piecePos = Vector3.MoveTowards(
                         piecePos,
                         destPosition,
                         PieceConstants.PieceSpeed * Time.deltaTime
                     );
-                    _tr.position = piecePos;
+                    TR.position = piecePos;
                     direction = destPosition - piecePos;
                     yield return null;
                 }
             }
-            _rb.useGravity = true;
+            Rb.useGravity = true;
 
             // in the knight we check if its grounded after all the moves, so it cant fall while moving
             // over gaps
@@ -60,8 +60,8 @@ namespace Gambetto.Scripts.GameCore.Piece.Types
                 if (Random.Range(0f, 1f) > 0.9)
                     boost = 4f; // easter egg :)
 
-                _rb.AddForce(direction.normalized * boost, ForceMode.Impulse);
-                _rb.AddTorque(
+                Rb.AddForce(direction.normalized * boost, ForceMode.Impulse);
+                Rb.AddTorque(
                     Vector3.Cross(Vector3.up, direction.normalized) * boost,
                     ForceMode.Impulse
                 );

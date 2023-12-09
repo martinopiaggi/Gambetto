@@ -160,31 +160,33 @@ namespace Gambetto.Scripts.GameCore
             }
         }
 
-        [Obsolete("MinimumDistance is deprecated, please use MinimumPath instead.", true)]
-        private void MinimumDistance(Piece.Piece piece, Cell cell)
-        {
-            var possibleMovements = PieceMovement.GetPossibleMovements(
-                piece,
-                cell,
-                out _possiblePaths
-            );
-            var minDist = float.MaxValue;
-            var index = 0;
-            var chosenIndex = 0;
-            foreach (var move in possibleMovements)
-            {
-                index++;
-                var dist = move.GetGlobalCoordinates() - _playerCell.GetGlobalCoordinates();
-                if (move.IsEmpty() || IsAvailable(move) || !(dist.magnitude < minDist))
-                    continue;
-                minDist = dist.magnitude;
-                cell = move;
-                chosenIndex = index - 1;
-            }
-
-            _chosenMoves[piece] = cell;
-            _movePaths[piece] = _possiblePaths[chosenIndex];
-        }
+        /*
+                [Obsolete("MinimumDistance is deprecated, please use MinimumPath instead.", true)]
+                private void MinimumDistance(Piece.Piece piece, Cell cell)
+                {
+                    var possibleMovements = PieceMovement.GetPossibleMovements(
+                        piece,
+                        cell,
+                        out _possiblePaths
+                    );
+                    var minDist = float.MaxValue;
+                    var index = 0;
+                    var chosenIndex = 0;
+                    foreach (var move in possibleMovements)
+                    {
+                        index++;
+                        var dist = move.GetGlobalCoordinates() - _playerCell.GetGlobalCoordinates();
+                        if (move.IsEmpty() || IsAvailable(move) || !(dist.magnitude < minDist))
+                            continue;
+                        minDist = dist.magnitude;
+                        cell = move;
+                        chosenIndex = index - 1;
+                    }
+        
+                    _chosenMoves[piece] = cell;
+                    _movePaths[piece] = _possiblePaths[chosenIndex];
+                }
+        */
 
         private bool IsAvailable(Cell cell)
         {

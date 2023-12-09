@@ -8,11 +8,6 @@ namespace Gambetto.Scripts.UI
 
         public static LevelSelector Instance;
 
-        public int currentLevel;
-
-        //boolean list to keep track of completed levels
-        private bool[] completedLevels = new bool[10];
-
         //awake method makes sure that LevelSelector is not destroyed
         private void Awake()
         {
@@ -29,9 +24,7 @@ namespace Gambetto.Scripts.UI
 
         public void LoadLevel(string level)
         {
-            currentLevel = 1;
             GameManager.Instance.sceneTransition.CrossFade(level);
-            //SceneManager.LoadScene("Sample Scene");
         }
 
         //method used by the back button

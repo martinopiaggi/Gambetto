@@ -7,7 +7,11 @@ namespace Gambetto.Scripts.GameCore.Piece
 {
     public static class PieceMovement
     {
-        public static List<Cell> GetPossibleMovements(Piece piece, Cell currentCell, out List<List<Vector3>> possiblePaths)
+        public static List<Cell> GetPossibleMovements(
+            Piece piece,
+            Cell currentCell,
+            out List<List<Vector3>> possiblePaths
+        )
         {
             var possibleMovement = new List<Cell>();
             possiblePaths = new List<List<Vector3>>();
@@ -29,8 +33,7 @@ namespace Gambetto.Scripts.GameCore.Piece
                             if (tempCell.IsEmpty())
                                 break;
                             tempCell = nextCell;
-                            tempPath = new List<Vector3>();
-                            tempPath.Add(tempCell.GetGlobalCoordinates());
+                            tempPath = new List<Vector3> { tempCell.GetGlobalCoordinates() };
                             possibleMovement.Add(tempCell);
                             possiblePaths.Add(tempPath);
                         }

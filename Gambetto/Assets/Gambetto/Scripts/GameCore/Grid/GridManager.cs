@@ -248,12 +248,12 @@ namespace Gambetto.Scripts.GameCore.Grid
                 //if the last color is 0 (white) the starting color will be changed in 1 (blue)
                 if (_lastColor == 1)
                 {
-                    roomObj.GetComponent<RoomBuilder>().setColorStart(0);
+                    roomObj.GetComponent<RoomBuilder>().SetColorStart(0);
                     _changed = false;
                 }
                 else
                 {
-                    roomObj.GetComponent<RoomBuilder>().setColorStart(1);
+                    roomObj.GetComponent<RoomBuilder>().SetColorStart(1);
                     _changed = true;
                 }
 
@@ -599,6 +599,7 @@ namespace Gambetto.Scripts.GameCore.Grid
             int rowNumber,
             int columnNumber,
             Vector2Int borderCheckDirection,
+            // ReSharper disable once UnusedParameter.Local
             List<Cell> border,
             int roomRowsSize,
             int roomColumnsSize
