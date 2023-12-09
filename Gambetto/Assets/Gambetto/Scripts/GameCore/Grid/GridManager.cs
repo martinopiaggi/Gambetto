@@ -122,7 +122,7 @@ namespace Gambetto.Scripts.GameCore.Grid
                 };
                 playerController.ChosenMove = _initialPlayerCell;
             }
-            
+
             if (!isDead)
             {
                 UpdatePlayerPosition();
@@ -143,7 +143,8 @@ namespace Gambetto.Scripts.GameCore.Grid
                     // if it's the first tick, don't compute the cpu moves and dont update the enemies position
                     cpuBehavior.ComputeCPUMoves(_playerCell, _enemies);
                     UpdateEnemiesPosition();
-                    CheckEndLevel();
+                    if (CheckEndLevel())
+                        return;
                     CheckPowerUp();
                 }
                 playerController.StartChoosing(_playerPiece, _playerCell);
@@ -749,7 +750,7 @@ namespace Gambetto.Scripts.GameCore.Grid
                 .gameObject;
         }
 
-        private void CheckEndLevel()
+        private bool CheckEndLevel()
         {
             if (_playerCell == _endLevelCell)
             {
@@ -757,7 +758,10 @@ namespace Gambetto.Scripts.GameCore.Grid
                 // we need to wait a bit before showing the end level menu and stopping time
                 AudioManager.Instance.PlaySfx(AudioManager.Instance.levelFinished);
                 StartCoroutine(ShowDelayed(_endLevelMenu));
+                return true;
             }
+
+            return false;
         }
 
         public IEnumerator ShowDelayed(GameObject g)

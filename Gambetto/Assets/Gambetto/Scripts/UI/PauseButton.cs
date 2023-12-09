@@ -14,5 +14,11 @@ namespace Gambetto.Scripts.UI
         {
             TimeManager.ResumeTime();
         }
+
+        public void BackToMainMenu()
+        {
+            TimeManager.ResumeTime();
+            GameManager.Instance.sceneTransition.CrossFade("Level selection");
+        }
     }
 }
