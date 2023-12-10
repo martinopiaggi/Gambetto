@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ac34a7225b38244ebf91c84eb6a06c1, type: 3}
   m_Name: p8
   m_EditorClassIdentifier: 
-  _movements:
+  movements:
   - {x: 0, y: -1}
   - {x: 0, y: -1}
   - {x: 0, y: -1}
@@ -31,5 +31,6 @@ MonoBehaviour:
   - {x: -1, y: 0}
   - {x: -1, y: 0}
   - {x: -1, y: 0}
-  _offset: 14
+  offset: 14
   id: 8
+  aggressive: 1
