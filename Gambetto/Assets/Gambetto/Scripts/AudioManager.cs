@@ -37,8 +37,8 @@ namespace Gambetto.Scripts
             //load floats
             try
             {
-                music = PlayerPrefs.GetFloat("MusicVolume");
-                sfx = PlayerPrefs.GetFloat("SFXVolume");
+                music = PlayerPrefs.GetFloat("MusicVolume", 0f);
+                sfx = PlayerPrefs.GetFloat("SFXVolume", 0.5f);
             }
             catch (Exception e)
             {
