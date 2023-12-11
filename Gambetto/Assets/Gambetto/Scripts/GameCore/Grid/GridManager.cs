@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -91,9 +92,16 @@ namespace Gambetto.Scripts.GameCore.Grid
 
         private GameObject _endLevelMenu;
 
-        public void Start()
+        private void Start()
         {
-            GameClock.Instance.ClockTick += OnClockTick;
+            StartCoroutine(StartClockDelayedCoroutine());
+        }
+
+        //delayed start clock cooroutine
+        private static IEnumerator StartClockDelayedCoroutine()
+        {
+            yield return new WaitForSeconds(2f);
+            GameClock.Instance.StartClock();
         }
 
         /// <summary>
@@ -311,7 +319,7 @@ namespace Gambetto.Scripts.GameCore.Grid
             _gridFinished = true;
 
             // start the clock after the grid is created
-            GameClock.Instance.StartClock();
+            GameClock.Instance.ClockTick += OnClockTick;
         }
 
         private int ColorConsistencyUpdate(RoomLayout roomLayout, bool changed)
