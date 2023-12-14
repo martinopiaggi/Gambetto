@@ -12,7 +12,7 @@ namespace Gambetto.Scripts.GameCore
         public PieceType Type;
 
         //boolean to check if powerUp has been used
-        public bool IsUsed { get; private set; }
+        public bool IsConsumed { get; private set; }
 
         //actual powerUp object
         private GameObject _powerUpObject;
@@ -36,13 +36,13 @@ namespace Gambetto.Scripts.GameCore
 
         public void SetActive()
         {
-            IsUsed = true;
+            IsConsumed = true;
             _powerUpObject.GetComponentInChildren<SpriteRenderer>().color = personalizedDark;
         }
 
         public void SetInactive()
         {
-            IsUsed = false;
+            IsConsumed = false;
             _powerUpObject.GetComponentInChildren<SpriteRenderer>().color = Color.white;
         }
     }
