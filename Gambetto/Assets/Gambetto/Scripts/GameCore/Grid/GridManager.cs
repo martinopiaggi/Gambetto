@@ -792,10 +792,11 @@ namespace Gambetto.Scripts.GameCore.Grid
             //check if the player has activated a power up
             if (_powerUps.ContainsValue(_playerCell))
             {
-                AudioManager.Instance.PlaySfx(AudioManager.Instance.powerUp);
                 var powerUp = _powerUps.FirstOrDefault(x => x.Value == _playerCell).Key;
-                if (!powerUp.IsUsed)
+                // check if the power up is not already used
+                if (!powerUp.IsConsumed)
                 {
+                    AudioManager.Instance.PlaySfx(AudioManager.Instance.powerUp);
                     //change player piece
                     var tempPrefab = powerUp.Type switch
                     {
