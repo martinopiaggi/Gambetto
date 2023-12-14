@@ -1,0 +1,1143 @@
+fileFormatVersion: 2
+guid: ca2fc9290e155864eababae978d332f5
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 12
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 0
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: sleeping-speech-bubble_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1272
+        width: 275
+        height: 159
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a404df4c896ed4941a59601779012e8b
+      internalID: -1911361152
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sleeping-speech-bubble_1
+      rect:
+        serializedVersion: 2
+        x: 275
+        y: 1272
+        width: 275
+        height: 159
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fc052974c2ad8644893c457a54a61c61
+      internalID: 1163176186
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sleeping-speech-bubble_2
+      rect:
+        serializedVersion: 2
+        x: 550
+        y: 1272
+        width: 275
+        height: 159
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3b708ce936222694695a0ff76655a1a3
+      internalID: 1440207148
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sleeping-speech-bubble_3
+      rect:
+        serializedVersion: 2
+        x: 825
+        y: 1272
+        width: 275
+        height: 159
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d09d3e8656b19dd4ca2bda93381f54e5
+      internalID: -349489357
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sleeping-speech-bubble_4
+      rect:
+        serializedVersion: 2
+        x: 1100
+        y: 1272
+        width: 275
+        height: 159
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1f590797ef1466d45ab658187185aa69
+      internalID: -754752691
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sleeping-speech-bubble_5
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1113
+        width: 275
+        height: 159
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b4ecc2e03bda6634e8d4935203cfae23
+      internalID: -1377722774
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sleeping-speech-bubble_6
+      rect:
+        serializedVersion: 2
+        x: 275
+        y: 1113
+        width: 275
+        height: 159
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a0b0955300c271648993c356fef70e50
+      internalID: 473897717
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sleeping-speech-bubble_7
+      rect:
+        serializedVersion: 2
+        x: 550
+        y: 1113
+        width: 275
+        height: 159
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 40f3f19a612905a419d23e1b36e7d694
+      internalID: -161626420
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sleeping-speech-bubble_8
+      rect:
+        serializedVersion: 2
+        x: 825
+        y: 1113
+        width: 275
+        height: 159
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0b32f8ca778f58947a1ae4c4740c1e9e
+      internalID: 598759307
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sleeping-speech-bubble_9
+      rect:
+        serializedVersion: 2
+        x: 1100
+        y: 1113
+        width: 275
+        height: 159
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5b2ab7eb3f2034f46949896b1b7ccb00
+      internalID: 1808232941
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sleeping-speech-bubble_10
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 954
+        width: 275
+        height: 159
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b481128118435bb4e9ef18b4463a0762
+      internalID: -82968660
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sleeping-speech-bubble_11
+      rect:
+        serializedVersion: 2
+        x: 275
+        y: 954
+        width: 275
+        height: 159
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8b07609c28647e844a4e73742f6dd434
+      internalID: 717557196
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sleeping-speech-bubble_12
+      rect:
+        serializedVersion: 2
+        x: 550
+        y: 954
+        width: 275
+        height: 159
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a2b28ea8025b0a14ebeaa3454f0c2103
+      internalID: 1833001120
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sleeping-speech-bubble_13
+      rect:
+        serializedVersion: 2
+        x: 825
+        y: 954
+        width: 275
+        height: 159
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0cbf0b77c4cb8ff479c3978bb143b5b0
+      internalID: -1240223596
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sleeping-speech-bubble_14
+      rect:
+        serializedVersion: 2
+        x: 1100
+        y: 954
+        width: 275
+        height: 159
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c3fd87d6074d33b40b9f594c29cac23c
+      internalID: 1767072606
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sleeping-speech-bubble_15
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 795
+        width: 275
+        height: 159
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bd4a6ab10012d7049834e9d5e27a53d8
+      internalID: 851584124
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sleeping-speech-bubble_16
+      rect:
+        serializedVersion: 2
+        x: 275
+        y: 795
+        width: 275
+        height: 159
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b91597c4089e87e42b9c58df85520015
+      internalID: -1373319371
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sleeping-speech-bubble_17
+      rect:
+        serializedVersion: 2
+        x: 550
+        y: 795
+        width: 275
+        height: 159
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0a93290546d79254884d4280cc950ea6
+      internalID: 455632384
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sleeping-speech-bubble_18
+      rect:
+        serializedVersion: 2
+        x: 825
+        y: 795
+        width: 275
+        height: 159
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 90475cfe01fb9634c940263fd9e05392
+      internalID: -728018812
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sleeping-speech-bubble_19
+      rect:
+        serializedVersion: 2
+        x: 1100
+        y: 795
+        width: 275
+        height: 159
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4e7ae0238604e634da9164dd590e84f9
+      internalID: 451143160
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sleeping-speech-bubble_20
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 636
+        width: 275
+        height: 159
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 331abc9aac1ec2b4ea9a5762b5ef89bf
+      internalID: -1330171920
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sleeping-speech-bubble_21
+      rect:
+        serializedVersion: 2
+        x: 275
+        y: 636
+        width: 275
+        height: 159
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 102cb893b8756084fbac22bb8420acdf
+      internalID: -254928139
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sleeping-speech-bubble_22
+      rect:
+        serializedVersion: 2
+        x: 550
+        y: 636
+        width: 275
+        height: 159
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8da890a55ea8daf499494a6875589e02
+      internalID: -1777421385
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sleeping-speech-bubble_23
+      rect:
+        serializedVersion: 2
+        x: 825
+        y: 636
+        width: 275
+        height: 159
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 71c607b23caaf5b4fb468c45e6c0d107
+      internalID: 1744351589
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sleeping-speech-bubble_24
+      rect:
+        serializedVersion: 2
+        x: 1100
+        y: 636
+        width: 275
+        height: 159
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f1a790b2d135ec448a80f4d641d50a30
+      internalID: 909368722
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sleeping-speech-bubble_25
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 477
+        width: 275
+        height: 159
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bc73ad0d0a0224f4cbab59339bf37e30
+      internalID: 2009497130
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sleeping-speech-bubble_26
+      rect:
+        serializedVersion: 2
+        x: 275
+        y: 477
+        width: 275
+        height: 159
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2450863d3cc895041a3bf9f7f72d966a
+      internalID: -593946901
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sleeping-speech-bubble_27
+      rect:
+        serializedVersion: 2
+        x: 550
+        y: 477
+        width: 275
+        height: 159
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4b8cab284e1e5534d806c72f7beae665
+      internalID: 1651643614
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sleeping-speech-bubble_28
+      rect:
+        serializedVersion: 2
+        x: 825
+        y: 477
+        width: 275
+        height: 159
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0938c7f4979a26a43b40a368ca1e034f
+      internalID: -34584254
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sleeping-speech-bubble_29
+      rect:
+        serializedVersion: 2
+        x: 1100
+        y: 477
+        width: 275
+        height: 159
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 61466b13cee4e2847905618e0e40b6cd
+      internalID: -377475751
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sleeping-speech-bubble_30
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 318
+        width: 275
+        height: 159
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2ab6f10225cccf54ba81a54396f47539
+      internalID: -733035410
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sleeping-speech-bubble_31
+      rect:
+        serializedVersion: 2
+        x: 275
+        y: 318
+        width: 275
+        height: 159
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c9d659e8cb62c3341843dd6fb04034d5
+      internalID: -1432631082
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sleeping-speech-bubble_32
+      rect:
+        serializedVersion: 2
+        x: 550
+        y: 318
+        width: 275
+        height: 159
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8d049c281b0ab9145b95cb74ae047b52
+      internalID: -912683926
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sleeping-speech-bubble_33
+      rect:
+        serializedVersion: 2
+        x: 825
+        y: 318
+        width: 275
+        height: 159
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 09d6bdcfcfe05f144b82d2e3e407f220
+      internalID: -927388634
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sleeping-speech-bubble_34
+      rect:
+        serializedVersion: 2
+        x: 1100
+        y: 318
+        width: 275
+        height: 159
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5bd5a610c82ebfa45bb75f99a8f1657f
+      internalID: 1402103222
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sleeping-speech-bubble_35
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 159
+        width: 275
+        height: 159
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d8556ca1850a4e04789efe691c3971c3
+      internalID: 1577840947
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sleeping-speech-bubble_36
+      rect:
+        serializedVersion: 2
+        x: 275
+        y: 159
+        width: 275
+        height: 159
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e7f822211938e4843b9ee7d9c03b6d7e
+      internalID: -90537644
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sleeping-speech-bubble_37
+      rect:
+        serializedVersion: 2
+        x: 550
+        y: 159
+        width: 275
+        height: 159
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 631c701a1f0132b4f90986df0a16fbaa
+      internalID: 1684716748
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sleeping-speech-bubble_38
+      rect:
+        serializedVersion: 2
+        x: 825
+        y: 159
+        width: 275
+        height: 159
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 76ee6898d697cc54092990b2cfa390e1
+      internalID: -1321037046
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sleeping-speech-bubble_39
+      rect:
+        serializedVersion: 2
+        x: 1100
+        y: 159
+        width: 275
+        height: 159
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3a086e392ee769d4296f94c55eb94619
+      internalID: -997408206
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sleeping-speech-bubble_40
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 275
+        height: 159
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c6f3b63ec8ed95449877b8ac9c3bbd74
+      internalID: -361315796
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sleeping-speech-bubble_41
+      rect:
+        serializedVersion: 2
+        x: 275
+        y: 0
+        width: 275
+        height: 159
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3f499894ebc3ae84f989e0cab4b0b4ea
+      internalID: -86888567
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sleeping-speech-bubble_42
+      rect:
+        serializedVersion: 2
+        x: 550
+        y: 0
+        width: 275
+        height: 159
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bf302a4ae9abe6c49ba2163f3c5ec0ab
+      internalID: 1156046279
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sleeping-speech-bubble_43
+      rect:
+        serializedVersion: 2
+        x: 825
+        y: 0
+        width: 275
+        height: 159
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a89e844a1016be54682df08788fd706e
+      internalID: -70195035
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sleeping-speech-bubble_44
+      rect:
+        serializedVersion: 2
+        x: 1100
+        y: 0
+        width: 275
+        height: 159
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 172a8ddcad792f743a6f48ed123f319b
+      internalID: 1085812377
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 7015e25a6e0c9f5498bf6f472f92bfe3
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      sleeping-speech-bubble_0: -1911361152
+      sleeping-speech-bubble_1: 1163176186
+      sleeping-speech-bubble_10: -82968660
+      sleeping-speech-bubble_11: 717557196
+      sleeping-speech-bubble_12: 1833001120
+      sleeping-speech-bubble_13: -1240223596
+      sleeping-speech-bubble_14: 1767072606
+      sleeping-speech-bubble_15: 851584124
+      sleeping-speech-bubble_16: -1373319371
+      sleeping-speech-bubble_17: 455632384
+      sleeping-speech-bubble_18: -728018812
+      sleeping-speech-bubble_19: 451143160
+      sleeping-speech-bubble_2: 1440207148
+      sleeping-speech-bubble_20: -1330171920
+      sleeping-speech-bubble_21: -254928139
+      sleeping-speech-bubble_22: -1777421385
+      sleeping-speech-bubble_23: 1744351589
+      sleeping-speech-bubble_24: 909368722
+      sleeping-speech-bubble_25: 2009497130
+      sleeping-speech-bubble_26: -593946901
+      sleeping-speech-bubble_27: 1651643614
+      sleeping-speech-bubble_28: -34584254
+      sleeping-speech-bubble_29: -377475751
+      sleeping-speech-bubble_3: -349489357
+      sleeping-speech-bubble_30: -733035410
+      sleeping-speech-bubble_31: -1432631082
+      sleeping-speech-bubble_32: -912683926
+      sleeping-speech-bubble_33: -927388634
+      sleeping-speech-bubble_34: 1402103222
+      sleeping-speech-bubble_35: 1577840947
+      sleeping-speech-bubble_36: -90537644
+      sleeping-speech-bubble_37: 1684716748
+      sleeping-speech-bubble_38: -1321037046
+      sleeping-speech-bubble_39: -997408206
+      sleeping-speech-bubble_4: -754752691
+      sleeping-speech-bubble_40: -361315796
+      sleeping-speech-bubble_41: -86888567
+      sleeping-speech-bubble_42: 1156046279
+      sleeping-speech-bubble_43: -70195035
+      sleeping-speech-bubble_44: 1085812377
+      sleeping-speech-bubble_5: -1377722774
+      sleeping-speech-bubble_6: 473897717
+      sleeping-speech-bubble_7: -161626420
+      sleeping-speech-bubble_8: 598759307
+      sleeping-speech-bubble_9: 1808232941
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
