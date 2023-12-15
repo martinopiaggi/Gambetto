@@ -30,6 +30,7 @@ namespace Gambetto.Scripts
         public AudioClip deathByFall;
         public AudioClip levelFinished;
         public AudioClip powerUp;
+        public AudioClip enemyAlerted;
 
         //start method to play background music in menu and to load player volumes previously set
         public void Start()

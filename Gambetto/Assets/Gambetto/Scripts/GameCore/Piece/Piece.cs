@@ -17,11 +17,20 @@ namespace Gambetto.Scripts.GameCore.Piece
 
         //private int _patternIndex = 0;
 
-        public bool Aggressive { get; set; } = false;
-
         public bool HasPattern { get; set; }
 
-        public Behaviour Behaviour { set; get; }
+        private Behaviour _behaviour;
+
+        // when setting the behaviour for the first time, set the countdown to the behaviour's offset
+        public Behaviour Behaviour
+        {
+            get => _behaviour;
+            set
+            {
+                _behaviour = value;
+                animator.SetBool("Aggressive", _behaviour.Aggressive);
+            }
+        }
 
         [SerializeField]
         private protected List<Vector2Int> possibleMoves;
@@ -39,6 +48,7 @@ namespace Gambetto.Scripts.GameCore.Piece
         private Coroutine _moveCoroutine;
         private List<Vector3> _oldPositions;
 
+        private Animator animator;
         public PieceRole PieceRole
         {
             get => pieceRole;
@@ -103,6 +113,7 @@ namespace Gambetto.Scripts.GameCore.Piece
         {
             TR = GetComponent<Transform>();
             Rb = GetComponent<Rigidbody>();
+            animator = GetComponentInChildren<Animator>();
             _colliders = GetComponents<Collider>();
             _hasCollided = false; //todo: temp solution for multiple collision issue
         }
@@ -223,6 +234,17 @@ namespace Gambetto.Scripts.GameCore.Piece
             {
                 col.enabled = true;
             }
+        }
+
+        /// <summary>
+        /// If set to true and <see cref="Behaviour"/> <b>isn't</b> aggressive, triggers the animation for the speech bubble.
+        /// </summary>
+        /// <param name="value"></param>
+        public void SetAnimatorInRange(bool value)
+        {
+            if (value && !Behaviour.Aggressive && !animator.GetBool("InRange"))
+                AudioManager.Instance.PlaySfx(AudioManager.Instance.enemyAlerted);
+            animator.SetBool("InRange", value);
         }
     }
 
