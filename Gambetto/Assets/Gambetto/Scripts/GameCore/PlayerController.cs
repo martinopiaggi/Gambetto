@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Gambetto.Scripts.GameCore.Grid;
 using Gambetto.Scripts.GameCore.Piece;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Gambetto.Scripts.GameCore
 {
@@ -17,7 +18,8 @@ namespace Gambetto.Scripts.GameCore
         private Coroutine _cycleMovesCoroutine;
         private Vector3 _lastDirection;
 
-        private bool _choosing;
+        [FormerlySerializedAs("_choosing")]
+        public bool choosing;
         private Cell _currentCell; // TODD: no need to pass it to methods
 
         private void Awake()
@@ -31,18 +33,15 @@ namespace Gambetto.Scripts.GameCore
             _possibleMovementsPath = new List<List<Vector3>>();
         }
 
-        private void Update()
+        //previously called 'update'
+        public void OnClick()
         {
-            if ((Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0)) && _choosing)
-            {
-                // AudioManager.Instance.PlaySfx(AudioManager.Instance.chosenMove);
-                ChosenMove = _possibleChoice;
-                MovePath = _possiblePath;
-                _lastDirection =
-                    ChosenMove.GetGlobalCoordinates() - _currentCell.GetGlobalCoordinates();
-                _choosing = false;
-                GameClock.Instance.ForceClockTick();
-            }
+            ChosenMove = _possibleChoice;
+            MovePath = _possiblePath;
+            _lastDirection =
+                ChosenMove.GetGlobalCoordinates() - _currentCell.GetGlobalCoordinates();
+            choosing = false;
+            GameClock.Instance.ForceClockTick();
         }
 
         public Cell ChosenMove { get; set; }
@@ -70,7 +69,7 @@ namespace Gambetto.Scripts.GameCore
         /// </summary>
         public void ResetController()
         {
-            _choosing = false;
+            choosing = false;
             ChosenMove = null;
             _selectedSquare.SetActive(false);
             _lastDirection = default;
@@ -81,7 +80,7 @@ namespace Gambetto.Scripts.GameCore
         private IEnumerator CycleMoves()
         {
             var clockPeriod = GameClock.Instance.ClockPeriod;
-            _choosing = true;
+            choosing = true;
             // find the index of the first move in the direction of the last move
             var firstMove = _possibleMovements.FindIndex(
                 cell =>
@@ -97,7 +96,7 @@ namespace Gambetto.Scripts.GameCore
                 AudioManager.Instance.PlaySfx(AudioManager.Instance.clockTick);
                 var move = _possibleMovements[i];
                 var movePath = _possibleMovementsPath[i];
-                if (_choosing == false)
+                if (choosing == false)
                     break;
                 _selectedSquare.SetActive(true);
                 _selectedSquare.transform.position =
