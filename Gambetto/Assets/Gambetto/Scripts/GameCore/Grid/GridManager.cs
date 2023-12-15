@@ -319,7 +319,6 @@ namespace Gambetto.Scripts.GameCore.Grid
                 roomObj
                     .GetComponent<Transform>()
                     .SetPositionAndRotation(translation, Quaternion.identity);
-
                 _grid.Add(PopulateRoomGraph(roomLayout, translation, roomIdx, previousRoomLayout));
                 // I find the center if the current room and store it in a list
                 Vector3 roomCenter =
