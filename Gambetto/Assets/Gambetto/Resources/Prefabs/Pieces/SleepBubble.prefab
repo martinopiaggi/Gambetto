@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 2009895372221842065}
   - component: {fileID: 6314951638606739891}
   - component: {fileID: 644472335999155354}
-  - component: {fileID: 7041864352779475844}
   - component: {fileID: 8973043980512261815}
   m_Layer: 3
   m_Name: SleepBubble
@@ -108,18 +107,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &7041864352779475844
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8820494192403526743}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df345fa60c97bdf499994ce6c43eadc9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!210 &8973043980512261815
 SortingGroup:
   m_ObjectHideFlags: 0
