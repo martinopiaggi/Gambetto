@@ -107,11 +107,15 @@ namespace Gambetto.Scripts.GameCore
             var moves = new List<Vector3>();
 
             if (dist <= 4.0f || piece.Behaviour.Aggressive)
+            {
                 MinimumPath(piece, cell);
+                piece.SetAnimatorInRange(true);
+            }
             else
             {
                 moves.Add(cell.GetGlobalCoordinates());
                 _movePaths[piece] = moves;
+                piece.SetAnimatorInRange(false);
             }
         }
 
