@@ -4,9 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using Gambetto.Scripts.GameCore.Piece;
 using Gambetto.Scripts.GameCore.Room;
+using Gambetto.Scripts.UI;
 using Gambetto.Scripts.Utils;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
 using Behaviour = Gambetto.Scripts.GameCore.Room.Behaviour;
 using Quaternion = UnityEngine.Quaternion;
@@ -97,7 +99,22 @@ namespace Gambetto.Scripts.GameCore.Grid
             StartCoroutine(StartClockDelayedCoroutine());
         }
 
-        //delayed start clock cooroutine
+        //new method to register input click
+        private void Update()
+        {
+            if (
+                (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
+                && playerController.choosing
+                && !isDead
+                && Time.timeScale != 0f
+                && !pauseButton.GetComponent<PauseButton>().mouseOverItemDropLocation
+            )
+            {
+                playerController.OnClick();
+            }
+        }
+
+        //delayed start clock coroutine
         private static IEnumerator StartClockDelayedCoroutine()
         {
             yield return new WaitForSeconds(2f);
