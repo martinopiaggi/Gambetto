@@ -49,11 +49,14 @@ namespace Gambetto.Scripts.GameCore.Room
             {
                 for (int j = 0; j < layout.GetSizeColumn(); j++)
                 {
-                    Vector3 position = new Vector3(i, cubePrefab.transform.position.y, j);
-                    if (layout.Squares[i, j].Value == RoomLayout.MatrixValue.Empty)
+                    if (
+                        (layout.Squares[i, j].Value == RoomLayout.MatrixValue.Empty)
+                        || layout.Squares[i, j].Value == RoomLayout.MatrixValue.Exit
+                    )
                     {
                         continue;
                     }
+                    var position = new Vector3(i, cubePrefab.transform.position.y, j);
                     var cubeInstance = Instantiate(cubePrefab, gameObject.transform, true);
                     cubeInstance.transform.localPosition = position;
                     cubeInstance.transform.rotation = Quaternion.identity;
