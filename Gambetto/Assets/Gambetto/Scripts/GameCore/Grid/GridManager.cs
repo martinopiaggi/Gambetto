@@ -211,14 +211,9 @@ namespace Gambetto.Scripts.GameCore.Grid
 
             foreach (var enemy in _enemies)
             {
-                MovePiece(
-                    enemy.Key,
-                    new List<Vector3> { enemy.Value.GetGlobalCoordinates() },
-                    false
-                );
+                enemy.Key.ResetAndMovePiece(new List<Vector3> { enemy.Value.GetGlobalCoordinates()});
             }
-
-            //MovePiece(_playerPiece, _playerCell);
+            
             Destroy(_playerPiece.gameObject);
             var playerObj = Instantiate(
                 prefabPawn,
@@ -242,7 +237,7 @@ namespace Gambetto.Scripts.GameCore.Grid
 
             foreach (var enemy in _enemies)
             {
-                MovePiece(enemy.Key, _enemiesPath[enemy.Key]);
+                enemy.Key.Move(_enemiesPath[enemy.Key]);
             }
         }
 
@@ -250,17 +245,9 @@ namespace Gambetto.Scripts.GameCore.Grid
         {
             _playerCell = playerController.ChosenMove;
             _playerPath = playerController.MovePath;
-            MovePiece(_playerPiece, _playerPath);
+            _playerPiece.Move(_playerPath);
         }
-
-        private void MovePiece(Piece.Piece piece, List<Vector3> path, bool gravity = true)
-        {
-            // Check if the piece is already in the destination
-            if (Vector3.Distance(piece.transform.position, path[^1]) < 0.1f)
-                return;
-            piece.Move(path, gravity);
-        }
-
+        
         public void CreateGrid(List<RoomLayout> roomLayouts)
         {
             var translation = new Vector3(0, 0, 0);
