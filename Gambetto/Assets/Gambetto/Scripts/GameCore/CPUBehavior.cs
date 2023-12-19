@@ -106,16 +106,15 @@ namespace Gambetto.Scripts.GameCore
             var dist = (cell.GetGlobalCoordinates() - _playerCell.GetGlobalCoordinates()).magnitude;
             var moves = new List<Vector3>();
 
-            if (dist <= 4.0f || piece.Behaviour.Aggressive)
+            if (dist <= 4.0f || piece.Behaviour.Aggressive || piece.IsAwake)
             {
+                if (!piece.IsAwake) piece.IsAwake = true;
                 MinimumPath(piece, cell);
-                piece.SetAnimatorInRange(true);
             }
             else
             {
                 moves.Add(cell.GetGlobalCoordinates());
                 _movePaths[piece] = moves;
-                piece.SetAnimatorInRange(false);
             }
         }
 

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Gambetto.Scripts.GameCore.Grid;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Behaviour = Gambetto.Scripts.GameCore.Room.Behaviour;
 using Random = UnityEngine.Random;
 
@@ -20,15 +21,27 @@ namespace Gambetto.Scripts.GameCore.Piece
         public bool HasPattern { get; set; }
 
         private Behaviour _behaviour;
-
-        // when setting the behaviour for the first time, set the countdown to the behaviour's offset
+        
         public Behaviour Behaviour
         {
             get => _behaviour;
             set
             {
                 _behaviour = value;
+                IsAwake = _behaviour.Aggressive;
                 animator.SetBool("Aggressive", _behaviour.Aggressive);
+            }
+        }
+
+        private bool isAwake = false;
+        
+        public bool IsAwake
+        {
+            get => isAwake;
+            set
+            {
+                isAwake = value;
+                SetAnimatorInRange(isAwake);
             }
         }
 
@@ -147,14 +160,16 @@ namespace Gambetto.Scripts.GameCore.Piece
 
         /**
          * <summary>
-         * Moves the piece smoothly following a given list of positions when <see cref="Countdown"/> reaches <see cref="PieceConstants.MinPieceCountdown"/>.
+         * Moves the piece smoothly following a given list of positions.
          * The piece is moved ONLY if the distance between the current position and the destination is greater than 0.1f.
          * </summary>
          * <param name="positions">The list of positions to follow</param>
-         * <param name="gravity">Whether the piece should be affected by gravity or not</param>
+         * <param name="gravity">Whether the piece should be affected by gravity or not while moving</param>
          */
         public void Move(List<Vector3> positions, bool gravity = true)
         {
+            if (Vector3.Distance(transform.position, positions[^1]) < 0.1f)
+                return;
             if (_moveCoroutine != null)
             {
                 // if a piece is still moving, stop it and force the position
@@ -240,11 +255,17 @@ namespace Gambetto.Scripts.GameCore.Piece
         /// If set to true and <see cref="Behaviour"/> <b>isn't</b> aggressive, triggers the animation for the speech bubble.
         /// </summary>
         /// <param name="value"></param>
-        public void SetAnimatorInRange(bool value)
+        private void SetAnimatorInRange(bool value)
         {
             if (value && !Behaviour.Aggressive && !animator.GetBool("InRange"))
                 AudioManager.Instance.PlaySfx(AudioManager.Instance.enemyAlerted);
             animator.SetBool("InRange", value);
+        }
+
+        public void ResetAndMovePiece(List<Vector3> moves)
+        {
+            IsAwake = Behaviour.Aggressive;
+            Move(moves,false);
         }
     }
 
