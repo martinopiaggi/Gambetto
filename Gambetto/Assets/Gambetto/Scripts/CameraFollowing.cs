@@ -13,6 +13,9 @@ namespace Gambetto.Scripts
          */
         public bool modality;
 
+        /**
+         * parameter that regulate the smoothing in the camera movement
+         */
         [Range(0, 1)]
         public float smoothFactor = 0.9f;
 
@@ -86,11 +89,15 @@ namespace Gambetto.Scripts
                 SimpleCamera();
             }
         }
-
+        
+        /**
+         * Function that implement simple camera following
+         */
         void SimpleCamera()
         {
             if (_firstTime)
             {
+                // instructions that compute the camera position according to the distance
                 _roomsCenter = gridManager.GetRoomsCenter();
                 _roomCenter = _roomsCenter[0];
                 float disTemp = distance * Sin45;
@@ -110,8 +117,13 @@ namespace Gambetto.Scripts
             _offSet.z = _newPos.z - _oldPos.z;
             _offSet.y = 0;
             _totalOffset = _totalOffset + _offSet;
-            transform.position += new Vector3(0.1f * _totalOffset.x, 0, 0.1f * _totalOffset.z);
-            _totalOffset = new Vector3(_totalOffset.x * 0.9f, 0, _totalOffset.z * 0.9f);
+            transform.position += new Vector3((1 - smoothFactor) * _totalOffset.x, 0, (1 - smoothFactor) * _totalOffset.z);
+            _totalOffset = new Vector3(_totalOffset.x * smoothFactor, 0, _totalOffset.z * smoothFactor);
+            
+            // if the amount of offset become too small I just set it to 0 to avoid trembling of the camera
+            if (_totalOffset.x < 0.00001 && _totalOffset.x > -0.00001)  _totalOffset.x = 0;
+            if (_totalOffset.z < 0.00001 && _totalOffset.x > -0.00001)  _totalOffset.z = 0;
+            
             _oldPos = _newPos;
         }
 
@@ -156,11 +168,12 @@ namespace Gambetto.Scripts
                 0,
                 (1 - smoothFactor) * _totalOffset.z
             );
-            _totalOffset = new Vector3(
-                _totalOffset.x * smoothFactor,
-                0,
-                _totalOffset.z * smoothFactor
-            );
+            _totalOffset = new Vector3(_totalOffset.x * smoothFactor, 0, _totalOffset.z * smoothFactor);
+            
+            // if the amount of offset become too small I just set it to 0 to avoid trembling of the camera
+            if (_totalOffset.x < 0.00001 && _totalOffset.x > -0.00001)  _totalOffset.x = 0;
+            if (_totalOffset.z < 0.00001 && _totalOffset.x > -0.00001)  _totalOffset.z = 0;
+
             _oldPos = _newPos;
         }
     }
