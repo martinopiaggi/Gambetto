@@ -99,9 +99,7 @@ namespace Gambetto.Scripts.GameCore.Grid
             StartCoroutine(StartClockDelayedCoroutine());
         }
 
-        /// <summary>
-        /// This method is used to handle the player input
-        /// </summary>
+        //new method to register input click
         private void Update()
         {
             if (
@@ -116,7 +114,7 @@ namespace Gambetto.Scripts.GameCore.Grid
             }
         }
 
-        //delayed start clock coroutine ? Why?
+        //delayed start clock coroutine
         private static IEnumerator StartClockDelayedCoroutine()
         {
             yield return new WaitForSeconds(2f);
@@ -197,11 +195,6 @@ namespace Gambetto.Scripts.GameCore.Grid
             StartCoroutine(RestartLevelCoroutine());
         }
 
-        /// <summary>
-        /// This method is used to restart the level after the player death
-        /// resetting enemies position, player position, cleaning all stuff of the previous play 
-        /// and starting the clock again
-        /// </summary>
         private IEnumerator RestartLevelCoroutine()
         {
             GameClock.Instance.StopClock();
@@ -237,10 +230,6 @@ namespace Gambetto.Scripts.GameCore.Grid
             yield return null;
         }
 
-
-        /// <summary>
-        /// This method is used to update the enemies position
-        /// </summary>
         private void UpdateEnemiesPosition()
         {
             _enemies = new Dictionary<Piece.Piece, Cell>(cpuBehavior.ChosenMoves);
@@ -259,11 +248,6 @@ namespace Gambetto.Scripts.GameCore.Grid
             _playerPiece.Move(_playerPath);
         }
         
-        /// <summary>
-        /// It creates the grid data structure from a list of roomLayouts (CSV files)
-        /// While builds the data structure, it calls the RoomBuilder to actually spawn the gameobjects
-        /// of the chessboard.
-        /// </summary>
         public void CreateGrid(List<RoomLayout> roomLayouts)
         {
             var translation = new Vector3(0, 0, 0);
@@ -273,12 +257,11 @@ namespace Gambetto.Scripts.GameCore.Grid
             for (var roomIdx = 0; roomIdx < roomLayouts.Count; roomIdx++)
             {
                 var roomLayout = roomLayouts[roomIdx];
-                //load the room data from the csv file
+
                 roomLayout.LoadRoomData();
 
                 var roomObj = Instantiate(_roomPrefab, translation, Quaternion.identity);
 
-                //change the starting color of the room for the chessboard pattern
                 //if the last color is 0 (white) the starting color will be changed in 1 (blue)
                 if (_lastColor == 1)
                 {
@@ -290,11 +273,8 @@ namespace Gambetto.Scripts.GameCore.Grid
                     roomObj.GetComponent<RoomBuilder>().SetColorStart(1);
                     _changed = true;
                 }
-                _lastColor = ColorConsistencyUpdate(roomLayout, _changed);
 
-                // actually spawn the room floor gameobjects
                 roomObj.GetComponent<RoomBuilder>().InitializeRoom(roomLayout);
-
                 // Compute the translation of the current room considering the previous room exit
                 if (roomIdx != 0)
                 {
@@ -322,14 +302,12 @@ namespace Gambetto.Scripts.GameCore.Grid
                         );
                     }
                 }
-                //set the position of the current room in the world space 
+
                 roomObj
                     .GetComponent<Transform>()
                     .SetPositionAndRotation(translation, Quaternion.identity);
                 _grid.Add(PopulateRoomGraph(roomLayout, translation, roomIdx, previousRoomLayout));
-                
-                // Saving the center and store it in a list
-                // to use it later to correct interpolate the camera position
+                // I find the center if the current room and store it in a list
                 Vector3 roomCenter =
                     _grid[roomIdx][0].GetGlobalCoordinates()
                     + _grid[roomIdx][_grid[roomIdx].Count - 1].GetGlobalCoordinates();
@@ -337,6 +315,7 @@ namespace Gambetto.Scripts.GameCore.Grid
                 roomCenter.y = 0.0f;
                 roomCenter.z /= 2.0f;
                 _roomsCenter.Add(roomCenter);
+                _lastColor = ColorConsistencyUpdate(roomLayout, _changed);
             }
 
             //Debug.Log("grid finished");
@@ -346,9 +325,6 @@ namespace Gambetto.Scripts.GameCore.Grid
             GameClock.Instance.ClockTick += OnClockTick;
         }
 
-        /// <summary>
-        /// This method is used to make consistent the color of the chessboard between rooms
-        /// </summary>
         private int ColorConsistencyUpdate(RoomLayout roomLayout, bool changed)
         {
             //this if determine what is the last color of the room, 1 (dark), 0 (bright)
@@ -369,12 +345,6 @@ namespace Gambetto.Scripts.GameCore.Grid
 
         private List<Cell> _cellBorder = new List<Cell>();
 
-        /// <summary>
-        /// This method is used to populate the graph data structure (using multiple support methods) 
-        /// of the grid from a roomLayout. 
-        /// It returns a list of cells that are the cells of the current room.
-        /// Also calls the methods to create pieces and power ups.
-        /// </summary>
         private List<Cell> PopulateRoomGraph(
             RoomLayout roomLayout,
             Vector3 coordinateOrigin,
@@ -433,6 +403,7 @@ namespace Gambetto.Scripts.GameCore.Grid
                             i,
                             j,
                             previousRoomLayout.GetExit() * -1,
+                            _cellBorder,
                             roomLayout.GetSizeRow(),
                             roomLayout.GetSizeColumn()
                         );
@@ -443,9 +414,6 @@ namespace Gambetto.Scripts.GameCore.Grid
             return roomCells;
         }
 
-        /// <summary>
-        /// This method is used to support the creation of pieces and to store them in a dictionary (_enemies)
-        /// </summary>
         private void InstantiatePiece(Cell cell, RoomLayout.Square square, Behaviour behaviour)
         {
             GameObject prefab;
@@ -504,10 +472,6 @@ namespace Gambetto.Scripts.GameCore.Grid
             _initialEnemiesPositions.Add(pieceObj.GetComponent<Piece.Piece>(), cell);
         }
 
-        /// <summary>
-        /// This method is used to support the creation of power ups/ end of level 
-        /// and to store them in a dictionary (_powerUps) or in a variable (_endLevelCell)
-        /// </summary>
         private void InstantiateTiles(Cell cell, RoomLayout.Square square)
         {
             switch (square.Value)
@@ -563,9 +527,6 @@ namespace Gambetto.Scripts.GameCore.Grid
             }
         }
 
-        /// <summary>
-        /// This method is used to support the creation of a cell in the graph data structure
-        /// </summary>
         private static Cell CreateCell(
             Vector3 coordinateOrigin,
             Vector2 borderDirection,
@@ -599,9 +560,6 @@ namespace Gambetto.Scripts.GameCore.Grid
             return cell;
         }
 
-        /// <summary>
-        /// This method is used to update the links between cells in the SAME room
-        /// </summary>
         private static void SolveLinksNeighbors(
             Cell cell,
             int rowNumber,
@@ -652,14 +610,13 @@ namespace Gambetto.Scripts.GameCore.Grid
             }
         }
 
-        /// <summary>
-        /// This method is used to update the links between cells in different rooms
-        /// </summary>
         private void SolveInterRoomConsistencies(
             Cell cell,
             int rowNumber,
             int columnNumber,
             Vector2Int borderCheckDirection,
+            // ReSharper disable once UnusedParameter.Local
+            List<Cell> border,
             int roomRowsSize,
             int roomColumnsSize
         )
@@ -868,7 +825,6 @@ namespace Gambetto.Scripts.GameCore.Grid
             }
         }
 
-    
         private void ResetPowerUps()
         {
             foreach (var p in _powerUps.Keys)
