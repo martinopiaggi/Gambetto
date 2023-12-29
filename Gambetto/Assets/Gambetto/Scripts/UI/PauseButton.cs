@@ -28,6 +28,7 @@ namespace Gambetto.Scripts.UI
         public void ResumeGame()
         {
             TimeManager.ResumeTime();
+            mouseOverItemDropLocation = false;
         }
 
         public void BackToMainMenu()

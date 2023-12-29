@@ -1211,10 +1211,10 @@ MonoBehaviour:
       - m_Target: {fileID: 4318537278370080884}
         m_TargetAssemblyTypeName: Gambetto.Scripts.UI.GeneralMenuFunctions, Assembly-CSharp
         m_MethodName: ResumeGame
-        m_Mode: 1
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 31408350075663558}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -1954,10 +1954,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8408071197929816397}
+  - component: {fileID: 3552778219249325221}
   - component: {fileID: 5666661492634991253}
   - component: {fileID: 4432978155468448369}
   - component: {fileID: 6034018131026516853}
-  - component: {fileID: 3552778219249325221}
   m_Layer: 5
   m_Name: PauseButton
   m_TagString: Untagged
@@ -1984,6 +1984,19 @@ RectTransform:
   m_AnchoredPosition: {x: -33, y: -33}
   m_SizeDelta: {x: 6, y: 6}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &3552778219249325221
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5322185578051438914}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 149fdc33f783a9e41978da16c29dab47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mouseOverItemDropLocation: 0
 --- !u!114 &5666661492634991253
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2102,19 +2115,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5322185578051438914}
   m_CullTransparentMesh: 1
---- !u!114 &3552778219249325221
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5322185578051438914}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 149fdc33f783a9e41978da16c29dab47, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mouseOverItemDropLocation: 0
 --- !u!1 &5764763948554468840
 GameObject:
   m_ObjectHideFlags: 0

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Gambetto.Scripts.UI
 {
-    public class GeneralMenuFunctions: MonoBehaviour
+    public class GeneralMenuFunctions : MonoBehaviour
     {
         private GridManager gridManager;
 
@@ -19,20 +19,24 @@ namespace Gambetto.Scripts.UI
         /// <param name="menuToClose">Menu to set inactive.</param>
         public void RestartAndCloseMenu(GameObject menuToClose = null)
         {
-            if (menuToClose != null) menuToClose.SetActive(false);
+            if (menuToClose != null)
+                menuToClose.SetActive(false);
             TimeManager.ResumeTime();
             gridManager.RestartLevel();
         }
 
-        public void BackToLevels(GameObject menuToClose =null)
+        public void BackToLevels(GameObject menuToClose = null)
         {
-            if (menuToClose != null) menuToClose.SetActive(false);
+            if (menuToClose != null)
+                menuToClose.SetActive(false);
             GameManager.Instance.sceneTransition.CrossFade("Level selection");
             TimeManager.ResumeTime();
         }
-        
-        public void ResumeGame()
+
+        public void ResumeGame(GameObject menuToClose = null)
         {
+            if (menuToClose != null)
+                menuToClose.SetActive(false);
             TimeManager.ResumeTime();
         }
     }
