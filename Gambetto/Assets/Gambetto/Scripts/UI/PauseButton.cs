@@ -20,7 +20,7 @@ namespace Gambetto.Scripts.UI
             mouseOverItemDropLocation = false;
         }
 
-        public void OpenSettings()
+        public void PauseGame()
         {
             TimeManager.StopTime();
         }
