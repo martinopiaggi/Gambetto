@@ -23,8 +23,7 @@ namespace Gambetto.Scripts.UI
         {
             crossFadeAnimator.SetTrigger(End);
             yield return new WaitForSeconds(1f);
-            SceneManager.LoadScene(scene);
-            yield return new WaitForSeconds(0.5f);
+            yield return SceneManager.LoadSceneAsync(scene);
             crossFadeAnimator.SetTrigger(Start);
         }
     }
