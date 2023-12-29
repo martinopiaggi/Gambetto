@@ -14,22 +14,12 @@ namespace Gambetto.Scripts.GameCore.Room
 
         [SerializeField]
         private Material dark;
-
-        [SerializeField]
-        private bool isBuilt;
-
+        
         private int colorStart;
 
         [SerializeField]
         private GameObject cubePrefab; // Reference to the Cube prefab
-
-        private void Update()
-        {
-            //todo: does this need to be here?
-            if (isBuilt)
-                return;
-            InitializeRoom(layout);
-        }
+        
 
         public void SetColorStart(int value)
         {
@@ -40,7 +30,6 @@ namespace Gambetto.Scripts.GameCore.Room
         {
             this.layout = l;
             FillMatrixWithCubes();
-            isBuilt = true;
         }
 
         void FillMatrixWithCubes()
@@ -65,5 +54,7 @@ namespace Gambetto.Scripts.GameCore.Room
                 }
             }
         }
-    }
+        
+        
+    } 
 }
