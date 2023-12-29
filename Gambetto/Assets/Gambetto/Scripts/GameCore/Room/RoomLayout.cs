@@ -79,6 +79,7 @@ namespace Gambetto.Scripts.GameCore.Room
         {
             var identifier = 0; // Default value if no number is found
             cellValue = cellValue.Replace(" ", ""); // Remove spaces
+            cellValue = cellValue.ToUpper(); //transform the cellvalue to uppercase
             if (cellValue.Length == 0)
                 return new Square(MatrixValue.Floor, identifier);
 
@@ -117,12 +118,12 @@ namespace Gambetto.Scripts.GameCore.Room
             Floor, // cell with no value
             Spawn, // s
             Exit, // e
-            Pawn, // ♟
-            Rook, // ♖
-            Bishop, // ♗
-            Knight, // ♘
-            Queen, // ♛
-            King, // ♚
+            Pawn, // ♟ p P
+            Rook, // ♖ r R
+            Bishop, // ♗ b B
+            Knight, // ♘ kn KN
+            Queen, // ♛ q Q
+            King, // ♚ k K
             PK, // pk
             PB, // pb
             PR, // pt
@@ -132,22 +133,25 @@ namespace Gambetto.Scripts.GameCore.Room
         private static readonly Dictionary<string, MatrixValue> CellValueMappings =
             new()
             {
-                { "x", MatrixValue.Empty },
+                { "PK", MatrixValue.PK },
+                { "PB", MatrixValue.PB },
+                { "PR", MatrixValue.PR },
+                { "PP", MatrixValue.PP },
                 { "X", MatrixValue.Empty },
-                { "s", MatrixValue.Spawn },
                 { "S", MatrixValue.Spawn },
-                { "e", MatrixValue.Exit },
                 { "E", MatrixValue.Exit },
                 { "♟", MatrixValue.Pawn },
+                { "P", MatrixValue.Pawn },
                 { "♖", MatrixValue.Rook },
+                { "R", MatrixValue.Rook },
                 { "♘", MatrixValue.Knight },
+                { "KN", MatrixValue.Rook },
                 { "♗", MatrixValue.Bishop },
+                { "B", MatrixValue.Bishop },
                 { "♛", MatrixValue.Queen },
+                { "Q", MatrixValue.Queen },
                 { "♚", MatrixValue.King },
-                { "pk", MatrixValue.PK },
-                { "pb", MatrixValue.PB },
-                { "pr", MatrixValue.PR },
-                { "pp", MatrixValue.PP }
+                { "K", MatrixValue.King }
             };
     }
 }
