@@ -6,12 +6,12 @@ Possible values for CSV:
 - S = Spawn
 - e = Exit
 - E = Exit
-- ♟ = Pawn
-- ♖ = Rook
-- ♘ = Knight
-- ♗ = Bishop
-- ♛ = Queen
-- ♚ = King
+- ♟ = p = P = Pawn
+- ♖ = r = R  = Rook
+- ♘ = kn = KN = Knight
+- ♗ = b = B = Bishop
+- ♛ = q = Q = Queen
+- ♚ = k = K = King
 - pk = PK // powerup knight
 - pb = PB // powerup bishop
 - pr = PR // powerup rook
