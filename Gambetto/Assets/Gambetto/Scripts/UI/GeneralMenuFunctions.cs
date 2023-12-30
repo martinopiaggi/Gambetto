@@ -22,6 +22,7 @@ namespace Gambetto.Scripts.UI
             if (menuToClose != null)
                 menuToClose.SetActive(false);
             TimeManager.ResumeTime();
+            PauseButton.MouseOverItemDropLocation = false;
             gridManager.RestartLevel();
         }
 
