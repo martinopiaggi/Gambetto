@@ -258,7 +258,7 @@ namespace Gambetto.Scripts.GameCore.Grid
             _playerPiece.Move(_playerPath);
         }
 
-        public void CreateGrid(List<RoomLayout> roomLayouts)
+        public void CreateGrid(List<RoomLayout> roomLayouts, ColorScheme colorScheme)
         {
             var translation = new Vector3(0, 0, 0);
             RoomLayout previousRoomLayout = null;
@@ -271,20 +271,21 @@ namespace Gambetto.Scripts.GameCore.Grid
                 roomLayout.LoadRoomData();
 
                 var roomObj = Instantiate(_roomPrefab, translation, Quaternion.identity);
+                var roomBuilder = roomObj.GetComponent<RoomBuilder>();
 
                 //if the last color is 0 (white) the starting color will be changed in 1 (blue)
                 if (_lastColor == 1)
                 {
-                    roomObj.GetComponent<RoomBuilder>().SetColorStart(0);
+                    roomBuilder.SetColorStart(0);
                     _changed = false;
                 }
                 else
                 {
-                    roomObj.GetComponent<RoomBuilder>().SetColorStart(1);
+                    roomBuilder.SetColorStart(1);
                     _changed = true;
                 }
 
-                roomObj.GetComponent<RoomBuilder>().InitializeRoom(roomLayout);
+                roomBuilder.InitializeRoom(roomLayout);
                 // Compute the translation of the current room considering the previous room exit
                 if (roomIdx != 0)
                 {

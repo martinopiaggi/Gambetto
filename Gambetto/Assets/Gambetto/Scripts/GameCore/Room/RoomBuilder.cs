@@ -58,6 +58,11 @@ namespace Gambetto.Scripts.GameCore.Room
             }
         }
         
+        public void SetScheme(ColorScheme colorScheme)
+        {
+            light = colorScheme.lightMaterial;
+            dark = colorScheme.darkMaterial;
+        }
         
     } 
 }

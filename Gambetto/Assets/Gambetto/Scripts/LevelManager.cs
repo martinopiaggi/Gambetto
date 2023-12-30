@@ -10,6 +10,8 @@ namespace Gambetto.Scripts
         public static LevelManager Instance;
 
         public List<RoomLayout> rooms;
+        
+        private GameObject colorScheme;
 
         [SerializeField]
         private GameObject gridManager;
@@ -32,7 +34,8 @@ namespace Gambetto.Scripts
         // Start is called before the first frame update
         void Start()
         {
-            gridManager.GetComponent<GridManager>().CreateGrid(rooms);
+            var gm = gridManager.GetComponent<GridManager>();
+            gm.CreateGrid(rooms, null);
         }
     }
 }
