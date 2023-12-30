@@ -153,7 +153,7 @@ namespace Gambetto.Scripts.GameCore.Piece
                 AudioManager.Instance.PlaySfx(AudioManager.Instance.deathByCollision);
                 var gridManager = FindObjectOfType<GridManager>();
                 GameClock.Instance.StopClock();
-                gridManager.StartCoroutine(gridManager.ShowDelayed(gridManager.deathScreen));
+                gridManager.StartCoroutine(gridManager.ShowDelayed(gridManager.deathScreen, 1.42f));
                 gridManager.pauseButton.SetActive(false);
             }
         }

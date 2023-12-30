@@ -102,8 +102,6 @@ namespace Gambetto.Scripts.GameCore.Grid
 
         private GameObject _endLevelMenu;
 
-        private PauseButton _pauseButton;
-
         private void Start()
         {
             StartCoroutine(StartClockDelayedCoroutine());
@@ -117,11 +115,6 @@ namespace Gambetto.Scripts.GameCore.Grid
                 .transform
                 .Find("EndOfLevelMenu")
                 .gameObject;
-            _pauseButton = GameObject
-                .FindWithTag("UI")
-                .transform
-                .Find("PauseButton")
-                .GetComponent<PauseButton>();
         }
 
         //new method to register input click
@@ -187,7 +180,7 @@ namespace Gambetto.Scripts.GameCore.Grid
                 AudioManager.Instance.PlaySfx(AudioManager.Instance.deathByFall);
                 GameClock.Instance.StopClock();
                 pauseButton.SetActive(false);
-                StartCoroutine(ShowDelayed(deathScreen));
+                StartCoroutine(ShowDelayed(deathScreen, 1f));
             }
 
             if (!isDead)
@@ -801,9 +794,9 @@ namespace Gambetto.Scripts.GameCore.Grid
             return false;
         }
 
-        public IEnumerator ShowDelayed(GameObject g)
+        public IEnumerator ShowDelayed(GameObject g, float delay = 0.5f)
         {
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(delay);
             g.SetActive(true);
             TimeManager.StopTime();
         }
