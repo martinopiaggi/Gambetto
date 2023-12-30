@@ -521,6 +521,7 @@ namespace Gambetto.Scripts.GameCore.Grid
                         cell.GetGlobalCoordinates() + new Vector3(0, 0.05f, 0),
                         quaternion.identity
                     );
+                    EndOfLevelEffect.instance.AddExitCoords(cell.GetGlobalCoordinates());
                     break;
                 default:
                     return;
