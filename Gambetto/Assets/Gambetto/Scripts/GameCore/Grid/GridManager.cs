@@ -35,16 +35,6 @@ namespace Gambetto.Scripts.GameCore.Grid
         private Dictionary<Piece.Piece, Cell> _initialEnemiesPositions =
             new Dictionary<Piece.Piece, Cell>();
         private Dictionary<PowerUp, Cell> _powerUps = new();
-        private readonly Dictionary<PieceType, float> _typesClockPeriods =
-            new()
-            {
-                { PieceType.Pawn, 2.5f },
-                { PieceType.Bishop, 3.7f },
-                { PieceType.Knight, 3f },
-                { PieceType.Rook, 3f },
-                { PieceType.King, 2.5f }, //king not implemented
-                { PieceType.Queen, 2.5f } //queen not implemented
-            }; //modify here clock period for each type
 
         [SerializeField]
         public GameObject prefabPawn;
@@ -125,7 +115,7 @@ namespace Gambetto.Scripts.GameCore.Grid
                 && playerController.choosing
                 && !isDead
                 && Time.timeScale != 0f
-                && !PauseButton.MouseOverItemDropLocation
+                && !PauseButton.mouseOverItemDropLocation
             )
             {
                 playerController.OnClick();
@@ -817,11 +807,14 @@ namespace Gambetto.Scripts.GameCore.Grid
                         PieceType.Bishop => prefabBishop,
                         PieceType.Knight => prefabKnight,
                         PieceType.Rook => prefabRook,
+                        //PieceType.King => prefabKing,
                         _ => prefabPawn
                     };
 
                     //set the correct clock period
-                    GameClock.Instance.ChangeClockPeriod(_typesClockPeriods[powerUp.Type]);
+                    GameClock
+                        .Instance
+                        .ChangeClockPeriod(PieceConstants.TypesClockPeriods[powerUp.Type]);
 
                     Destroy(_playerPiece.gameObject);
                     var playerObj = Instantiate(
