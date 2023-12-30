@@ -1,3 +1,4 @@
+using Gambetto.Scripts.GameCore.Grid;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -19,7 +20,6 @@ namespace Gambetto.Scripts.GameCore.Room
 
         [SerializeField]
         private GameObject cubePrefab; // Reference to the Cube prefab
-        
 
         public void SetColorStart(int value)
         {
@@ -34,6 +34,7 @@ namespace Gambetto.Scripts.GameCore.Room
 
         void FillMatrixWithCubes()
         {
+            var endOfLevelEffect = EndOfLevelEffect.instance; 
             for (int i = 0; i < layout.GetSizeRow(); i++)
             {
                 for (int j = 0; j < layout.GetSizeColumn(); j++)
@@ -51,6 +52,8 @@ namespace Gambetto.Scripts.GameCore.Room
                     cubeInstance.transform.rotation = Quaternion.identity;
                     cubeInstance.GetComponent<MeshRenderer>().material =
                         (i + j + colorStart) % 2 == 0 ? light : dark;
+                    
+                    endOfLevelEffect.AddCube(cubeInstance);
                 }
             }
         }
