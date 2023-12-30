@@ -47,13 +47,7 @@ namespace Gambetto.Scripts.GameCore.Piece
 
         [SerializeField]
         private protected List<Vector2Int> possibleMoves;
-
-        [Range(PieceConstants.MinPieceCountdown, PieceConstants.MaxPieceCountdown)]
-        [SerializeField]
-        private protected int countdown;
-
-        [SerializeField]
-        private protected PieceConstants.PieceCountdown countdownStartValue;
+        
         private protected Transform TR;
         private protected Rigidbody Rb;
         private Collider[] _colliders;
@@ -77,46 +71,6 @@ namespace Gambetto.Scripts.GameCore.Piece
         {
             get => possibleMoves ?? new List<Vector2Int>();
             set => possibleMoves = value;
-        }
-
-        /// <summary>
-        /// Active countdown after which the piece will move.
-        /// </summary>
-        public int Countdown
-        {
-            get => countdown;
-            set
-            {
-                switch (value)
-                {
-                    case < PieceConstants.MinPieceCountdown:
-                        Debug.LogError(
-                            "Piece countdown cannot be less than "
-                                + PieceConstants.MinPieceCountdown
-                        );
-                        countdown = PieceConstants.MinPieceCountdown;
-                        break;
-                    case > PieceConstants.MaxPieceCountdown:
-                        Debug.LogError(
-                            "Piece countdown cannot be more than "
-                                + PieceConstants.MaxPieceCountdown
-                        );
-                        countdown = PieceConstants.MaxPieceCountdown;
-                        break;
-                    default:
-                        countdown = value;
-                        break;
-                }
-            }
-        }
-
-        /// <summary>
-        ///  Value of the countdown when <see cref="Piece"/> gets initialized.
-        /// </summary>
-        public PieceConstants.PieceCountdown CountDownStartValue
-        {
-            get => countdownStartValue;
-            set => countdownStartValue = value;
         }
 
         ///<summary>
