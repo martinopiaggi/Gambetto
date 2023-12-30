@@ -5,16 +5,16 @@ namespace Gambetto.Scripts
 {
     public class GameManager : MonoBehaviour
     {
-        public static GameManager Instance;
+        public static GameManager instance;
 
         public SceneTransition sceneTransition;
         public AudioManager audioManager;
 
         private void Awake()
         {
-            if (Instance == null)
+            if (instance == null)
             {
-                Instance = this;
+                instance = this;
                 DontDestroyOnLoad(gameObject);
             }
             else
@@ -22,11 +22,5 @@ namespace Gambetto.Scripts
                 Destroy(gameObject);
             }
         }
-
-        // Start is called before the first frame update
-        void Start() { }
-
-        // Update is called once per frame
-        void Update() { }
     }
 }

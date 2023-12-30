@@ -1,4 +1,3 @@
-using System;
 using Gambetto.Scripts.Utils;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -7,29 +6,27 @@ namespace Gambetto.Scripts.UI
 {
     public class PauseButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
-        
         /// <summary>
         /// When the mouse is over an item drop location. It won't be possible to move the pawn.
         /// </summary>
-        public static bool MouseOverItemDropLocation;
+        public static bool mouseOverItemDropLocation;
 
-        
         /// <summary>
         /// On awake, set the mouse over item drop location to false. This will is necessary to avoid the static variable being true after a scene reload.
         /// </summary>
         public void Awake()
         {
-            MouseOverItemDropLocation = false;
+            mouseOverItemDropLocation = false;
         }
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            MouseOverItemDropLocation = true;
+            mouseOverItemDropLocation = true;
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            MouseOverItemDropLocation = false;
+            mouseOverItemDropLocation = false;
         }
 
         public void PauseGame()
@@ -40,13 +37,13 @@ namespace Gambetto.Scripts.UI
         public void ResumeGame()
         {
             TimeManager.ResumeTime();
-            MouseOverItemDropLocation = false;
+            mouseOverItemDropLocation = false;
         }
 
         public void BackToMainMenu()
         {
             TimeManager.ResumeTime();
-            GameManager.Instance.sceneTransition.CrossFade("Level selection");
+            GameManager.instance.sceneTransition.CrossFade(1);
         }
     }
 }

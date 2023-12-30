@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -616,11 +616,11 @@ MonoBehaviour:
       - m_Target: {fileID: 1289294617}
         m_TargetAssemblyTypeName: Gambetto.Scripts.UI.LevelButton, Assembly-CSharp
         m_MethodName: LoadLevel
-        m_Mode: 5
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 8
           m_FloatArgument: 0
           m_StringArgument: horsy
           m_BoolArgument: 0
@@ -1019,11 +1019,11 @@ MonoBehaviour:
       - m_Target: {fileID: 1289294617}
         m_TargetAssemblyTypeName: Gambetto.Scripts.UI.LevelButton, Assembly-CSharp
         m_MethodName: LoadLevel
-        m_Mode: 5
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 3
           m_FloatArgument: 0
           m_StringArgument: livello1
           m_BoolArgument: 0
@@ -1287,11 +1287,11 @@ MonoBehaviour:
       - m_Target: {fileID: 1289294617}
         m_TargetAssemblyTypeName: Gambetto.Scripts.UI.LevelButton, Assembly-CSharp
         m_MethodName: LoadLevel
-        m_Mode: 5
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 10
           m_FloatArgument: 0
           m_StringArgument: kn vs rook
           m_BoolArgument: 0
@@ -1420,11 +1420,11 @@ MonoBehaviour:
       - m_Target: {fileID: 1289294617}
         m_TargetAssemblyTypeName: Gambetto.Scripts.UI.LevelButton, Assembly-CSharp
         m_MethodName: LoadLevel
-        m_Mode: 5
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 5
           m_FloatArgument: 0
           m_StringArgument: marcia pedoni
           m_BoolArgument: 0
@@ -1804,11 +1804,11 @@ MonoBehaviour:
       - m_Target: {fileID: 1289294617}
         m_TargetAssemblyTypeName: Gambetto.Scripts.UI.LevelButton, Assembly-CSharp
         m_MethodName: LoadLevel
-        m_Mode: 5
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 4
           m_FloatArgument: 0
           m_StringArgument: bishopIntro
           m_BoolArgument: 0
@@ -2140,11 +2140,11 @@ MonoBehaviour:
       - m_Target: {fileID: 1289294617}
         m_TargetAssemblyTypeName: Gambetto.Scripts.UI.LevelButton, Assembly-CSharp
         m_MethodName: LoadLevel
-        m_Mode: 5
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 7
           m_FloatArgument: 0
           m_StringArgument: TowerEscape
           m_BoolArgument: 0
@@ -2525,11 +2525,11 @@ MonoBehaviour:
       - m_Target: {fileID: 1289294617}
         m_TargetAssemblyTypeName: Gambetto.Scripts.UI.LevelButton, Assembly-CSharp
         m_MethodName: LoadLevel
-        m_Mode: 5
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 6
           m_FloatArgument: 0
           m_StringArgument: pawnEnemyIntro
           m_BoolArgument: 0
@@ -3353,11 +3353,11 @@ MonoBehaviour:
       - m_Target: {fileID: 1289294617}
         m_TargetAssemblyTypeName: Gambetto.Scripts.UI.LevelButton, Assembly-CSharp
         m_MethodName: LoadLevel
-        m_Mode: 5
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 9
           m_FloatArgument: 0
           m_StringArgument: Girotondo
           m_BoolArgument: 0
@@ -3641,13 +3641,13 @@ MonoBehaviour:
       - m_Target: {fileID: 1289294617}
         m_TargetAssemblyTypeName: Gambetto.Scripts.UI.LevelButton, Assembly-CSharp
         m_MethodName: LoadLevel
-        m_Mode: 5
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 2
           m_FloatArgument: 0
-          m_StringArgument: livello0
+          m_StringArgument: 2
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &2143161286

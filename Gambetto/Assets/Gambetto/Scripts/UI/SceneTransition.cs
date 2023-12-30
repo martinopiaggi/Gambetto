@@ -14,12 +14,12 @@ namespace Gambetto.Scripts.UI
         private static readonly int End = Animator.StringToHash("end");
         private static readonly int Start = Animator.StringToHash("start");
 
-        public void CrossFade(string scene)
+        public void CrossFade(int scene)
         {
             StartCoroutine(LoadScene(scene));
         }
 
-        private IEnumerator LoadScene(string scene)
+        private IEnumerator LoadScene(int scene)
         {
             crossFadeAnimator.SetTrigger(End);
             yield return new WaitForSeconds(1f);

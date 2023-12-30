@@ -6,12 +6,12 @@ namespace Gambetto.Scripts.UI
     {
         public void BackMenu()
         {
-            LevelSelector.Instance.BackToMainMenu();
+            LevelSelector.instance.BackToMainMenu();
         }
 
-        public void LoadLevel(string level)
+        public void LoadLevel(int level)
         {
-            LevelSelector.Instance.LoadLevel(level);
+            LevelSelector.instance.LoadLevel(level);
         }
     }
 }
