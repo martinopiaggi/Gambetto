@@ -21,7 +21,7 @@ namespace Gambetto.Scripts.GameCore.Piece
         public bool HasPattern { get; set; }
 
         private Behaviour _behaviour;
-        
+
         public Behaviour Behaviour
         {
             get => _behaviour;
@@ -34,7 +34,7 @@ namespace Gambetto.Scripts.GameCore.Piece
         }
 
         private bool isAwake = false;
-        
+
         public bool IsAwake
         {
             get => isAwake;
@@ -265,7 +265,7 @@ namespace Gambetto.Scripts.GameCore.Piece
         public void ResetAndMovePiece(List<Vector3> moves)
         {
             IsAwake = Behaviour.Aggressive;
-            Move(moves,false);
+            Move(moves, false);
         }
     }
 
