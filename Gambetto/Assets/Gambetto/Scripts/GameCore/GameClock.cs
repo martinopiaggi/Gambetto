@@ -74,7 +74,6 @@ namespace Gambetto.Scripts.GameCore
 
         public void ForceClockTick()
         {
-            Debug.Log("game clock forced to tick");
             StopAllCoroutines();
             _clockCoroutine = StartCoroutine(ClockRoutine());
         }

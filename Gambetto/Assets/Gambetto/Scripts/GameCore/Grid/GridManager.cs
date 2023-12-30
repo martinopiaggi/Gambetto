@@ -94,9 +94,26 @@ namespace Gambetto.Scripts.GameCore.Grid
 
         private GameObject _endLevelMenu;
 
+        private PauseButton _pauseButton;
+
         private void Start()
         {
             StartCoroutine(StartClockDelayedCoroutine());
+        }
+
+        private void Awake()
+        {
+            _roomPrefab = Resources.Load<GameObject>("Prefabs/Room");
+            _endLevelMenu = GameObject
+                .FindWithTag("UI")
+                .transform
+                .Find("EndOfLevelMenu")
+                .gameObject;
+            _pauseButton = GameObject
+                .FindWithTag("UI")
+                .transform
+                .Find("PauseButton")
+                .GetComponent<PauseButton>();
         }
 
         //new method to register input click
@@ -107,7 +124,7 @@ namespace Gambetto.Scripts.GameCore.Grid
                 && playerController.choosing
                 && !isDead
                 && Time.timeScale != 0f
-                && !pauseButton.GetComponent<PauseButton>().mouseOverItemDropLocation
+                && !PauseButton.MouseOverItemDropLocation
             )
             {
                 playerController.OnClick();
@@ -211,9 +228,11 @@ namespace Gambetto.Scripts.GameCore.Grid
 
             foreach (var enemy in _enemies)
             {
-                enemy.Key.ResetAndMovePiece(new List<Vector3> { enemy.Value.GetGlobalCoordinates()});
+                enemy
+                    .Key
+                    .ResetAndMovePiece(new List<Vector3> { enemy.Value.GetGlobalCoordinates() });
             }
-            
+
             Destroy(_playerPiece.gameObject);
             var playerObj = Instantiate(
                 prefabPawn,
@@ -247,7 +266,7 @@ namespace Gambetto.Scripts.GameCore.Grid
             _playerPath = playerController.MovePath;
             _playerPiece.Move(_playerPath);
         }
-        
+
         public void CreateGrid(List<RoomLayout> roomLayouts)
         {
             var translation = new Vector3(0, 0, 0);
@@ -756,16 +775,6 @@ namespace Gambetto.Scripts.GameCore.Grid
                     foreignCell.SetNext(Directions.NorthEast, cell);
                 }
             }
-        }
-
-        private void Awake()
-        {
-            _roomPrefab = Resources.Load<GameObject>("Prefabs/Room");
-            _endLevelMenu = GameObject
-                .FindWithTag("UI")
-                .transform
-                .Find("EndOfLevelMenu")
-                .gameObject;
         }
 
         private bool CheckEndLevel()
