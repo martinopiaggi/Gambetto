@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +7,6 @@ using Gambetto.Scripts.UI;
 using Gambetto.Scripts.Utils;
 using Unity.Mathematics;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
 using Behaviour = Gambetto.Scripts.GameCore.Room.Behaviour;
 using Quaternion = UnityEngine.Quaternion;
@@ -36,7 +34,17 @@ namespace Gambetto.Scripts.GameCore.Grid
             new Dictionary<Piece.Piece, List<Vector3>>();
         private Dictionary<Piece.Piece, Cell> _initialEnemiesPositions =
             new Dictionary<Piece.Piece, Cell>();
-        private Dictionary<PowerUp, Cell> _powerUps = new Dictionary<PowerUp, Cell>();
+        private Dictionary<PowerUp, Cell> _powerUps = new();
+        private readonly Dictionary<PieceType, float> _typesClockPeriods =
+            new()
+            {
+                { PieceType.Pawn, 2.5f },
+                { PieceType.Bishop, 3.7f },
+                { PieceType.Knight, 3f },
+                { PieceType.Rook, 3f },
+                { PieceType.King, 2.5f }, //king not implemented
+                { PieceType.Queen, 2.5f } //queen not implemented
+            }; //modify here clock period for each type
 
         [SerializeField]
         public GameObject prefabPawn;
@@ -819,6 +827,9 @@ namespace Gambetto.Scripts.GameCore.Grid
                         _ => prefabPawn
                     };
 
+                    //set the correct clock period
+                    GameClock.Instance.ChangeClockPeriod(_typesClockPeriods[powerUp.Type]);
+
                     Destroy(_playerPiece.gameObject);
                     var playerObj = Instantiate(
                         tempPrefab,
@@ -841,6 +852,7 @@ namespace Gambetto.Scripts.GameCore.Grid
             {
                 p.SetInactive();
             }
+            GameClock.Instance.ChangeClockPeriod(GameClock.DefaultClockPeriod);
         }
     }
 }
