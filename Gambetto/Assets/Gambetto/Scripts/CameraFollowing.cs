@@ -121,8 +121,8 @@ namespace Gambetto.Scripts
             _totalOffset = new Vector3(_totalOffset.x * smoothFactor, 0, _totalOffset.z * smoothFactor);
             
             // if the amount of offset become too small I just set it to 0 to avoid trembling of the camera
-            if (_totalOffset.x < 0.00001 && _totalOffset.x > -0.00001)  _totalOffset.x = 0;
-            if (_totalOffset.z < 0.00001 && _totalOffset.x > -0.00001)  _totalOffset.z = 0;
+            //if (_totalOffset.x < 0.00001 && _totalOffset.x > -0.00001)  _totalOffset.x = 0;
+            //if (_totalOffset.z < 0.00001 && _totalOffset.x > -0.00001)  _totalOffset.z = 0;
             
             _oldPos = _newPos;
         }
@@ -171,8 +171,8 @@ namespace Gambetto.Scripts
             _totalOffset = new Vector3(_totalOffset.x * smoothFactor, 0, _totalOffset.z * smoothFactor);
             
             // if the amount of offset become too small I just set it to 0 to avoid trembling of the camera
-            if (_totalOffset.x < 0.00001 && _totalOffset.x > -0.00001)  _totalOffset.x = 0;
-            if (_totalOffset.z < 0.00001 && _totalOffset.x > -0.00001)  _totalOffset.z = 0;
+            //if (_totalOffset.x < 0.00001 && _totalOffset.x > -0.00001)  _totalOffset.x = 0;
+            //if (_totalOffset.z < 0.00001 && _totalOffset.x > -0.00001)  _totalOffset.z = 0;
 
             _oldPos = _newPos;
         }
