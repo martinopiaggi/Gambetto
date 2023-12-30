@@ -1,6 +1,7 @@
 using Gambetto.Scripts.GameCore.Grid;
 using Gambetto.Scripts.Utils;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Gambetto.Scripts.UI
 {
@@ -22,7 +23,7 @@ namespace Gambetto.Scripts.UI
             if (menuToClose != null)
                 menuToClose.SetActive(false);
             TimeManager.ResumeTime();
-            PauseButton.MouseOverItemDropLocation = false;
+            PauseButton.mouseOverItemDropLocation = false;
             gridManager.RestartLevel();
         }
 
@@ -30,7 +31,7 @@ namespace Gambetto.Scripts.UI
         {
             if (menuToClose != null)
                 menuToClose.SetActive(false);
-            GameManager.Instance.sceneTransition.CrossFade("Level selection");
+            GameManager.instance.sceneTransition.CrossFade(1);
             TimeManager.ResumeTime();
         }
 
@@ -38,6 +39,13 @@ namespace Gambetto.Scripts.UI
         {
             if (menuToClose != null)
                 menuToClose.SetActive(false);
+            TimeManager.ResumeTime();
+        }
+
+        public void LoadNextLevel()
+        {
+            var currentScene = SceneManager.GetActiveScene().buildIndex;
+            GameManager.instance.sceneTransition.CrossFade(currentScene + 1);
             TimeManager.ResumeTime();
         }
     }

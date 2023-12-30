@@ -6,14 +6,14 @@ namespace Gambetto.Scripts.UI
     {
         // Start is called before the first frame update
 
-        public static LevelSelector Instance;
+        public static LevelSelector instance;
 
         //awake method makes sure that LevelSelector is not destroyed
         private void Awake()
         {
-            if (Instance == null)
+            if (instance == null)
             {
-                Instance = this;
+                instance = this;
                 DontDestroyOnLoad(gameObject);
             }
             else
@@ -22,16 +22,15 @@ namespace Gambetto.Scripts.UI
             }
         }
 
-        public void LoadLevel(string level)
+        public void LoadLevel(int level)
         {
-            GameManager.Instance.sceneTransition.CrossFade(level);
+            GameManager.instance.sceneTransition.CrossFade(level);
         }
 
         //method used by the back button
         public void BackToMainMenu()
         {
-            GameManager.Instance.sceneTransition.CrossFade("MainMenu");
-            //SceneManager.LoadScene("MainMenu");
+            GameManager.instance.sceneTransition.CrossFade(0);
         }
     }
 }
