@@ -219,7 +219,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.5, y: 4.628611, z: 0.5}
+  m_Size: {x: 0.65, y: 4.628611, z: 0.65}
   m_Center: {x: 0, y: 2.3094745, z: 0}
 --- !u!54 &8500237751024084872
 Rigidbody:
@@ -262,8 +262,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pieceRole: 1
   possibleMoves: []
-  countdown: 0
-  countdownStartValue: 0
 --- !u!33 &5039144752598122705
 MeshFilter:
   m_ObjectHideFlags: 0

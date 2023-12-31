@@ -91,6 +91,10 @@ namespace Gambetto.Scripts.GameCore.Grid
         private bool _gridFinished;
 
         private GameObject _endLevelMenu;
+        
+        private float timeSinceLastInput = 0f;
+        // input is taken every 120ms to detect all the collisions
+        private const float inputTimeInterval = 0.12f;
 
         private void Start()
         {
@@ -110,8 +114,10 @@ namespace Gambetto.Scripts.GameCore.Grid
         //new method to register input click
         private void Update()
         {
+            timeSinceLastInput += Time.deltaTime;
             if (
                 (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
+                && timeSinceLastInput >= inputTimeInterval
                 && playerController.choosing
                 && !isDead
                 && Time.timeScale != 0f
@@ -119,6 +125,7 @@ namespace Gambetto.Scripts.GameCore.Grid
             )
             {
                 playerController.OnClick();
+                timeSinceLastInput = 0f;
             }
         }
 
