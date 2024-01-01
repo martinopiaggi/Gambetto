@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using Gambetto.Scripts.GameCore.Grid;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -203,6 +204,12 @@ namespace Gambetto.Scripts.GameCore.Piece
             {
                 col.enabled = true;
             }
+        }
+
+        public void EnableGravity()
+        {
+            Rb.useGravity = true;
+            EnableColliders();
         }
 
         /// <summary>
