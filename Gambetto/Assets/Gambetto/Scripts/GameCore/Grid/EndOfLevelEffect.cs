@@ -26,18 +26,13 @@ namespace Gambetto.Scripts.GameCore.Grid
             }        
             instance = this;
         }
+        
 
-        //update is called every frame
-        private void Update()
+        public void FireEffect()
         {
-            if (ok)
-            {
-                ok = false;
-                //coroutine
-                StartCoroutine(EndOfLevelEffectCoroutine());
-            }
+            StartCoroutine(EndOfLevelEffectCoroutine());
         }
-    
+        
         private IEnumerator<WaitForSeconds> EndOfLevelEffectCoroutine()
         {            
             
@@ -73,7 +68,17 @@ namespace Gambetto.Scripts.GameCore.Grid
                 // Update elapsed time and wait a bit before the next update
                 animTime += Time.deltaTime;
                 yield return new WaitForSeconds(0.01f);
-                Debug.Log(animTime);
+            }
+        }
+
+        public void ResetCubes()
+        {
+            StopAllCoroutines(); //stopping the running coroutine in case 
+            Debug.Log("done");
+            foreach (var cube in _cubes)
+            {
+                var p = cube.transform.position;
+                cube.transform.position = new Vector3(p.x, -0.05f, p.z);
             }
         }
 

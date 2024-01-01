@@ -220,6 +220,8 @@ namespace Gambetto.Scripts.GameCore.Grid
         private IEnumerator RestartLevelCoroutine()
         {
             GameClock.Instance.StopClock();
+            //after the effects, all the cubes are in the fog, resetting positions:
+            EndOfLevelEffect.instance.ResetCubes(); 
             _enemies.Clear();
             _enemies = new Dictionary<Piece.Piece, Cell>(_initialEnemiesPositions);
 
@@ -229,7 +231,7 @@ namespace Gambetto.Scripts.GameCore.Grid
             cpuBehavior.ChosenMoves.Clear();
             cpuBehavior.MovePaths.Clear();
 
-            yield return new WaitForSeconds(1f);
+            //yield return new WaitForSeconds(1f); 
 
             foreach (var enemy in _enemies)
             {
@@ -821,10 +823,19 @@ namespace Gambetto.Scripts.GameCore.Grid
             if (_playerCell == _endLevelCell)
             {
                 GameClock.Instance.StopClock();
+                EndOfLevelEffect.instance.FireEffect();
+                
+                //todo I would like to make the enemies fall when there is the effect
+                // but they don't fall
+                foreach (var e in _enemies)
+                {
+                    e.Key.EnableGravity();
+                }
+                
                 // we need to wait a bit before showing the end level menu and stopping time
                 AudioManager.Instance.PlaySfx(AudioManager.Instance.levelFinished);
                 pauseButton.SetActive(false);
-                StartCoroutine(ShowDelayed(_endLevelMenu));
+                StartCoroutine(ShowDelayed(_endLevelMenu,2.0f));
                 pauseButton.SetActive(false);
                 return true;
             }
