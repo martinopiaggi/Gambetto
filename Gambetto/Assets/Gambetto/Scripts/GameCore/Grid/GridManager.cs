@@ -111,7 +111,9 @@ namespace Gambetto.Scripts.GameCore.Grid
                 .gameObject;
         }
 
-        //new method to register input click
+        /// <summary>
+        /// This method is used to handle the player input
+        /// </summary>
         private void Update()
         {
             timeSinceLastInput += Time.deltaTime;
@@ -210,6 +212,11 @@ namespace Gambetto.Scripts.GameCore.Grid
             StartCoroutine(RestartLevelCoroutine());
         }
 
+        /// <summary>
+        /// This method is used to restart the level after the player death
+        /// resetting enemies position, player position, cleaning all stuff of the previous play 
+        /// and starting the clock again
+        /// </summary>
         private IEnumerator RestartLevelCoroutine()
         {
             GameClock.Instance.StopClock();
@@ -247,6 +254,9 @@ namespace Gambetto.Scripts.GameCore.Grid
             yield return null;
         }
 
+        /// <summary>
+        /// This method is used to update the enemies position
+        /// </summary>
         private void UpdateEnemiesPosition()
         {
             _enemies = new Dictionary<Piece.Piece, Cell>(cpuBehavior.ChosenMoves);
@@ -265,6 +275,11 @@ namespace Gambetto.Scripts.GameCore.Grid
             _playerPiece.Move(_playerPath);
         }
 
+        /// <summary>
+        /// It creates the grid data structure from a list of roomLayouts (CSV files)
+        /// While builds the data structure, it calls the RoomBuilder to actually spawn the gameobjects
+        /// of the chessboard.
+        /// </summary>
         public void CreateGrid(List<RoomLayout> roomLayouts, ColorScheme colorScheme)
         {
             var translation = new Vector3(0, 0, 0);
@@ -343,6 +358,9 @@ namespace Gambetto.Scripts.GameCore.Grid
             GameClock.Instance.ClockTick += OnClockTick;
         }
 
+        /// <summary>
+        /// This method is used to make consistent the color of the chessboard between rooms
+        /// </summary>
         private int ColorConsistencyUpdate(RoomLayout roomLayout, bool changed)
         {
             //this if determine what is the last color of the room, 1 (dark), 0 (bright)
@@ -363,6 +381,12 @@ namespace Gambetto.Scripts.GameCore.Grid
 
         private List<Cell> _cellBorder = new List<Cell>();
 
+        /// <summary>
+        /// This method is used to populate the graph data structure (using multiple support methods) 
+        /// of the grid from a roomLayout. 
+        /// It returns a list of cells that are the cells of the current room.
+        /// Also calls the methods to create pieces and power ups.
+        /// </summary>
         private List<Cell> PopulateRoomGraph(
             RoomLayout roomLayout,
             Vector3 coordinateOrigin,
@@ -432,6 +456,9 @@ namespace Gambetto.Scripts.GameCore.Grid
             return roomCells;
         }
 
+        /// <summary>
+        /// This method is used to support the creation of pieces and to store them in a dictionary (_enemies)
+        /// </summary>
         private void InstantiatePiece(Cell cell, RoomLayout.Square square, Behaviour behaviour)
         {
             GameObject prefab;
@@ -490,6 +517,10 @@ namespace Gambetto.Scripts.GameCore.Grid
             _initialEnemiesPositions.Add(pieceObj.GetComponent<Piece.Piece>(), cell);
         }
 
+        /// <summary>
+        /// This method is used to support the creation of power ups/ end of level 
+        /// and to store them in a dictionary (_powerUps) or in a variable (_endLevelCell)
+        /// </summary>
         private void InstantiateTiles(Cell cell, RoomLayout.Square square)
         {
             switch (square.Value)
@@ -546,6 +577,9 @@ namespace Gambetto.Scripts.GameCore.Grid
             }
         }
 
+        /// <summary>
+        /// This method is used to support the creation of a cell in the graph data structure
+        /// </summary>
         private static Cell CreateCell(
             Vector3 coordinateOrigin,
             Vector2 borderDirection,
@@ -579,6 +613,9 @@ namespace Gambetto.Scripts.GameCore.Grid
             return cell;
         }
 
+        /// <summary>
+        /// This method is used to update the links between cells in the SAME room
+        /// </summary>
         private static void SolveLinksNeighbors(
             Cell cell,
             int rowNumber,
@@ -629,6 +666,9 @@ namespace Gambetto.Scripts.GameCore.Grid
             }
         }
 
+        /// <summary>
+        /// This method is used to update the links between cells in different rooms
+        /// </summary>
         private void SolveInterRoomConsistencies(
             Cell cell,
             int rowNumber,
@@ -792,6 +832,9 @@ namespace Gambetto.Scripts.GameCore.Grid
             return false;
         }
 
+        /// <summary>
+        /// This method is used to check if the player has reached the end of the level
+        /// </summary>
         public IEnumerator ShowDelayed(GameObject g, float delay = 0.5f)
         {
             yield return new WaitForSeconds(delay);
@@ -799,6 +842,9 @@ namespace Gambetto.Scripts.GameCore.Grid
             TimeManager.StopTime();
         }
 
+        /// <summary>
+        /// This method is used to check if the player has activated a power up
+        /// </summary>
         private void CheckPowerUp()
         {
             //check if the player has activated a power up
