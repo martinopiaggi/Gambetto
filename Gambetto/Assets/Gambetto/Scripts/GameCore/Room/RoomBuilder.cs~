@@ -52,11 +52,6 @@ namespace Gambetto.Scripts.GameCore.Room
                     cubeInstance.GetComponent<MeshRenderer>().material =
                         (i + j + colorStart) % 2 == 0 ? light : dark;
 
-                    // Add the cube to the list of cubes for the end of level effect only if it's not the exit
-                    if (layout.Squares[i, j].Value == RoomLayout.MatrixValue.Exit)
-                    {
-                        continue;
-                    }
                     endOfLevelEffect.AddCube(cubeInstance);
                 }
             }

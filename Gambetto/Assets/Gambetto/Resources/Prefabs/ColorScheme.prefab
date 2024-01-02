@@ -46,9 +46,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   transitionMaterial: {fileID: 2100000, guid: 4191d154ab0933d49b3278975bdbcf9b, type: 2}
   fogMaterial: {fileID: 2100000, guid: 6c118279595d2a84ea24450ad40d3167, type: 2}
-  fogColor: {r: 0, g: 1, b: 0.07796383, a: 1}
+  fogColor: {r: 0.7607844, g: 0.70980394, b: 0.9333334, a: 1}
   endLevelMaterial: {fileID: 2100000, guid: ffa14671ab75d3c4c9ed46cbf63c08c9, type: 2}
-  endLevelColor: {r: 1, g: 0, b: 0, a: 1}
+  endLevelColor: {r: 0.061599493, g: 1, b: 0, a: 1}
   lateralMaterial: {fileID: 2100000, guid: a56c0737c0a6494498667e1792e704dd, type: 2}
   lateralColor: {r: 1, g: 1, b: 1, a: 1}
   lightMaterial: {fileID: 2100000, guid: cf4f19fd0a10ee044a41c976ddca337a, type: 2}
