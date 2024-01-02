@@ -91,8 +91,9 @@ namespace Gambetto.Scripts.GameCore.Grid
         private bool _gridFinished;
 
         private GameObject _endLevelMenu;
-        
+
         private float timeSinceLastInput = 0f;
+
         // input is taken every 120ms to detect all the collisions
         private const float inputTimeInterval = 0.12f;
 
@@ -214,30 +215,30 @@ namespace Gambetto.Scripts.GameCore.Grid
 
         /// <summary>
         /// This method is used to restart the level after the player death
-        /// resetting enemies position, player position, cleaning all stuff of the previous play 
+        /// resetting enemies position, player position, cleaning all stuff of the previous play
         /// and starting the clock again
         /// </summary>
         private IEnumerator RestartLevelCoroutine()
         {
             GameClock.Instance.StopClock();
             //after the effects, all the cubes are in the fog, resetting positions:
-            EndOfLevelEffect.instance.ResetCubes(); 
+            EndOfLevelEffect.instance.ResetCubes();
             _enemies.Clear();
             _enemies = new Dictionary<Piece.Piece, Cell>(_initialEnemiesPositions);
-
             _playerCell = _initialPlayerCell;
 
             playerController.ResetController();
             cpuBehavior.ChosenMoves.Clear();
             cpuBehavior.MovePaths.Clear();
 
-            //yield return new WaitForSeconds(1f); 
+            //yield return new WaitForSeconds(1f);
 
             foreach (var enemy in _enemies)
             {
                 enemy
                     .Key
                     .ResetAndMovePiece(new List<Vector3> { enemy.Value.GetGlobalCoordinates() });
+                enemy.Key.SetIsKinematic(false);
             }
 
             Destroy(_playerPiece.gameObject);
@@ -384,8 +385,8 @@ namespace Gambetto.Scripts.GameCore.Grid
         private List<Cell> _cellBorder = new List<Cell>();
 
         /// <summary>
-        /// This method is used to populate the graph data structure (using multiple support methods) 
-        /// of the grid from a roomLayout. 
+        /// This method is used to populate the graph data structure (using multiple support methods)
+        /// of the grid from a roomLayout.
         /// It returns a list of cells that are the cells of the current room.
         /// Also calls the methods to create pieces and power ups.
         /// </summary>
@@ -520,7 +521,7 @@ namespace Gambetto.Scripts.GameCore.Grid
         }
 
         /// <summary>
-        /// This method is used to support the creation of power ups/ end of level 
+        /// This method is used to support the creation of power ups/ end of level
         /// and to store them in a dictionary (_powerUps) or in a variable (_endLevelCell)
         /// </summary>
         private void InstantiateTiles(Cell cell, RoomLayout.Square square)
@@ -823,19 +824,30 @@ namespace Gambetto.Scripts.GameCore.Grid
             if (_playerCell == _endLevelCell)
             {
                 GameClock.Instance.StopClock();
-                EndOfLevelEffect.instance.FireEffect();
+                Destroy(_playerPiece.gameObject);
                 
+                var playerObj = Instantiate(
+                    prefabKing,
+                    _playerCell.GetGlobalCoordinates(),
+                    quaternion.identity
+                );
+                playerObj.GetComponent<MeshRenderer>().material = lightMaterial;
+                _playerPiece = playerObj.GetComponent<Piece.Piece>();
+                
+                ExecuteAfterDelay(0.5f, () => EndOfLevelEffect.instance.FireEffect());
+
                 //todo I would like to make the enemies fall when there is the effect
                 // but they don't fall
                 foreach (var e in _enemies)
                 {
                     e.Key.EnableGravity();
+                    e.Key.SetIsKinematic(false);
                 }
-                
+
                 // we need to wait a bit before showing the end level menu and stopping time
                 AudioManager.Instance.PlaySfx(AudioManager.Instance.levelFinished);
                 pauseButton.SetActive(false);
-                StartCoroutine(ShowDelayed(_endLevelMenu,2.0f));
+                StartCoroutine(ShowDelayed(_endLevelMenu, 3.0f));
                 pauseButton.SetActive(false);
                 return true;
             }
@@ -843,11 +855,24 @@ namespace Gambetto.Scripts.GameCore.Grid
             return false;
         }
 
+        // a method that executes a method after a delay
+        public void ExecuteAfterDelay(float delay, System.Action action)
+        {
+            StartCoroutine(ExecuteAfterDelayCoroutine(delay, action));
+        }
+
+        private static IEnumerator ExecuteAfterDelayCoroutine(float delay, System.Action action)
+        {
+            yield return new WaitForSeconds(delay);
+            action();
+        }
+
         /// <summary>
-        /// This method is used to check if the player has reached the end of the level
+        /// This method is used to show a gameobject after a delay at the end of the level
         /// </summary>
         public IEnumerator ShowDelayed(GameObject g, float delay = 0.5f)
         {
+            Debug.Log(Time.timeScale);
             yield return new WaitForSeconds(delay);
             g.SetActive(true);
             TimeManager.StopTime();

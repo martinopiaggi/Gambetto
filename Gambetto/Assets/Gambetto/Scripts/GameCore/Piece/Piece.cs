@@ -48,7 +48,7 @@ namespace Gambetto.Scripts.GameCore.Piece
 
         [SerializeField]
         private protected List<Vector2Int> possibleMoves;
-        
+
         private protected Transform TR;
         private protected Rigidbody Rb;
         private Collider[] _colliders;
@@ -210,6 +210,11 @@ namespace Gambetto.Scripts.GameCore.Piece
         {
             Rb.useGravity = true;
             EnableColliders();
+        }
+
+        public void SetIsKinematic(bool value)
+        {
+            Rb.isKinematic = value;
         }
 
         /// <summary>

@@ -581,6 +581,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7165094672426419033, guid: 327a3696743b7204dad75205fbd3e2c8,
         type: 3}
+      propertyPath: endLevel
+      value: 
+      objectReference: {fileID: 6760961586210498684, guid: 3800e65dc616af44586ffd16bbfad11b,
+        type: 3}
+    - target: {fileID: 7165094672426419033, guid: 327a3696743b7204dad75205fbd3e2c8,
+        type: 3}
       propertyPath: cpuBehavior
       value: 
       objectReference: {fileID: 3288437916242555474}
