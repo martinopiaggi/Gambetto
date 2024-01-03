@@ -531,7 +531,7 @@ namespace Gambetto.Scripts.GameCore.Grid
                 case RoomLayout.MatrixValue.PB: //Bishop power up
                     var bishopPowerUpObj = Instantiate(
                         bishopPowerUp,
-                        cell.GetGlobalCoordinates() + new Vector3(0, 0.05f, 0),
+                        cell.GetGlobalCoordinates() + new Vector3(0, 0.001f, 0),
                         quaternion.identity
                     );
                     var bishop = new PowerUp(PieceType.Bishop, bishopPowerUpObj, cell);
@@ -541,7 +541,7 @@ namespace Gambetto.Scripts.GameCore.Grid
                 case RoomLayout.MatrixValue.PK: //Knight power up
                     var knightPowerUpObj = Instantiate(
                         knightPowerUp,
-                        cell.GetGlobalCoordinates() + new Vector3(0, 0.05f, 0),
+                        cell.GetGlobalCoordinates() + new Vector3(0, 0.001f, 0),
                         quaternion.identity
                     );
                     var knight = new PowerUp(PieceType.Knight, knightPowerUpObj, cell);
@@ -550,7 +550,7 @@ namespace Gambetto.Scripts.GameCore.Grid
                 case RoomLayout.MatrixValue.PR: //Rook power up
                     var rookPowerUpObj = Instantiate(
                         rookPowerUp,
-                        cell.GetGlobalCoordinates() + new Vector3(0, 0.05f, 0),
+                        cell.GetGlobalCoordinates() + new Vector3(0, 0.001f, 0),
                         quaternion.identity
                     );
                     var rook = new PowerUp(PieceType.Rook, rookPowerUpObj, cell);
@@ -559,7 +559,7 @@ namespace Gambetto.Scripts.GameCore.Grid
                 case RoomLayout.MatrixValue.PP: //Pawn power up
                     var pawnPowerUpObj = Instantiate(
                         pawnPowerUp,
-                        cell.GetGlobalCoordinates() + new Vector3(0, 0.05f, 0),
+                        cell.GetGlobalCoordinates() + new Vector3(0, 0.001f, 0),
                         quaternion.identity
                     );
                     var pawn = new PowerUp(PieceType.Pawn, pawnPowerUpObj, cell);
@@ -570,7 +570,7 @@ namespace Gambetto.Scripts.GameCore.Grid
                     _endLevelCell = cell;
                     Instantiate(
                         endLevel,
-                        cell.GetGlobalCoordinates() + new Vector3(0, 0.05f, 0),
+                        cell.GetGlobalCoordinates() + new Vector3(0, 0.001f, 0),
                         quaternion.identity
                     );
                     EndOfLevelEffect.instance.AddExitCoords(cell.GetGlobalCoordinates());
@@ -825,7 +825,7 @@ namespace Gambetto.Scripts.GameCore.Grid
             {
                 GameClock.Instance.StopClock();
                 Destroy(_playerPiece.gameObject);
-                
+
                 var playerObj = Instantiate(
                     prefabKing,
                     _playerCell.GetGlobalCoordinates(),
@@ -833,7 +833,7 @@ namespace Gambetto.Scripts.GameCore.Grid
                 );
                 playerObj.GetComponent<MeshRenderer>().material = lightMaterial;
                 _playerPiece = playerObj.GetComponent<Piece.Piece>();
-                
+
                 ExecuteAfterDelay(0.5f, () => EndOfLevelEffect.instance.FireEffect());
 
                 //todo I would like to make the enemies fall when there is the effect

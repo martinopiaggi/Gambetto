@@ -100,7 +100,7 @@ namespace Gambetto.Scripts.GameCore
                     break;
                 _selectedSquare.SetActive(true);
                 _selectedSquare.transform.position =
-                    move.GetGlobalCoordinates() + new Vector3(0, 0.02f, 0);
+                    move.GetGlobalCoordinates() + new Vector3(0, 0.0001f, 0);
                 _possibleChoice = move;
                 _possiblePath = movePath;
                 yield return new WaitForSeconds((clockPeriod / _possibleMovements.Count));
