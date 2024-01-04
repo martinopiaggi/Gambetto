@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,13 +8,13 @@ namespace Gambetto.Scripts.GameCore.Grid
 {
     public class EndOfLevelEffect : MonoBehaviour
     {
-
+        [SerializeField] private Camera _cam;
+        private bool _fired = false;
+        
         //list 
         private List<GameObject> _cubes = new List<GameObject>();
         private Vector3 _exitCoords;
-        
-        
-        public bool ok = false;
+         
         
         // singleton
         public static EndOfLevelEffect instance;
@@ -28,11 +29,44 @@ namespace Gambetto.Scripts.GameCore.Grid
         }
         
 
-        public void FireEffect()
+        public void FireEffect(GameObject target)
         {
+            _fired = true;
             StartCoroutine(EndOfLevelEffectCoroutine());
+            _camOriginalSize = _cam.orthographicSize; 
+            StartCoroutine(CinematicZoomCoroutine(target, 1f));
         }
+
+        private float _camOriginalSize;
+        private Vector3 _camPosition;
         
+        private IEnumerator CinematicZoomCoroutine(GameObject target, float duration)
+        {
+            var camOriginalSize = _cam.orthographicSize;
+
+            var targetPosition = target.transform.position;
+            var camFinalSize = 4.5f;
+            
+            float elapsedTime = 0;
+            
+            // Calculate the new position for the camera
+            var finalCamPos = targetPosition - _cam.transform.forward*10f;
+            var moveTime = duration*2f;
+            target.GetComponent<Rigidbody>().isKinematic = true;
+            while (elapsedTime < moveTime)
+            {
+                elapsedTime += Time.deltaTime;
+                _cam.transform.position = Vector3.MoveTowards(_cam.transform.position, finalCamPos, elapsedTime / moveTime);
+                _cam.orthographicSize = Mathf.Lerp(camOriginalSize, camFinalSize, elapsedTime / moveTime);
+                
+                target.transform.position = Vector3.MoveTowards(targetPosition, targetPosition + Vector3.up, elapsedTime / moveTime);
+                
+                yield return null;
+            }
+        }
+
+        
+
         private IEnumerator<WaitForSeconds> EndOfLevelEffectCoroutine()
         {            
             
@@ -71,7 +105,19 @@ namespace Gambetto.Scripts.GameCore.Grid
             }
         }
 
-        public void ResetCubes()
+        
+            
+        public void ResetEndOfLevelEffect()
+        {
+            if (_fired)
+            {
+                ResetCubes();
+                ResetCamera();
+                _fired = false;
+            }
+        }
+        
+        private void ResetCubes()
         {
             StopAllCoroutines(); //stopping the running coroutine in case 
             Debug.Log("done");
@@ -82,6 +128,10 @@ namespace Gambetto.Scripts.GameCore.Grid
             }
         }
 
+        private void ResetCamera()
+        {
+            _cam.orthographicSize = _camOriginalSize;
+        }
 
         //compute distance
         private float dist(GameObject cube)
