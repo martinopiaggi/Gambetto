@@ -222,7 +222,7 @@ namespace Gambetto.Scripts.GameCore.Grid
         {
             GameClock.Instance.StopClock();
             //after the effects, all the cubes are in the fog, resetting positions:
-            EndOfLevelEffect.instance.ResetCubes();
+            EndOfLevelEffect.instance.ResetEndOfLevelEffect();
             _enemies.Clear();
             _enemies = new Dictionary<Piece.Piece, Cell>(_initialEnemiesPositions);
             _playerCell = _initialPlayerCell;
@@ -834,8 +834,8 @@ namespace Gambetto.Scripts.GameCore.Grid
                 playerObj.GetComponent<MeshRenderer>().material = lightMaterial;
                 _playerPiece = playerObj.GetComponent<Piece.Piece>();
 
-                ExecuteAfterDelay(0.5f, () => EndOfLevelEffect.instance.FireEffect());
-
+                ExecuteAfterDelay(0.5f, () => EndOfLevelEffect.instance.FireEffect(_playerPiece.gameObject));
+                
                 //todo I would like to make the enemies fall when there is the effect
                 // but they don't fall
                 foreach (var e in _enemies)
