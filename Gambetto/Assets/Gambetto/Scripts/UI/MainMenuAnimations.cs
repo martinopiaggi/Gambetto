@@ -27,8 +27,8 @@ namespace Gambetto.Scripts.UI
         {
             var titleTransform = title.GetComponent<RectTransform>();
             var buttonsTransform = buttons.GetComponent<RectTransform>();
-            var finalButtonsPosition = buttonsTransform.anchoredPosition - new Vector2(0, 100f);
-            var finalTitlePosition = titleTransform.anchoredPosition + new Vector2(0, 100f);
+            //var finalButtonsPosition = buttonsTransform.anchoredPosition - new Vector2(0, 100f);
+            //var finalTitlePosition = titleTransform.anchoredPosition + new Vector2(0, 100f);
 
             while (transform.position.y > _finalPosition.y)
             {
@@ -41,6 +41,7 @@ namespace Gambetto.Scripts.UI
                 transform.Rotate(Vector3.up, Time.deltaTime * 20f, Space.World);
 
                 //lerp buttons and title to final position
+                /*
                 buttonsTransform.anchoredPosition = Vector2.Lerp(
                     buttonsTransform.anchoredPosition,
                     finalButtonsPosition,
@@ -51,7 +52,7 @@ namespace Gambetto.Scripts.UI
                     finalTitlePosition,
                     Time.deltaTime
                 );
-
+                */
                 yield return null;
             }
             enabled = false;

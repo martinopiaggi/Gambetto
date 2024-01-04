@@ -11,7 +11,7 @@ namespace Gambetto.Scripts.GameCore
     public class CPUBehavior : MonoBehaviour
     {
         private GameObject _selectedSquare;
-        private Dictionary<Piece.Piece, Cell> _chosenMoves;
+        private Dictionary<Piece.Piece, Cell> _chosenMoves; //todo this could be reworked and replaced with _movePaths ?
         private Dictionary<Piece.Piece, List<Vector3>> _movePaths;
         private List<List<Vector3>> _possiblePaths;
         private Cell _playerCell;
@@ -139,7 +139,7 @@ namespace Gambetto.Scripts.GameCore
                 {
                     startCell = path[0];
                     tempListMoves.Add(startCell.GetGlobalCoordinates());
-                    _chosenMoves[piece] = startCell; //todo: deprecated?
+                    _chosenMoves[piece] = startCell; 
                     _movePaths[piece] = tempListMoves;
                     return;
                 }
