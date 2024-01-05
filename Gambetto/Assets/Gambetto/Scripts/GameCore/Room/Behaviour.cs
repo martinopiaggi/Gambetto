@@ -20,12 +20,18 @@ namespace Gambetto.Scripts.GameCore.Room
 
         [SerializeField]
         private bool aggressive = true;
-
-        public int Id => id;
-        public bool Aggressive => aggressive;
+        
+        [SerializeField]
+        private int activationDistanceCells;
 
         public List<Vector2Int> Movements => movements;
 
         public int Offset => offset;
+
+        public int Id => id;
+
+        public bool Aggressive => aggressive;
+
+        public int ActivationDistanceCells => activationDistanceCells;
     }
 }

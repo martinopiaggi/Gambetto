@@ -63,7 +63,7 @@ namespace Gambetto.Scripts.GameCore
                 var move = piece.Behaviour.Movements[
                     (i + piece.Behaviour.Offset) % piece.Behaviour.Movements.Count
                 ];
-                Cell nextCell = cell;
+                var nextCell = cell;
                 var tempListMoves = new List<Vector3>();
 
                 //code used to calculate next cell even in case the movement is not a single step
@@ -103,10 +103,11 @@ namespace Gambetto.Scripts.GameCore
             }
 
             //standard behavior for the AI
-            var dist = (cell.GetGlobalCoordinates() - _playerCell.GetGlobalCoordinates()).magnitude;
+            var dist = Mathf.Abs(cell.GetGlobalCoordinates().x - _playerCell.GetGlobalCoordinates().x) +
+                       Mathf.Abs(cell.GetGlobalCoordinates().z - _playerCell.GetGlobalCoordinates().z);
             var moves = new List<Vector3>();
 
-            if (dist <= 4.0f || piece.Behaviour.Aggressive || piece.IsAwake)
+            if (dist <= piece.Behaviour.ActivationDistanceCells || piece.Behaviour.Aggressive || piece.IsAwake)
             {
                 if (!piece.IsAwake) piece.IsAwake = true;
                 var found = MinimumPath(piece, cell, _playerCell);
