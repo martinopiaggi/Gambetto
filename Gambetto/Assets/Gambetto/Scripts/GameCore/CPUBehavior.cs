@@ -109,7 +109,23 @@ namespace Gambetto.Scripts.GameCore
             if (dist <= 4.0f || piece.Behaviour.Aggressive || piece.IsAwake)
             {
                 if (!piece.IsAwake) piece.IsAwake = true;
-                MinimumPath(piece, cell);
+                var found = MinimumPath(piece, cell, _playerCell);
+                if (found) return;
+                var nearCells = new List<Cell>
+                {
+                    _playerCell.GetNext(Vector2Int.up), _playerCell.GetNext(Vector2Int.down),
+                    _playerCell.GetNext(Vector2Int.right), _playerCell.GetNext(Vector2Int.left),
+                    _playerCell.GetNext(Vector2Int.up + Vector2Int.right),
+                    _playerCell.GetNext(Vector2Int.up + Vector2Int.left),
+                    _playerCell.GetNext(Vector2Int.down + Vector2Int.right),
+                    _playerCell.GetNext(Vector2Int.down + Vector2Int.left)
+                };
+                nearCells = nearCells.Where(IsAvailable).ToList();
+                foreach (var c in nearCells)
+                {
+                    found = MinimumPath(piece, cell, c);
+                    if (found) return;
+                }
             }
             else
             {
@@ -124,9 +140,9 @@ namespace Gambetto.Scripts.GameCore
         /// </summary>
         /// <param name="piece">Current enemy piece.</param>
         /// <param name="startCell">Starting cell of the enemy piece.</param>
-        private void MinimumPath(Piece.Piece piece, Cell startCell)
+        /// <param name="playerCell">Final cell of the player piece.</param>
+        private bool MinimumPath(Piece.Piece piece, Cell startCell, Cell playerCell)
         {
-            var playerCell = _playerCell;
             var queue = new Queue<(Cell, List<Cell>)>();
             var visited = new HashSet<Cell>();
             queue.Enqueue((startCell, new List<Cell>()));
@@ -139,9 +155,9 @@ namespace Gambetto.Scripts.GameCore
                 {
                     startCell = path[0];
                     tempListMoves.Add(startCell.GetGlobalCoordinates());
-                    _chosenMoves[piece] = startCell; 
+                    _chosenMoves[piece] = startCell;
                     _movePaths[piece] = tempListMoves;
-                    return;
+                    return true;
                 }
 
                 var possibleMovements = PieceMovement.GetPossibleMovements(
@@ -161,35 +177,38 @@ namespace Gambetto.Scripts.GameCore
                     queue.Enqueue((nextCell, newPath));
                 }
             }
+
+            return false;
         }
 
-        /*
-                [Obsolete("MinimumDistance is deprecated, please use MinimumPath instead.", true)]
-                private void MinimumDistance(Piece.Piece piece, Cell cell)
-                {
-                    var possibleMovements = PieceMovement.GetPossibleMovements(
-                        piece,
-                        cell,
-                        out _possiblePaths
-                    );
-                    var minDist = float.MaxValue;
-                    var index = 0;
-                    var chosenIndex = 0;
-                    foreach (var move in possibleMovements)
-                    {
-                        index++;
-                        var dist = move.GetGlobalCoordinates() - _playerCell.GetGlobalCoordinates();
-                        if (move.IsEmpty() || IsAvailable(move) || !(dist.magnitude < minDist))
-                            continue;
-                        minDist = dist.magnitude;
-                        cell = move;
-                        chosenIndex = index - 1;
-                    }
-        
-                    _chosenMoves[piece] = cell;
-                    _movePaths[piece] = _possiblePaths[chosenIndex];
-                }
-        */
+        // Debug.Log("No path found!");
+        // MinimumDistance(piece, startCell);
+
+        // [Obsolete("MinimumDistance is deprecated, please use MinimumPath instead.", true)]
+        // private void MinimumDistance(Piece.Piece piece, Cell cell)
+        // {
+        //     var possibleMovements = PieceMovement.GetPossibleMovements(
+        //         piece,
+        //         cell,
+        //         out _possiblePaths
+        //     );
+        //     var minDist = float.MaxValue;
+        //     var index = 0;
+        //     var chosenIndex = 0;
+        //     foreach (var move in possibleMovements)
+        //     {
+        //         index++;
+        //         var dist = move.GetGlobalCoordinates() - _playerCell.GetGlobalCoordinates();
+        //         if (move.IsEmpty() || IsAvailable(move) || !(dist.magnitude < minDist))
+        //             continue;
+        //         minDist = dist.magnitude;
+        //         cell = move;
+        //         chosenIndex = index - 1;
+        //     }
+        //
+        //     _chosenMoves[piece] = cell;
+        //     _movePaths[piece] = _possiblePaths[chosenIndex];
+        // }
 
         private bool IsAvailable(Cell cell)
         {
