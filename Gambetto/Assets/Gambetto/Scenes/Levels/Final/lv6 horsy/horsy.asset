@@ -15,4 +15,5 @@ MonoBehaviour:
   topologyDescription: horsyyy horse
   roomCsvTextAsset: {fileID: 4900000, guid: ad94921547c44dc5bf75d40fa42a6071, type: 3}
   exitSide: {x: 1, y: 0}
-  behaviours: []
+  behaviours:
+  - {fileID: 11400000, guid: 11f8f7cf28b14d04d820725b79a490a9, type: 2}
