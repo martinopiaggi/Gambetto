@@ -96,18 +96,19 @@ namespace Gambetto.Scripts.GameCore.Piece
                 && !_hasCollided
             )
             {
+                GameClock.Instance.StopClock();
                 // stop the piece from moving
                 if (_moveCoroutine != null)
                     StopCoroutine(_moveCoroutine);
-                _hasCollided = true; //todo: change this temp solution for multiple triggered collision issue
-                Rb.useGravity = true; // force gravity (needed for the knight)
-                Debug.Log("Enemy hit");
+                // solution for multiple triggered collision issue
+                _hasCollided = true; 
+                // force gravity (needed for the knight)
+                Rb.useGravity = true; 
                 var direction = collision.transform.position - TR.position;
                 // add a force to the player in the opposite direction of the enemy to simulate a hit
                 Rb.AddForce(-direction.normalized * 10f + Vector3.up, ForceMode.Impulse);
                 AudioManager.Instance.PlaySfx(AudioManager.Instance.deathByCollision);
                 var gridManager = FindObjectOfType<GridManager>();
-                GameClock.Instance.StopClock();
                 gridManager.StartCoroutine(gridManager.ShowDelayed(gridManager.deathScreen, 1.42f));
                 gridManager.pauseButton.SetActive(false);
             }

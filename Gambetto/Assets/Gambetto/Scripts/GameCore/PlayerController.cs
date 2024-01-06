@@ -20,7 +20,7 @@ namespace Gambetto.Scripts.GameCore
 
         [FormerlySerializedAs("_choosing")]
         public bool choosing;
-        private Cell _currentCell; // TODD: no need to pass it to methods
+        private Cell _currentCell; // TODO: no need to pass it to methods
 
         private void Awake()
         {
