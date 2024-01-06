@@ -38,7 +38,21 @@ namespace Gambetto.Scripts
         [SerializeField]
         private Color darkColor;
 
-        public void Start()
+        public bool liveEdit;
+        private void Start()
+        {
+            UpdateMaterialColors(); // Initialize material colors
+        }
+
+        private void Update()
+        {
+            if (liveEdit)
+            {
+                UpdateMaterialColors();
+            }
+        }
+
+        private void UpdateMaterialColors()
         {
             transitionMaterial.color = fogColor;
             fogMaterial.SetColor("_FogColor", fogColor);
