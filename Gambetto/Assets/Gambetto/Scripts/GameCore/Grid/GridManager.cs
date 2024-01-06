@@ -22,18 +22,16 @@ namespace Gambetto.Scripts.GameCore.Grid
         private bool _changed;
         public PlayerController playerController;
 
-        //todo Think where to place it
-        private List<Vector3> _roomsCenter = new List<Vector3>();
+        //todo: Think where to place it
+        private List<Vector3> _roomsCenter = new();
 
         [FormerlySerializedAs("CPUBehavior")]
         public CPUBehavior cpuBehavior;
 
-        private readonly List<List<Cell>> _grid = new List<List<Cell>>(); //maybe we can remove _grid? (never used)
-        private Dictionary<Piece.Piece, Cell> _enemies = new Dictionary<Piece.Piece, Cell>();
-        private Dictionary<Piece.Piece, List<Vector3>> _enemiesPath =
-            new Dictionary<Piece.Piece, List<Vector3>>();
-        private Dictionary<Piece.Piece, Cell> _initialEnemiesPositions =
-            new Dictionary<Piece.Piece, Cell>();
+        private readonly List<List<Cell>> _grid = new(); //maybe we can remove _grid? (never used)
+        private Dictionary<Piece.Piece, Cell> _enemies = new();
+        private Dictionary<Piece.Piece, List<Vector3>> _enemiesPath = new();
+        private Dictionary<Piece.Piece, Cell> _initialEnemiesPositions = new();
         private Dictionary<PowerUp, Cell> _powerUps = new();
 
         [SerializeField]
@@ -92,10 +90,10 @@ namespace Gambetto.Scripts.GameCore.Grid
 
         private GameObject _endLevelMenu;
 
-        private float timeSinceLastInput = 0f;
+        private float timeSinceLastInput;
 
         // input is taken every 120ms to detect all the collisions
-        private const float inputTimeInterval = 0.12f;
+        private const float InputTimeInterval = 0.12f;
 
         private void Start()
         {
@@ -120,7 +118,7 @@ namespace Gambetto.Scripts.GameCore.Grid
             timeSinceLastInput += Time.deltaTime;
             if (
                 (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
-                && timeSinceLastInput >= inputTimeInterval
+                && timeSinceLastInput >= InputTimeInterval
                 && playerController.choosing
                 && !isDead
                 && Time.timeScale != 0f
