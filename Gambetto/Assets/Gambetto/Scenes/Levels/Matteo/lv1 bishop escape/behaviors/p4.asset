@@ -16,3 +16,4 @@ MonoBehaviour:
   offset: 0
   id: 3
   aggressive: 0
+  activationDistanceCells: 2
