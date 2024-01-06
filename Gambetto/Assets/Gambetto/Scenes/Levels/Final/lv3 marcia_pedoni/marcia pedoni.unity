@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.3069224, a: 1}
+  m_IndirectSpecularColor: {r: 0.1815466, g: 0.22718978, b: 0.3074084, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -176,7 +176,7 @@ Light:
   m_Type: 1
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1
+  m_Intensity: 3
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -234,13 +234,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1033744262}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
+  m_LocalRotation: {x: 0.35355338, y: -0.35355338, z: 0.1464466, w: 0.8535535}
   m_LocalPosition: {x: 1697, y: 1090, z: -395}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+  m_LocalEulerAnglesHint: {x: 45, y: -45, z: 0}
 --- !u!1 &1851560333
 GameObject:
   m_ObjectHideFlags: 0
@@ -317,6 +317,81 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6595917538710946094, guid: fdbeda54be644584db01138afc1a0104,
+        type: 3}
+      propertyPath: liveEdit
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6595917538710946094, guid: fdbeda54be644584db01138afc1a0104,
+        type: 3}
+      propertyPath: fogColor.b
+      value: 0.42
+      objectReference: {fileID: 0}
+    - target: {fileID: 6595917538710946094, guid: fdbeda54be644584db01138afc1a0104,
+        type: 3}
+      propertyPath: fogColor.g
+      value: 0.24376471
+      objectReference: {fileID: 0}
+    - target: {fileID: 6595917538710946094, guid: fdbeda54be644584db01138afc1a0104,
+        type: 3}
+      propertyPath: fogColor.r
+      value: 0.2931765
+      objectReference: {fileID: 0}
+    - target: {fileID: 6595917538710946094, guid: fdbeda54be644584db01138afc1a0104,
+        type: 3}
+      propertyPath: darkColor.b
+      value: 0.11
+      objectReference: {fileID: 0}
+    - target: {fileID: 6595917538710946094, guid: fdbeda54be644584db01138afc1a0104,
+        type: 3}
+      propertyPath: darkColor.g
+      value: 0.06384314
+      objectReference: {fileID: 0}
+    - target: {fileID: 6595917538710946094, guid: fdbeda54be644584db01138afc1a0104,
+        type: 3}
+      propertyPath: darkColor.r
+      value: 0.07678433
+      objectReference: {fileID: 0}
+    - target: {fileID: 6595917538710946094, guid: fdbeda54be644584db01138afc1a0104,
+        type: 3}
+      propertyPath: lightColor.g
+      value: 0.866
+      objectReference: {fileID: 0}
+    - target: {fileID: 6595917538710946094, guid: fdbeda54be644584db01138afc1a0104,
+        type: 3}
+      propertyPath: lightColor.r
+      value: 0.9035701
+      objectReference: {fileID: 0}
+    - target: {fileID: 6595917538710946094, guid: fdbeda54be644584db01138afc1a0104,
+        type: 3}
+      propertyPath: lateralColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6595917538710946094, guid: fdbeda54be644584db01138afc1a0104,
+        type: 3}
+      propertyPath: lateralColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6595917538710946094, guid: fdbeda54be644584db01138afc1a0104,
+        type: 3}
+      propertyPath: lateralColor.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6595917538710946094, guid: fdbeda54be644584db01138afc1a0104,
+        type: 3}
+      propertyPath: endLevelColor.b
+      value: 0.41960788
+      objectReference: {fileID: 0}
+    - target: {fileID: 6595917538710946094, guid: fdbeda54be644584db01138afc1a0104,
+        type: 3}
+      propertyPath: endLevelColor.g
+      value: 0.24313727
+      objectReference: {fileID: 0}
+    - target: {fileID: 6595917538710946094, guid: fdbeda54be644584db01138afc1a0104,
+        type: 3}
+      propertyPath: endLevelColor.r
+      value: 0.29411766
+      objectReference: {fileID: 0}
     - target: {fileID: 8187618403978367875, guid: fdbeda54be644584db01138afc1a0104,
         type: 3}
       propertyPath: m_LocalPosition.x
