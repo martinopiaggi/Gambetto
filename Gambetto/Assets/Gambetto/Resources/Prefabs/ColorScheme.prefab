@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   transitionMaterial: {fileID: 2100000, guid: 4191d154ab0933d49b3278975bdbcf9b, type: 2}
+  trasitionColor: {r: 0.68235296, g: 0.6509804, b: 0.77647066, a: 1}
   fogMaterial: {fileID: 2100000, guid: 6c118279595d2a84ea24450ad40d3167, type: 2}
   fogColor: {r: 0.7607844, g: 0.70980394, b: 0.9333334, a: 1}
   endLevelMaterial: {fileID: 2100000, guid: ffa14671ab75d3c4c9ed46cbf63c08c9, type: 2}
@@ -55,3 +56,4 @@ MonoBehaviour:
   lightColor: {r: 1, g: 1, b: 1, a: 1}
   darkMaterial: {fileID: 2100000, guid: a778dca5d3731a24ba57709c077ce4e1, type: 2}
   darkColor: {r: 0, g: 0, b: 0, a: 1}
+  liveEdit: 0
