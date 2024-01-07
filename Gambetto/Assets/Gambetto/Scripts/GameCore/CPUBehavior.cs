@@ -44,7 +44,17 @@ namespace Gambetto.Scripts.GameCore
         public void ComputeCPUMoves(Cell playerCell, Dictionary<Piece.Piece, Cell> enemies) //todo enemies!
         {
             _playerCell = playerCell;
-            foreach (var enemyRef in enemies)
+
+            var patternEnemies = enemies.Where(enemy => enemy.Key.HasPattern);
+            var aiEnemies = enemies.Where(enemy => !enemy.Key.HasPattern);
+
+            // Compute first all enemies with patterns
+            foreach (var enemyRef in patternEnemies)
+            {
+                ComputeNextMove(enemyRef.Key, enemyRef.Value);
+            }
+
+            foreach (var enemyRef in aiEnemies)
             {
                 ComputeNextMove(enemyRef.Key, enemyRef.Value);
             }
@@ -103,19 +113,28 @@ namespace Gambetto.Scripts.GameCore
             }
 
             //standard behavior for the AI
-            var dist = Mathf.Abs(cell.GetGlobalCoordinates().x - _playerCell.GetGlobalCoordinates().x) +
-                       Mathf.Abs(cell.GetGlobalCoordinates().z - _playerCell.GetGlobalCoordinates().z);
+            var dist =
+                Mathf.Abs(cell.GetGlobalCoordinates().x - _playerCell.GetGlobalCoordinates().x)
+                + Mathf.Abs(cell.GetGlobalCoordinates().z - _playerCell.GetGlobalCoordinates().z);
             var moves = new List<Vector3>();
 
-            if (dist <= piece.Behaviour.ActivationDistanceCells || piece.Behaviour.Aggressive || piece.IsAwake)
+            if (
+                dist <= piece.Behaviour.ActivationDistanceCells
+                || piece.Behaviour.Aggressive
+                || piece.IsAwake
+            )
             {
-                if (!piece.IsAwake) piece.IsAwake = true;
+                if (!piece.IsAwake)
+                    piece.IsAwake = true;
                 var found = MinimumPath(piece, cell, _playerCell);
-                if (found) return;
+                if (found)
+                    return;
                 var nearCells = new List<Cell>
                 {
-                    _playerCell.GetNext(Vector2Int.up), _playerCell.GetNext(Vector2Int.down),
-                    _playerCell.GetNext(Vector2Int.right), _playerCell.GetNext(Vector2Int.left),
+                    _playerCell.GetNext(Vector2Int.up),
+                    _playerCell.GetNext(Vector2Int.down),
+                    _playerCell.GetNext(Vector2Int.right),
+                    _playerCell.GetNext(Vector2Int.left),
                     _playerCell.GetNext(Vector2Int.up + Vector2Int.right),
                     _playerCell.GetNext(Vector2Int.up + Vector2Int.left),
                     _playerCell.GetNext(Vector2Int.down + Vector2Int.right),
@@ -125,7 +144,8 @@ namespace Gambetto.Scripts.GameCore
                 foreach (var c in nearCells)
                 {
                     found = MinimumPath(piece, cell, c);
-                    if (found) return;
+                    if (found)
+                        return;
                 }
             }
             else
