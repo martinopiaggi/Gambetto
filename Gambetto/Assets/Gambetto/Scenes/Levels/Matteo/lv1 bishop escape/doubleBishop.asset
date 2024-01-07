@@ -18,5 +18,3 @@ MonoBehaviour:
   behaviours:
   - {fileID: 11400000, guid: 53ed014369a53f745be94d884768d740, type: 2}
   - {fileID: 11400000, guid: d3d2d2d85aa5e7c4cadb3cad0ff7a690, type: 2}
-  - {fileID: 11400000, guid: cf5233d5187584448a2717e27ab09e0c, type: 2}
-  - {fileID: 11400000, guid: 3327e13d8e46bc14892e889ef3e274ec, type: 2}

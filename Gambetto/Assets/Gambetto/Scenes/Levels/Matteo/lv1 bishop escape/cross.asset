@@ -15,4 +15,6 @@ MonoBehaviour:
   topologyDescription: stanza a croce
   roomCsvTextAsset: {fileID: 4900000, guid: d1e0f5a2c0d77af4ca98ee0ccac471c0, type: 3}
   exitSide: {x: 1, y: 0}
-  behaviours: []
+  behaviours:
+  - {fileID: 11400000, guid: cf5233d5187584448a2717e27ab09e0c, type: 2}
+  - {fileID: 11400000, guid: 3327e13d8e46bc14892e889ef3e274ec, type: 2}
