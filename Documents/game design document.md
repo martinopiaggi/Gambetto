@@ -19,7 +19,7 @@ Any level will be considered completed only if the player reaches the end tile w
 
 ### Genre
 
-Strategy puzzle Hybrid with Rhythm  and Arcade elements.
+Strategy puzzle Hybrid with Rhythm and Arcade elements.
 
 ### Platforms
 
@@ -57,18 +57,18 @@ Using this game mechanic, players navigate the dungeon, progressing through vari
 
 ### Level Design
 
-Levels will be formed by a succession of rooms each with different challenges and hazards, rooms are made of chess board style tiles and are surrounded by a foggy void.
-Rooms exhibit unique, irregular shapes and may incorporate openings within their design. Distinct levels are set apart by alterations in tile patterns, lighting, and fog effects, presenting varying colors to immerse players in diverse environments. Within each room, enemies are strategically positioned, and players will find checkpoints to return to upon death.
+Levels will each have different challenges and hazards, levels are made of chess board style tiles and are surrounded by a foggy void.
+Levels exhibit unique, irregular shapes and may incorporate openings within their design. They are set apart by alterations in tile patterns, lighting, and fog effects, presenting varying colors to immerse players in diverse environments. Within each room, enemies are strategically positioned, and players will have to find a way to traverse them end reach the end goal, a highlighted tile that "crwons the player as King".
 
 ## User Interface
 
-The main menu will double as the level selection interface, offering players a side view of rooms that exhibit characteristics related to each level, similar to the design seen in the game Smash Hit. [Smash Hit example](https://www.youtube.com/watch?v=8Sb8wIWeM2E)
+There will be a main menu and a level selection interface.
 
-The in-game user interface will maintain a minimalistic design, featuring only a select few elements, including a pause button and a timer that tracks the elapsed time within the level.
+The in-game user interface will maintain a minimalistic design, featuring only a select few elements, including a pause button.
 
 ## Characters
 
-- The Pawn (Player): The main character who embarks on this journey, harnessing the powers of other pieces.
+- The Pawn (Player): The main character who embarks on this journey to become a King, harnessing the powers of other pieces.
 - Enemy Pieces: Various chess pieces, each with unique movement patterns, challenge the player throughout the journey.
 
 ## Story
@@ -97,11 +97,11 @@ Discrete, emphasizing movements, captures, and transformations.
 
 - **Engine**: Unity (ideal for both PC and Mobile platforms).
 - **Graphics**: 3D low poly
-- **Controls**: The player can only use one keyboard key (or screen tap) to select his move. He needs to press it when the light displayed on the terrain corresponds to his desired direction. Initially the pawn can only move one step in each direction (excluding diagonal moves), but the game will provide some power-ups to increase the variety of the movement. In this last case the player will be also able to select the destination cell always in the frenetic way that distinguishes the game.
+- **Controls**: The player can use the space key/mouse click (or screen tap on mobile) to select his move. He needs to press it when the light displayed on the terrain corresponds to his desired direction. Initially the pawn can only move one step in each direction (excluding diagonal moves), but the game will provide some power-ups to increase the variety of the movement. In this last case the player will be also able to select the destination cell always in the unforgiving way that distinguishes the game.
 
 ### Project Structure Overview
 
-1. Materials
+Materials
 
 - Two distinct chessboard materials: Dark and Light. These could represent the two different colored squares on a chessboard.
 - background fog
@@ -109,22 +109,20 @@ Discrete, emphasizing movements, captures, and transformations.
 - maybe the player can choose to be white/black piece. And if black it's hard because we can make that for the first turn only the enemies (white) moves (like in chess white move first)
 
 Scenes
-
-- Multiple scenes including:
-- A main menu for game navigation.
-- Several testing or development scenes, like "Prova" and "SampleScene", indicating ongoing development and experimentation.
+A main menu for game navigation.
+Several testing or development scenes, like "Prova" and "SampleScene", indicating ongoing development and experimentation.
 
 Scripts
 
 - Main Game Logic:
-- Scripts for audio management, cell interactions, grid management, level flow, main menu functionality, and UI management.
+  Scripts for audio management, cell interactions, grid management, level flow, main menu functionality, and UI management.
 
 - Chess Piece Logic:
-- A script for the basic behavior of chess pieces.
+  A script for the basic behavior of chess pieces.
 
 - Room Logic:
-- Scripts related to room behavior and layout, indicating dynamic and varied level designs.
-- Manually design rooms and concatenate rooms layouts/specifications easily in each level
+  Scripts related to room behavior and layout, indicating dynamic and varied level designs.
+  Manually design rooms and concatenate rooms layouts/specifications easily in each level
 
 - Clock Logic:
 
@@ -157,7 +155,7 @@ sequenceDiagram
 		loop Every cycle
 		C-)+G: clockEvent
 		G ->>+ PI: updatePositions
-		PI -->>-G: done
+
 		par GridManager to PlayerController
 		G -)+ PC: startChoosing(piece, currentPosition)
 		PC->>+ P: cycleThroughPossibleMoves
@@ -171,10 +169,10 @@ sequenceDiagram
 ```
 
 - Utilities:
-- Several utility scripts for constants, debugging, and movement directions, among others. These are crucial for game functionality and development efficiency.
+  Several utility scripts for constants, debugging, and movement directions, among others. These are crucial for game functionality and development efficiency.
 
-- Sounds
-- Audio files for theme music and sound effects, which will contribute to the game's ambiance and player feedback.
+- Sounds:
+  Audio files for theme music and sound effects, which will contribute to the game's ambiance and player feedback.
 
 ## Deadlines
 
