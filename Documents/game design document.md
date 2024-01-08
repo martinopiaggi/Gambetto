@@ -40,7 +40,7 @@ Using this game mechanic, players navigate the dungeon, progressing through vari
 
 - Chess-inspired Movement: Navigate using the movement rules of chess pieces.
 - Movement Rhythms: Sync your moves with the ticking of an in-game clock. Mistime your move, and face the consequences. Selecting trigger all enemies to move at the same time as the player. Enemy movement will also be triggered by the end of a move cycle.
-- Chess Power-ups: Collect transparent chess pieces to temporarily gain their movement abilities.
+- Chess Power-ups: Go on tiles representing various chess pieces to gain their movement abilities.
 - Quick Levels: Short, intense levels, especially during the initial phases.
 
 ### Challenges
@@ -50,13 +50,10 @@ Using this game mechanic, players navigate the dungeon, progressing through vari
   - Selecting the wrong move can result into falling out from the chessboard or crashing into an enemy piece
 - **Dynamic Enemies**: various types of enemies
   - Different enemies have different move patterns
-  - Some move in sync with the pl
+  - Enemies move in sync with the player , some try to eat the player others just follow a predefined pattern.
+  - Enemies that follow you have an activation distance they will start to follow you only if you alert them by getting close enough.
 - **Powerup exploitations**: Player must make the most of powerups
   - Wrong powerups could increase difficulty
-- _Dual-Pawn Control_: Maybe in specific levels, control two pawns simultaneously, adding a layer of complexity and strategy.
-- _Moving platforms_: Rooms that periodically move, altering paths
-  - Rotations
-  - Translations
 
 ### Level Design
 
