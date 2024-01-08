@@ -10,16 +10,16 @@
 
 ## Overview and Vision Statement
 
-Gambetto combines the strategic depth of chess with the frenetic pace of arcade and rhythm games.
+Gambetto combines the strategic depth of chess with puzzle, arcade and some rhythm games.
 Players take on the role of a chess pawn facing various challenges. As they navigate different types of dungeons, they’ll need to face enemy pieces and to get to the end of different rooms. Players can transform using power-ups and gain the abilities of other chess pieces, introducing layers of strategy and gameplay depth.
 All pieces in the game will move following a certain rhythm; players will need to time their actions to choose moves.
-The player also needs to avoid falling out from the chessboard, otherwise he will restart the level from the latest checkpoint.
+The player also needs to avoid falling out from the chessboard, otherwise he will have to restart the level.
 Levels are designed and ordered with increasing difficulty.
-Any level will be considered completed only if the player reaches the end uneaten. As a consequence, the next level will be unlocked and playable.
+Any level will be considered completed only if the player reaches the end tile where he will transform in a king piece and ascend. As a consequence, the next level will be unlocked and playable.
 
 ### Genre
 
-Arcade-Strategy Hybrid with Rhythm elements
+Strategy puzzle Hybrid with Rhythm  and Arcade elements.
 
 ### Platforms
 
@@ -34,16 +34,14 @@ The game's visual aesthetics will draw inspiration from Monument Valley while bl
 ### Game Flow
 
 In a typical game players commence a level in the role of a pawn, and they must strategize their moves by carefully timing their inputs. The available move is visually highlighted on the ground, and changes cycling through an array of moves over a set duration.
-Using this game mechanic, players navigate the dungeon, progressing through various rooms while avoiding enemy pieces and environmental hazards. If a player's character succumbs to these challenges, they are reset to a designated checkpoint at the start of the room they were in. Certain rooms contain power-ups essential for progressing through the map. Completion of each level grants access to the next one.
+Using this game mechanic, players navigate the dungeon, progressing through various levels while avoiding enemy pieces and environmental hazards. Certain rooms contain power-ups essential for progressing through the map. Completion of each level grants access to the next one.
 
 ### Core Mechanics
 
 - Chess-inspired Movement: Navigate using the movement rules of chess pieces.
-- Movement Rhythms: Sync your moves with the ticking of an in-game clock. Mistime your move, and face the consequences.
+- Movement Rhythms: Sync your moves with the ticking of an in-game clock. Mistime your move, and face the consequences. Selecting trigger all enemies to move at the same time as the player. Enemy movement will also be triggered by the end of a move cycle.
 - Chess Power-ups: Collect transparent chess pieces to temporarily gain their movement abilities.
-- Enemy Elimination: Rare power-ups allow players to eliminate certain enemies.
 - Quick Levels: Short, intense levels, especially during the initial phases.
-- Check Points: Checkpoints between different sections (rooms) of a level.
 
 ### Challenges
 
@@ -52,7 +50,7 @@ Using this game mechanic, players navigate the dungeon, progressing through vari
   - Selecting the wrong move can result into falling out from the chessboard or crashing into an enemy piece
 - **Dynamic Enemies**: various types of enemies
   - Different enemies have different move patterns
-  - Some move in sync with the player, while others have their unique rhythms (slower or faster).
+  - Some move in sync with the pl
 - **Powerup exploitations**: Player must make the most of powerups
   - Wrong powerups could increase difficulty
 - _Dual-Pawn Control_: Maybe in specific levels, control two pawns simultaneously, adding a layer of complexity and strategy.
