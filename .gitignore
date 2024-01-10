@@ -76,16 +76,3 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 
-Gambetto/Assets/Gambetto/Resources/Materials/TransitionMaterial.mat
-
-Gambetto/Assets/Gambetto/Resources/Materials/LightChessboard.mat
-
-Gambetto/Assets/_Fog_Plane/Shaders/Fog_ortographic.mat
-
-Gambetto/Assets/Gambetto/Resources/Materials/DarkChessboard.mat
-
-Gambetto/Assets/Gambetto/Resources/Materials/EndOfLevelSHAFT.mat
-
-Gambetto/Assets/Gambetto/Resources/Materials/lateral.mat
-
-Gambetto/Assets/Gambetto/Resources/Font/Robot Serif/RobotoSerif-LightItalic SDF.asset
