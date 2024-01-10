@@ -178,6 +178,7 @@ namespace Gambetto.Scripts.GameCore.Grid
                 AudioManager.Instance.PlaySfx(AudioManager.Instance.deathByFall);
                 GameClock.Instance.StopClock();
                 pauseButton.SetActive(false);
+                playerController.choosing = false;
                 StartCoroutine(ShowDelayed(deathScreen, 1f));
             }
 
@@ -832,8 +833,11 @@ namespace Gambetto.Scripts.GameCore.Grid
                 playerObj.GetComponent<MeshRenderer>().material = lightMaterial;
                 _playerPiece = playerObj.GetComponent<Piece.Piece>();
 
-                ExecuteAfterDelay(0.5f, () => EndOfLevelEffect.instance.FireEffect(_playerPiece.gameObject));
-                
+                ExecuteAfterDelay(
+                    0.5f,
+                    () => EndOfLevelEffect.instance.FireEffect(_playerPiece.gameObject)
+                );
+
                 //todo I would like to make the enemies fall when there is the effect
                 // but they don't fall
                 foreach (var e in _enemies)
@@ -845,6 +849,7 @@ namespace Gambetto.Scripts.GameCore.Grid
                 // we need to wait a bit before showing the end level menu and stopping time
                 AudioManager.Instance.PlaySfx(AudioManager.Instance.levelFinished);
                 pauseButton.SetActive(false);
+                playerController.choosing = false;
                 StartCoroutine(ShowDelayed(_endLevelMenu, 3.0f));
                 pauseButton.SetActive(false);
                 return true;
