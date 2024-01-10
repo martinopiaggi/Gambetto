@@ -23,6 +23,16 @@ namespace Gambetto.Scripts
         private Color endLevelColor;
 
         [SerializeField]
+        public Material selectedSquareMaterial;
+
+        [SerializeField]
+        private Color selectedSquareColor;
+
+        [SerializeField]
+        [Min(0)]
+        private float selectedSquareColorIntensity;
+
+        [SerializeField]
         public Material lateralMaterial;
 
         [SerializeField]
@@ -63,6 +73,12 @@ namespace Gambetto.Scripts
             lateralMaterial.color = lateralColor;
             lightMaterial.color = lightColor;
             darkMaterial.color = darkColor;
+
+            //change emission color
+            selectedSquareMaterial.SetColor(
+                "_EmissionColor",
+                selectedSquareColor * selectedSquareColorIntensity
+            );
         }
     }
 }
