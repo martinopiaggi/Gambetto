@@ -8,15 +8,16 @@ namespace Gambetto.Scripts.GameCore.Grid
 {
     public class EndOfLevelEffect : MonoBehaviour
     {
-        [SerializeField] private Camera _cam;
+        [SerializeField]
+        private Camera _cam;
         private bool _fired = false;
-        
-        //list 
-        private readonly List<GameObject> _cubes = new List<GameObject>();
+
+        //list
+        [SerializeField]
+        private List<GameObject> _cubes = new List<GameObject>();
         private readonly List<GameObject> _powerUps = new List<GameObject>();
         private Vector3 _exitCoords;
-         
-        
+
         // singleton
         public static EndOfLevelEffect instance;
 
@@ -25,52 +26,60 @@ namespace Gambetto.Scripts.GameCore.Grid
             if (instance != null)
             {
                 Destroy(instance);
-            }        
+            }
             instance = this;
         }
-        
 
         public void FireEffect(GameObject target)
         {
             _fired = true;
             StartCoroutine(EndOfLevelEffectCoroutine());
-            _camOriginalSize = _cam.orthographicSize; 
+            _camOriginalSize = _cam.orthographicSize;
             StartCoroutine(CinematicZoomCoroutine(target, 1f));
         }
 
         private float _camOriginalSize;
         private Vector3 _camPosition;
-        
+
         private IEnumerator CinematicZoomCoroutine(GameObject target, float duration)
         {
             var camOriginalSize = _cam.orthographicSize;
 
             var targetPosition = target.transform.position;
             var camFinalSize = 4.5f;
-            
+
             float elapsedTime = 0;
-            
+
             // Calculate the new position for the camera
-            var finalCamPos = targetPosition - _cam.transform.forward*10f;
-            var moveTime = duration*2f;
+            var finalCamPos = targetPosition - _cam.transform.forward * 10f;
+            var moveTime = duration * 2f;
             target.GetComponent<Rigidbody>().isKinematic = true;
             while (elapsedTime < moveTime)
             {
                 elapsedTime += Time.deltaTime;
-                _cam.transform.position = Vector3.MoveTowards(_cam.transform.position, finalCamPos, elapsedTime / moveTime);
-                _cam.orthographicSize = Mathf.Lerp(camOriginalSize, camFinalSize, elapsedTime / moveTime);
-                
-                target.transform.position = Vector3.MoveTowards(targetPosition, targetPosition + Vector3.up, elapsedTime / moveTime);
-                
+                _cam.transform.position = Vector3.MoveTowards(
+                    _cam.transform.position,
+                    finalCamPos,
+                    elapsedTime / moveTime
+                );
+                _cam.orthographicSize = Mathf.Lerp(
+                    camOriginalSize,
+                    camFinalSize,
+                    elapsedTime / moveTime
+                );
+
+                target.transform.position = Vector3.MoveTowards(
+                    targetPosition,
+                    targetPosition + Vector3.up,
+                    elapsedTime / moveTime
+                );
+
                 yield return null;
             }
         }
 
-        
-
         private IEnumerator<WaitForSeconds> EndOfLevelEffectCoroutine()
-        {            
-            
+        {
             // Assign a delay to each cube based on its order
             float baseDelay = 0.05f; // Base delay between each cube's movement
             Dictionary<GameObject, float> cubeDelays = new Dictionary<GameObject, float>();
@@ -78,12 +87,13 @@ namespace Gambetto.Scripts.GameCore.Grid
             for (int i = 0; i < _cubes.Count; i++)
             {
                 var delay = dist(_cubes[i]) * baseDelay;
-                if (minTime > delay) minTime = delay;
+                if (minTime > delay)
+                    minTime = delay;
                 cubeDelays[_cubes[i]] = delay;
             }
 
             // Start moving all cubes, considering their delay
-            
+
             float animTime = 0;
             while (animTime < 5f) //maximum time
             {
@@ -106,8 +116,6 @@ namespace Gambetto.Scripts.GameCore.Grid
             }
         }
 
-        
-            
         public void ResetEndOfLevelEffect()
         {
             if (_fired)
@@ -117,11 +125,10 @@ namespace Gambetto.Scripts.GameCore.Grid
                 _fired = false;
             }
         }
-        
+
         private void ResetCubes()
         {
-            StopAllCoroutines(); //stopping the running coroutine in case 
-            Debug.Log("done");
+            StopAllCoroutines(); //stopping the running coroutine in case
             foreach (var cube in _cubes)
             {
                 var p = cube.transform.position;
@@ -139,20 +146,20 @@ namespace Gambetto.Scripts.GameCore.Grid
         {
             return Vector3.Distance(cube.transform.position, _exitCoords);
         }
-        
+
         public void AddCube(GameObject cube)
         {
             _cubes.Add(cube);
         }
-        
+
         public void AddPowerUp(GameObject powerUp)
         {
             _powerUps.Add(powerUp);
         }
-        
+
         public void AddExitCoords(Vector3 coords)
         {
-          _exitCoords = coords;  
+            _exitCoords = coords;
         }
     }
 }
