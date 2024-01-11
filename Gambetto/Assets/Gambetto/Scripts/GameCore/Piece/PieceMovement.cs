@@ -10,6 +10,7 @@ namespace Gambetto.Scripts.GameCore.Piece
         public static List<Cell> GetPossibleMovements(
             Piece piece,
             Cell currentCell,
+            Dictionary<Piece, Cell> enemiesChosenMoves,
             out List<List<Vector3>> possiblePaths
         )
         {
@@ -30,7 +31,13 @@ namespace Gambetto.Scripts.GameCore.Piece
                         while (tempCell?.GetNext(direction) != null)
                         {
                             var nextCell = tempCell.GetNext(direction);
-                            if (tempCell.IsEmpty())
+                            if (
+                                tempCell.IsEmpty()
+                                || (
+                                    tempCell != currentCell
+                                    && enemiesChosenMoves.ContainsValue(tempCell)
+                                )
+                            )
                                 break;
                             tempCell = nextCell;
                             tempPath = new List<Vector3> { tempCell.GetGlobalCoordinates() };
