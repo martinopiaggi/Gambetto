@@ -16,5 +16,4 @@ MonoBehaviour:
   roomCsvTextAsset: {fileID: 4900000, guid: 7d5a900fbaf2e4548b0c962c027a3fe6, type: 3}
   exitSide: {x: 1, y: 0}
   behaviours:
-  - {fileID: 11400000, guid: ca83668b06ec6d843a9a1dfbd4fbeb80, type: 2}
   - {fileID: 11400000, guid: 2e216a579aca43d449fd604d19e138a6, type: 2}
