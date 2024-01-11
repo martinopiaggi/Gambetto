@@ -144,6 +144,8 @@ namespace Gambetto.Scripts.GameCore
                     _playerCell.GetNext(Vector2Int.down + Vector2Int.right),
                     _playerCell.GetNext(Vector2Int.down + Vector2Int.left)
                 };
+                // null check here is a fallback that should never happen only of the map
+                // csv is not correct and isn't surrounded by void cells
                 nearCells = nearCells.Where(c => c != null && IsAvailable(c)).ToList();
                 foreach (var c in nearCells)
                 {
@@ -188,18 +190,40 @@ namespace Gambetto.Scripts.GameCore
                 var possibleMovements = PieceMovement.GetPossibleMovements(
                     piece,
                     currentCell,
+                    _chosenMoves,
                     out _possiblePaths
                 );
 
-                foreach (
-                    var nextCell in possibleMovements.Where(
-                        nextCell => !visited.Contains(nextCell) && IsAvailable(nextCell)
-                    )
-                )
+                var cellsToSkip = new List<Vector3>();
+                foreach (var nextCell in possibleMovements)
                 {
-                    visited.Add(nextCell);
-                    var newPath = new List<Cell>(path) { nextCell };
-                    queue.Enqueue((nextCell, newPath));
+                    // if (!IsAvailable(nextCell))
+                    // {
+                    //     // if a cell is occupied, skip all the next cells in the same path
+                    //     var pathFromCell = _possiblePaths.Find(
+                    //         path => path.Contains(nextCell.GetGlobalCoordinates())
+                    //     );
+                    //
+                    //     cellsToSkip.AddRange(
+                    //         pathFromCell.SkipWhile(
+                    //             coords => coords != nextCell.GetGlobalCoordinates()
+                    //         )
+                    //     );
+                    //     continue;
+                    // }
+                    //
+                    // if (cellsToSkip.Contains(nextCell.GetGlobalCoordinates()))
+                    // {
+                    //     visited.Add(nextCell);
+                    //     continue;
+                    // }
+
+                    if (!visited.Contains(nextCell) && IsAvailable(nextCell))
+                    {
+                        visited.Add(nextCell);
+                        var newPath = new List<Cell>(path) { nextCell };
+                        queue.Enqueue((nextCell, newPath));
+                    }
                 }
             }
 
@@ -235,7 +259,9 @@ namespace Gambetto.Scripts.GameCore
         //     _movePaths[piece] = _possiblePaths[chosenIndex];
         // }
 
-        private bool IsAvailable(Cell cell)
+        /// <param name="cell">Cell to check.</param>
+        /// <returns>returns true if the cell is not void and if no other Enemies have chosen it as a move.</returns>
+        public bool IsAvailable(Cell cell)
         {
             return !cell.IsEmpty() && _chosenMoves.All(enemy => enemy.Value != cell);
         }

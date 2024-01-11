@@ -59,6 +59,7 @@ namespace Gambetto.Scripts.GameCore
             _possibleMovements = PieceMovement.GetPossibleMovements(
                 piece,
                 currentCell,
+                new Dictionary<Piece.Piece, Cell>(),
                 out _possibleMovementsPath
             );
             _cycleMovesCoroutine = StartCoroutine(CycleMoves());
