@@ -15,5 +15,4 @@ MonoBehaviour:
   topologyDescription: Stanza iniziale con PWUP
   roomCsvTextAsset: {fileID: 4900000, guid: f22aff61ed7c9684b8cd66bb5218d104, type: 3}
   exitSide: {x: 1, y: 0}
-  behaviours:
-  - {fileID: 11400000, guid: 299b37adfb00b9b43bc25922d3d9dbe9, type: 2}
+  behaviours: []
