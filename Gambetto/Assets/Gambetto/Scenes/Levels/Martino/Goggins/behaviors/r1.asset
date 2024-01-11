@@ -9,10 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 030530086e85cb745a146f3a7806b1b7, type: 3}
-  m_Name: zero
+  m_Script: {fileID: 11500000, guid: 7ac34a7225b38244ebf91c84eb6a06c1, type: 3}
+  m_Name: r1
   m_EditorClassIdentifier: 
-  topologyDescription: stanzina piccola solo spawn
-  roomCsvTextAsset: {fileID: 4900000, guid: ee42fb8f3fc3aee4298262e9c75325eb, type: 3}
-  exitSide: {x: 1, y: 0}
-  behaviours: []
+  movements:
+  - {x: -5, y: 0}
+  - {x: 0, y: -5}
+  - {x: 5, y: 0}
+  - {x: 0, y: 5}
+  offset: 0
+  id: 1
+  aggressive: 1
+  activationDistanceCells: 0
