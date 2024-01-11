@@ -452,8 +452,7 @@ namespace Gambetto.Scripts.GameCore.Grid
                             roomLayout.GetSizeColumn()
                         );
                 }
-            }
-
+            } 
             _cellBorder = currentCellBorder;
             return roomCells;
         }
@@ -528,43 +527,17 @@ namespace Gambetto.Scripts.GameCore.Grid
             switch (square.Value)
             {
                 case RoomLayout.MatrixValue.PB: //Bishop power up
-                    var bishopPowerUpObj = Instantiate(
-                        bishopPowerUp,
-                        cell.GetGlobalCoordinates() + new Vector3(0, 0.001f, 0),
-                        quaternion.identity
-                    );
-                    var bishop = new PowerUp(PieceType.Bishop, bishopPowerUpObj, cell);
-                    _powerUps.Add(bishop, cell);
+                    InstantiatePowerUp(bishopPowerUp, PieceType.Bishop, cell);
                     break;
-
                 case RoomLayout.MatrixValue.PK: //Knight power up
-                    var knightPowerUpObj = Instantiate(
-                        knightPowerUp,
-                        cell.GetGlobalCoordinates() + new Vector3(0, 0.001f, 0),
-                        quaternion.identity
-                    );
-                    var knight = new PowerUp(PieceType.Knight, knightPowerUpObj, cell);
-                    _powerUps.Add(knight, cell);
+                    InstantiatePowerUp(knightPowerUp, PieceType.Knight, cell);
                     break;
                 case RoomLayout.MatrixValue.PR: //Rook power up
-                    var rookPowerUpObj = Instantiate(
-                        rookPowerUp,
-                        cell.GetGlobalCoordinates() + new Vector3(0, 0.001f, 0),
-                        quaternion.identity
-                    );
-                    var rook = new PowerUp(PieceType.Rook, rookPowerUpObj, cell);
-                    _powerUps.Add(rook, cell);
+                    InstantiatePowerUp(rookPowerUp, PieceType.Rook, cell);
                     break;
                 case RoomLayout.MatrixValue.PP: //Pawn power up
-                    var pawnPowerUpObj = Instantiate(
-                        pawnPowerUp,
-                        cell.GetGlobalCoordinates() + new Vector3(0, 0.001f, 0),
-                        quaternion.identity
-                    );
-                    var pawn = new PowerUp(PieceType.Pawn, pawnPowerUpObj, cell);
-                    _powerUps.Add(pawn, cell);
+                    InstantiatePowerUp(pawnPowerUp, PieceType.Pawn, cell);
                     break;
-
                 case RoomLayout.MatrixValue.Exit: //End of level
                     _endLevelCell = cell;
                     Instantiate(
@@ -577,6 +550,18 @@ namespace Gambetto.Scripts.GameCore.Grid
                 default:
                     return;
             }
+        }
+
+        private void InstantiatePowerUp(GameObject prefab,PieceType type, Cell cell, Quaternion rotation = default)
+        {
+            var powerUpObj = Instantiate(
+                prefab,
+                cell.GetGlobalCoordinates() + new Vector3(0, 0.001f, 0),
+                quaternion.identity
+            );
+            var bishop = new PowerUp(type, powerUpObj, cell);
+            _powerUps.Add(bishop, cell);
+            EndOfLevelEffect.instance.AddPowerUp(powerUpObj);
         }
 
         /// <summary>
