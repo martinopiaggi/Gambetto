@@ -140,7 +140,7 @@ namespace Gambetto.Scripts.GameCore
                         "currentTick = " + _currentTick,
                         Color.white,
                         Debugger.Position.UpperRight,
-                        printConsole: true
+                        printConsole: false
                     );
         }
     }

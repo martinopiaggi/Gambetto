@@ -125,7 +125,11 @@ namespace Gambetto.Scripts.GameCore
             )
             {
                 if (!piece.IsAwake)
+                {
                     piece.IsAwake = true;
+                    return;
+                }
+
                 var found = MinimumPath(piece, cell, _playerCell);
                 if (found)
                     return;
@@ -140,7 +144,7 @@ namespace Gambetto.Scripts.GameCore
                     _playerCell.GetNext(Vector2Int.down + Vector2Int.right),
                     _playerCell.GetNext(Vector2Int.down + Vector2Int.left)
                 };
-                nearCells = nearCells.Where(IsAvailable).ToList();
+                nearCells = nearCells.Where(c => c != null && IsAvailable(c)).ToList();
                 foreach (var c in nearCells)
                 {
                     found = MinimumPath(piece, cell, c);
