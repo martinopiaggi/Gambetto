@@ -12,7 +12,8 @@ namespace Gambetto.Scripts.GameCore.Grid
         private bool _fired = false;
         
         //list 
-        private List<GameObject> _cubes = new List<GameObject>();
+        private readonly List<GameObject> _cubes = new List<GameObject>();
+        private readonly List<GameObject> _powerUps = new List<GameObject>();
         private Vector3 _exitCoords;
          
         
@@ -142,6 +143,11 @@ namespace Gambetto.Scripts.GameCore.Grid
         public void AddCube(GameObject cube)
         {
             _cubes.Add(cube);
+        }
+        
+        public void AddPowerUp(GameObject powerUp)
+        {
+            _powerUps.Add(powerUp);
         }
         
         public void AddExitCoords(Vector3 coords)
