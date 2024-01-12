@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,12 +8,8 @@ using Gambetto.Scripts.UI;
 using Gambetto.Scripts.Utils;
 using Unity.Mathematics;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 using Behaviour = Gambetto.Scripts.GameCore.Room.Behaviour;
-using Quaternion = UnityEngine.Quaternion;
-using Vector2 = UnityEngine.Vector2;
-using Vector3 = UnityEngine.Vector3;
 
 namespace Gambetto.Scripts.GameCore.Grid
 {
@@ -839,7 +836,8 @@ namespace Gambetto.Scripts.GameCore.Grid
                 // we need to wait a bit before showing the end level menu and stopping time
                 AudioManager.Instance.PlaySfx(AudioManager.Instance.levelFinished);
 
-                GameManager.Instance.SetLevelStatus(GameManager.Instance.nextLevel, true);
+                if (GameManager.Instance != null)
+                    GameManager.Instance.SetLevelStatus(GameManager.Instance.nextLevel, true);
 
                 pauseButton.SetActive(false);
                 playerController.choosing = false;
@@ -852,12 +850,12 @@ namespace Gambetto.Scripts.GameCore.Grid
         }
 
         // a method that executes a method after a delay
-        public void ExecuteAfterDelay(float delay, System.Action action)
+        public void ExecuteAfterDelay(float delay, Action action)
         {
             StartCoroutine(ExecuteAfterDelayCoroutine(delay, action));
         }
 
-        private static IEnumerator ExecuteAfterDelayCoroutine(float delay, System.Action action)
+        private static IEnumerator ExecuteAfterDelayCoroutine(float delay, Action action)
         {
             yield return new WaitForSeconds(delay);
             action();
@@ -868,7 +866,6 @@ namespace Gambetto.Scripts.GameCore.Grid
         /// </summary>
         public IEnumerator ShowDelayed(GameObject g, float delay = 0.5f)
         {
-            Debug.Log(Time.timeScale);
             yield return new WaitForSeconds(delay);
             g.SetActive(true);
             TimeManager.StopTime();

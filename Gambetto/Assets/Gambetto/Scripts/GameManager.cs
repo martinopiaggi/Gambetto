@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using Gambetto.Scripts.UI;
+using Newtonsoft.Json;
 using UnityEngine;
 
 namespace Gambetto.Scripts
@@ -14,12 +16,15 @@ namespace Gambetto.Scripts
         [SerializeField]
         private bool allLevelsUnlocked;
 
+        private string _saveDataPath;
+
         //levels have a false status if they are locked
-        private readonly Dictionary<string, bool> _levelStatus = new();
+        private Dictionary<string, bool> _levelStatus = new();
 
         public void SetLevelStatus(string levelName, bool status)
         {
             _levelStatus[levelName] = status;
+            SaveData();
         }
 
         public bool GetLevelStatus(string levelName)
@@ -35,6 +40,7 @@ namespace Gambetto.Scripts
 
         private void Awake()
         {
+            _saveDataPath = Application.persistentDataPath + "/level_data.json";
             // get the names of all levels in the build settings
             for (
                 var i = 2;
@@ -56,6 +62,9 @@ namespace Gambetto.Scripts
             // set the first levels as unlocked
             _levelStatus["level0"] = true;
 
+            // load saved data
+            LoadData();
+
             if (Instance == null)
             {
                 Instance = this;
@@ -70,6 +79,28 @@ namespace Gambetto.Scripts
         private void Start()
         {
             AudioManager.Instance.PlayBackground(AudioManager.Instance.menuBackground);
+        }
+
+        private void SaveData()
+        {
+            var json = JsonConvert.SerializeObject(_levelStatus);
+            File.WriteAllText(_saveDataPath, json);
+        }
+
+        private void LoadData()
+        {
+            if (!File.Exists(_saveDataPath))
+                return;
+            var json = File.ReadAllText(_saveDataPath);
+            if (json == string.Empty)
+                return;
+
+            var data = JsonConvert.DeserializeObject<Dictionary<string, bool>>(json);
+
+            foreach (var (key, value) in data)
+            {
+                _levelStatus[key] = value;
+            }
         }
     }
 }
