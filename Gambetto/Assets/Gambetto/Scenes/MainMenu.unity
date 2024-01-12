@@ -6589,8 +6589,13 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 75860764595376870, guid: d619a46dab00f244f866701e94ccd3e0,
         type: 3}
+      propertyPath: sfx
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 75860764595376870, guid: d619a46dab00f244f866701e94ccd3e0,
+        type: 3}
       propertyPath: music
-      value: 0
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 75860764595376870, guid: d619a46dab00f244f866701e94ccd3e0,
         type: 3}
