@@ -8,6 +8,8 @@ namespace Gambetto.Scripts.Utils
     public static class TimeManager
     {
         private static float _timeScale = 1f;
+
+        public static float inputTimeInterval = 0.15f;
         
         public static void StopTime()
         {
