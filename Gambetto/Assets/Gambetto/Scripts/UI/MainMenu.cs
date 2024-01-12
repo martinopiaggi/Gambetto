@@ -6,7 +6,7 @@ namespace Gambetto.Scripts.UI
     {
         public void PlayGame()
         {
-            GameManager.instance.sceneTransition.CrossFade(1);
+            GameManager.Instance.sceneTransition.CrossFade(1);
         }
 
         public void QuitGame()
