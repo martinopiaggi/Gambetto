@@ -111,6 +111,7 @@ namespace Gambetto.Scripts.GameCore.Piece
                 AudioManager.Instance.PlaySfx(AudioManager.Instance.deathByCollision);
                 var gridManager = FindObjectOfType<GridManager>();
                 gridManager.playerController.choosing = false;
+                gridManager.isDead = true;
                 gridManager.StartCoroutine(gridManager.ShowDelayed(gridManager.deathScreen, 1.42f));
                 gridManager.pauseButton.SetActive(false);
             }
@@ -177,12 +178,13 @@ namespace Gambetto.Scripts.GameCore.Piece
                     var piecePos = TR.position;
                     var distance = Vector3.Distance(piecePos, destPosition);
                     // if the distance is less then 5 is set to 5 to avoid the movement to be to slow
-                    if (distance < 5.0f) distance = 5.0f;
+                    if (distance < 5.0f)
+                        distance = 5.0f;
                     var inputTime = TimeManager.inputTimeInterval;
                     piecePos = Vector3.MoveTowards(
                         piecePos,
                         destPosition,
-                        distance * (Time.deltaTime/inputTime)
+                        distance * (Time.deltaTime / inputTime)
                     );
                     TR.position = piecePos;
                     direction = destPosition - piecePos;
