@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Gambetto.Scripts
@@ -32,26 +34,7 @@ namespace Gambetto.Scripts
         public AudioClip powerUp;
         public AudioClip enemyAlerted;
 
-        //start method to play background music in menu and to load player volumes previously set
-        public void Start()
-        {
-            //load floats
-            try
-            {
-                music = PlayerPrefs.GetFloat("MusicVolume", 0f);
-                sfx = PlayerPrefs.GetFloat("SFXVolume", 0.5f);
-            }
-            catch (Exception e)
-            {
-                Debug.Log(e);
-                throw;
-            }
-            //set values
-            EditMusicVolume(music);
-            EditSfxVolume(sfx);
-            //play background music
-            //PlayBackground(menuBackground);
-        }
+        
 
         //awake method makes sure that AudioManager is not destroyed
         private void Awake()
@@ -65,6 +48,21 @@ namespace Gambetto.Scripts
             {
                 Destroy(gameObject);
             }
+            
+            // play background music in menu and to load player volumes previously set
+            try
+            {
+                music = PlayerPrefs.GetFloat("MusicVolume", 0f);
+                sfx = PlayerPrefs.GetFloat("SFXVolume", 0.5f);
+            }
+            catch (Exception e)
+            {
+                Debug.Log(e);
+                throw;
+            }
+            //set values
+            EditMusicVolume(music);
+            EditSfxVolume(sfx);
         }
 
         //method used to play every sfx
@@ -76,10 +74,59 @@ namespace Gambetto.Scripts
         //method used to change background music
         public void PlayBackground(AudioClip clip)
         {
+            PlayWithFadeIn(clip, 4f);
+        }
+
+        //method that start music with a fade in
+        private void PlayWithFadeIn(AudioClip clip, float duration)
+        {
+            StartCoroutine(FadeOutFadeIn(clip, duration));
+        }
+
+        //method that start music with a fade in
+
+        //method that start music with a fade in
+        private IEnumerator FadeOutFadeIn(AudioClip clip, float duration)
+        {
+            // if music is already playing, fade out
+            var timeElapsed = 0f;
+            if (musicSource.isPlaying)
+            {
+                while (musicSource.volume > 0)
+                {
+                    musicSource.volume = Mathf.Lerp(music, 0, timeElapsed / duration);
+                    timeElapsed += Time.deltaTime;
+                    yield return null;
+                }
+            }
             musicSource.Stop();
             musicSource.clip = clip;
+            musicSource.volume = 0;
             musicSource.Play();
+
+            timeElapsed = 0f;
+            while (musicSource.volume < music)
+            {
+                musicSource.volume = Mathf.Lerp(0, 1, timeElapsed / duration);
+                timeElapsed += Time.deltaTime;
+                yield return null;
+            }
         }
+
+        // private IEnumerator PlayWithFadeInCoroutine(AudioClip clip, float duration)
+        // {
+        //     musicSource.Stop();
+        //     musicSource.clip = clip;
+        //     musicSource.volume = 0;
+        //     musicSource.Play();
+        //     var elapsedTime = 0f;
+        //     while (elapsedTime < duration)
+        //     {
+        //         elapsedTime += Time.deltaTime;
+        //         musicSource.volume = Mathf.Lerp(0, music, elapsedTime / duration);
+        //         yield return null;
+        //     }
+        // }
 
         //method used to change music volume
         public void EditMusicVolume(float volume)

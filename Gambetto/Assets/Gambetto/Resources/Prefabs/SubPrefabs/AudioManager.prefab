@@ -44,7 +44,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.138
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -172,7 +172,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.594
+  m_Volume: 0
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -306,7 +306,7 @@ MonoBehaviour:
   sfx: 0.5
   musicSource: {fileID: 5069162072447621978}
   sfxSource: {fileID: 9560519539147919}
-  menuBackground: {fileID: 8300000, guid: 2032c3a359b93324291c5c478ae4a3f4, type: 3}
+  menuBackground: {fileID: 8300000, guid: b60ae4d8dd638c14eaf10cbbf43a1b3e, type: 3}
   pawnMovement: {fileID: 8300000, guid: e7c00806e1a055b469409fbc5f9da034, type: 3}
   clockTick: {fileID: 8300000, guid: 3bac9f0b06a11a44cbdffe93f20c31dc, type: 3}
   chosenMove: {fileID: 8300000, guid: 8cb9608285129b04f8e92464138ea332, type: 3}
