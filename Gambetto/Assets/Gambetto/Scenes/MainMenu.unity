@@ -6587,6 +6587,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 75860764595376870, guid: d619a46dab00f244f866701e94ccd3e0,
+        type: 3}
+      propertyPath: music
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 75860764595376870, guid: d619a46dab00f244f866701e94ccd3e0,
+        type: 3}
+      propertyPath: menuBackground
+      value: 
+      objectReference: {fileID: 8300000, guid: c0648db08dc2cdb4585a621745ade9dc, type: 3}
     - target: {fileID: 2384346359177306790, guid: d619a46dab00f244f866701e94ccd3e0,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -6636,6 +6646,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5069162072447621978, guid: d619a46dab00f244f866701e94ccd3e0,
+        type: 3}
+      propertyPath: m_Volume
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 5564635933696879171, guid: d619a46dab00f244f866701e94ccd3e0,
         type: 3}

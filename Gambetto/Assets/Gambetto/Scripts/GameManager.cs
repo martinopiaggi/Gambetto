@@ -1,3 +1,4 @@
+using System;
 using Gambetto.Scripts.UI;
 using UnityEngine;
 
@@ -8,7 +9,9 @@ namespace Gambetto.Scripts
         public static GameManager instance;
 
         public SceneTransition sceneTransition;
-        public AudioManager audioManager;
+
+        [SerializeField]
+        private AudioManager audioManager;
 
         private void Awake()
         {
@@ -21,6 +24,11 @@ namespace Gambetto.Scripts
             {
                 Destroy(gameObject);
             }
+        }
+
+        private void Start()
+        {
+            audioManager.PlayBackground(AudioManager.Instance.menuBackground);
         }
     }
 }
