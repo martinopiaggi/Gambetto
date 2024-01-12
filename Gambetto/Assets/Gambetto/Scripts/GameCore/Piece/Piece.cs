@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using Gambetto.Scripts.GameCore.Grid;
+using Gambetto.Scripts.Utils;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Behaviour = Gambetto.Scripts.GameCore.Room.Behaviour;
@@ -174,10 +175,14 @@ namespace Gambetto.Scripts.GameCore.Piece
                     }
 
                     var piecePos = TR.position;
+                    var distance = Vector3.Distance(piecePos, destPosition);
+                    // if the distance is less then 5 is set to 5 to avoid the movement to be to slow
+                    if (distance < 5.0f) distance = 5.0f;
+                    var inputTime = TimeManager.inputTimeInterval;
                     piecePos = Vector3.MoveTowards(
                         piecePos,
                         destPosition,
-                        PieceConstants.PieceSpeed * Time.deltaTime
+                        distance * (Time.deltaTime/inputTime)
                     );
                     TR.position = piecePos;
                     direction = destPosition - piecePos;
