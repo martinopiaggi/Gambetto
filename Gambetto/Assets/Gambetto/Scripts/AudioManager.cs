@@ -34,8 +34,6 @@ namespace Gambetto.Scripts
         public AudioClip powerUp;
         public AudioClip enemyAlerted;
 
-        
-
         //awake method makes sure that AudioManager is not destroyed
         private void Awake()
         {
@@ -48,12 +46,12 @@ namespace Gambetto.Scripts
             {
                 Destroy(gameObject);
             }
-            
+
             // play background music in menu and to load player volumes previously set
             try
             {
-                music = PlayerPrefs.GetFloat("MusicVolume", 0f);
-                sfx = PlayerPrefs.GetFloat("SFXVolume", 0.5f);
+                music = PlayerPrefs.GetFloat("MusicVolume", 0.25f);
+                sfx = PlayerPrefs.GetFloat("SFXVolume", 0.25f);
             }
             catch (Exception e)
             {
@@ -84,27 +82,14 @@ namespace Gambetto.Scripts
         }
 
         //method that start music with a fade in
-
-        //method that start music with a fade in
         private IEnumerator FadeOutFadeIn(AudioClip clip, float duration)
         {
-            // if music is already playing, fade out
-            var timeElapsed = 0f;
-            if (musicSource.isPlaying)
-            {
-                while (musicSource.volume > 0)
-                {
-                    musicSource.volume = Mathf.Lerp(music, 0, timeElapsed / duration);
-                    timeElapsed += Time.deltaTime;
-                    yield return null;
-                }
-            }
             musicSource.Stop();
             musicSource.clip = clip;
             musicSource.volume = 0;
             musicSource.Play();
 
-            timeElapsed = 0f;
+            var timeElapsed = 0f;
             while (musicSource.volume < music)
             {
                 musicSource.volume = Mathf.Lerp(0, 1, timeElapsed / duration);
