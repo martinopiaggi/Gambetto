@@ -168,6 +168,7 @@ namespace Gambetto.Scripts.GameCore
         /// <param name="piece">Current enemy piece.</param>
         /// <param name="startCell">Starting cell of the enemy piece.</param>
         /// <param name="playerCell">Final cell of the player piece.</param>
+        /// <returns>True if a path is found, false otherwise.</returns>
         private bool MinimumPath(Piece.Piece piece, Cell startCell, Cell playerCell)
         {
             var queue = new Queue<(Cell, List<Cell>)>();
@@ -180,6 +181,9 @@ namespace Gambetto.Scripts.GameCore
                 var (currentCell, path) = queue.Dequeue();
                 if (currentCell.Equals(playerCell)) // end of the algorithm
                 {
+                    if (path.Count < 1) // this is a "pezzo di scotch" to fix a bug
+                        return false;
+
                     startCell = path[0];
                     tempListMoves.Add(startCell.GetGlobalCoordinates());
                     _chosenMoves[piece] = startCell;
@@ -194,30 +198,8 @@ namespace Gambetto.Scripts.GameCore
                     out _possiblePaths
                 );
 
-                var cellsToSkip = new List<Vector3>();
                 foreach (var nextCell in possibleMovements)
                 {
-                    // if (!IsAvailable(nextCell))
-                    // {
-                    //     // if a cell is occupied, skip all the next cells in the same path
-                    //     var pathFromCell = _possiblePaths.Find(
-                    //         path => path.Contains(nextCell.GetGlobalCoordinates())
-                    //     );
-                    //
-                    //     cellsToSkip.AddRange(
-                    //         pathFromCell.SkipWhile(
-                    //             coords => coords != nextCell.GetGlobalCoordinates()
-                    //         )
-                    //     );
-                    //     continue;
-                    // }
-                    //
-                    // if (cellsToSkip.Contains(nextCell.GetGlobalCoordinates()))
-                    // {
-                    //     visited.Add(nextCell);
-                    //     continue;
-                    // }
-
                     if (!visited.Contains(nextCell) && IsAvailable(nextCell))
                     {
                         visited.Add(nextCell);
