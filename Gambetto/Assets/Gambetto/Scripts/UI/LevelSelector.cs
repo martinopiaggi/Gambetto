@@ -24,13 +24,18 @@ namespace Gambetto.Scripts.UI
 
         public void LoadLevel(int level)
         {
-            GameManager.instance.sceneTransition.CrossFade(level);
+            GameManager.Instance.sceneTransition.CrossFade(level);
+        }
+
+        public void LoadLevel(string level)
+        {
+            GameManager.Instance.sceneTransition.CrossFade(level);
         }
 
         //method used by the back button
         public void BackToMainMenu()
         {
-            GameManager.instance.sceneTransition.CrossFade(0);
+            GameManager.Instance.sceneTransition.CrossFade(0);
         }
     }
 }

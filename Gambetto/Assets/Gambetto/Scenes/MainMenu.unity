@@ -2921,7 +2921,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneTransition: {fileID: 1691216244}
-  audioManager: {fileID: 1509300427}
+  allLevelsUnlocked: 0
+  nextLevel: 
 --- !u!4 &675283270
 Transform:
   m_ObjectHideFlags: 0
@@ -6667,18 +6668,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d619a46dab00f244f866701e94ccd3e0, type: 3}
---- !u!114 &1509300427 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 75860764595376870, guid: d619a46dab00f244f866701e94ccd3e0,
-    type: 3}
-  m_PrefabInstance: {fileID: 1509300426}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c6ca316a4d83ae44cb2f338db79d28d3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1524578092
 GameObject:
   m_ObjectHideFlags: 0

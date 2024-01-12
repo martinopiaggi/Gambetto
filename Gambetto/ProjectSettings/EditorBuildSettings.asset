@@ -12,10 +12,10 @@ EditorBuildSettings:
     path: Assets/Gambetto/Scenes/Level selection.unity
     guid: 55ec6f38368d6c044ba38962ce034777
   - enabled: 1
-    path: Assets/Gambetto/Scenes/Levels/Final/lv0/livello0.unity
+    path: Assets/Gambetto/Scenes/Levels/Final/lv0/level0.unity
     guid: 99f02b0c204960d45ab0dde71ce10aa9
   - enabled: 1
-    path: Assets/Gambetto/Scenes/Levels/Final/lv1 knight/livello1.unity
+    path: Assets/Gambetto/Scenes/Levels/Final/lv1 knight/level1.unity
     guid: 8ed6571f5f72b7242a888075efbd627a
   - enabled: 1
     path: Assets/Gambetto/Scenes/Levels/Final/lv2 bishop/bishopIntro.unity

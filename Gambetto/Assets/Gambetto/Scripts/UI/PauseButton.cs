@@ -43,7 +43,7 @@ namespace Gambetto.Scripts.UI
         public void BackToMainMenu()
         {
             TimeManager.ResumeTime();
-            GameManager.instance.sceneTransition.CrossFade(1);
+            GameManager.Instance.sceneTransition.CrossFade(1);
         }
     }
 }

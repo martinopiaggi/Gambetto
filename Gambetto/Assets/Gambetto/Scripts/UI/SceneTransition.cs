@@ -18,8 +18,22 @@ namespace Gambetto.Scripts.UI
         {
             StartCoroutine(LoadScene(scene));
         }
+        
+        public void CrossFade(string scene)
+        {
+            StartCoroutine(LoadScene(scene));
+        }
+        
 
         private IEnumerator LoadScene(int scene)
+        {
+            crossFadeAnimator.SetTrigger(End);
+            yield return new WaitForSeconds(1f);
+            yield return SceneManager.LoadSceneAsync(scene);
+            crossFadeAnimator.SetTrigger(Start);
+        }
+        
+        private IEnumerator LoadScene(string scene)
         {
             crossFadeAnimator.SetTrigger(End);
             yield return new WaitForSeconds(1f);

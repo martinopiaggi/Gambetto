@@ -7,6 +7,7 @@ using Gambetto.Scripts.UI;
 using Gambetto.Scripts.Utils;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 using Behaviour = Gambetto.Scripts.GameCore.Room.Behaviour;
 using Quaternion = UnityEngine.Quaternion;
@@ -828,7 +829,6 @@ namespace Gambetto.Scripts.GameCore.Grid
                     () => EndOfLevelEffect.instance.FireEffect(_playerPiece.gameObject)
                 );
 
-                //todo I would like to make the enemies fall when there is the effect
                 // but they don't fall
                 foreach (var e in _enemies)
                 {
@@ -838,6 +838,9 @@ namespace Gambetto.Scripts.GameCore.Grid
 
                 // we need to wait a bit before showing the end level menu and stopping time
                 AudioManager.Instance.PlaySfx(AudioManager.Instance.levelFinished);
+
+                GameManager.Instance.SetLevelStatus(GameManager.Instance.nextLevel, true);
+
                 pauseButton.SetActive(false);
                 playerController.choosing = false;
                 StartCoroutine(ShowDelayed(_endLevelMenu, 3.0f));
