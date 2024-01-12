@@ -175,6 +175,7 @@ namespace Gambetto.Scripts.GameCore
             var visited = new HashSet<Cell>();
             queue.Enqueue((startCell, new List<Cell>()));
             var tempListMoves = new List<Vector3>();
+            var initialCell = startCell;
 
             while (queue.Count > 0)
             {
@@ -183,10 +184,16 @@ namespace Gambetto.Scripts.GameCore
                 {
                     if (path.Count < 1) // this is a "pezzo di scotch" to fix a bug
                         return false;
-
+                    
+                    
                     startCell = path[0];
                     tempListMoves.Add(startCell.GetGlobalCoordinates());
                     _chosenMoves[piece] = startCell;
+                    if (piece.PieceType.Equals(PieceType.Knight))
+                    {
+                        tempListMoves = ComputeKnightMovementPattern(initialCell.GetGlobalCoordinates(),
+                            startCell.GetGlobalCoordinates());
+                    }
                     _movePaths[piece] = tempListMoves;
                     return true;
                 }
@@ -210,6 +217,17 @@ namespace Gambetto.Scripts.GameCore
             }
 
             return false;
+        }
+
+        private List<Vector3> ComputeKnightMovementPattern(Vector3 startingCell, Vector3 finalCell)
+        {
+            var temp = finalCell - startingCell;
+            var tempListMoves = new List<Vector3>();
+            var temp1 = startingCell;
+            temp1.x += temp.x;
+            tempListMoves.Add(temp1);
+            tempListMoves.Add(finalCell);
+            return tempListMoves;
         }
 
         // Debug.Log("No path found!");
