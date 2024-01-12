@@ -90,10 +90,10 @@ namespace Gambetto.Scripts.GameCore.Grid
 
         private GameObject _endLevelMenu;
 
-        private float timeSinceLastInput;
+        private float _timeSinceLastInput;
 
-        // input is taken every 120ms to detect all the collisions
-        private const float InputTimeInterval = 0.12f;
+        // input is taken every 130ms to let all the pieces the time to move
+        private float InputTimeInterval = TimeManager.inputTimeInterval;
 
         private void Start()
         {
@@ -115,10 +115,10 @@ namespace Gambetto.Scripts.GameCore.Grid
         /// </summary>
         private void Update()
         {
-            timeSinceLastInput += Time.deltaTime;
+            _timeSinceLastInput += Time.deltaTime;
             if (
                 (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
-                && timeSinceLastInput >= InputTimeInterval
+                && _timeSinceLastInput >= InputTimeInterval
                 && playerController.choosing
                 && !isDead
                 && Time.timeScale != 0f
@@ -126,7 +126,7 @@ namespace Gambetto.Scripts.GameCore.Grid
             )
             {
                 playerController.OnClick();
-                timeSinceLastInput = 0f;
+                _timeSinceLastInput = 0f;
             }
         }
 
