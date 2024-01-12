@@ -186,11 +186,11 @@ namespace Gambetto.Scripts.GameCore.Grid
             {
                 if (GameClock.Instance.CurrentTick() != 0)
                 {
+                    if (CheckEndLevel())
+                        return;
                     // if it's the first tick, don't compute the cpu moves and dont update the enemies position
                     cpuBehavior.ComputeCPUMoves(_playerCell, _enemies);
                     UpdateEnemiesPosition();
-                    if (CheckEndLevel())
-                        return;
                     CheckPowerUp();
                 }
                 playerController.StartChoosing(_playerPiece, _playerCell);
@@ -452,7 +452,7 @@ namespace Gambetto.Scripts.GameCore.Grid
                             roomLayout.GetSizeColumn()
                         );
                 }
-            } 
+            }
             _cellBorder = currentCellBorder;
             return roomCells;
         }
@@ -552,7 +552,12 @@ namespace Gambetto.Scripts.GameCore.Grid
             }
         }
 
-        private void InstantiatePowerUp(GameObject prefab,PieceType type, Cell cell, Quaternion rotation = default)
+        private void InstantiatePowerUp(
+            GameObject prefab,
+            PieceType type,
+            Cell cell,
+            Quaternion rotation = default
+        )
         {
             var powerUpObj = Instantiate(
                 prefab,
