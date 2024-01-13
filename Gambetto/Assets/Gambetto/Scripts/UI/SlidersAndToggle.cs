@@ -3,15 +3,17 @@ using UnityEngine.UI;
 
 namespace Gambetto.Scripts.UI
 {
-    public class Sliders : MonoBehaviour
+    public class SlidersAndToggle : MonoBehaviour
     {
         public Slider musicSlider,
             sfxSlider;
+        public Toggle unlockAllLevelsToggle;
 
         private void Start()
         {
             musicSlider.value = AudioManager.Instance.music;
             sfxSlider.value = AudioManager.Instance.sfx;
+            unlockAllLevelsToggle.isOn = PlayerPrefs.GetInt("AllLevelsUnlocked", 0) == 1;
         }
 
         public void MusicVolume()
@@ -22,6 +24,12 @@ namespace Gambetto.Scripts.UI
         public void SfxVolume()
         {
             AudioManager.Instance.EditSfxVolume(sfxSlider.value);
+        }
+
+        public void UnlockAllLevels()
+        {
+            GameManager.Instance.AllLevelsUnlocked = unlockAllLevelsToggle.isOn;
+            PlayerPrefs.SetInt("AllLevelsUnlocked", GameManager.Instance.AllLevelsUnlocked ? 1 : 0);
         }
     }
 }
