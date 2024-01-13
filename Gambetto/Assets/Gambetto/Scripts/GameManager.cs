@@ -58,6 +58,8 @@ namespace Gambetto.Scripts
 
         private void Awake()
         {
+            allLevelsUnlocked = PlayerPrefs.GetInt("AllLevelsUnlocked", 0) == 1;
+                
             _saveDataPath = Application.persistentDataPath + "/level_data.json";
             // get the names of all levels in the build settings
             for (
@@ -78,7 +80,9 @@ namespace Gambetto.Scripts
                 _levelStatus.Add(sceneName, false);
             }
             // set the first levels as unlocked
-            _levelStatus["level0"] = true;
+            _levelStatus["tutortial"] = true;
+            _levelStatus["pawnEnemyIntro"] = true;
+            _levelStatus["BishopEscape"] = true;
 
             // load saved data
             LoadData();

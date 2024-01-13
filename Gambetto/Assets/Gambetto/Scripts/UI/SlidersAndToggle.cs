@@ -13,7 +13,7 @@ namespace Gambetto.Scripts.UI
         {
             musicSlider.value = AudioManager.Instance.music;
             sfxSlider.value = AudioManager.Instance.sfx;
-            unlockAllLevelsToggle.isOn = PlayerPrefs.GetInt("AllLevelsUnlocked", 0) == 1;
+            unlockAllLevelsToggle.isOn = GameManager.Instance.AllLevelsUnlocked;
         }
 
         public void MusicVolume()
