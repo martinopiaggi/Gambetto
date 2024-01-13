@@ -12,8 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ac34a7225b38244ebf91c84eb6a06c1, type: 3}
   m_Name: p3
   m_EditorClassIdentifier: 
-  movements: []
+  movements:
+  - {x: -1, y: 0}
+  - {x: -1, y: 0}
+  - {x: -1, y: 0}
+  - {x: -1, y: 0}
+  - {x: -1, y: 0}
+  - {x: -1, y: 0}
+  - {x: -1, y: 0}
+  - {x: 1, y: 0}
+  - {x: 1, y: 0}
+  - {x: 1, y: 0}
+  - {x: 1, y: 0}
+  - {x: 1, y: 0}
+  - {x: 1, y: 0}
+  - {x: 1, y: 0}
   offset: 0
-  id: 1
+  id: 3
   aggressive: 1
   activationDistanceCells: 0

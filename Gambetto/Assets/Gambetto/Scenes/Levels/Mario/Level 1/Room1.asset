@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: Room1
   m_EditorClassIdentifier: 
   topologyDescription: Stanza unica
-  roomCsvTextAsset: {fileID: 4900000, guid: f4c5db2b56505664692529424889408d, type: 3}
+  roomCsvTextAsset: {fileID: 4900000, guid: a5a5928423af2a245b235a4fe4680898, type: 3}
   exitSide: {x: 1, y: 0}
   behaviours:
-  - {fileID: 11400000, guid: 9f4d2b628b190964c89ca7a8d90fd918, type: 2}
+  - {fileID: 11400000, guid: 944f24013b4b23c4090a5f5b79237af9, type: 2}
+  - {fileID: 11400000, guid: 05e1411603c56ad4ca408201bbd9dc8e, type: 2}
+  - {fileID: 11400000, guid: 53d32bb122d6ca543ba0544d1a8e1262, type: 2}
