@@ -15,6 +15,11 @@ namespace Gambetto.Scripts
 
         [SerializeField]
         private bool allLevelsUnlocked;
+        public bool AllLevelsUnlocked
+        {
+            get => allLevelsUnlocked;
+            set => allLevelsUnlocked = value;
+        }
 
         private string _saveDataPath;
 
