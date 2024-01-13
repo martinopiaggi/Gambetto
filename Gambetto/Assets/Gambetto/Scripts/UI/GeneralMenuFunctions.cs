@@ -50,6 +50,9 @@ namespace Gambetto.Scripts.UI
                 return;
             }
             GameManager.Instance.sceneTransition.CrossFade(GameManager.Instance.nextLevel);
+
+            //todo: set the GameManager.Instance.nextLevel to the next level
+
             TimeManager.ResumeTime();
         }
     }
