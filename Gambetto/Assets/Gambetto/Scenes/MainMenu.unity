@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -376,94 +376,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!1001 &71282502
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 48231770509836777, guid: c6a839bf8c27eb5489657cf718218521,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 48231770509836777, guid: c6a839bf8c27eb5489657cf718218521,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 48231770509836777, guid: c6a839bf8c27eb5489657cf718218521,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 48231770509836777, guid: c6a839bf8c27eb5489657cf718218521,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 48231770509836777, guid: c6a839bf8c27eb5489657cf718218521,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 48231770509836777, guid: c6a839bf8c27eb5489657cf718218521,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 48231770509836777, guid: c6a839bf8c27eb5489657cf718218521,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 48231770509836777, guid: c6a839bf8c27eb5489657cf718218521,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 48231770509836777, guid: c6a839bf8c27eb5489657cf718218521,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 48231770509836777, guid: c6a839bf8c27eb5489657cf718218521,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 718298013263909403, guid: c6a839bf8c27eb5489657cf718218521,
-        type: 3}
-      propertyPath: fogColor.b
-      value: 0.9339623
-      objectReference: {fileID: 0}
-    - target: {fileID: 718298013263909403, guid: c6a839bf8c27eb5489657cf718218521,
-        type: 3}
-      propertyPath: fogColor.g
-      value: 0.7092827
-      objectReference: {fileID: 0}
-    - target: {fileID: 718298013263909403, guid: c6a839bf8c27eb5489657cf718218521,
-        type: 3}
-      propertyPath: fogColor.r
-      value: 0.76001674
-      objectReference: {fileID: 0}
-    - target: {fileID: 718298013263909403, guid: c6a839bf8c27eb5489657cf718218521,
-        type: 3}
-      propertyPath: transitionMaterial
-      value: 
-      objectReference: {fileID: 2100000, guid: 4191d154ab0933d49b3278975bdbcf9b, type: 2}
-    - target: {fileID: 8471252604288283110, guid: c6a839bf8c27eb5489657cf718218521,
-        type: 3}
-      propertyPath: m_Name
-      value: ColorScheme
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: c6a839bf8c27eb5489657cf718218521, type: 3}
 --- !u!1 &86133637
 GameObject:
   m_ObjectHideFlags: 0
@@ -1140,8 +1052,8 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 0.7405877, g: 0.70468235, b: 0.7882353, a: 1}
-  m_Intensity: 3
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Intensity: 2
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -3057,7 +2969,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sceneTransition: {fileID: 1691216244}
   allLevelsUnlocked: 0
-  nextLevel: 
+  nextLevels: []
 --- !u!4 &675283270
 Transform:
   m_ObjectHideFlags: 0
@@ -8445,4 +8357,3 @@ SceneRoots:
   - {fileID: 1509300426}
   - {fileID: 902635812}
   - {fileID: 179790155}
-  - {fileID: 71282502}

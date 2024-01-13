@@ -12,51 +12,51 @@ EditorBuildSettings:
     path: Assets/Gambetto/Scenes/Level selection.unity
     guid: 55ec6f38368d6c044ba38962ce034777
   - enabled: 1
-    path: Assets/Gambetto/Scenes/Levels/Final/lv0/tutortial.unity
+    path: Assets/Gambetto/Scenes/Levels/Final/Magnus/lv0/tutortial.unity
     guid: 99f02b0c204960d45ab0dde71ce10aa9
   - enabled: 1
-    path: Assets/Gambetto/Scenes/Levels/Final/lv1 knight/KnightIntro.unity
+    path: Assets/Gambetto/Scenes/Levels/Final/Magnus/lv1 knight/KnightIntro.unity
     guid: 8ed6571f5f72b7242a888075efbd627a
   - enabled: 1
-    path: Assets/Gambetto/Scenes/Levels/Final/lv2 bishop/bishopIntro.unity
+    path: Assets/Gambetto/Scenes/Levels/Final/Magnus/lv2 bishop/bishopIntro.unity
     guid: 7ab2db2333edced43ab8511c2bfcdaad
   - enabled: 1
-    path: Assets/Gambetto/Scenes/Levels/Final/martino-David/David.unity
+    path: Assets/Gambetto/Scenes/Levels/Final/Bobby/martino-David/David.unity
     guid: d7b8428b32504e141a7c3d61347bd978
   - enabled: 1
-    path: Assets/Gambetto/Scenes/Levels/Final/martino-Goggins/Goggins.unity
+    path: Assets/Gambetto/Scenes/Levels/Final/Magnus/martino-Goggins/Goggins.unity
     guid: 93e1e131876f28646bfcf99fd54c4581
   - enabled: 1
-    path: Assets/Gambetto/Scenes/Levels/Final/martino-Queen/Queen.unity
+    path: Assets/Gambetto/Scenes/Levels/Final/Bobby/martino-Queen/Queen.unity
     guid: d20b0fea8e27d974aac72dd10d36fbbd
   - enabled: 1
-    path: Assets/Gambetto/Scenes/Levels/Final/lv3 marcia_pedoni/PawnMarch.unity
+    path: Assets/Gambetto/Scenes/Levels/Final/Magnus/lv3 marcia_pedoni/PawnMarch.unity
     guid: d8fbf2577c68dc349be8ad4d6376e7d6
   - enabled: 1
-    path: Assets/Gambetto/Scenes/Levels/Final/lv4 AI intro/pawnEnemyIntro.unity
+    path: Assets/Gambetto/Scenes/Levels/Final/Bobby/Pawn Enemy intro/pawnEnemyIntro.unity
     guid: 6303504d0cbff154197e93baaa1489ac
   - enabled: 1
-    path: Assets/Gambetto/Scenes/Levels/Final/lv5 TowerEscape/TowerEscape.unity
+    path: Assets/Gambetto/Scenes/Levels/Final/Garry/lv5 TowerEscape/TowerEscape.unity
     guid: 35dbf8f2104a72f409606552e7b05819
   - enabled: 1
-    path: Assets/Gambetto/Scenes/Levels/Final/martino-Spiral/Spiral.unity
+    path: Assets/Gambetto/Scenes/Levels/Final/Bobby/martino-Spiral/Spiral.unity
     guid: a3f9f0ea9c087cb4c9b87f0a48aa457c
   - enabled: 1
-    path: Assets/Gambetto/Scenes/Levels/Final/martino-TrappedTower/TrappedTower.unity
+    path: Assets/Gambetto/Scenes/Levels/Final/Bobby/martino-TrappedTower/TrappedTower.unity
     guid: a99f93137fa7ba8459d9a6656e749797
   - enabled: 1
-    path: Assets/Gambetto/Scenes/Levels/Final/lv7 girotondo/Girotondo.unity
+    path: Assets/Gambetto/Scenes/Levels/Final/Magnus/lv7 girotondo/Girotondo.unity
     guid: d690ba7d1e4860c40ad3e885517ff4ac
   - enabled: 1
-    path: Assets/Gambetto/Scenes/Levels/Final/matteo-mess/mess.unity
+    path: Assets/Gambetto/Scenes/Levels/Final/Garry/matteo-mess/mess.unity
     guid: b7b7212afb0ba904390d1ad63eba40c3
   - enabled: 1
-    path: Assets/Gambetto/Scenes/Levels/Final/matteo-knight maze/KnightMaze.unity
+    path: Assets/Gambetto/Scenes/Levels/Final/Garry/matteo-knight maze/KnightMaze.unity
     guid: a000a80b1af759047a1127f0db5fe7fb
   - enabled: 1
-    path: Assets/Gambetto/Scenes/Levels/Final/matteo-bishop escape/BishopEscape.unity
+    path: Assets/Gambetto/Scenes/Levels/Final/Garry/matteo-bishop escape/BishopEscape.unity
     guid: f0af5b62d58f8c4429d945bdc881b19b
   - enabled: 1
-    path: Assets/Gambetto/Scenes/Levels/Final/milo-PawnEscort/PawnEscort.unity
+    path: Assets/Gambetto/Scenes/Levels/Final/Bobby/milo-PawnEscort/PawnEscort.unity
     guid: 048851854f3774f4ab4cc9ae3a7b4822
   m_configObjects: {}
