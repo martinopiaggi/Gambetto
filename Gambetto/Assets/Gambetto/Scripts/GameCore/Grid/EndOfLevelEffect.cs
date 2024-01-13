@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 // static class to hold the cubes that are in the end of level effect
@@ -80,13 +81,15 @@ namespace Gambetto.Scripts.GameCore.Grid
 
         private IEnumerator<WaitForSeconds> EndOfLevelEffectCoroutine()
         {
+            // hide all powerups
+            _powerUps.ForEach((p) => p.SetActive(false));
             // Assign a delay to each cube based on its order
             float baseDelay = 0.05f; // Base delay between each cube's movement
             Dictionary<GameObject, float> cubeDelays = new Dictionary<GameObject, float>();
             float minTime = float.MinValue;
             for (int i = 0; i < _cubes.Count; i++)
             {
-                var delay = dist(_cubes[i]) * baseDelay;
+                var delay = Dist(_cubes[i]) * baseDelay;
                 if (minTime > delay)
                     minTime = delay;
                 cubeDelays[_cubes[i]] = delay;
@@ -121,6 +124,7 @@ namespace Gambetto.Scripts.GameCore.Grid
             if (_fired)
             {
                 ResetCubes();
+                _powerUps.ForEach((p) => p.SetActive(true));
                 ResetCamera();
                 _fired = false;
             }
@@ -142,7 +146,7 @@ namespace Gambetto.Scripts.GameCore.Grid
         }
 
         //compute distance
-        private float dist(GameObject cube)
+        private float Dist(GameObject cube)
         {
             return Vector3.Distance(cube.transform.position, _exitCoords);
         }
