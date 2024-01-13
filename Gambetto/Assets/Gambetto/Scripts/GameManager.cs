@@ -29,7 +29,8 @@ namespace Gambetto.Scripts
         public void SetLevelStatus(string levelName, bool status)
         {
             _levelStatus[levelName] = status;
-            SaveData();
+            if (!allLevelsUnlocked)
+                SaveData();
         }
 
         public bool GetLevelStatus(string levelName)
