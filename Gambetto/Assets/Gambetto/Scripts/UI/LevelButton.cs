@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Gambetto.Scripts.UI
@@ -5,7 +6,8 @@ namespace Gambetto.Scripts.UI
     public class LevelButton : MonoBehaviour
     {
         public string levelName;
-        public string nextLevelName;
+
+        public List<string> nextLevels;
 
         public void BackMenu()
         {
@@ -20,7 +22,7 @@ namespace Gambetto.Scripts.UI
         public void LoadLevel()
         {
             LevelSelector.instance.LoadLevel(levelName);
-            GameManager.Instance.nextLevel = nextLevelName;
+            GameManager.Instance.nextLevels = nextLevels;
         }
     }
 }

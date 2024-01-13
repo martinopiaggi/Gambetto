@@ -8,6 +8,7 @@ using Gambetto.Scripts.UI;
 using Gambetto.Scripts.Utils;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 using Behaviour = Gambetto.Scripts.GameCore.Room.Behaviour;
 
@@ -837,7 +838,7 @@ namespace Gambetto.Scripts.GameCore.Grid
                 AudioManager.Instance.PlaySfx(AudioManager.Instance.levelFinished);
 
                 if (GameManager.Instance != null)
-                    GameManager.Instance.SetLevelStatus(GameManager.Instance.nextLevel, true);
+                    GameManager.Instance.SetLevelStatus(GameManager.Instance.GetNextLevel(SceneManager.GetActiveScene().name), true);
 
                 pauseButton.SetActive(false);
                 playerController.choosing = false;

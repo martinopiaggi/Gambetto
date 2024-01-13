@@ -23,9 +23,7 @@ namespace Gambetto.Scripts.UI
                 var button = Instantiate(buttonPrefab, transform);
                 button.name = levelName;
                 button.GetComponent<LevelButton>().levelName = levelName;
-                if (i < levelNames.Count)
-                    button.GetComponent<LevelButton>().nextLevelName = levelNames[i];
-
+                button.GetComponent<LevelButton>().nextLevels = levelNames;
                 // get the text component of the child of the button
                 button.GetComponentInChildren<TMPro.TextMeshProUGUI>().text =
                     RomanNumeralGenerator.GenerateNumeral(i);
