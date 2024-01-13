@@ -145,7 +145,7 @@ namespace Gambetto.Scripts.GameCore.Room
                 { "♖", MatrixValue.Rook },
                 { "R", MatrixValue.Rook },
                 { "♘", MatrixValue.Knight },
-                { "KN", MatrixValue.Rook },
+                { "KN", MatrixValue.Knight },
                 { "♗", MatrixValue.Bishop },
                 { "B", MatrixValue.Bishop },
                 { "♛", MatrixValue.Queen },
