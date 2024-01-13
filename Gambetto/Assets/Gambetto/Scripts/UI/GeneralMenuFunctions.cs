@@ -44,12 +44,14 @@ namespace Gambetto.Scripts.UI
 
         public void LoadNextLevel()
         {
-            if (GameManager.Instance.nextLevel == SceneManager.GetActiveScene().name)
+            
+            var nextLevel = GameManager.Instance.GetNextLevel(SceneManager.GetActiveScene().name);
+            if (nextLevel == SceneManager.GetActiveScene().name)
             {
                 BackToLevels();
                 return;
             }
-            GameManager.Instance.sceneTransition.CrossFade(GameManager.Instance.nextLevel);
+            GameManager.Instance.sceneTransition.CrossFade(nextLevel);
 
             //todo: set the GameManager.Instance.nextLevel to the next level
 

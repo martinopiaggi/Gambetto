@@ -42,7 +42,19 @@ namespace Gambetto.Scripts
             return status;
         }
 
-        public string nextLevel;
+        public List<string> nextLevels;
+
+        public string GetNextLevel(string currentLevel)
+        {
+            var index = nextLevels.IndexOf(currentLevel);
+            if (index == -1)
+                return currentLevel;
+
+            //return only if exists
+            if (index + 1 < nextLevels.Count)
+                return nextLevels[index + 1];
+            return currentLevel;
+        }
 
         private void Awake()
         {
