@@ -25,6 +25,8 @@ namespace Gambetto.Scripts.GameCore.Piece.Types
         )
         {
             Rb.useGravity = false; // enable/disable gravity
+            //disable the collider so the piece can move through other pieces
+            DisableColliders();
 
             foreach (var destPosition in positions)
             {
@@ -47,6 +49,7 @@ namespace Gambetto.Scripts.GameCore.Piece.Types
                 }
             }
             Rb.useGravity = true;
+            EnableColliders(); //Re-enable collidersS
 
             // in the knight we check if its grounded after all the moves, so it cant fall while moving
             // over gaps
