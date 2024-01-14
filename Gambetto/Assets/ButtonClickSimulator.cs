@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class ButtonClickSimulator : MonoBehaviour
 {
-    public Button pauseButton; 
+    public Button pauseButton;
 
     // Update is called once per frame
     void Update()
@@ -12,11 +12,10 @@ public class ButtonClickSimulator : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             // Simulat the click of the pause button
-            if (pauseButton.interactable)
+            if (pauseButton.interactable && pauseButton.gameObject.activeInHierarchy)
             {
                 pauseButton.onClick.Invoke();
             }
         }
-        
     }
 }
