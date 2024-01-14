@@ -52,7 +52,7 @@ namespace Gambetto.Scripts.GameCore.Piece
 
         private protected Transform TR;
         private protected Rigidbody Rb;
-        private Collider[] _colliders;
+        private protected Collider[] _colliders;
 
         private Coroutine _moveCoroutine;
         private List<Vector3> _oldPositions;
@@ -199,7 +199,7 @@ namespace Gambetto.Scripts.GameCore.Piece
             return Physics.Raycast(transform.position, Vector3.down, 10.0f);
         }
 
-        private void DisableColliders()
+        private protected void DisableColliders()
         {
             foreach (var col in _colliders)
             {
@@ -207,7 +207,7 @@ namespace Gambetto.Scripts.GameCore.Piece
             }
         }
 
-        private void EnableColliders()
+        private protected void EnableColliders()
         {
             foreach (var col in _colliders)
             {
