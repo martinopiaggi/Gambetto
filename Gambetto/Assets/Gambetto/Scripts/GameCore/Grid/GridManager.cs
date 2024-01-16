@@ -841,7 +841,7 @@ namespace Gambetto.Scripts.GameCore.Grid
                 {
                     GameManager.Instance.SetLevelCompleted(SceneManager.GetActiveScene().name);
                 }
-                
+
                 pauseButton.SetActive(false);
                 playerController.choosing = false;
                 StartCoroutine(ShowDelayed(_endLevelMenu, 3.0f));
