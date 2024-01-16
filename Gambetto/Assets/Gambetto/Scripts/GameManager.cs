@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using Gambetto.Scripts.UI;
 using Newtonsoft.Json;
+using UnityEditor.PackageManager;
 using UnityEngine;
+using Object = System.Object;
 
 namespace Gambetto.Scripts
 {
@@ -21,16 +23,24 @@ namespace Gambetto.Scripts
             set => allLevelsUnlocked = value;
         }
 
-        private string _saveDataPath;
+        private string _nextLevelsSaveDataPath;
+        private string _levelsCompletedSaveDataPath;
 
         //levels have a false status if they are locked
         private Dictionary<string, bool> _levelStatus = new();
+        
+        private Dictionary<string, bool> _levelsCompleted = new();
 
-        public void SetLevelStatus(string levelName, bool status)
+        public void SetLevelCompleted(string levelName)
         {
-            _levelStatus[levelName] = status;
-            if (!allLevelsUnlocked)
-                SaveData();
+            // set level as completed
+            _levelsCompleted[levelName] = true;
+            SaveData(_levelsCompleted, _levelsCompletedSaveDataPath);
+            
+            // unlock the next level
+            var nextLevel = GetNextLevel(levelName);
+            _levelStatus[nextLevel] = true;
+            SaveData(_levelStatus, _nextLevelsSaveDataPath);
         }
 
         public bool GetLevelStatus(string levelName)
@@ -41,9 +51,16 @@ namespace Gambetto.Scripts
             _levelStatus.TryGetValue(levelName, out var status);
             return status;
         }
-
+        
+        public int GetLevelCount(bool  onlyCompleted = false)
+        {
+            return onlyCompleted ? _levelsCompleted.Count : _levelStatus.Count;
+        }
+        
         public List<string> nextLevels;
 
+        /// <param name="currentLevel">level to get the next level of</param>
+        /// <returns>returns the next level if exists, otherwise returns the current level</returns>
         public string GetNextLevel(string currentLevel)
         {
             var index = nextLevels.IndexOf(currentLevel);
@@ -60,7 +77,9 @@ namespace Gambetto.Scripts
         {
             allLevelsUnlocked = PlayerPrefs.GetInt("AllLevelsUnlocked", 0) == 1;
                 
-            _saveDataPath = Application.persistentDataPath + "/level_data.json";
+            _nextLevelsSaveDataPath = Application.persistentDataPath + "/level_data.json";
+            _levelsCompletedSaveDataPath = Application.persistentDataPath + "/completed_data.json";
+            
             // get the names of all levels in the build settings
             for (
                 var i = 2;
@@ -103,17 +122,15 @@ namespace Gambetto.Scripts
             AudioManager.Instance.PlayBackground(AudioManager.Instance.menuBackground);
         }
 
-        private void SaveData()
+        private void SaveData(object dataToSave, string path)
         {
-            var json = JsonConvert.SerializeObject(_levelStatus);
-            File.WriteAllText(_saveDataPath, json);
+            var json = JsonConvert.SerializeObject(dataToSave);
+            File.WriteAllText(path, json);
         }
 
         private void LoadData()
         {
-            if (!File.Exists(_saveDataPath))
-                return;
-            var json = File.ReadAllText(_saveDataPath);
+            var json = ReadFile(_nextLevelsSaveDataPath);
             if (json == string.Empty)
                 return;
 
@@ -123,6 +140,24 @@ namespace Gambetto.Scripts
             {
                 _levelStatus[key] = value;
             }
+            
+            json = ReadFile(_levelsCompletedSaveDataPath);
+            if (json == string.Empty)
+                return;
+            
+            data = JsonConvert.DeserializeObject<Dictionary<string, bool>>(json);
+            
+            foreach (var (key, value) in data)
+            {
+                _levelsCompleted[key] = value;
+            }
+        }
+        
+        private static string ReadFile(string path) {
+            if (File.Exists(path)) 
+                return File.ReadAllText(path);
+            Debug.LogError("File "+path+ " not found");
+            return string.Empty;
         }
     }
 }

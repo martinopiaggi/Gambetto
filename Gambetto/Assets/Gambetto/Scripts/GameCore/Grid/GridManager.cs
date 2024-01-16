@@ -838,8 +838,10 @@ namespace Gambetto.Scripts.GameCore.Grid
                 AudioManager.Instance.PlaySfx(AudioManager.Instance.levelFinished);
 
                 if (GameManager.Instance != null)
-                    GameManager.Instance.SetLevelStatus(GameManager.Instance.GetNextLevel(SceneManager.GetActiveScene().name), true);
-
+                {
+                    GameManager.Instance.SetLevelCompleted(SceneManager.GetActiveScene().name);
+                }
+                
                 pauseButton.SetActive(false);
                 playerController.choosing = false;
                 StartCoroutine(ShowDelayed(_endLevelMenu, 3.0f));
