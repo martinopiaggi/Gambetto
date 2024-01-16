@@ -173,7 +173,7 @@ namespace Gambetto.Scripts.GameCore
         {
             var queue = new Queue<(Cell, List<Cell>)>();
             var visited = new HashSet<Cell>();
-            queue.Enqueue((startCell, new List<Cell>()));
+            queue.Enqueue((startCell, new List<Cell> { }));
             var tempListMoves = new List<Vector3>();
             var initialCell = startCell;
 
@@ -182,17 +182,16 @@ namespace Gambetto.Scripts.GameCore
                 var (currentCell, path) = queue.Dequeue();
                 if (currentCell.Equals(playerCell)) // end of the algorithm
                 {
-                    if (path.Count < 1) // this is a "pezzo di scotch" to fix a bug
-                        return false;
-                    
-                    
-                    startCell = path[0];
+                    // path will be empty if the enemy is already on the player cell
+                    startCell = path.Count > 0 ? path[0] : startCell;
                     tempListMoves.Add(startCell.GetGlobalCoordinates());
                     _chosenMoves[piece] = startCell;
                     if (piece.PieceType.Equals(PieceType.Knight))
                     {
-                        tempListMoves = ComputeKnightMovementPattern(initialCell.GetGlobalCoordinates(),
-                            startCell.GetGlobalCoordinates());
+                        tempListMoves = ComputeKnightMovementPattern(
+                            initialCell.GetGlobalCoordinates(),
+                            startCell.GetGlobalCoordinates()
+                        );
                     }
                     _movePaths[piece] = tempListMoves;
                     return true;
