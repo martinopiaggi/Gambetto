@@ -8,6 +8,11 @@ namespace Gambetto.Scripts.UI
         {
             GameManager.Instance.sceneTransition.CrossFade(1);
         }
+        
+        public void OpenCredits()
+        {
+            GameManager.Instance.sceneTransition.CrossFade("CreditsScene");
+        }
 
         public void QuitGame()
         {
