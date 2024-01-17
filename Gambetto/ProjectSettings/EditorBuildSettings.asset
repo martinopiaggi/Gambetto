@@ -59,4 +59,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Gambetto/Scenes/Levels/Final/Bobby/milo-PawnEscort/PawnEscort.unity
     guid: 048851854f3774f4ab4cc9ae3a7b4822
+  - enabled: 1
+    path: Assets/Gambetto/Scenes/CreditsScene.unity
+    guid: 1856a6b8b7e925c449c3dad5cd160baf
   m_configObjects: {}

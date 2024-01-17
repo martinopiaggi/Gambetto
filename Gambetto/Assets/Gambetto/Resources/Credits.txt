@@ -1,0 +1,22 @@
+Gambetto:
+
+An Idea by:
+Martino Piaggi
+
+Game Design & Programming:
+Martino Piaggi
+Matteo Ianini
+Lorenzo Morelli
+Milo Brontesi
+Mario Vallone
+
+Music & Sound Design:
+Milo Brontesi
+Lorenzo Morelli
+
+
+Sound Effects Used:
+whoosh - by ztrees1
+level-up-01 - by rhodesmas
+menu-selection-click - by nenadsimic
+marimba - by InspectorJ
