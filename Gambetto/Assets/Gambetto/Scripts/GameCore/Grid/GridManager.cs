@@ -7,6 +7,7 @@ using Gambetto.Scripts.GameCore.Room;
 using Gambetto.Scripts.UI;
 using Gambetto.Scripts.Utils;
 using Unity.Mathematics;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
@@ -66,6 +67,9 @@ namespace Gambetto.Scripts.GameCore.Grid
         [SerializeField]
         public GameObject endLevel;
 
+        [SerializeField]
+        public GameObject keyTile;
+        
         [SerializeField]
         public GameObject deathScreen;
 
@@ -517,6 +521,9 @@ namespace Gambetto.Scripts.GameCore.Grid
             _initialEnemiesPositions.Add(pieceObj.GetComponent<Piece.Piece>(), cell);
         }
 
+        Cell _key;
+        Cell _door;
+        
         /// <summary>
         /// This method is used to support the creation of power ups/ end of level
         /// and to store them in a dictionary (_powerUps) or in a variable (_endLevelCell)
@@ -525,6 +532,15 @@ namespace Gambetto.Scripts.GameCore.Grid
         {
             switch (square.Value)
             {
+                case RoomLayout.MatrixValue.Key: //Key
+                    _key = cell;
+                    InstantiatePowerUp(keyTile, PieceType.Pawn, cell);
+                    break;
+                case RoomLayout.MatrixValue.Door: //door
+                    _door = cell;
+                    _door.SetEmpty();
+                    EndOfLevelEffect.instance.AddDoorCoords(cell.GetGlobalCoordinates());
+                    break;
                 case RoomLayout.MatrixValue.PB: //Bishop power up
                     InstantiatePowerUp(bishopPowerUp, PieceType.Bishop, cell);
                     break;
@@ -551,6 +567,8 @@ namespace Gambetto.Scripts.GameCore.Grid
             }
         }
 
+        
+        
         private void InstantiatePowerUp(
             GameObject prefab,
             PieceType type,
@@ -563,8 +581,12 @@ namespace Gambetto.Scripts.GameCore.Grid
                 cell.GetGlobalCoordinates() + new Vector3(0, 0.001f, 0),
                 quaternion.identity
             );
-            var bishop = new PowerUp(type, powerUpObj, cell);
-            _powerUps.Add(bishop, cell);
+            if (prefab != keyTile)
+            {
+                var obj = new PowerUp(type, powerUpObj, cell);
+                _powerUps.Add(obj, cell);
+            }
+            
             EndOfLevelEffect.instance.AddPowerUp(powerUpObj);
         }
 
