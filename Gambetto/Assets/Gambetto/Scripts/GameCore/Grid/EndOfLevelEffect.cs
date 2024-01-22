@@ -79,6 +79,18 @@ namespace Gambetto.Scripts.GameCore.Grid
             }
         }
 
+        private GameObject door; 
+        
+        public void AddDoorCoords(Vector3 coords)
+        {
+            foreach (var cube in _cubes.Where(cube => (cube.transform.position.x == coords.x && cube.transform.position.z == coords.z)))
+            {
+                cube.GetComponent<MeshRenderer>().material.color = Color.red;
+                Debug.Log("found door");
+                door = cube;
+            }
+        }
+
         private IEnumerator<WaitForSeconds> EndOfLevelEffectCoroutine()
         {
             // hide all powerups
