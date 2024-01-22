@@ -7,7 +7,7 @@ using UnityEngine;
 // static class to hold the cubes that are in the end of level effect
 namespace Gambetto.Scripts.GameCore.Grid
 {
-    public class EndOfLevelEffect : MonoBehaviour
+    public class CubesRuntimeManager : MonoBehaviour
     {
         [SerializeField]
         private Camera _cam;
@@ -20,7 +20,7 @@ namespace Gambetto.Scripts.GameCore.Grid
         private Vector3 _exitCoords;
 
         // singleton
-        public static EndOfLevelEffect instance;
+        public static CubesRuntimeManager instance;
 
         private void Awake()
         {

@@ -224,7 +224,7 @@ namespace Gambetto.Scripts.GameCore.Grid
         {
             GameClock.Instance.StopClock();
             //after the effects, all the cubes are in the fog, resetting positions:
-            EndOfLevelEffect.instance.ResetEndOfLevelEffect();
+            CubesRuntimeManager.instance.ResetEndOfLevelEffect();
             _enemies.Clear();
             _enemies = new Dictionary<Piece.Piece, Cell>(_initialEnemiesPositions);
             _playerCell = _initialPlayerCell;
@@ -539,7 +539,7 @@ namespace Gambetto.Scripts.GameCore.Grid
                 case RoomLayout.MatrixValue.Door: //door
                     _door = cell;
                     _door.SetEmpty();
-                    EndOfLevelEffect.instance.AddDoorCoords(cell.GetGlobalCoordinates());
+                    CubesRuntimeManager.instance.AddDoorCoords(cell.GetGlobalCoordinates());
                     break;
                 case RoomLayout.MatrixValue.PB: //Bishop power up
                     InstantiatePowerUp(bishopPowerUp, PieceType.Bishop, cell);
@@ -560,7 +560,7 @@ namespace Gambetto.Scripts.GameCore.Grid
                         cell.GetGlobalCoordinates() + new Vector3(0, 0.001f, 0),
                         quaternion.identity
                     );
-                    EndOfLevelEffect.instance.AddExitCoords(cell.GetGlobalCoordinates());
+                    CubesRuntimeManager.instance.AddExitCoords(cell.GetGlobalCoordinates());
                     break;
                 default:
                     return;
@@ -587,7 +587,7 @@ namespace Gambetto.Scripts.GameCore.Grid
                 _powerUps.Add(obj, cell);
             }
             
-            EndOfLevelEffect.instance.AddPowerUp(powerUpObj);
+            CubesRuntimeManager.instance.AddPowerUp(powerUpObj);
         }
 
         /// <summary>
@@ -846,7 +846,7 @@ namespace Gambetto.Scripts.GameCore.Grid
 
                 ExecuteAfterDelay(
                     0.5f,
-                    () => EndOfLevelEffect.instance.FireEffect(_playerPiece.gameObject)
+                    () => CubesRuntimeManager.instance.FireEffect(_playerPiece.gameObject)
                 );
 
                 // but they don't fall
