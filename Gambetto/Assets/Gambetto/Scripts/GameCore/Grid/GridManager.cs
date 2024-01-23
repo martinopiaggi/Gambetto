@@ -195,11 +195,21 @@ namespace Gambetto.Scripts.GameCore.Grid
                     cpuBehavior.ComputeCPUMoves(_playerCell, _enemies);
                     UpdateEnemiesPosition();
                     CheckPowerUp();
+                    CheckKeyDoor();
                 }
                 playerController.StartChoosing(_playerPiece, _playerCell);
             }
         }
 
+        private void CheckKeyDoor()
+        {
+            if (_playerCell == _key && _door.IsEmpty())
+            {
+                _door.SetEmpty(false);
+                CubesRuntimeManager.instance.DoorIsOpen(true);
+            }
+        }
+        
         public Cell GetPlayerPosition()
         {
             return _playerCell;
@@ -253,6 +263,7 @@ namespace Gambetto.Scripts.GameCore.Grid
             _playerPiece = playerObj.GetComponent<Piece.Piece>();
             _playerPiece.PieceRole = PieceRole.Player;
             ResetPowerUps();
+            ResetDoor();
             isDead = false;
             pauseButton.SetActive(true);
             GameClock.Instance.StartClock();
@@ -587,7 +598,7 @@ namespace Gambetto.Scripts.GameCore.Grid
                 _powerUps.Add(obj, cell);
             }
             
-            CubesRuntimeManager.instance.AddPowerUp(powerUpObj);
+            CubesRuntimeManager.instance.AddTile(powerUpObj);
         }
 
         /// <summary>
@@ -948,5 +959,12 @@ namespace Gambetto.Scripts.GameCore.Grid
             }
             GameClock.Instance.ChangeClockPeriod(GameClock.DefaultClockPeriod);
         }
+
+        private void ResetDoor()
+        {
+            CubesRuntimeManager.instance.DoorIsOpen(false, true);
+            _door.SetEmpty();
+        }
+
     }
 }

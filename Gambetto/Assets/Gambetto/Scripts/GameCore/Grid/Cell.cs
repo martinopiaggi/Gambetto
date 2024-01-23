@@ -32,10 +32,11 @@ namespace Gambetto.Scripts.GameCore.Grid
         }
 
         public bool IsEmpty() => _empty;
-
-        public void SetEmpty()
+        
+        // by default is true 
+        public void SetEmpty(bool isEmpty = true)
         {
-            _empty = true;
+            _empty = isEmpty;
         }
 
         public void SetNext(Vector2Int dir, Cell next)
