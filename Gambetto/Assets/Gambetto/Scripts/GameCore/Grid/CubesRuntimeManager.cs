@@ -31,6 +31,8 @@ namespace Gambetto.Scripts.GameCore.Grid
             instance = this;
         }
 
+        
+        
         public void FireEffect(GameObject target)
         {
             _fired = true;
@@ -85,11 +87,59 @@ namespace Gambetto.Scripts.GameCore.Grid
         {
             foreach (var cube in _cubes.Where(cube => (cube.transform.position.x == coords.x && cube.transform.position.z == coords.z)))
             {
-                cube.GetComponent<MeshRenderer>().material.color = Color.red;
                 Debug.Log("found door");
                 door = cube;
             }
+            //set the cube (the door) closed by default (aka move down the cube)
+            DoorIsOpen(false,true);
         }
+        
+        //method used to move down door
+        public void DoorIsOpen(bool isOpen,bool skipAnimation = false)
+        {
+            StartCoroutine(MoveDoorCoroutine(isOpen,skipAnimation));
+        }
+        
+        
+        private const float DoorMoveDistance = 2.5f; // Total distance to move the door
+        private const float DoorMoveSpeed = 5f; // Speed at which the door moves
+
+        private IEnumerator MoveDoorCoroutine(bool isOpen, bool skipAnimation = false)
+        {
+            float elapsedTime = 0f; // Time elapsed since the start of the animation
+            Vector3 direction = isOpen ? Vector3.up : Vector3.down; // Direction of the door's movement
+            float totalMovement = 0f; // Total movement accumulated
+
+            // Calculate the target position based on the opening state
+            Vector3 originalPosition = door.transform.position;
+            Vector3 targetPosition = originalPosition + direction * DoorMoveDistance;
+
+            while (totalMovement < DoorMoveDistance && !skipAnimation)
+            {
+                // Calculate movement for this frame and update the total movement
+                float frameMovement = DoorMoveSpeed * Time.deltaTime;
+                totalMovement += frameMovement;
+
+                // Move the door
+                door.transform.position += direction * frameMovement;
+
+                // Ensure we do not overshoot the target position
+                if (totalMovement > DoorMoveDistance)
+                {
+                    door.transform.position = targetPosition;
+                    break;
+                }
+
+                // Update elapsed time
+                elapsedTime += Time.deltaTime;
+
+                // Wait for the next frame before the next update
+                yield return new WaitForSeconds(0.01f);
+            }
+
+            door.transform.position = targetPosition; //force position
+        }
+
 
         private IEnumerator<WaitForSeconds> EndOfLevelEffectCoroutine()
         {
@@ -168,7 +218,7 @@ namespace Gambetto.Scripts.GameCore.Grid
             _cubes.Add(cube);
         }
 
-        public void AddPowerUp(GameObject powerUp)
+        public void AddTile(GameObject powerUp)
         {
             _powerUps.Add(powerUp);
         }
