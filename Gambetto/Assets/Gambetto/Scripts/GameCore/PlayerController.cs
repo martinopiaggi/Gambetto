@@ -93,28 +93,29 @@ namespace Gambetto.Scripts.GameCore
             var j = 0;
             var numberOfMoves = _possibleMovements.Count;
             var firstShowingPeriod = (clockPeriod / numberOfMoves) * 1.35f;
-            var showingPeriod = 0.0f;
-            if (numberOfMoves > 1) showingPeriod = (clockPeriod - firstShowingPeriod) / (numberOfMoves - 1);
-            else showingPeriod = firstShowingPeriod;
+            var showingPeriod =
+                numberOfMoves > 1
+                    ? (clockPeriod - firstShowingPeriod) / (numberOfMoves - 1)
+                    : firstShowingPeriod;
             // start the cycle from the first move in the direction of the last move
             while (j < numberOfMoves)
             {
                 AudioManager.Instance.PlaySfx(AudioManager.Instance.clockTick);
-                var move = _possibleMovements[i];
-                var movePath = _possibleMovementsPath[i];
                 if (choosing == false)
                     break;
+                _possibleChoice = _possibleMovements[i];
+                _possiblePath = _possibleMovementsPath[i];
                 _selectedSquare.SetActive(true);
                 _selectedSquare.transform.position =
-                    move.GetGlobalCoordinates() + new Vector3(0, 0.0001f, 0);
-                _possibleChoice = move;
-                _possiblePath = movePath;
+                    _possibleChoice.GetGlobalCoordinates() + new Vector3(0, 0.0001f, 0);
                 // the first moves have a bit more time
-                if(j==0) yield return new WaitForSeconds(firstShowingPeriod);
-                else yield return new WaitForSeconds(showingPeriod);
+                yield return j == 0
+                    ? new WaitForSeconds(firstShowingPeriod)
+                    : new WaitForSeconds(showingPeriod);
                 i = (i + 1) % _possibleMovements.Count;
                 j++;
             }
+
             _selectedSquare.SetActive(false);
         }
     }
