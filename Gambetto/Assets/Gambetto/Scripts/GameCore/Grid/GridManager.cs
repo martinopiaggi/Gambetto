@@ -203,11 +203,11 @@ namespace Gambetto.Scripts.GameCore.Grid
 
         private void CheckKeyDoor()
         {
-            if (_playerCell == _key && _door.IsEmpty())
-            {
-                _door.SetEmpty(false);
-                CubesRuntimeManager.instance.DoorIsOpen(true);
-            }
+            if (_playerCell != _key) return;
+            if (_doors.Count == 0) return;
+            if (!_doors[0].IsEmpty()) return; //it means that the doors are already open
+            foreach (var door in _doors) door.SetEmpty(false);
+            CubesRuntimeManager.instance.ToggleAllDoors(true);
         }
         
         public Cell GetPlayerPosition()
@@ -533,7 +533,7 @@ namespace Gambetto.Scripts.GameCore.Grid
         }
 
         Cell _key;
-        Cell _door;
+        private List<Cell> _doors = new List<Cell>();
         
         /// <summary>
         /// This method is used to support the creation of power ups/ end of level
@@ -548,8 +548,8 @@ namespace Gambetto.Scripts.GameCore.Grid
                     InstantiatePowerUp(keyTile, PieceType.Pawn, cell);
                     break;
                 case RoomLayout.MatrixValue.Door: //door
-                    _door = cell;
-                    _door.SetEmpty();
+                    _doors.Add(cell);
+                    cell.SetEmpty();
                     CubesRuntimeManager.instance.AddDoorCoords(cell.GetGlobalCoordinates());
                     break;
                 case RoomLayout.MatrixValue.PB: //Bishop power up
@@ -962,8 +962,10 @@ namespace Gambetto.Scripts.GameCore.Grid
 
         private void ResetDoor()
         {
-            CubesRuntimeManager.instance.DoorIsOpen(false, true);
-            _door.SetEmpty();
+            if (_doors.Count == 0) return;
+            if (_doors[0].IsEmpty()) return; //it means that the doors are already open
+            CubesRuntimeManager.instance.ToggleAllDoors(false, true);
+            foreach (var door in _doors)door.SetEmpty();
         }
 
     }
