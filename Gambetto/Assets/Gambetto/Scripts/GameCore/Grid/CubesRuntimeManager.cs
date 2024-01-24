@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 // static class to hold the cubes that are in the end of level effect
 namespace Gambetto.Scripts.GameCore.Grid
@@ -80,67 +81,61 @@ namespace Gambetto.Scripts.GameCore.Grid
                 yield return null;
             }
         }
-
-        private GameObject door; 
+        
+        private List<GameObject> doors = new List<GameObject>();
         
         public void AddDoorCoords(Vector3 coords)
         {
             foreach (var cube in _cubes.Where(cube => (cube.transform.position.x == coords.x && cube.transform.position.z == coords.z)))
             {
                 Debug.Log("found door");
-                door = cube;
+                doors.Add(cube);
+                StartCoroutine(MoveDoorCoroutine(cube, false,true));
             }
-            //set the cube (the door) closed by default (aka move down the cube)
-            DoorIsOpen(false,true);
         }
         
-        //method used to move down door
-        public void DoorIsOpen(bool isOpen,bool skipAnimation = false)
+        //method used to open and closed all doors 
+        public void ToggleAllDoors(bool isOpen,bool skipAnimation = false)
         {
-            StartCoroutine(MoveDoorCoroutine(isOpen,skipAnimation));
+            foreach (var door in doors)
+            {
+                StartCoroutine(MoveDoorCoroutine(door, isOpen,skipAnimation));
+            }
         }
         
-        
-        private const float DoorMoveDistance = 2.5f; // Total distance to move the door
-        private const float DoorMoveSpeed = 5f; // Speed at which the door moves
 
-        private IEnumerator MoveDoorCoroutine(bool isOpen, bool skipAnimation = false)
+        private IEnumerator MoveDoorCoroutine(GameObject door, bool isOpen, bool skipAnimation = false)
         {
+            float doorMoveDistance = 7f; // Total distance to move the door
+            float doorMoveSpeed = 10f + 4f *  Random.value; // Speed at which the door moves
             float elapsedTime = 0f; // Time elapsed since the start of the animation
             Vector3 direction = isOpen ? Vector3.up : Vector3.down; // Direction of the door's movement
             float totalMovement = 0f; // Total movement accumulated
 
             // Calculate the target position based on the opening state
             Vector3 originalPosition = door.transform.position;
-            Vector3 targetPosition = originalPosition + direction * DoorMoveDistance;
+            Vector3 targetPosition = originalPosition + direction * doorMoveDistance;
 
-            while (totalMovement < DoorMoveDistance && !skipAnimation)
+            while (totalMovement < doorMoveDistance && !skipAnimation)
             {
                 // Calculate movement for this frame and update the total movement
-                float frameMovement = DoorMoveSpeed * Time.deltaTime;
+                float frameMovement = doorMoveSpeed * Time.deltaTime;
                 totalMovement += frameMovement;
-
-                // Move the door
                 door.transform.position += direction * frameMovement;
-
-                // Ensure we do not overshoot the target position
-                if (totalMovement > DoorMoveDistance)
+                
+                if (totalMovement > doorMoveDistance)
                 {
                     door.transform.position = targetPosition;
                     break;
                 }
-
-                // Update elapsed time
+                
                 elapsedTime += Time.deltaTime;
-
-                // Wait for the next frame before the next update
                 yield return new WaitForSeconds(0.01f);
             }
-
+            Debug.Log(" door moved");
             door.transform.position = targetPosition; //force position
         }
-
-
+        
         private IEnumerator<WaitForSeconds> EndOfLevelEffectCoroutine()
         {
             // hide all powerups
