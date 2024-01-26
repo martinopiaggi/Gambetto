@@ -71,6 +71,9 @@ namespace Gambetto.Scripts.GameCore.Grid
         public GameObject keyTile;
         
         [SerializeField]
+        public GameObject bombTile;
+        
+        [SerializeField]
         public GameObject deathScreen;
 
         [SerializeField]
@@ -543,6 +546,10 @@ namespace Gambetto.Scripts.GameCore.Grid
         {
             switch (square.Value)
             {
+                case RoomLayout.MatrixValue.Bomb: //Bomb
+                    //_key = cell;
+                    InstantiatePowerUp(bombTile, PieceType.Pawn, cell);
+                    break;
                 case RoomLayout.MatrixValue.Key: //Key
                     _key = cell;
                     InstantiatePowerUp(keyTile, PieceType.Pawn, cell);
@@ -592,7 +599,7 @@ namespace Gambetto.Scripts.GameCore.Grid
                 cell.GetGlobalCoordinates() + new Vector3(0, 0.001f, 0),
                 quaternion.identity
             );
-            if (prefab != keyTile)
+            if (prefab != (keyTile||bombTile))
             {
                 var obj = new PowerUp(type, powerUpObj, cell);
                 _powerUps.Add(obj, cell);

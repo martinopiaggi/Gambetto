@@ -16,6 +16,10 @@ Possible values for CSV:
 - pb = PB // powerup bishop
 - pr = PR // powerup rook
 - pp = PP // "powerup" pawn
+- UNLOCK = is a key "powerup" 
+- DOOR is a floor which initially is not present and then spawn after the UNLOCK
+  multiple DOOR are associated with the same SINGLE key 
+- BOMB
 
 If for each piece symbol (♟♘♗♛♚)
 you write an identifier (a number from 1 )
