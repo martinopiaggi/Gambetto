@@ -115,6 +115,7 @@ namespace Gambetto.Scripts.GameCore.Room
         public enum MatrixValue
         {
             Empty, // x
+            Bomb,
             Key, // key
             Door, // door
             Floor, // cell with no value
@@ -135,6 +136,7 @@ namespace Gambetto.Scripts.GameCore.Room
         private static readonly Dictionary<string, MatrixValue> CellValueMappings =
             new()
             {
+                { "BOMB", MatrixValue.Bomb },
                 { "PK", MatrixValue.PK },
                 { "PB", MatrixValue.PB },
                 { "PR", MatrixValue.PR },
