@@ -130,8 +130,20 @@ namespace Gambetto.Scripts.GameCore.Grid
                     neighborhoodObjects.Add(cube);
                 }
             }
-            
+
+            _detonatedCubes.AddRange(neighborhoodObjects);
             return neighborhoodObjects;
+        }
+
+        private List<GameObject> _detonatedCubes = new List<GameObject>();
+        
+        public void ResetDetonatedCubes()
+        {
+            foreach (var detonatedCube in _detonatedCubes)
+            {
+                StartCoroutine(MoveDoorCoroutine(detonatedCube, true,true));
+            }
+            _detonatedCubes = new List<GameObject>();
         }
         
 
@@ -248,7 +260,7 @@ namespace Gambetto.Scripts.GameCore.Grid
         {
             _powerUps.Add(powerUp);
         }
-
+        
         public void AddExitCoords(Vector3 coords)
         {
             _exitCoords = coords;
