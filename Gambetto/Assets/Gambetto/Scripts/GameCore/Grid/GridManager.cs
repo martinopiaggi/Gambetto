@@ -199,6 +199,7 @@ namespace Gambetto.Scripts.GameCore.Grid
                     UpdateEnemiesPosition();
                     CheckPowerUp();
                     CheckKeyDoor();
+                    CheckDetonation();
                 }
                 playerController.StartChoosing(_playerPiece, _playerCell);
             }
@@ -212,6 +213,29 @@ namespace Gambetto.Scripts.GameCore.Grid
             foreach (var door in _doors) door.SetEmpty(false);
             CubesRuntimeManager.instance.ToggleAllDoors(true);
         }
+        
+        
+        List<Cell> _bombs = new List<Cell>();
+        
+        private void CheckDetonation()
+        {
+            if (!_bombs.Contains(_playerCell)) return;
+            if(_playerCell.IsEmpty()) return;
+            //find in _bombs the cell which is the same as _playerCell
+            var bomb = _bombs.Find(cell => cell == _playerCell);
+            
+            //set each detonated cell as empty
+            bomb.SetEmpty();
+            foreach(var cell in bomb.Neighborhood())
+            {
+                cell.SetEmpty();
+            }
+            List<Cell> neighborhoodWithBomb = bomb.Neighborhood();
+            neighborhoodWithBomb.Add(bomb);
+            CubesRuntimeManager.instance.DetonateNeighborhood(neighborhoodWithBomb);
+        }
+        
+        
         
         public Cell GetPlayerPosition()
         {
@@ -547,7 +571,7 @@ namespace Gambetto.Scripts.GameCore.Grid
             switch (square.Value)
             {
                 case RoomLayout.MatrixValue.Bomb: //Bomb
-                    //_key = cell;
+                    _bombs.Add(cell);
                     InstantiatePowerUp(bombTile, PieceType.Pawn, cell);
                     break;
                 case RoomLayout.MatrixValue.Key: //Key
