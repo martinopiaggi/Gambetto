@@ -103,6 +103,37 @@ namespace Gambetto.Scripts.GameCore.Grid
             }
         }
         
+        public void DetonateNeighborhood(List<Cell> neighborhood, bool skipAnimation = false)
+        {
+            var crater = RetrieveNeighborhood(neighborhood);
+            foreach (var ripCell in crater)
+            {
+                StartCoroutine(MoveDoorCoroutine(ripCell, false,skipAnimation));
+            }
+        }
+        
+        private List<GameObject> RetrieveNeighborhood(List<Cell> neighborhood)
+        {
+            List<GameObject> neighborhoodObjects = new List<GameObject>();
+            foreach(var cell in neighborhood)
+            {
+                var xCell = cell.GetGlobalCoordinates().x;
+                var zCell = cell.GetGlobalCoordinates().z;
+                
+                foreach (var cube in _cubes)
+                {
+                    
+                    var cubePos = cube.transform.position;
+                    if (cubePos.x != xCell || cubePos.z != zCell) continue;
+                    
+                    Debug.Log("neighbor found, let's fucking detonate it");
+                    neighborhoodObjects.Add(cube);
+                }
+            }
+            
+            return neighborhoodObjects;
+        }
+        
 
         private IEnumerator MoveDoorCoroutine(GameObject door, bool isOpen, bool skipAnimation = false)
         {
