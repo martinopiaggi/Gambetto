@@ -199,7 +199,8 @@ namespace Gambetto.Scripts.GameCore.Grid
                     UpdateEnemiesPosition();
                     CheckPowerUp();
                     CheckKeyDoor();
-                    CheckDetonation();
+                    CheckBombTrigger();
+                    CheckBombExplosion();
                 }
                 playerController.StartChoosing(_playerPiece, _playerCell);
             }
@@ -218,13 +219,39 @@ namespace Gambetto.Scripts.GameCore.Grid
         List<Cell> _bombs = new List<Cell>();
         private List<Cell> _detonatedCells = new List<Cell>();
         
-        private void CheckDetonation()
+        Dictionary<Cell,int> _detonatedCellsTimer = new Dictionary<Cell, int>();  
+        
+        private void CheckBombTrigger()
         {
             if (!_bombs.Contains(_playerCell)) return;
-            if(_playerCell.IsEmpty()) return;
             //find in _bombs the cell which is the same as _playerCell
             var bombCell = _bombs.Find(cell => cell == _playerCell);
+            if (_detonatedCellsTimer.ContainsKey(bombCell)) return; //already activated
             
+            //find the powerup in _powerups which has value = bomb to hide it during explosion
+            var powerUp = _powerUps.Keys.ToList().Find(p => _powerUps[p] == bombCell);
+            powerUp.SetInactive(); //disactivate the powerup
+            _detonatedCellsTimer.Add(bombCell, 3);
+        }
+
+        private void CheckBombExplosion()
+        {
+            if(_detonatedCellsTimer.Count == 0) return;
+            
+            foreach (var cell in _detonatedCellsTimer.Keys.ToList())
+            {
+                _detonatedCellsTimer[cell]--;
+                CubesRuntimeManager.instance.PulsingNeighborhood(cell.Neighborhood());
+                if (_detonatedCellsTimer[cell] == 0)
+                {
+                    BombExplosion(cell);
+                    _detonatedCellsTimer.Remove(cell);
+                }
+            }
+        }
+        
+        private void BombExplosion(Cell bombCell)
+        {
             //find the powerup in _powerups which has value = bomb to hide it during explosion
             var powerUp = _powerUps.Keys.ToList().Find(p => _powerUps[p] == bombCell);
             powerUp.PowerUpObject.SetActive(false);
@@ -235,6 +262,10 @@ namespace Gambetto.Scripts.GameCore.Grid
             
             //set each detonated cell as empty
             foreach(var detonatedCell in bombNeighborhood) detonatedCell.SetEmpty();
+            
+            //kill immediately player if inside the bomb explosion
+            if (bombNeighborhood.Contains(_playerCell)) isDead = true;
+            
             //move down physical cubes of the detonated cells
             CubesRuntimeManager.instance.DetonateNeighborhood(bombNeighborhood);
             

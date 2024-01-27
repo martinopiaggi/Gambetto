@@ -106,11 +106,58 @@ namespace Gambetto.Scripts.GameCore.Grid
         public void DetonateNeighborhood(List<Cell> neighborhood, bool skipAnimation = false)
         {
             var crater = RetrieveNeighborhood(neighborhood);
+            _detonatedCubes.AddRange(crater); //adding to the list of detonated cubes
             foreach (var ripCell in crater)
             {
                 StartCoroutine(ToggleCubeHeight(ripCell, false,skipAnimation));
             }
         }
+
+        public void PulsingNeighborhood(List<Cell> neighborhood)
+        {
+            var crater = RetrieveNeighborhood(neighborhood);
+            foreach (var ripCell in crater)
+            {
+                //adding emessive to the color
+                ripCell.GetComponentInChildren<MeshRenderer>().material.EnableKeyword("_EMISSION");
+                ripCell.GetComponentInChildren<MeshRenderer>().material.SetColor("_EmissionColor", Color.red);
+            }
+            //launch coroutine to cooldown the color
+            StartCoroutine(CooldownNeighborhood(crater));
+        }
+        
+        private IEnumerator CooldownNeighborhood(List<GameObject> neighborhood)
+        {
+            // Cache materials and initial emission colors
+            var materials = new List<(Material, Color)>();
+            foreach (var ripCell in neighborhood)
+            {
+                var renderer = ripCell.GetComponentInChildren<MeshRenderer>();
+                var mat = renderer.material; // Consider using 'sharedMaterial' if materials are shared and changes are non-persistent
+                var emissionColor = mat.GetColor("_EmissionColor");
+                materials.Add((mat, emissionColor));
+            }
+
+            // Define cooldown parameters
+            var cooldownDuration = 1f; // Total duration in seconds to complete the cooldown
+            var elapsedTime = 0f;
+
+            // Cooldown loop
+            while (elapsedTime < cooldownDuration)
+            {
+                foreach (var (material, initialColor) in materials)
+                {
+                    // Calculate the new emission color using Lerp for a smooth transition
+                    Color newEmissionColor = Color.Lerp(initialColor, Color.black, elapsedTime / cooldownDuration);
+                    material.SetColor("_EmissionColor", newEmissionColor);
+                }
+
+                // Increment the elapsed time and wait
+                elapsedTime += 0.01f; // Increment based on your wait time below
+                yield return new WaitForSeconds(0.01f);
+            }
+        }
+
         
         private List<GameObject> RetrieveNeighborhood(List<Cell> neighborhood)
         {
@@ -130,8 +177,6 @@ namespace Gambetto.Scripts.GameCore.Grid
                     neighborhoodObjects.Add(cube);
                 }
             }
-
-            _detonatedCubes.AddRange(neighborhoodObjects);
             return neighborhoodObjects;
         }
 
