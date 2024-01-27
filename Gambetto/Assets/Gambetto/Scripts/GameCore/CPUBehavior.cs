@@ -62,6 +62,9 @@ namespace Gambetto.Scripts.GameCore
 
         private void ComputeNextMove(Piece.Piece piece, Cell cell)
         {
+            //if the enemy is on a detonated cell, it doesn't move
+            if (cell.IsEmpty()) return; 
+            
             //pattern based AI behavior
             if (piece.HasPattern)
             {
