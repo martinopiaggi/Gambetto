@@ -7,7 +7,6 @@ using Gambetto.Scripts.GameCore.Room;
 using Gambetto.Scripts.UI;
 using Gambetto.Scripts.Utils;
 using Unity.Mathematics;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
