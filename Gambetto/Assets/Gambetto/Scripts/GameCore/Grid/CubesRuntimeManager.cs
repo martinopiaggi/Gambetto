@@ -90,16 +90,16 @@ namespace Gambetto.Scripts.GameCore.Grid
             {
                 Debug.Log("found door");
                 doors.Add(cube);
-                StartCoroutine(MoveDoorCoroutine(cube, false,true));
+                StartCoroutine(ToggleCubeHeight(cube, false,true));
             }
         }
         
         //method used to open and closed all doors 
-        public void ToggleAllDoors(bool isOpen,bool skipAnimation = false)
+        public void ToggleAllDoors(bool moveUp,bool skipAnimation = false)
         {
             foreach (var door in doors)
             {
-                StartCoroutine(MoveDoorCoroutine(door, isOpen,skipAnimation));
+                StartCoroutine(ToggleCubeHeight(door, moveUp,skipAnimation));
             }
         }
         
@@ -108,7 +108,7 @@ namespace Gambetto.Scripts.GameCore.Grid
             var crater = RetrieveNeighborhood(neighborhood);
             foreach (var ripCell in crater)
             {
-                StartCoroutine(MoveDoorCoroutine(ripCell, false,skipAnimation));
+                StartCoroutine(ToggleCubeHeight(ripCell, false,skipAnimation));
             }
         }
         
@@ -141,42 +141,39 @@ namespace Gambetto.Scripts.GameCore.Grid
         {
             foreach (var detonatedCube in _detonatedCubes)
             {
-                StartCoroutine(MoveDoorCoroutine(detonatedCube, true,true));
+                StartCoroutine(ToggleCubeHeight(detonatedCube, true,true));
             }
             _detonatedCubes = new List<GameObject>();
         }
         
 
-        private IEnumerator MoveDoorCoroutine(GameObject door, bool isOpen, bool skipAnimation = false)
+        private IEnumerator ToggleCubeHeight(GameObject cube, bool moveUp, bool skipAnimation = false)
         {
-            float doorMoveDistance = 7f; // Total distance to move the door
-            float doorMoveSpeed = 10f + 4f *  Random.value; // Speed at which the door moves
-            float elapsedTime = 0f; // Time elapsed since the start of the animation
-            Vector3 direction = isOpen ? Vector3.up : Vector3.down; // Direction of the door's movement
-            float totalMovement = 0f; // Total movement accumulated
+            const float cubeMoveDistance = 7f; // Total distance to move the door
+            var cubeMoveSpeed = 10f + 4f *  Random.value; // Speed at which the door moves
+            var direction = moveUp ? Vector3.up : Vector3.down; // Direction of the door's movement
+            var totalMovement = 0f; // Total movement accumulated
 
             // Calculate the target position based on the opening state
-            Vector3 originalPosition = door.transform.position;
-            Vector3 targetPosition = originalPosition + direction * doorMoveDistance;
+            Vector3 originalPosition = cube.transform.position;
+            Vector3 targetPosition = originalPosition + direction * cubeMoveDistance;
 
-            while (totalMovement < doorMoveDistance && !skipAnimation)
+            while (totalMovement < cubeMoveDistance && !skipAnimation)
             {
                 // Calculate movement for this frame and update the total movement
-                float frameMovement = doorMoveSpeed * Time.deltaTime;
+                float frameMovement = cubeMoveSpeed * Time.deltaTime;
                 totalMovement += frameMovement;
-                door.transform.position += direction * frameMovement;
+                cube.transform.position += direction * frameMovement;
                 
-                if (totalMovement > doorMoveDistance)
+                if (totalMovement > cubeMoveDistance)
                 {
-                    door.transform.position = targetPosition;
+                    cube.transform.position = targetPosition;
                     break;
                 }
                 
-                elapsedTime += Time.deltaTime;
                 yield return new WaitForSeconds(0.01f);
             }
-            Debug.Log(" door moved");
-            door.transform.position = targetPosition; //force position
+            cube.transform.position = targetPosition; //force position
         }
         
         private IEnumerator<WaitForSeconds> EndOfLevelEffectCoroutine()
