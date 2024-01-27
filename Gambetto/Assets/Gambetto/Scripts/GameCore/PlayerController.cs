@@ -15,6 +15,7 @@ namespace Gambetto.Scripts.GameCore
         private List<Vector3> _possiblePath;
         private List<List<Vector3>> _possibleMovementsPath;
         private GameObject _selectedSquare;
+        private GameObject highlightedSquarePrefab;
         private Coroutine _cycleMovesCoroutine;
         private Vector3 _lastDirection;
 
@@ -28,6 +29,9 @@ namespace Gambetto.Scripts.GameCore
             // In start I create the light used to illuminate the grid
             _selectedSquare = Instantiate(selectedSquarePrefab);
             _selectedSquare.SetActive(false);
+
+            highlightedSquarePrefab = Resources.Load<GameObject>("Prefabs/HighlightedSquare");
+            InitializePooledSquares();
 
             _possibleMovements = new List<Cell>();
             _possibleMovementsPath = new List<List<Vector3>>();
@@ -73,6 +77,7 @@ namespace Gambetto.Scripts.GameCore
             choosing = false;
             ChosenMove = null;
             _selectedSquare.SetActive(false);
+            DeactivateAllSquares();
             _lastDirection = default;
             if (_cycleMovesCoroutine != null)
                 StopCoroutine(_cycleMovesCoroutine);
@@ -108,6 +113,13 @@ namespace Gambetto.Scripts.GameCore
                 _selectedSquare.SetActive(true);
                 _selectedSquare.transform.position =
                     _possibleChoice.GetGlobalCoordinates() + new Vector3(0, 0.0001f, 0);
+
+                HighlightSquares(
+                    PieceMovement.HighlightedCellsForPath(
+                        _currentCell.GetGlobalCoordinates(),
+                        _possibleMovementsPath[i]
+                    )
+                );
                 // the first moves have a bit more time
                 yield return j == 0
                     ? new WaitForSeconds(firstShowingPeriod)
@@ -117,6 +129,52 @@ namespace Gambetto.Scripts.GameCore
             }
 
             _selectedSquare.SetActive(false);
+            DeactivateAllSquares();
+        }
+
+        private readonly List<GameObject> highLightedSquares = new List<GameObject>();
+
+        private const int AmountToPool = 60;
+
+        private void InitializePooledSquares()
+        {
+            var container = new GameObject("Squares");
+            for (var i = 0; i < AmountToPool; i++)
+            {
+                var obj = Instantiate(highlightedSquarePrefab, container.transform);
+                obj.SetActive(false);
+                highLightedSquares.Add(obj);
+            }
+        }
+
+        private void HighlightSquares(List<Vector3> positions)
+        {
+            DeactivateAllSquares();
+            foreach (var t in positions)
+            {
+                var obj = GetPooledObject();
+                if (obj == null)
+                    return;
+                obj.transform.position = t + new Vector3(0, 0.0001f, 0);
+                obj.SetActive(true);
+            }
+        }
+
+        private void DeactivateAllSquares()
+        {
+            highLightedSquares.ForEach(square => square.SetActive(false));
+        }
+
+        private GameObject GetPooledObject()
+        {
+            for (int i = 0; i < AmountToPool; i++)
+            {
+                if (!highLightedSquares[i].activeInHierarchy)
+                {
+                    return highLightedSquares[i];
+                }
+            }
+            return null;
         }
     }
 }

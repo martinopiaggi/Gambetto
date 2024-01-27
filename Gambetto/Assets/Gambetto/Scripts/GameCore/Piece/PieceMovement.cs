@@ -96,5 +96,38 @@ namespace Gambetto.Scripts.GameCore.Piece
 
             return possibleMovement;
         }
+
+        public static List<Vector3> HighlightedCellsForPath(Vector3 pieceCell, List<Vector3> path)
+        {
+            // return coordinates of cells to highlight for the given path
+            var highlightedCells = new List<Vector3>();
+
+            var startCell = pieceCell;
+            foreach (var step in path)
+            {
+                // get a normalized direction vector for each step in the path
+                var direction = step - startCell;
+
+                // transforms the direction vector into a unit vector
+                direction = new Vector3(
+                    direction.x != 0 ? direction.x / Mathf.Abs(direction.x) : 0,
+                    0,
+                    direction.z != 0 ? direction.z / Mathf.Abs(direction.z) : 0
+                );
+
+                var tempCell = startCell;
+
+                while (tempCell != step)
+                {
+                    tempCell += direction;
+                    if (tempCell == step && path.IndexOf(step) == path.Count - 1)
+                        break;
+                    highlightedCells.Add(tempCell);
+                }
+                startCell = step;
+            }
+
+            return highlightedCells;
+        }
     }
 }
