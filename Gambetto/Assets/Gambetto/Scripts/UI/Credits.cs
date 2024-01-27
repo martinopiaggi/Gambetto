@@ -1,19 +1,29 @@
+using System;
+using System.Collections;
 using System.IO;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Gambetto.Scripts.UI
 {
     public class Credits : MonoBehaviour
     {
-        
-        [SerializeField]
-        private TextAsset textAsset;
-        // Start is called before the first frame update
-        void Start()
+        private Scrollbar scrollbar;
+        private const float ScrollSpeed = 0.001f;
+        private bool isAutoScrolling = true;
+
+        private void Awake()
         {
-            var text = textAsset.text;
-            var textMesh = gameObject.GetComponent<TMPro.TextMeshProUGUI>();
-            textMesh.text = text;
+            scrollbar = GetComponent<Scrollbar>();
+            scrollbar.value = 1;
+        }
+
+        private void FixedUpdate()
+        {
+            if (scrollbar.value > 0 && isAutoScrolling)
+                scrollbar.value -= ScrollSpeed;
+            else
+                isAutoScrolling = false;
         }
     }
 }
