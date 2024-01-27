@@ -15,4 +15,6 @@ MonoBehaviour:
   topologyDescription: bomb
   roomCsvTextAsset: {fileID: 4900000, guid: 6f0c19fd160d99b489c0664588b72f8f, type: 3}
   exitSide: {x: 1, y: 0}
-  behaviours: []
+  behaviours:
+  - {fileID: 11400000, guid: 2a7921ad92cf8c143aef981cb31b8410, type: 2}
+  - {fileID: 11400000, guid: 81b537f8ded2f534ab30e38fbc8f151e, type: 2}
