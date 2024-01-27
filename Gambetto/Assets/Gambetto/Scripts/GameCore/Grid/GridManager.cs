@@ -330,6 +330,7 @@ namespace Gambetto.Scripts.GameCore.Grid
             ResetPowerUps();
             ResetDoor();
             ResetDetonatedCells();
+            ResetBombTimers();
             isDead = false;
             pauseButton.SetActive(true);
             GameClock.Instance.StartClock();
@@ -1045,6 +1046,11 @@ namespace Gambetto.Scripts.GameCore.Grid
             CubesRuntimeManager.instance.ResetDetonatedCubes();
             
             _detonatedCells.Clear(); //clear the list of detonated cells IMPORTANT
+        }
+        
+        private void ResetBombTimers()
+        {
+            _detonatedCellsTimer.Clear();
         }
 
     }
