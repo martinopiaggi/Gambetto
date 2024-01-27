@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.1815466, g: 0.22718978, b: 0.3074084, a: 1}
+  m_IndirectSpecularColor: {r: 0.17757934, g: 0.22232315, b: 0.30451885, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -170,37 +170,37 @@ PrefabInstance:
     - target: {fileID: 6595917538710946094, guid: fdbeda54be644584db01138afc1a0104,
         type: 3}
       propertyPath: liveEdit
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6595917538710946094, guid: fdbeda54be644584db01138afc1a0104,
         type: 3}
       propertyPath: fogColor.b
-      value: 1
+      value: 0.9333334
       objectReference: {fileID: 0}
     - target: {fileID: 6595917538710946094, guid: fdbeda54be644584db01138afc1a0104,
         type: 3}
       propertyPath: fogColor.g
-      value: 0.58000004
+      value: 0.70980394
       objectReference: {fileID: 0}
     - target: {fileID: 6595917538710946094, guid: fdbeda54be644584db01138afc1a0104,
         type: 3}
       propertyPath: fogColor.r
-      value: 0.6999999
+      value: 0.7607844
       objectReference: {fileID: 0}
     - target: {fileID: 6595917538710946094, guid: fdbeda54be644584db01138afc1a0104,
         type: 3}
       propertyPath: lateralColor.b
-      value: 0.80392164
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6595917538710946094, guid: fdbeda54be644584db01138afc1a0104,
         type: 3}
       propertyPath: lateralColor.g
-      value: 0.54901963
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6595917538710946094, guid: fdbeda54be644584db01138afc1a0104,
         type: 3}
       propertyPath: lateralColor.r
-      value: 0.6392157
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6595917538710946094, guid: fdbeda54be644584db01138afc1a0104,
         type: 3}
@@ -210,12 +210,12 @@ PrefabInstance:
     - target: {fileID: 6595917538710946094, guid: fdbeda54be644584db01138afc1a0104,
         type: 3}
       propertyPath: endLevelColor.g
-      value: 0
+      value: 0.5803922
       objectReference: {fileID: 0}
     - target: {fileID: 6595917538710946094, guid: fdbeda54be644584db01138afc1a0104,
         type: 3}
       propertyPath: endLevelColor.r
-      value: 0.6333332
+      value: 0.972549
       objectReference: {fileID: 0}
     - target: {fileID: 8187618403978367875, guid: fdbeda54be644584db01138afc1a0104,
         type: 3}
@@ -389,13 +389,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1224217814}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.35355338, y: -0.35355338, z: 0.1464466, w: 0.8535535}
+  m_LocalRotation: {x: 0.24999999, y: 0.75000006, z: -0.43301275, w: 0.43301266}
   m_LocalPosition: {x: -22, y: 32.5, z: -18}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 45, y: -45, z: 0}
+  m_LocalEulerAnglesHint: {x: 60, y: 120, z: 0}
 --- !u!1001 &1760980870
 PrefabInstance:
   m_ObjectHideFlags: 0

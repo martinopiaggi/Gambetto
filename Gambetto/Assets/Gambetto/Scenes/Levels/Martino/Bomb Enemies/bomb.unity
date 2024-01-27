@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.17790183, g: 0.22273833, b: 0.3048739, a: 1}
+  m_IndirectSpecularColor: {r: 0.17757934, g: 0.22232315, b: 0.30451885, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -294,7 +294,7 @@ Light:
   m_Type: 1
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 0.2
+  m_Intensity: 1.5
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -352,13 +352,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 282075727}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.025691887, y: -0.87001985, z: 0.49023095, w: -0.04559576}
+  m_LocalRotation: {x: 0.24999999, y: 0.75000006, z: -0.43301275, w: 0.43301266}
   m_LocalPosition: {x: 10.660055, y: 1.479435, z: 8.527413}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 58.8, y: -186, z: 0}
+  m_LocalEulerAnglesHint: {x: 60, y: 120, z: 0}
 --- !u!1 &492901519
 GameObject:
   m_ObjectHideFlags: 0
@@ -10421,32 +10421,32 @@ PrefabInstance:
     - target: {fileID: 6595917538710946094, guid: fdbeda54be644584db01138afc1a0104,
         type: 3}
       propertyPath: fogColor.b
-      value: 0.21960784
+      value: 0.9333334
       objectReference: {fileID: 0}
     - target: {fileID: 6595917538710946094, guid: fdbeda54be644584db01138afc1a0104,
         type: 3}
       propertyPath: fogColor.g
-      value: 0.21730162
+      value: 0.70980394
       objectReference: {fileID: 0}
     - target: {fileID: 6595917538710946094, guid: fdbeda54be644584db01138afc1a0104,
         type: 3}
       propertyPath: fogColor.r
-      value: 0.11372549
+      value: 0.7607844
       objectReference: {fileID: 0}
     - target: {fileID: 6595917538710946094, guid: fdbeda54be644584db01138afc1a0104,
         type: 3}
       propertyPath: lateralColor.b
-      value: 0.6156863
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6595917538710946094, guid: fdbeda54be644584db01138afc1a0104,
         type: 3}
       propertyPath: lateralColor.g
-      value: 0.5868877
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6595917538710946094, guid: fdbeda54be644584db01138afc1a0104,
         type: 3}
       propertyPath: lateralColor.r
-      value: 0.36862746
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6595917538710946094, guid: fdbeda54be644584db01138afc1a0104,
         type: 3}
@@ -10456,12 +10456,12 @@ PrefabInstance:
     - target: {fileID: 6595917538710946094, guid: fdbeda54be644584db01138afc1a0104,
         type: 3}
       propertyPath: endLevelColor.g
-      value: 0.9019608
+      value: 0.5803922
       objectReference: {fileID: 0}
     - target: {fileID: 6595917538710946094, guid: fdbeda54be644584db01138afc1a0104,
         type: 3}
       propertyPath: endLevelColor.r
-      value: 0
+      value: 0.972549
       objectReference: {fileID: 0}
     - target: {fileID: 8187618403978367875, guid: fdbeda54be644584db01138afc1a0104,
         type: 3}
