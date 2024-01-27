@@ -223,15 +223,24 @@ namespace Gambetto.Scripts.GameCore.Grid
         
         private void CheckBombTrigger()
         {
-            if (!_bombs.Contains(_playerCell)) return;
-            //find in _bombs the cell which is the same as _playerCell
-            var bombCell = _bombs.Find(cell => cell == _playerCell);
-            if (_detonatedCellsTimer.ContainsKey(bombCell)) return; //already activated
+            //check if any player or enemy is on a bomb
+            var player_enemies = new List<Cell>();
+            player_enemies.AddRange(_enemies.Values.ToList());;
+            player_enemies.Add(_playerCell);
             
-            //find the powerup in _powerups which has value = bomb to hide it during explosion
-            var powerUp = _powerUps.Keys.ToList().Find(p => _powerUps[p] == bombCell);
-            powerUp.SetInactive(); //disactivate the powerup
-            _detonatedCellsTimer.Add(bombCell, 3);
+            //check if any player or enemy is on a bomb
+            foreach (var cell in player_enemies)
+            {
+                if (!_bombs.Contains(cell)) continue;
+                //find in _bombs the cell which is the same as _playerCell
+                var bombCell = _bombs.Find(c => c == cell);
+                if (_detonatedCellsTimer.ContainsKey(bombCell)) continue; //already activated
+                
+                //find the powerup in _powerups which has value = bomb to hide it during explosion
+                var powerUp = _powerUps.Keys.ToList().Find(p => _powerUps[p] == bombCell);
+                powerUp.SetInactive(); //disactivate the powerup
+                _detonatedCellsTimer.Add(bombCell, 3);
+            }
         }
 
         private void CheckBombExplosion()
@@ -265,6 +274,17 @@ namespace Gambetto.Scripts.GameCore.Grid
             
             //kill immediately player if inside the bomb explosion
             if (bombNeighborhood.Contains(_playerCell)) isDead = true;
+            
+            
+            //kill immediately enemies if inside the bomb explosion
+            foreach (var enemy in _enemies)
+            {
+                if (bombNeighborhood.Contains(enemy.Value))
+                {
+                    enemy.Key.SetIsKinematic(false);
+                }
+            }
+            
             
             //move down physical cubes of the detonated cells
             CubesRuntimeManager.instance.DetonateNeighborhood(bombNeighborhood);
