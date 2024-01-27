@@ -68,10 +68,10 @@ namespace Gambetto.Scripts.GameCore.Grid
 
         [SerializeField]
         public GameObject keyTile;
-        
+
         [SerializeField]
         public GameObject bombTile;
-        
+
         [SerializeField]
         public GameObject deathScreen;
 
@@ -200,6 +200,9 @@ namespace Gambetto.Scripts.GameCore.Grid
                     CheckKeyDoor();
                     CheckBombTrigger();
                     CheckBombExplosion();
+                    // check if the player is dead after bomb is exploded
+                    if (isDead)
+                        return;
                 }
                 playerController.StartChoosing(_playerPiece, _playerCell);
             }
@@ -207,34 +210,40 @@ namespace Gambetto.Scripts.GameCore.Grid
 
         private void CheckKeyDoor()
         {
-            if (_playerCell != _key) return;
-            if (_doors.Count == 0) return;
-            if (!_doors[0].IsEmpty()) return; //it means that the doors are already open
-            foreach (var door in _doors) door.SetEmpty(false);
+            if (_playerCell != _key)
+                return;
+            if (_doors.Count == 0)
+                return;
+            if (!_doors[0].IsEmpty())
+                return; //it means that the doors are already open
+            foreach (var door in _doors)
+                door.SetEmpty(false);
             CubesRuntimeManager.instance.ToggleAllDoors(true);
         }
-        
-        
+
         List<Cell> _bombs = new List<Cell>();
         private List<Cell> _detonatedCells = new List<Cell>();
-        
-        Dictionary<Cell,int> _detonatedCellsTimer = new Dictionary<Cell, int>();  
-        
+
+        Dictionary<Cell, int> _detonatedCellsTimer = new Dictionary<Cell, int>();
+
         private void CheckBombTrigger()
         {
             //check if any player or enemy is on a bomb
             var player_enemies = new List<Cell>();
-            player_enemies.AddRange(_enemies.Values.ToList());;
+            player_enemies.AddRange(_enemies.Values.ToList());
+            ;
             player_enemies.Add(_playerCell);
-            
+
             //check if any player or enemy is on a bomb
             foreach (var cell in player_enemies)
             {
-                if (!_bombs.Contains(cell)) continue;
+                if (!_bombs.Contains(cell))
+                    continue;
                 //find in _bombs the cell which is the same as _playerCell
                 var bombCell = _bombs.Find(c => c == cell);
-                if (_detonatedCellsTimer.ContainsKey(bombCell)) continue; //already activated
-                
+                if (_detonatedCellsTimer.ContainsKey(bombCell))
+                    continue; //already activated
+
                 //find the powerup in _powerups which has value = bomb to hide it during explosion
                 var powerUp = _powerUps.Keys.ToList().Find(p => _powerUps[p] == bombCell);
                 powerUp.SetInactive(); //disactivate the powerup
@@ -244,8 +253,9 @@ namespace Gambetto.Scripts.GameCore.Grid
 
         private void CheckBombExplosion()
         {
-            if(_detonatedCellsTimer.Count == 0) return;
-            
+            if (_detonatedCellsTimer.Count == 0)
+                return;
+
             foreach (var cell in _detonatedCellsTimer.Keys.ToList())
             {
                 _detonatedCellsTimer[cell]--;
@@ -257,24 +267,25 @@ namespace Gambetto.Scripts.GameCore.Grid
                 }
             }
         }
-        
+
         private void BombExplosion(Cell bombCell)
         {
             //find the powerup in _powerups which has value = bomb to hide it during explosion
             var powerUp = _powerUps.Keys.ToList().Find(p => _powerUps[p] == bombCell);
             powerUp.PowerUpObject.SetActive(false);
-            
+
             var bombNeighborhood = new List<Cell>();
             bombNeighborhood.Add(bombCell);
             bombNeighborhood.AddRange(bombCell.Neighborhood());
-            
+
             //set each detonated cell as empty
-            foreach(var detonatedCell in bombNeighborhood) detonatedCell.SetEmpty();
-            
+            foreach (var detonatedCell in bombNeighborhood)
+                detonatedCell.SetEmpty();
+
             //kill immediately player if inside the bomb explosion
-            if (bombNeighborhood.Contains(_playerCell)) isDead = true;
-            
-            
+            if (bombNeighborhood.Contains(_playerCell))
+                isDead = true;
+
             //kill immediately enemies if inside the bomb explosion
             foreach (var enemy in _enemies)
             {
@@ -283,17 +294,14 @@ namespace Gambetto.Scripts.GameCore.Grid
                     enemy.Key.SetIsKinematic(false);
                 }
             }
-            
-            
+
             //move down physical cubes of the detonated cells
             CubesRuntimeManager.instance.DetonateNeighborhood(bombNeighborhood);
-            
+
             //accumulate all the cells detonated (also of different bombs) in a list
             _detonatedCells.AddRange(bombNeighborhood);
         }
-        
-        
-        
+
         public Cell GetPlayerPosition()
         {
             return _playerCell;
@@ -620,7 +628,7 @@ namespace Gambetto.Scripts.GameCore.Grid
 
         Cell _key;
         private List<Cell> _doors = new List<Cell>();
-        
+
         /// <summary>
         /// This method is used to support the creation of power ups/ end of level
         /// and to store them in a dictionary (_powerUps) or in a variable (_endLevelCell)
@@ -668,8 +676,6 @@ namespace Gambetto.Scripts.GameCore.Grid
             }
         }
 
-        
-        
         private void InstantiatePowerUp(
             GameObject prefab,
             PieceType type,
@@ -687,7 +693,7 @@ namespace Gambetto.Scripts.GameCore.Grid
                 var obj = new PowerUp(type, powerUpObj, cell);
                 _powerUps.Add(obj, cell);
             }
-            
+
             CubesRuntimeManager.instance.AddTile(powerUpObj);
         }
 
@@ -1043,34 +1049,40 @@ namespace Gambetto.Scripts.GameCore.Grid
 
         private void ResetPowerUps()
         {
-            foreach (var p in _powerUps.Keys) p.SetInactive();
+            foreach (var p in _powerUps.Keys)
+                p.SetInactive();
             GameClock.Instance.ChangeClockPeriod(GameClock.DefaultClockPeriod);
         }
 
         private void ResetDoor()
         {
-            if (_doors.Count == 0) return;
-            if (_doors[0].IsEmpty()) return; //it means that the doors are already open
+            if (_doors.Count == 0)
+                return;
+            if (_doors[0].IsEmpty())
+                return; //it means that the doors are already open
             CubesRuntimeManager.instance.ToggleAllDoors(false, true);
-            foreach (var door in _doors)door.SetEmpty();
+            foreach (var door in _doors)
+                door.SetEmpty();
         }
-        
+
         private void ResetDetonatedCells()
         {
-            if (_detonatedCells.Count == 0) return;
-            foreach (var detonatedCell in _detonatedCells) detonatedCell.SetEmpty(false);
+            if (_detonatedCells.Count == 0)
+                return;
+            foreach (var detonatedCell in _detonatedCells)
+                detonatedCell.SetEmpty(false);
 
-            foreach (var powerUp in _powerUps) powerUp.Key.PowerUpObject.SetActive(true);
+            foreach (var powerUp in _powerUps)
+                powerUp.Key.PowerUpObject.SetActive(true);
 
             CubesRuntimeManager.instance.ResetDetonatedCubes();
-            
+
             _detonatedCells.Clear(); //clear the list of detonated cells IMPORTANT
         }
-        
+
         private void ResetBombTimers()
         {
             _detonatedCellsTimer.Clear();
         }
-
     }
 }
