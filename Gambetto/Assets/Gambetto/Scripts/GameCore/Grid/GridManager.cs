@@ -229,17 +229,17 @@ namespace Gambetto.Scripts.GameCore.Grid
             var powerUp = _powerUps.Keys.ToList().Find(p => _powerUps[p] == bombCell);
             powerUp.PowerUpObject.SetActive(false);
             
-            //set each detonated cell as empty
-            bombCell.SetEmpty();
-            foreach(var cellNeighbor in bombCell.Neighborhood())
-            {
-                cellNeighbor.SetEmpty();
-            }
-            
-            List<Cell> bombNeighborhood = bombCell.Neighborhood();
+            var bombNeighborhood = new List<Cell>();
             bombNeighborhood.Add(bombCell);
-            _detonatedCells.AddRange(bombNeighborhood);
+            bombNeighborhood.AddRange(bombCell.Neighborhood());
+            
+            //set each detonated cell as empty
+            foreach(var detonatedCell in bombNeighborhood) detonatedCell.SetEmpty();
+            //move down physical cubes of the detonated cells
             CubesRuntimeManager.instance.DetonateNeighborhood(bombNeighborhood);
+            
+            //accumulate all the cells detonated (also of different bombs) in a list
+            _detonatedCells.AddRange(bombNeighborhood);
         }
         
         
@@ -1012,6 +1012,8 @@ namespace Gambetto.Scripts.GameCore.Grid
             foreach (var powerUp in _powerUps) powerUp.Key.PowerUpObject.SetActive(true);
 
             CubesRuntimeManager.instance.ResetDetonatedCubes();
+            
+            _detonatedCells.Clear(); //clear the list of detonated cells IMPORTANT
         }
 
     }
