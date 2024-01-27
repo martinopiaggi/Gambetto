@@ -374,6 +374,7 @@ namespace Gambetto.Scripts.GameCore.Grid
 
             foreach (var enemy in _enemies)
             {
+                if (enemy.Value.IsEmpty()) continue; //skip if the enemy is dead in an explosion
                 enemy.Key.Move(_enemiesPath[enemy.Key]);
             }
         }
