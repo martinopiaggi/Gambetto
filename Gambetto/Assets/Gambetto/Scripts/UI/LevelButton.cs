@@ -11,7 +11,7 @@ namespace Gambetto.Scripts.UI
 
         public void BackMenu()
         {
-            LevelSelector.instance.BackToMainMenu();
+            GameManager.Instance.sceneTransition.CrossFade(0);
         }
 
         public void LoadLevel(int level)
