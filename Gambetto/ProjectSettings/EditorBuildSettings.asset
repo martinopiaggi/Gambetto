@@ -62,4 +62,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Gambetto/Scenes/CreditsScene.unity
     guid: 1856a6b8b7e925c449c3dad5cd160baf
+  - enabled: 1
+    path: Assets/Gambetto/Scenes/QuotesScene.unity
+    guid: 034cf45bc5204b64d8f6431767c44cf9
   m_configObjects: {}

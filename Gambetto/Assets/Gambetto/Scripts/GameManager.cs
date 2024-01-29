@@ -21,6 +21,14 @@ namespace Gambetto.Scripts
             set => allLevelsUnlocked = value;
         }
 
+        [SerializeField]
+        private bool disableQuotes;
+        public bool DisableQuotes
+        {
+            get => disableQuotes;
+            set => disableQuotes = value;
+        }
+
         private string _nextLevelsSaveDataPath;
         private string _levelsCompletedSaveDataPath;
 
@@ -74,6 +82,7 @@ namespace Gambetto.Scripts
         private void Awake()
         {
             allLevelsUnlocked = PlayerPrefs.GetInt("AllLevelsUnlocked", 0) == 1;
+            disableQuotes = PlayerPrefs.GetInt("DisableQuotes", 0) == 1;
 
             _nextLevelsSaveDataPath = Application.persistentDataPath + "/level_data.json";
             _levelsCompletedSaveDataPath = Application.persistentDataPath + "/completed_data.json";
