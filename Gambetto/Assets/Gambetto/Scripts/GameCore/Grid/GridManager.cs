@@ -98,7 +98,7 @@ namespace Gambetto.Scripts.GameCore.Grid
         private float _timeSinceLastInput;
 
         // input is taken every 130ms to let all the pieces the time to move
-        private float InputTimeInterval = TimeManager.inputTimeInterval;
+        private float InputTimeInterval = TimeManager.InputTimeInterval;
 
         private void Start()
         {
@@ -402,6 +402,8 @@ namespace Gambetto.Scripts.GameCore.Grid
         {
             _playerCell = playerController.ChosenMove;
             _playerPath = playerController.MovePath;
+            // set if the player moved in the last turn
+            playerController._playerIsStill=(Vector3.Distance(_playerPiece.transform.position, _playerPath[^1]) < 0.1f);
             _playerPiece.Move(_playerPath);
         }
 
