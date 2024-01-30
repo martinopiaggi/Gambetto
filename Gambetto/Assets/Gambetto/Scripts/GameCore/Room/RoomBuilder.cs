@@ -34,7 +34,7 @@ namespace Gambetto.Scripts.GameCore.Room
 
         void FillMatrixWithCubes()
         {
-            var endOfLevelEffect = EndOfLevelEffect.instance;
+            var endOfLevelEffect = CubesRuntimeManager.instance;
             for (int i = 0; i < layout.GetSizeRow(); i++)
             {
                 for (int j = 0; j < layout.GetSizeColumn(); j++)
