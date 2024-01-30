@@ -237,8 +237,9 @@ namespace Gambetto.Scripts.GameCore.Grid
             //check if any player or enemy is on a bomb
             foreach (var cell in player_enemies)
             {
-                if (!_bombs.Contains(cell))
-                    continue;
+                if (cell.IsEmpty()) continue; //bomb already exploded and enemy is on an empty
+                if (!_bombs.Contains(cell))continue;
+                
                 //find in _bombs the cell which is the same as _playerCell
                 var bombCell = _bombs.Find(c => c == cell);
                 if (_detonatedCellsTimer.ContainsKey(bombCell))
