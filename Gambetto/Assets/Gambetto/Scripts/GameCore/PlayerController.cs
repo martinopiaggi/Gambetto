@@ -19,7 +19,7 @@ namespace Gambetto.Scripts.GameCore
         private Coroutine _cycleMovesCoroutine;
         private Vector3 _lastDirection;
         //varible that  says if the player stayed still in the last turn
-        private bool _playerIsStill;
+        public bool _playerIsStill { get; set; }
 
         [FormerlySerializedAs("_choosing")]
         public bool choosing;
@@ -134,11 +134,6 @@ namespace Gambetto.Scripts.GameCore
 
             _selectedSquare.SetActive(false);
             DeactivateAllSquares();
-        }
-        
-        public void SetPlayerIsStill(bool isStill)
-        {
-            _playerIsStill = isStill;
         }
 
         private readonly List<GameObject> highLightedSquares = new List<GameObject>();
