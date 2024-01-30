@@ -12,7 +12,7 @@ namespace Gambetto.Scripts.GameCore.Grid
         private int _roomId;
         private bool _empty;
 
-        private List<Cell> neighbors;
+        private List<Cell> _neighbors = new List<Cell>();
 
         private int room; //room id depends by the level, not by the roomLayout
         private Cell north;
@@ -32,14 +32,17 @@ namespace Gambetto.Scripts.GameCore.Grid
         }
 
         public bool IsEmpty() => _empty;
-
-        public void SetEmpty()
+        
+        // by default is true 
+        public void SetEmpty(bool isEmpty = true)
         {
-            _empty = true;
+            _empty = isEmpty;
         }
 
         public void SetNext(Vector2Int dir, Cell next)
         {
+            _neighbors.Add(next);
+            
             //with a switch I have an error :( @todo/refactor
             if (dir == Directions.North)
                 north = next;
@@ -57,6 +60,11 @@ namespace Gambetto.Scripts.GameCore.Grid
                 southEast = next;
             if (dir == Directions.SouthWest)
                 southWest = next;
+        }
+        
+        public List<Cell> Neighborhood()
+        {
+            return _neighbors;
         }
 
         public Cell GetNext(Vector2Int dir)

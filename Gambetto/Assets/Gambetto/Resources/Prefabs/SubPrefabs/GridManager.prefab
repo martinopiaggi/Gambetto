@@ -68,7 +68,11 @@ MonoBehaviour:
     type: 3}
   endLevel: {fileID: 6760961586210498684, guid: 2e790e3ab25499f4f83f49b62edf91bc,
     type: 3}
+  keyTile: {fileID: 6760961586210498684, guid: 1baab9f6039b2604fbb2d58ce6e6fb33, type: 3}
+  bombTile: {fileID: 6760961586210498684, guid: b7381f23460fa484ba94ef5f5e3272ea,
+    type: 3}
   deathScreen: {fileID: 0}
+  pauseButton: {fileID: 0}
   lightMaterial: {fileID: 2100000, guid: cf4f19fd0a10ee044a41c976ddca337a, type: 2}
   darkMaterial: {fileID: 2100000, guid: a778dca5d3731a24ba57709c077ce4e1, type: 2}
   isDead: 0
