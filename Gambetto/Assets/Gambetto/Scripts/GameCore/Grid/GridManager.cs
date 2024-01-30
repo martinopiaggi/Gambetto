@@ -225,7 +225,8 @@ namespace Gambetto.Scripts.GameCore.Grid
         private List<Cell> _detonatedCells = new List<Cell>();
 
         Dictionary<Cell, int> _detonatedCellsTimer = new Dictionary<Cell, int>();
-
+        List<Cell> _emptyDetonateCells = new List<Cell>();
+        
         private void CheckBombTrigger()
         {
             //check if any player or enemy is on a bomb
@@ -279,9 +280,26 @@ namespace Gambetto.Scripts.GameCore.Grid
             bombNeighborhood.Add(bombCell);
             bombNeighborhood.AddRange(bombCell.Neighborhood());
 
-            //set each detonated cell as empty
+            
             foreach (var detonatedCell in bombNeighborhood)
-                detonatedCell.SetEmpty();
+            {
+                //before set each detonated cell as empty, save if it's actual empty
+                //second member is necessary in case of multiple overlapping bombs:
+                //the cell would be empty after the first explosion
+                //and marked wrongly as "original empty"
+                //checking over _detonatedCells this bug is avoided
+                if (detonatedCell.IsEmpty() 
+                    && !_detonatedCells.Contains(detonatedCell))
+                {
+                    _emptyDetonateCells.Add(detonatedCell);
+                }
+                else
+                {
+                    //set detonated cell as empty
+                    detonatedCell.SetEmpty();
+                }
+            }
+                
 
             //kill immediately player if inside the bomb explosion
             if (bombNeighborhood.Contains(_playerCell))
@@ -1067,18 +1085,29 @@ namespace Gambetto.Scripts.GameCore.Grid
                 door.SetEmpty();
         }
 
+        
+        
         private void ResetDetonatedCells()
         {
             if (_detonatedCells.Count == 0)
                 return;
+            
             foreach (var detonatedCell in _detonatedCells)
-                detonatedCell.SetEmpty(false);
+            {
+                //if not original empty, it must be set as not empty
+                if (!_emptyDetonateCells.Contains(detonatedCell))
+                {
+                    detonatedCell.SetEmpty(false);
+                }
+            }
+                
 
             foreach (var powerUp in _powerUps)
                 powerUp.Key.PowerUpObject.SetActive(true);
 
             CubesRuntimeManager.instance.ResetDetonatedCubes();
 
+            _emptyDetonateCells.Clear();
             _detonatedCells.Clear(); //clear the list of detonated cells IMPORTANT
         }
 
