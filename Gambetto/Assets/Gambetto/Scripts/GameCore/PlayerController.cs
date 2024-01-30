@@ -19,7 +19,8 @@ namespace Gambetto.Scripts.GameCore
         private Coroutine _cycleMovesCoroutine;
         private Vector3 _lastDirection;
         //varible that  says if the player stayed still in the last turn
-        public bool _playerIsStill { get; set; }
+        public bool PlayerIsStill { get; set; }
+        private bool HighLightedSquaresActive;
 
         [FormerlySerializedAs("_choosing")]
         public bool choosing;
@@ -100,7 +101,7 @@ namespace Gambetto.Scripts.GameCore
             var j = 0;
             var numberOfMoves = _possibleMovements.Count;
             var multiplicatorFirstMove = 1.0f;
-            if (!_playerIsStill) multiplicatorFirstMove = 1.4f; 
+            if (!PlayerIsStill) multiplicatorFirstMove = 1.4f; 
             var firstShowingPeriod = (clockPeriod / numberOfMoves) * multiplicatorFirstMove;
             var showingPeriod =
                 numberOfMoves > 1
@@ -118,12 +119,17 @@ namespace Gambetto.Scripts.GameCore
                 _selectedSquare.transform.position =
                     _possibleChoice.GetGlobalCoordinates() + new Vector3(0, 0.0001f, 0);
 
-                HighlightSquares(
-                    PieceMovement.HighlightedCellsForPath(
-                        _currentCell.GetGlobalCoordinates(),
-                        _possibleMovementsPath[i]
-                    )
-                );
+                //code to highlight the path of the piece
+                if (PlayerPrefs.GetInt("HighLightedSquaresActive", 0)>0)
+                {
+                    HighlightSquares(
+                        PieceMovement.HighlightedCellsForPath(
+                            _currentCell.GetGlobalCoordinates(),
+                            _possibleMovementsPath[i]
+                        )
+                    );
+                }
+                
                 // the first moves have a bit more time
                 yield return j == 0
                     ? new WaitForSeconds(firstShowingPeriod)
