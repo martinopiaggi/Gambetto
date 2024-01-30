@@ -403,7 +403,7 @@ namespace Gambetto.Scripts.GameCore.Grid
             _playerCell = playerController.ChosenMove;
             _playerPath = playerController.MovePath;
             // set if the player moved in the last turn
-            playerController._playerIsStill=(Vector3.Distance(_playerPiece.transform.position, _playerPath[^1]) < 0.1f);
+            playerController.PlayerIsStill=(Vector3.Distance(_playerPiece.transform.position, _playerPath[^1]) < 0.1f);
             _playerPiece.Move(_playerPath);
         }
 
