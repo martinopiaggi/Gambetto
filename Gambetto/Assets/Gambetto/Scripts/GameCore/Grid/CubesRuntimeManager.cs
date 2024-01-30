@@ -172,7 +172,6 @@ namespace Gambetto.Scripts.GameCore.Grid
                     var cubePos = cube.transform.position;
                     if (cubePos.x != xCell || cubePos.z != zCell) continue;
                     
-                    Debug.Log("neighbor found, let's fucking detonate it");
                     neighborhoodObjects.Add(cube);
                 }
             }
@@ -202,6 +201,14 @@ namespace Gambetto.Scripts.GameCore.Grid
             Vector3 originalPosition = cube.transform.position;
             Vector3 targetPosition = originalPosition + direction * cubeMoveDistance;
 
+            //Weak try to fix BUG purposes 
+            if (targetPosition.y > 1f)
+            {
+                Debug.Log("target position is too high");
+                Debug.Log("BUG AVOIDED, recheck the code");
+                targetPosition.y = -0.05f;
+            }
+            
             while (totalMovement < cubeMoveDistance && !skipAnimation)
             {
                 // Calculate movement for this frame and update the total movement
