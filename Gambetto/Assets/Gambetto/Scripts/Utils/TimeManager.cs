@@ -9,8 +9,8 @@ namespace Gambetto.Scripts.Utils
     {
         private static float _timeScale = 1f;
 
-        public static float inputTimeInterval = 0.15f;
-        
+        public const float InputTimeInterval = 0.15f;
+
         public static void StopTime()
         {
             Time.timeScale = 0f;
