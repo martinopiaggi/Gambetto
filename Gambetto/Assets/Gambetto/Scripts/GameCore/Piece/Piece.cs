@@ -178,7 +178,7 @@ namespace Gambetto.Scripts.GameCore.Piece
                     // if the distance is less then 5 is set to 5 to avoid the movement to be to slow
                     if (distance < 2.0f) 
                         distance = 2.0f;
-                    var inputTime = TimeManager.inputTimeInterval;
+                    var inputTime = TimeManager.InputTimeInterval;
                     piecePos = Vector3.MoveTowards(
                         piecePos,
                         destPosition,

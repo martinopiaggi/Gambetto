@@ -18,6 +18,8 @@ namespace Gambetto.Scripts.GameCore
         private GameObject highlightedSquarePrefab;
         private Coroutine _cycleMovesCoroutine;
         private Vector3 _lastDirection;
+        //varible that  says if the player stayed still in the last turn
+        public bool _playerIsStill { get; set; }
 
         [FormerlySerializedAs("_choosing")]
         public bool choosing;
@@ -97,7 +99,9 @@ namespace Gambetto.Scripts.GameCore
             var i = firstMove == -1 ? 0 : firstMove;
             var j = 0;
             var numberOfMoves = _possibleMovements.Count;
-            var firstShowingPeriod = (clockPeriod / numberOfMoves) * 1.35f;
+            var multiplicatorFirstMove = 1.0f;
+            if (!_playerIsStill) multiplicatorFirstMove = 1.4f; 
+            var firstShowingPeriod = (clockPeriod / numberOfMoves) * multiplicatorFirstMove;
             var showingPeriod =
                 numberOfMoves > 1
                     ? (clockPeriod - firstShowingPeriod) / (numberOfMoves - 1)
