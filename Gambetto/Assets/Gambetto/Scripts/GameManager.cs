@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using Gambetto.Scripts.UI;
 using Newtonsoft.Json;
+using POLIMIGameCollective.Scripts.Movement.TurnBased;
 using UnityEngine;
 
 namespace Gambetto.Scripts
@@ -10,6 +11,8 @@ namespace Gambetto.Scripts
     public class GameManager : MonoBehaviour
     {
         public static GameManager Instance;
+
+        public PlayerController playerController;
 
         public SceneTransition sceneTransition;
 
@@ -27,6 +30,17 @@ namespace Gambetto.Scripts
         {
             get => disableQuotes;
             set => disableQuotes = value;
+        }
+        
+        [SerializeField]
+        private bool highLightedSquaresActive;
+        public bool HighLightedSquaresActive
+        {
+            get => highLightedSquaresActive;
+            set
+            {
+                highLightedSquaresActive = value;
+            }
         }
 
         private string _nextLevelsSaveDataPath;
