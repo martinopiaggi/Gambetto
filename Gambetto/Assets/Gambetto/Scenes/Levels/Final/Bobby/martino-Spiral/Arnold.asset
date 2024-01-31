@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Arnold
   m_EditorClassIdentifier: 
   topologyDescription: Stanza unica
-  roomCsvTextAsset: {fileID: 4900000, guid: f4c5db2b56505664692529424889408d, type: 3}
+  roomCsvTextAsset: {fileID: 4900000, guid: 6efdb73ecf5f85c428ac2013e43005cb, type: 3}
   exitSide: {x: 1, y: 0}
   behaviours:
   - {fileID: 11400000, guid: 9f4d2b628b190964c89ca7a8d90fd918, type: 2}

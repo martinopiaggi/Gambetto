@@ -630,7 +630,7 @@ PrefabInstance:
         type: 3}
       propertyPath: rooms.Array.data[0]
       value: 
-      objectReference: {fileID: 11400000, guid: 31b9f17336040cf498a3457a2d49d8fd,
+      objectReference: {fileID: 11400000, guid: 397e6d6cbf676494ba7f81e29c2e757c,
         type: 2}
     - target: {fileID: 5283260288071725677, guid: fdbeda54be644584db01138afc1a0104,
         type: 3}
