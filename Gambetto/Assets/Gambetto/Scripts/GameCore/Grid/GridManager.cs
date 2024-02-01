@@ -97,7 +97,7 @@ namespace Gambetto.Scripts.GameCore.Grid
 
         private float _timeSinceLastInput;
 
-        // input is taken every 130ms to let all the pieces the time to move
+        // input is taken every 150ms to let all the pieces the time to move
         private float InputTimeInterval = TimeManager.InputTimeInterval;
 
         private void Start()

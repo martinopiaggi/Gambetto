@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Gambetto.Scripts.GameCore.Grid;
 using Gambetto.Scripts.GameCore.Piece;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -100,13 +101,14 @@ namespace Gambetto.Scripts.GameCore
             var i = firstMove == -1 ? 0 : firstMove;
             var j = 0;
             var numberOfMoves = _possibleMovements.Count;
-            var multiplicatorFirstMove = 1.0f;
-            if (!PlayerIsStill) multiplicatorFirstMove = 1.4f; 
-            var firstShowingPeriod = (clockPeriod / numberOfMoves) * multiplicatorFirstMove;
+            var multiplierFirstMove = 1.0f;
+            if (!PlayerIsStill) multiplierFirstMove = 1.35f; 
+            var firstShowingPeriod = (clockPeriod / numberOfMoves) * multiplierFirstMove;
             var showingPeriod =
                 numberOfMoves > 1
                     ? (clockPeriod - firstShowingPeriod) / (numberOfMoves - 1)
                     : firstShowingPeriod;
+            showingPeriod = showingPeriod * 0.97f; 
             // start the cycle from the first move in the direction of the last move
             while (j < numberOfMoves)
             {
@@ -131,9 +133,7 @@ namespace Gambetto.Scripts.GameCore
                 }
                 
                 // the first moves have a bit more time
-                yield return j == 0
-                    ? new WaitForSeconds(firstShowingPeriod)
-                    : new WaitForSeconds(showingPeriod);
+                yield return StartCoroutine(WaitingCoroutine(j == 0 ? firstShowingPeriod : showingPeriod));
                 i = (i + 1) % _possibleMovements.Count;
                 j++;
             }
@@ -185,6 +185,17 @@ namespace Gambetto.Scripts.GameCore
                 }
             }
             return null;
+        }
+        
+        IEnumerator WaitingCoroutine(float duration)
+        {
+            float elapsedTime = 0f; // Track the elapsed time
+
+            while (elapsedTime < duration)
+            {
+                elapsedTime += Time.deltaTime; // Increment the elapsed time by the time passed since last frame
+                yield return null; // Wait until the next frame
+            }
         }
     }
 }
