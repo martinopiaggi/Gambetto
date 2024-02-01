@@ -127,6 +127,7 @@ namespace Gambetto.Scripts.GameCore.Piece
         {
             if (Vector3.Distance(transform.position, positions[^1]) < 0.1f)
                 return;
+            if (gravity) EnableColliders();
             if (_moveCoroutine != null)
             {
                 // if a piece is still moving, stop it and force the position
@@ -143,8 +144,8 @@ namespace Gambetto.Scripts.GameCore.Piece
             bool gravity = true
         )
         {
-            if (!gravity)
-                DisableColliders();
+            if (!gravity) DisableColliders();
+            
             // disable collider if gravity is disabled
             Rb.useGravity = gravity; // enable/disable gravity
 
@@ -188,7 +189,6 @@ namespace Gambetto.Scripts.GameCore.Piece
                     direction = destPosition - piecePos;
                     yield return null;
                 }
-                EnableColliders(); //Re-enable colliders
             }
         }
 
