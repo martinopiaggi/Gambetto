@@ -17,10 +17,12 @@ namespace Gambetto.Scripts.UI
         {
             musicSlider.value = AudioManager.Instance.music;
             sfxSlider.value = AudioManager.Instance.sfx;
-            unlockAllLevelsToggle.isOn = GameManager.Instance.AllLevelsUnlocked;
-            disableQuotesToggle.isOn = GameManager.Instance.DisableQuotes;
-            
-            
+            if (unlockAllLevelsToggle)
+                unlockAllLevelsToggle.isOn = GameManager.Instance.AllLevelsUnlocked;
+            if (disableQuotesToggle)
+                disableQuotesToggle.isOn = GameManager.Instance.DisableQuotes;
+            if (enableHighlatedSquaresToggle)
+                enableHighlatedSquaresToggle.isOn = GameManager.Instance.HighLightedSquaresActive;
         }
 
         public void MusicVolume()
@@ -44,11 +46,14 @@ namespace Gambetto.Scripts.UI
             GameManager.Instance.DisableQuotes = disableQuotesToggle.isOn;
             PlayerPrefs.SetInt("DisableQuotes", GameManager.Instance.DisableQuotes ? 1 : 0);
         }
-        
+
         public void HighLightedSquaresActive()
         {
             GameManager.Instance.HighLightedSquaresActive = enableHighlatedSquaresToggle.isOn;
-            PlayerPrefs.SetInt("HighLightedSquaresActive", GameManager.Instance.HighLightedSquaresActive ? 1 : 0);
+            PlayerPrefs.SetInt(
+                "HighLightedSquaresActive",
+                GameManager.Instance.HighLightedSquaresActive ? 1 : 0
+            );
         }
     }
 }
