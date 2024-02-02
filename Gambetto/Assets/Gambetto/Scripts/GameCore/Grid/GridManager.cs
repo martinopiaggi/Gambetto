@@ -87,7 +87,7 @@ namespace Gambetto.Scripts.GameCore.Grid
             set
             {
                 // if player is set to dead and was not dead before, increment the death count
-                if (!isDead && value)
+                if (!isDead && value && GameManager.Instance != null)
                 {
                     GameManager.Instance.DeathCount++;
                 }

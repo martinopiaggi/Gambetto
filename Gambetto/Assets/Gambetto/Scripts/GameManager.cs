@@ -151,7 +151,7 @@ namespace Gambetto.Scripts
 
         private void Start()
         {
-            AudioManager.Instance.PlayBackground(AudioManager.Instance.menuBackground);
+            AudioManager.Instance.PlayBackground();
         }
 
         private void SaveData(object dataToSave, string path)
