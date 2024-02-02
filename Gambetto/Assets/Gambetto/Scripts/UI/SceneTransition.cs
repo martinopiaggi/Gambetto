@@ -1,5 +1,4 @@
 using System.Collections;
-using Gambetto.Scripts.Utils;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
@@ -31,7 +30,6 @@ namespace Gambetto.Scripts.UI
             yield return new WaitForSeconds(0.8f);
             yield return SceneManager.LoadSceneAsync(scene);
             crossFadeAnimator.SetTrigger(Start);
-            TimeManager.ResumeTime();
         }
 
         private IEnumerator LoadScene(string scene)
@@ -40,7 +38,6 @@ namespace Gambetto.Scripts.UI
             yield return new WaitForSeconds(1f);
             yield return SceneManager.LoadSceneAsync(scene);
             crossFadeAnimator.SetTrigger(Start);
-            TimeManager.ResumeTime();
         }
     }
 }

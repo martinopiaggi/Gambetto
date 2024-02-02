@@ -1,5 +1,4 @@
 using System.Collections;
-using Gambetto.Scripts.Utils;
 using UnityEngine;
 
 namespace Gambetto.Scripts.UI
@@ -27,14 +26,12 @@ namespace Gambetto.Scripts.UI
 
         public void LoadLevel(int level)
         {
-            TimeManager.StopTime();
             //start load level coroutine
             StartCoroutine(LoadLevelRoutine(level));
         }
 
         public void LoadLevel(string level)
         {
-            TimeManager.StopTime();
             //start load level coroutine
             StartCoroutine(LoadLevelRoutine(level));
             currentLevel = level;
@@ -43,7 +40,6 @@ namespace Gambetto.Scripts.UI
         //method used by the back button
         public void BackToMainMenu()
         {
-            TimeManager.StopTime();
             GameManager.Instance.sceneTransition.CrossFade(0);
         }
 
