@@ -31,8 +31,6 @@ namespace Gambetto.Scripts.GameCore.Grid
             instance = this;
         }
 
-        
-        
         public void FireEffect(GameObject target)
         {
             _fired = true;
@@ -80,28 +78,35 @@ namespace Gambetto.Scripts.GameCore.Grid
                 yield return null;
             }
         }
-        
+
         private List<GameObject> doors = new List<GameObject>();
-        
+
         public void AddDoorCoords(Vector3 coords)
         {
-            foreach (var cube in _cubes.Where(cube => (cube.transform.position.x == coords.x && cube.transform.position.z == coords.z)))
+            foreach (
+                var cube in _cubes.Where(
+                    cube =>
+                        (
+                            cube.transform.position.x == coords.x
+                            && cube.transform.position.z == coords.z
+                        )
+                )
+            )
             {
-                Debug.Log("found door");
                 doors.Add(cube);
-                StartCoroutine(ToggleCubeHeight(cube, false,true));
+                StartCoroutine(ToggleCubeHeight(cube, false, true));
             }
         }
-        
-        //method used to open and closed all doors 
-        public void ToggleAllDoors(bool moveUp,bool skipAnimation = false)
+
+        //method used to open and closed all doors
+        public void ToggleAllDoors(bool moveUp, bool skipAnimation = false)
         {
             foreach (var door in doors)
             {
-                StartCoroutine(ToggleCubeHeight(door, moveUp,skipAnimation));
+                StartCoroutine(ToggleCubeHeight(door, moveUp, skipAnimation));
             }
         }
-        
+
         public void DetonateNeighborhood(List<Cell> neighborhood, bool skipAnimation = false)
         {
             AudioManager.Instance.PlaySfx(AudioManager.Instance.bombExplosion);
@@ -109,7 +114,7 @@ namespace Gambetto.Scripts.GameCore.Grid
             _detonatedCubes.AddRange(crater); //adding to the list of detonated cubes
             foreach (var ripCell in crater)
             {
-                StartCoroutine(ToggleCubeHeight(ripCell, false,skipAnimation));
+                StartCoroutine(ToggleCubeHeight(ripCell, false, skipAnimation));
             }
         }
 
@@ -120,12 +125,15 @@ namespace Gambetto.Scripts.GameCore.Grid
             {
                 //adding emessive to the color
                 ripCell.GetComponentInChildren<MeshRenderer>().material.EnableKeyword("_EMISSION");
-                ripCell.GetComponentInChildren<MeshRenderer>().material.SetColor("_EmissionColor", Color.red);
+                ripCell
+                    .GetComponentInChildren<MeshRenderer>()
+                    .material
+                    .SetColor("_EmissionColor", Color.red);
             }
             //launch coroutine to cooldown the color
             StartCoroutine(CooldownNeighborhood(crater));
         }
-        
+
         private IEnumerator CooldownNeighborhood(List<GameObject> neighborhood)
         {
             // Cache materials and initial emission colors
@@ -148,7 +156,11 @@ namespace Gambetto.Scripts.GameCore.Grid
                 foreach (var (material, initialColor) in materials)
                 {
                     // Calculate the new emission color using Lerp for a smooth transition
-                    Color newEmissionColor = Color.Lerp(initialColor, Color.black, elapsedTime / cooldownDuration);
+                    Color newEmissionColor = Color.Lerp(
+                        initialColor,
+                        Color.black,
+                        elapsedTime / cooldownDuration
+                    );
                     material.SetColor("_EmissionColor", newEmissionColor);
                 }
 
@@ -158,21 +170,20 @@ namespace Gambetto.Scripts.GameCore.Grid
             }
         }
 
-        
         private List<GameObject> RetrieveNeighborhood(List<Cell> neighborhood)
         {
             List<GameObject> neighborhoodObjects = new List<GameObject>();
-            foreach(var cell in neighborhood)
+            foreach (var cell in neighborhood)
             {
                 var xCell = cell.GetGlobalCoordinates().x;
                 var zCell = cell.GetGlobalCoordinates().z;
-                
+
                 foreach (var cube in _cubes)
                 {
-                    
                     var cubePos = cube.transform.position;
-                    if (cubePos.x != xCell || cubePos.z != zCell) continue;
-                    
+                    if (cubePos.x != xCell || cubePos.z != zCell)
+                        continue;
+
                     neighborhoodObjects.Add(cube);
                 }
             }
@@ -180,21 +191,24 @@ namespace Gambetto.Scripts.GameCore.Grid
         }
 
         private List<GameObject> _detonatedCubes = new List<GameObject>();
-        
+
         public void ResetDetonatedCubes()
         {
             foreach (var detonatedCube in _detonatedCubes)
             {
-                StartCoroutine(ToggleCubeHeight(detonatedCube, true,true));
+                StartCoroutine(ToggleCubeHeight(detonatedCube, true, true));
             }
             _detonatedCubes = new List<GameObject>();
         }
-        
 
-        private IEnumerator ToggleCubeHeight(GameObject cube, bool moveUp, bool skipAnimation = false)
+        private IEnumerator ToggleCubeHeight(
+            GameObject cube,
+            bool moveUp,
+            bool skipAnimation = false
+        )
         {
             const float cubeMoveDistance = 7f; // Total distance to move the door
-            var cubeMoveSpeed = 10f + 4f *  Random.value; // Speed at which the door moves
+            var cubeMoveSpeed = 10f + 4f * Random.value; // Speed at which the door moves
             var direction = moveUp ? Vector3.up : Vector3.down; // Direction of the door's movement
             var totalMovement = 0f; // Total movement accumulated
 
@@ -202,32 +216,32 @@ namespace Gambetto.Scripts.GameCore.Grid
             Vector3 originalPosition = cube.transform.position;
             Vector3 targetPosition = originalPosition + direction * cubeMoveDistance;
 
-            //Weak try to fix BUG purposes 
+            //Weak try to fix BUG purposes
             if (targetPosition.y > 1f)
             {
                 Debug.Log("target position is too high");
                 Debug.Log("BUG AVOIDED, recheck the code");
                 targetPosition.y = -0.05f;
             }
-            
+
             while (totalMovement < cubeMoveDistance && !skipAnimation)
             {
                 // Calculate movement for this frame and update the total movement
                 float frameMovement = cubeMoveSpeed * Time.deltaTime;
                 totalMovement += frameMovement;
                 cube.transform.position += direction * frameMovement;
-                
+
                 if (totalMovement > cubeMoveDistance)
                 {
                     cube.transform.position = targetPosition;
                     break;
                 }
-                
+
                 yield return new WaitForSeconds(0.01f);
             }
             cube.transform.position = targetPosition; //force position
         }
-        
+
         private IEnumerator<WaitForSeconds> EndOfLevelEffectCoroutine()
         {
             // hide all powerups
@@ -309,7 +323,7 @@ namespace Gambetto.Scripts.GameCore.Grid
         {
             _powerUps.Add(powerUp);
         }
-        
+
         public void AddExitCoords(Vector3 coords)
         {
             _exitCoords = coords;
