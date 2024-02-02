@@ -133,6 +133,7 @@ namespace Gambetto.Scripts
             _levelStatus["tutortial"] = true;
             _levelStatus["pawnEnemyIntro"] = true;
             _levelStatus["BishopEscape"] = true;
+            _levelStatus["KeyReveal"] = true;
 
             // load saved data
             LoadData();
@@ -150,7 +151,7 @@ namespace Gambetto.Scripts
 
         private void Start()
         {
-            AudioManager.Instance.PlayBackground(AudioManager.Instance.menuBackground);
+            AudioManager.Instance.PlayBackground();
         }
 
         private void SaveData(object dataToSave, string path)

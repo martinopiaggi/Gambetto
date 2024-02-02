@@ -42,7 +42,7 @@ namespace Gambetto.Scripts.UI
                 // "Chess is really 99 percent calculation.",
                 // "Gambetto is 20 percent of the 98 percent of Chess. So it's like 19.6 percent calculation.",
                 "Gambetto may be a cure for headaches.",
-                "-All I ever want to do is play Gambetto.- \r\n- some guy hopefully",
+                "-All I ever want to do is play Gambetto.- \r\n- some dude hopefully",
                 "What separates a Winner from a Loser in Gambetto?",
                 "Einstein might have postulated that for every Gambetto action, there's an equally bewildering and opposite reaction.",
                 // "Gambetto: where the only thing more unpredictable than the moves is the outcome.",

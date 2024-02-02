@@ -32,18 +32,14 @@ namespace Gambetto.Scripts.UI
         public void PauseGame()
         {
             TimeManager.StopTime();
+            AudioManager.Instance.FadeDownVoicing(1f);
         }
 
         public void ResumeGame()
         {
             TimeManager.ResumeTime();
             mouseOverItemDropLocation = false;
-        }
-
-        public void BackToMainMenu()
-        {
-            TimeManager.ResumeTime();
-            GameManager.Instance.sceneTransition.CrossFade(1);
+            AudioManager.Instance.FadeUpVoicing();
         }
     }
 }
