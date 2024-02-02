@@ -133,6 +133,7 @@ namespace Gambetto.Scripts
             _levelStatus["tutortial"] = true;
             _levelStatus["pawnEnemyIntro"] = true;
             _levelStatus["BishopEscape"] = true;
+            _levelStatus["KeyReveal"] = true;
 
             // load saved data
             LoadData();
