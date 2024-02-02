@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Gambetto.Scripts.Utils;
 using UnityEngine;
 
 namespace Gambetto.Scripts.UI
@@ -11,6 +12,7 @@ namespace Gambetto.Scripts.UI
 
         public void BackMenu()
         {
+            TimeManager.StopTime();
             GameManager.Instance.sceneTransition.CrossFade("MainMenu");
         }
 
