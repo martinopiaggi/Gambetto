@@ -315,3 +315,4 @@ MonoBehaviour:
   levelFinished: {fileID: 8300000, guid: c9d717b4fba7dd741ac7ce02ecd33be2, type: 3}
   powerUp: {fileID: 8300000, guid: a525336893dd89e4997cc73a80e856aa, type: 3}
   enemyAlerted: {fileID: 8300000, guid: ab428f989acef7b46a2e28f896375e61, type: 3}
+  bombExplosion: {fileID: 8300000, guid: 404dbb2348aa1a14db0117d0a014122c, type: 3}

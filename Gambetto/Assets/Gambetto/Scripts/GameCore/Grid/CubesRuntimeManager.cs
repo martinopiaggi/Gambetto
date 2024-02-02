@@ -104,6 +104,7 @@ namespace Gambetto.Scripts.GameCore.Grid
         
         public void DetonateNeighborhood(List<Cell> neighborhood, bool skipAnimation = false)
         {
+            AudioManager.Instance.PlaySfx(AudioManager.Instance.bombExplosion);
             var crater = RetrieveNeighborhood(neighborhood);
             _detonatedCubes.AddRange(crater); //adding to the list of detonated cubes
             foreach (var ripCell in crater)
