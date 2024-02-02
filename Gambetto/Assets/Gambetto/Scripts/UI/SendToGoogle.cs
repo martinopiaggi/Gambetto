@@ -1,10 +1,11 @@
 ﻿using System.Collections;
+using Gambetto.Scripts;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.Networking;
+using UnityEngine.UI;
 
-public class SendToGoogle : MonoBehaviour {
-
+public class SendToGoogle : MonoBehaviour
+{
     private string[] _videogames_names = new string[30]
     {
         "ACat_sVacation",
@@ -35,7 +36,7 @@ public class SendToGoogle : MonoBehaviour {
         "Shoto",
         "TheDoomedDog",
         "ThereIsNoMainCharacter",
-        "WoodlandMystery",        
+        "WoodlandMystery",
         "TestGame"
     };
 
@@ -72,24 +73,29 @@ public class SendToGoogle : MonoBehaviour {
         WoodlandMystery,
         TestGame
     };
-    
-    [SerializeField] private VideoGamesName Videogame;
-    [SerializeField] private InputField Feedback;
-    
+
+    [SerializeField]
+    private VideoGamesName Videogame;
+
+    [SerializeField]
+    private InputField Feedback;
+
     public void SendFeedback()
     {
-        string feedback = Feedback.text;
-        StartCoroutine(PostFeedback(_videogames_names[(int) Videogame],feedback));
+        var feedback = Feedback.text;
+        feedback += "\n" + "levels completed: " + GameManager.Instance.GetLevelCount(true);
+        feedback += "\n" + "deaths: " + GameManager.Instance.DeathCount;
+        StartCoroutine(PostFeedback(_videogames_names[(int)Videogame], feedback));
         // StartCoroutine(PostFeedback(Videogame.ToString(),feedback));
     }
-    
-    IEnumerator PostFeedback(string videogame_name, string feedback) 
+
+    IEnumerator PostFeedback(string videogame_name, string feedback)
     {
         // https://docs.google.com/forms/d/e/1FAIpQLSdyQkpRLzqRzADYlLhlGJHwhbKZvKJILo6vGmMfSePJQqlZxA/viewform?usp=pp_url&entry.631493581=Simple+Game&entry.1313960569=Very%0AGood!
 
         string URL =
             "https://docs.google.com/forms/d/e/1FAIpQLSdyQkpRLzqRzADYlLhlGJHwhbKZvKJILo6vGmMfSePJQqlZxA/formResponse";
-        
+
         WWWForm form = new WWWForm();
 
         form.AddField("entry.631493581", videogame_name);
@@ -100,7 +106,7 @@ public class SendToGoogle : MonoBehaviour {
         yield return www.SendWebRequest();
 
         print(www.error);
-        
+
         if (www.isNetworkError)
         {
             Debug.Log(www.error);

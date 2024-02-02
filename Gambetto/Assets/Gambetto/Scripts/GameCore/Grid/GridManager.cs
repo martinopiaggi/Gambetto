@@ -81,7 +81,20 @@ namespace Gambetto.Scripts.GameCore.Grid
         public Material lightMaterial;
         public Material darkMaterial;
 
-        public bool isDead;
+        public bool IsDead
+        {
+            get => isDead;
+            set
+            {
+                // if player is set to dead and was not dead before, increment the death count
+                if (!isDead && value)
+                {
+                    GameManager.Instance.DeathCount++;
+                }
+                isDead = value;
+            }
+        }
+        private bool isDead;
 
         private GameObject _spawnGameObject;
 
@@ -125,7 +138,7 @@ namespace Gambetto.Scripts.GameCore.Grid
                 (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
                 && _timeSinceLastInput >= InputTimeInterval
                 && playerController.choosing
-                && !isDead
+                && !IsDead
                 && Time.timeScale != 0f
                 && !PauseButton.mouseOverItemDropLocation
             )
@@ -172,14 +185,14 @@ namespace Gambetto.Scripts.GameCore.Grid
                 playerController.ChosenMove = _initialPlayerCell;
             }
 
-            if (!isDead)
+            if (!IsDead)
             {
                 UpdatePlayerPosition();
             }
 
             if (_playerCell.IsEmpty())
             {
-                isDead = true;
+                IsDead = true;
                 AudioManager.Instance.PlaySfx(AudioManager.Instance.deathByFall);
                 GameClock.Instance.StopClock();
                 pauseButton.SetActive(false);
@@ -187,7 +200,7 @@ namespace Gambetto.Scripts.GameCore.Grid
                 StartCoroutine(ShowDelayed(deathScreen, 1f));
             }
 
-            if (!isDead)
+            if (!IsDead)
             {
                 if (GameClock.Instance.CurrentTick() != 0)
                 {
@@ -201,7 +214,7 @@ namespace Gambetto.Scripts.GameCore.Grid
                     CheckBombTrigger();
                     CheckBombExplosion();
                     // check if the player is dead after bomb is exploded
-                    if (isDead)
+                    if (IsDead)
                         return;
                 }
                 playerController.StartChoosing(_playerPiece, _playerCell);
@@ -226,7 +239,7 @@ namespace Gambetto.Scripts.GameCore.Grid
 
         Dictionary<Cell, int> _detonatedCellsTimer = new Dictionary<Cell, int>();
         List<Cell> _emptyDetonateCells = new List<Cell>();
-        
+
         private void CheckBombTrigger()
         {
             //check if any player or enemy is on a bomb
@@ -238,9 +251,11 @@ namespace Gambetto.Scripts.GameCore.Grid
             //check if any player or enemy is on a bomb
             foreach (var cell in player_enemies)
             {
-                if (cell.IsEmpty()) continue; //bomb already exploded and enemy is on an empty
-                if (!_bombs.Contains(cell))continue;
-                
+                if (cell.IsEmpty())
+                    continue; //bomb already exploded and enemy is on an empty
+                if (!_bombs.Contains(cell))
+                    continue;
+
                 //find in _bombs the cell which is the same as _playerCell
                 var bombCell = _bombs.Find(c => c == cell);
                 if (_detonatedCellsTimer.ContainsKey(bombCell))
@@ -280,7 +295,6 @@ namespace Gambetto.Scripts.GameCore.Grid
             bombNeighborhood.Add(bombCell);
             bombNeighborhood.AddRange(bombCell.Neighborhood());
 
-            
             foreach (var detonatedCell in bombNeighborhood)
             {
                 //before set each detonated cell as empty, save if it's actual empty
@@ -288,8 +302,7 @@ namespace Gambetto.Scripts.GameCore.Grid
                 //the cell would be empty after the first explosion
                 //and marked wrongly as "original empty"
                 //checking over _detonatedCells this bug is avoided
-                if (detonatedCell.IsEmpty() 
-                    && !_detonatedCells.Contains(detonatedCell))
+                if (detonatedCell.IsEmpty() && !_detonatedCells.Contains(detonatedCell))
                 {
                     _emptyDetonateCells.Add(detonatedCell);
                 }
@@ -299,11 +312,10 @@ namespace Gambetto.Scripts.GameCore.Grid
                     detonatedCell.SetEmpty();
                 }
             }
-                
 
             //kill immediately player if inside the bomb explosion
             if (bombNeighborhood.Contains(_playerCell))
-                isDead = true;
+                IsDead = true;
 
             //kill immediately enemies if inside the bomb explosion
             foreach (var enemy in _enemies)
@@ -377,7 +389,7 @@ namespace Gambetto.Scripts.GameCore.Grid
             ResetDoor();
             ResetDetonatedCells();
             ResetBombTimers();
-            isDead = false;
+            IsDead = false;
             pauseButton.SetActive(true);
             GameClock.Instance.StartClock();
             yield return null;
@@ -393,7 +405,8 @@ namespace Gambetto.Scripts.GameCore.Grid
 
             foreach (var enemy in _enemies)
             {
-                if (enemy.Value.IsEmpty()) continue; //skip if the enemy is dead in an explosion
+                if (enemy.Value.IsEmpty())
+                    continue; //skip if the enemy is dead in an explosion
                 enemy.Key.Move(_enemiesPath[enemy.Key]);
             }
         }
@@ -403,7 +416,9 @@ namespace Gambetto.Scripts.GameCore.Grid
             _playerCell = playerController.ChosenMove;
             _playerPath = playerController.MovePath;
             // set if the player moved in the last turn
-            playerController.PlayerIsStill=(Vector3.Distance(_playerPiece.transform.position, _playerPath[^1]) < 0.1f);
+            playerController.PlayerIsStill = (
+                Vector3.Distance(_playerPiece.transform.position, _playerPath[^1]) < 0.1f
+            );
             _playerPiece.Move(_playerPath);
         }
 
@@ -1087,13 +1102,11 @@ namespace Gambetto.Scripts.GameCore.Grid
                 door.SetEmpty();
         }
 
-        
-        
         private void ResetDetonatedCells()
         {
             if (_detonatedCells.Count == 0)
                 return;
-            
+
             foreach (var detonatedCell in _detonatedCells)
             {
                 //if not original empty, it must be set as not empty
@@ -1102,7 +1115,6 @@ namespace Gambetto.Scripts.GameCore.Grid
                     detonatedCell.SetEmpty(false);
                 }
             }
-                
 
             foreach (var powerUp in _powerUps)
                 powerUp.Key.PowerUpObject.SetActive(true);

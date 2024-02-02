@@ -109,7 +109,7 @@ namespace Gambetto.Scripts.GameCore.Piece
                 AudioManager.Instance.PlaySfx(AudioManager.Instance.deathByCollision);
                 var gridManager = FindObjectOfType<GridManager>();
                 gridManager.playerController.choosing = false;
-                gridManager.isDead = true;
+                gridManager.IsDead = true;
                 gridManager.StartCoroutine(gridManager.ShowDelayed(gridManager.deathScreen, 1.42f));
                 gridManager.pauseButton.SetActive(false);
             }

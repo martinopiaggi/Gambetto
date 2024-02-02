@@ -16,6 +16,18 @@ namespace Gambetto.Scripts
 
         public SceneTransition sceneTransition;
 
+        private int _deathCount;
+
+        public int DeathCount
+        {
+            get => _deathCount;
+            set
+            {
+                _deathCount = value;
+                PlayerPrefs.SetInt("DeathCount", _deathCount);
+            }
+        }
+
         [SerializeField]
         private bool allLevelsUnlocked;
         public bool AllLevelsUnlocked
@@ -31,16 +43,13 @@ namespace Gambetto.Scripts
             get => disableQuotes;
             set => disableQuotes = value;
         }
-        
+
         [SerializeField]
         private bool highLightedSquaresActive;
         public bool HighLightedSquaresActive
         {
             get => highLightedSquaresActive;
-            set
-            {
-                highLightedSquaresActive = value;
-            }
+            set { highLightedSquaresActive = value; }
         }
 
         private string _nextLevelsSaveDataPath;
@@ -97,6 +106,7 @@ namespace Gambetto.Scripts
         {
             allLevelsUnlocked = PlayerPrefs.GetInt("AllLevelsUnlocked", 0) == 1;
             disableQuotes = PlayerPrefs.GetInt("DisableQuotes", 0) == 1;
+            _deathCount = PlayerPrefs.GetInt("DeathCount", 0);
 
             _nextLevelsSaveDataPath = Application.persistentDataPath + "/level_data.json";
             _levelsCompletedSaveDataPath = Application.persistentDataPath + "/completed_data.json";
