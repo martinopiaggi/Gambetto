@@ -37,13 +37,7 @@ namespace Gambetto.Scripts.UI
             currentLevel = level;
         }
 
-        //method used by the back button
-        public void BackToMainMenu()
-        {
-            GameManager.Instance.sceneTransition.CrossFade(0);
-        }
-
-        private IEnumerator LoadLevelRoutine(string level)
+        private static IEnumerator LoadLevelRoutine(string level)
         {
             if (!GameManager.Instance.DisableQuotes)
             {
@@ -59,7 +53,7 @@ namespace Gambetto.Scripts.UI
             GameManager.Instance.sceneTransition.CrossFade(level);
         }
 
-        private IEnumerator LoadLevelRoutine(int level)
+        private static IEnumerator LoadLevelRoutine(int level)
         {
             if (!GameManager.Instance.DisableQuotes)
             {
