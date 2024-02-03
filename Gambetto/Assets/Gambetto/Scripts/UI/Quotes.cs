@@ -11,14 +11,14 @@ namespace Gambetto.Scripts.UI
         private readonly List<string> levelQuotes =
             new()
             {
-                "Good game but not really my type. It's not you, it's me.",
-                "Technically very good, I simply don't like the gameplay, it is made of a lot of waiting and trial and error.",
-                "Very good game, just too complicated for me.",
-                "It isn't my type of game but it's well done. I found a bug.",
-                "Nice concept, but pawn capturing forward hurts.",
-                "Nothing to say, the mechanics are crazy, I could have never imagined something this cool.",
+                // "Good game but not really my type. It's not you, it's me.",
+                // "Technically very good, I simply don't like the gameplay, it is made of a lot of waiting and trial and error.",
+                // "Very good game, just too complicated for me.",
+                // "It isn't my type of game but it's well done. I found a bug.",
+                // "Nice concept, but pawn capturing forward hurts.",
+                // "Nothing to say, the mechanics are crazy, I could have never imagined something this cool.",
                 "Easy",
-                "For a chess player this game would be a gem.",
+                // "For a chess player this game would be a gem.",
                 "Aristotle once said: \"Gambetto is for people who love chess but are too stupid for chess\"",
                 "My grandma always said: \"A round of Gambetto before bed is the secret to a wise head.\"",
                 "As Plato might have observed: \"In the journey of life, we're all just pawns.\"",
