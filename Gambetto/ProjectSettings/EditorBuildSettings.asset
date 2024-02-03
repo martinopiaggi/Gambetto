@@ -48,7 +48,7 @@ EditorBuildSettings:
     path: Assets/Gambetto/Scenes/Levels/Final/Garry/lv5 TowerEscape/TowerEscape.unity
     guid: 35dbf8f2104a72f409606552e7b05819
   - enabled: 1
-    path: Assets/Gambetto/Scenes/Levels/Final/Bobby/martino-Spiral/Spiral.unity
+    path: Assets/Gambetto/Scenes/Levels/Martino/z_old/martino-Spiral/Spiral.unity
     guid: a3f9f0ea9c087cb4c9b87f0a48aa457c
   - enabled: 1
     path: Assets/Gambetto/Scenes/Levels/Final/Bobby/martino-TrappedTower/TrappedTower.unity
