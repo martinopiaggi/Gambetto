@@ -128,7 +128,7 @@ namespace Gambetto.Scripts.GameCore.Grid
                 ripCell
                     .GetComponentInChildren<MeshRenderer>()
                     .material
-                    .SetColor("_EmissionColor", Color.red);
+                    .SetColor("_EmissionColor", Color.red*5f);
             }
             //launch coroutine to cooldown the color
             StartCoroutine(CooldownNeighborhood(crater));
