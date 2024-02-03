@@ -3102,7 +3102,6 @@ MonoBehaviour:
   levelNames:
   - KeyReveal
   - bomb
-  - Spiral
   - bombislands
 --- !u!114 &1138886584
 MonoBehaviour:
