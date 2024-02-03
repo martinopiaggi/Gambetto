@@ -2389,7 +2389,6 @@ MonoBehaviour:
   - PawnEscort
   - David
   - TrappedTower
-  - Spiral
   - Queen
 --- !u!114 &610101823
 MonoBehaviour:
@@ -3103,6 +3102,7 @@ MonoBehaviour:
   levelNames:
   - KeyReveal
   - bomb
+  - Spiral
   - bombislands
 --- !u!114 &1138886584
 MonoBehaviour:
