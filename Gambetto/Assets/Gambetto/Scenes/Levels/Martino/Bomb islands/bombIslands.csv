@@ -1,0 +1,16 @@
+x,x,x,x,x,x,x,x,x,x,x,x
+x,x,x,x,x,x,x,x,x,x,x,x
+x,x,x,UNLOCK,,,x,x,x,x,x,x
+x,x,x,,x,,x,x,x,x,x,x
+x,x,x,,,,x,x,x,x,x,x
+x,x,x,x,,x,x,x,x,x,x,x
+x,x,x,,,,x,,,,x,x
+x,x,x,,x,,DOOR,P4,x,,x,x
+x,x,x,,P1,,x,,,,x,x
+x,x,x,x,,x,x,x,DOOR,x,x,x
+x,x,x,,,,x,,,P2,x,x
+x,x,x,,x,,,,x,,x,x
+x,x,x,S,,BOMB,x,,,E,x,x
+x,x,x,x,x,x,x,x,x,x,x,x
+x,x,x,x,x,x,x,x,x,x,x,x
+x,x,x,x,x,x,x,x,x,x,x,x

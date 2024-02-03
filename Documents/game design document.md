@@ -10,24 +10,26 @@
 
 ## Overview and Vision Statement
 
-Gambetto combines the strategic depth of chess with puzzle, arcade and some rhythm games.
-Players take on the role of a chess pawn facing various challenges. As they navigate different types of dungeons, they’ll need to face enemy pieces and to get to the end of different rooms. Players can transform using power-ups and gain the abilities of other chess pieces, introducing layers of strategy and gameplay depth.
-All pieces in the game will move following a certain rhythm; players will need to time their actions to choose moves.
-The player also needs to avoid falling out from the chessboard, otherwise he will have to restart the level.
+Gambetto combines the strategic depth of chess with puzzle and arcade elements.<br>
+Players take on the role of a chess pawn facing various challenges. As they navigate different types of dungeons, they’ll need to face enemy pieces and get to the end of different rooms. Players can transform using power-ups and gain abilities from other chess pieces, introducing layers of strategy and gameplay depth.
+Some pieces in the game will move following a certain rhythm others will chase the player; players will need to time their movements and avoid them.
+The player also needs to avoid falling out from the chessboard, otherwise they will have to restart the level.
 Levels are designed and ordered with increasing difficulty.
-Any level will be considered completed only if the player reaches the end tile where he will transform in a king piece and ascend. As a consequence, the next level will be unlocked and playable.
+By triggering specific tiles its possible to change some parts of the level.
+A level will be considered completed only if the player reaches the end tile.
+As a consequence, the next level will be unlocked and playable.
 
 ### Genre
 
-Strategy puzzle Hybrid with Rhythm and Arcade elements.
+Strategy puzzle Hybrid with Arcade elements.
 
 ### Platforms
 
-PC, Mobile
+PC
 
 ### Market Analysis
 
-The game's visual aesthetics will draw inspiration from Monument Valley while blending rhythm-based elements with arcade mechanics reminiscent of games like Crossy Road.
+The game's visual aesthetics will draw inspiration from Monument Valley while blending puzzle elements with arcade mechanics reminiscent of games like Crossy Road.
 
 ## Gameplay
 
@@ -39,26 +41,28 @@ Using this game mechanic, players navigate the dungeon, progressing through vari
 ### Core Mechanics
 
 - Chess-inspired Movement: Navigate using the movement rules of chess pieces.
-- Movement Rhythms: Sync your moves with the ticking of an in-game clock. Mistime your move, and face the consequences. Selecting trigger all enemies to move at the same time as the player. Enemy movement will also be triggered by the end of a move cycle.
-- Chess Power-ups: Go on tiles representing various chess pieces to gain their movement abilities.
+- Movement: Sync your moves with the ticking of an in-game clock. Mistime your move, and face the consequences. Selecting trigger all enemies to move at the same time as the player. Enemy movement will also be triggered by the end of a move cycle.
+- Chess Power-ups: tiles representing various chess pieces that allow the player to gain their movement abilities.
+- Bomb tile: triggers a timed explosion that will destoy adjacent tiles.
+- Key tile: unlocks a new path.
 - Quick Levels: Short, intense levels, especially during the initial phases.
 
 ### Challenges
 
 - **Time Pressure**: player must make their move within a time limit
-  - To be stationary increase the chances to be captured by an enemy piece
-  - Selecting the wrong move can result into falling out from the chessboard or crashing into an enemy piece
+  - To be stationary increase the chances to be captured by an enemy piece.
+  - Selecting the wrong move can result into falling out from the chessboard or crashing into an enemy piece.
 - **Dynamic Enemies**: various types of enemies
-  - Different enemies have different move patterns
-  - Enemies move in sync with the player , some try to eat the player others just follow a predefined pattern.
-  - Enemies that follow you have an activation distance they will start to follow you only if you alert them by getting close enough.
-- **Powerup exploitations**: Player must make the most of powerups
-  - Wrong powerups could increase difficulty
+  - Different enemies have different move patterns.
+  - Enemies move in sync with the player, some try to eat the player others just follow a predefined pattern.
+  - Enemies that follow you have an activation distance; they will try to catch you only if you alert them by getting close enough.
+- **Special Tile exploitation**: Player must make the most of special tiles
+  - Wrong powerups could increase difficulty.
 
 ### Level Design
 
 Levels will each have different challenges and hazards, levels are made of chess board style tiles and are surrounded by a foggy void.
-Levels exhibit unique, irregular shapes and may incorporate openings within their design. They are set apart by alterations in tile patterns, lighting, and fog effects, presenting varying colors to immerse players in diverse environments. Within each room, enemies are strategically positioned, and players will have to find a way to traverse them end reach the end goal, a highlighted tile that "crwons the player as King".
+Levels exhibit unique, irregular shapes and may incorporate openings within their design. They are set apart by alterations in tile patterns, lighting, and fog effects, presenting varying colors to immerse players in diverse environments. Within each room, enemies are strategically positioned, and players will have to find a way to traverse them and reach the end goal, a highlighted tile that "crowns the player as King".
 
 ## User Interface
 
@@ -87,11 +91,11 @@ The game camera will have an isometric view of the map and will follow the playe
 
 ## Music
 
-The game's music sets the mood with an ambient composition, where rhythmic elements echoing the in-game clock's tick, creating a soothing and immersive experience for players.
+The game's music sets the mood with a light and spacious tone, creating a soothing and immersive experience for players.
 
 ## Sound Effects
 
-Discrete, emphasizing movements, captures, and transformations.
+Discrete, emphasizing movements, captures, transformations and explosions.
 
 ## Technical Specification
 
@@ -106,16 +110,19 @@ Materials
 - Two distinct chessboard materials: Dark and Light. These could represent the two different colored squares on a chessboard.
 - background fog
 - gradient background
-- maybe the player can choose to be white/black piece. And if black it's hard because we can make that for the first turn only the enemies (white) moves (like in chess white move first)
+- materials change depending on the color scheme of the scene
 
 Scenes
-A main menu for game navigation.
-Several testing or development scenes, like "Prova" and "SampleScene", indicating ongoing development and experimentation.
+- A main menu for game navigation.
+- Level selector scene.
+- Quotes scene.
+- All levels divided by category.
+- Credits scene.
 
 Scripts
 
 - Main Game Logic:
-  Scripts for audio management, cell interactions, grid management, level flow, main menu functionality, and UI management.
+  Scripts for audio management, cell interactions, grid management, level flow, main menu functionality.
 
 - Chess Piece Logic:
   A script for the basic behavior of chess pieces.
@@ -123,6 +130,9 @@ Scripts
 - Room Logic:
   Scripts related to room behavior and layout, indicating dynamic and varied level designs.
   Manually design rooms and concatenate rooms layouts/specifications easily in each level
+
+- UI Logic:
+  Sripts related to buttons, trasitions, toggles & sliders.
 
 - Clock Logic:
 
@@ -178,27 +188,27 @@ sequenceDiagram
 
 ### Week 1 (October 10 - October 17, 2023)
 
-- **Team formation** and initial brainstorming sessions.
-- **Task Assignment** to start game's core mechanics.
+- **Team formation and initial brainstorming sessions.**
+- **Task Assignment to start game's core mechanics.**
 
 ### Week 2 (October 17 - October 24, 2023)
 
-- Continuing **Core Mechanics Development**
+- **Continuing Core Mechanics Development**
 - **Aesthetics Brainstorm**
-- Hold a team meeting to discuss progress and potential changes.
+- **Hold a team meeting to discuss progress and potential changes.**
 
 ### Week 3-4 (October 24 - November 6, 2023)
 
 - **Experimenting layout of levels**
 - **Milestone Review**
 - **Draft of GDD**
-- Send the game design document and git repository link to pierluca.lanzi@polimi.it.
+- **Send the game design document and git repository link to pierluca.lanzi@polimi.it.**
 
 ### Week 5-9 (November 6 - December 12, 2023)
 
 - **Prototype Development**
 - **Aesthetics Implementation**
-- **Regular Playtesting**, testing and refining gameplay mechanics
+- **Regular Playtesting, testing and refining gameplay mechanics**
 - **Prototype Submission** (December 10)
 
 ### Week 10 (December 12 - December 20, 2023)
@@ -218,5 +228,5 @@ sequenceDiagram
 
 ### Week 17 (February 23 - February 27, 2024)
 
-- Final touches and last-minute refinements.
-- Submit the final project.
+- **Final touches and last-minute refinements.**
+- **Submit the final project.**

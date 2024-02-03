@@ -1,6 +1,6 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Gambetto.Scripts
@@ -18,11 +18,16 @@ namespace Gambetto.Scripts
         private AudioSource musicSource;
 
         [SerializeField]
+        private AudioSource musicSourceVoicing;
+
+        [SerializeField]
         private AudioSource sfxSource;
 
         [Header("---- Audio Clip ----")]
         [Header("--------Background Clips----------")]
         public AudioClip menuBackground;
+
+        public AudioClip menuBackgroundVoicing;
 
         [Header("--------SFX Clips----------")]
         public AudioClip pawnMovement;
@@ -33,6 +38,7 @@ namespace Gambetto.Scripts
         public AudioClip levelFinished;
         public AudioClip powerUp;
         public AudioClip enemyAlerted;
+        public AudioClip bombExplosion;
 
         //awake method makes sure that AudioManager is not destroyed
         private void Awake()
@@ -69,57 +75,78 @@ namespace Gambetto.Scripts
             sfxSource.PlayOneShot(clip);
         }
 
-        //method used to change background music
-        public void PlayBackground(AudioClip clip)
+        public void PlayBackground()
         {
-            PlayWithFadeIn(clip, 4f);
+            PlayWithFadeIn(4f);
         }
 
-        //method that start music with a fade in
-        private void PlayWithFadeIn(AudioClip clip, float duration)
+        private void PlayWithFadeIn(float duration)
         {
-            StartCoroutine(FadeOutFadeIn(clip, duration));
+            StartCoroutine(BackgroundMusicCoroutine(duration));
         }
 
-        //method that start music with a fade in
-        private IEnumerator FadeOutFadeIn(AudioClip clip, float duration)
+        private IEnumerator BackgroundMusicCoroutine(float duration)
         {
             musicSource.Stop();
-            musicSource.clip = clip;
+            musicSource.clip = menuBackground;
             musicSource.volume = 0;
             musicSource.Play();
-
-            var timeElapsed = 0f;
-            while (musicSource.volume < music)
+            musicSourceVoicing.Stop();
+            musicSourceVoicing.clip = menuBackgroundVoicing;
+            musicSourceVoicing.volume = 0;
+            musicSourceVoicing.Play();
+            var elapsedTime = 0f;
+            while (elapsedTime < duration)
             {
-                musicSource.volume = Mathf.Lerp(0, 1, timeElapsed / duration);
-                timeElapsed += Time.deltaTime;
+                elapsedTime += Time.deltaTime;
+                musicSource.volume = Mathf.Lerp(0, music, elapsedTime / duration);
+                musicSourceVoicing.volume = Mathf.Lerp(0, music, elapsedTime / duration);
                 yield return null;
             }
         }
-
-        // private IEnumerator PlayWithFadeInCoroutine(AudioClip clip, float duration)
-        // {
-        //     musicSource.Stop();
-        //     musicSource.clip = clip;
-        //     musicSource.volume = 0;
-        //     musicSource.Play();
-        //     var elapsedTime = 0f;
-        //     while (elapsedTime < duration)
-        //     {
-        //         elapsedTime += Time.deltaTime;
-        //         musicSource.volume = Mathf.Lerp(0, music, elapsedTime / duration);
-        //         yield return null;
-        //     }
-        // }
 
         //method used to change music volume
         public void EditMusicVolume(float volume)
         {
             music = volume;
             musicSource.volume = volume;
+            musicSourceVoicing.volume = volume;
             //save value into PlayerPrefs
             PlayerPrefs.SetFloat("MusicVolume", music);
+        }
+
+        Coroutine _fadeCoroutine;
+
+        public void FadeDownVoicing(float duration)
+        {
+            if (_fadeCoroutine != null)
+                StopCoroutine(_fadeCoroutine);
+            _fadeCoroutine = StartCoroutine(FadeVoicingCoroutine(duration, true));
+            Debug.Log("fading down");
+        }
+
+        public void FadeUpVoicing()
+        {
+            Debug.Log("fading up");
+            const float duration = 1f;
+            if (_fadeCoroutine != null)
+                StopCoroutine(_fadeCoroutine);
+            _fadeCoroutine = StartCoroutine(FadeVoicingCoroutine(duration, false));
+        }
+
+        private IEnumerator FadeVoicingCoroutine(float duration, bool toZero)
+        {
+            var elapsedTime = 0f;
+            while (elapsedTime < duration)
+            {
+                elapsedTime += Time.deltaTime;
+                musicSourceVoicing.volume = Mathf.Lerp(
+                    musicSourceVoicing.volume,
+                    toZero ? 0 : music,
+                    elapsedTime / duration
+                );
+                yield return null;
+            }
         }
 
         //method used to change sfx volume

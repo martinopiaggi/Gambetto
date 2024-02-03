@@ -25,6 +25,7 @@ namespace Gambetto.Scripts.UI
             TimeManager.ResumeTime();
             PauseButton.mouseOverItemDropLocation = false;
             gridManager.RestartLevel();
+            AudioManager.Instance.FadeUpVoicing();
         }
 
         public void BackToLevels(GameObject menuToClose = null)
@@ -33,6 +34,7 @@ namespace Gambetto.Scripts.UI
                 menuToClose.SetActive(false);
             GameManager.Instance.sceneTransition.CrossFade("Level selection");
             TimeManager.ResumeTime();
+            AudioManager.Instance.FadeUpVoicing();
         }
 
         public void ResumeGame(GameObject menuToClose = null)
@@ -44,7 +46,6 @@ namespace Gambetto.Scripts.UI
 
         public void LoadNextLevel()
         {
-            
             var nextLevel = GameManager.Instance.GetNextLevel(SceneManager.GetActiveScene().name);
             if (nextLevel == SceneManager.GetActiveScene().name)
             {
@@ -52,8 +53,6 @@ namespace Gambetto.Scripts.UI
                 return;
             }
             GameManager.Instance.sceneTransition.CrossFade(nextLevel);
-
-            //todo: set the GameManager.Instance.nextLevel to the next level
 
             TimeManager.ResumeTime();
         }

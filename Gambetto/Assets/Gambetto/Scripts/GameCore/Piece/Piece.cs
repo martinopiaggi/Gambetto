@@ -1,10 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using Gambetto.Scripts.GameCore.Grid;
 using Gambetto.Scripts.Utils;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Behaviour = Gambetto.Scripts.GameCore.Room.Behaviour;
 using Random = UnityEngine.Random;
 
@@ -111,7 +109,7 @@ namespace Gambetto.Scripts.GameCore.Piece
                 AudioManager.Instance.PlaySfx(AudioManager.Instance.deathByCollision);
                 var gridManager = FindObjectOfType<GridManager>();
                 gridManager.playerController.choosing = false;
-                gridManager.isDead = true;
+                gridManager.IsDead = true;
                 gridManager.StartCoroutine(gridManager.ShowDelayed(gridManager.deathScreen, 1.42f));
                 gridManager.pauseButton.SetActive(false);
             }
@@ -129,6 +127,7 @@ namespace Gambetto.Scripts.GameCore.Piece
         {
             if (Vector3.Distance(transform.position, positions[^1]) < 0.1f)
                 return;
+            if (gravity) EnableColliders();
             if (_moveCoroutine != null)
             {
                 // if a piece is still moving, stop it and force the position
@@ -145,8 +144,8 @@ namespace Gambetto.Scripts.GameCore.Piece
             bool gravity = true
         )
         {
-            if (!gravity)
-                DisableColliders();
+            if (!gravity) DisableColliders();
+            
             // disable collider if gravity is disabled
             Rb.useGravity = gravity; // enable/disable gravity
 
@@ -177,10 +176,11 @@ namespace Gambetto.Scripts.GameCore.Piece
 
                     var piecePos = TR.position;
                     var distance = Vector3.Distance(piecePos, destPosition);
-                    // if the distance is less then 5 is set to 5 to avoid the movement to be to slow
-                    if (distance < 2.0f) 
-                        distance = 2.0f;
-                    var inputTime = TimeManager.inputTimeInterval;
+                    // if the distance is less than 1 is set to 1 to avoid the movement to be to slow
+                    // ATTENTION don't change this value to don't lose collisions
+                    if (distance < 1.0f) 
+                        distance = 1.0f;
+                    var inputTime = TimeManager.InputTimeInterval;
                     piecePos = Vector3.MoveTowards(
                         piecePos,
                         destPosition,
@@ -190,7 +190,6 @@ namespace Gambetto.Scripts.GameCore.Piece
                     direction = destPosition - piecePos;
                     yield return null;
                 }
-                EnableColliders(); //Re-enable colliders
             }
         }
 

@@ -24,8 +24,17 @@ EditorBuildSettings:
     path: Assets/Gambetto/Scenes/Levels/Final/Bobby/martino-David/David.unity
     guid: d7b8428b32504e141a7c3d61347bd978
   - enabled: 1
+    path: Assets/Gambetto/Scenes/Levels/Martino/Key_tut2/KeyReveal.unity
+    guid: 991030395b36d68449474b77ecf80d21
+  - enabled: 1
     path: Assets/Gambetto/Scenes/Levels/Final/Magnus/martino-Goggins/Goggins.unity
     guid: 93e1e131876f28646bfcf99fd54c4581
+  - enabled: 1
+    path: Assets/Gambetto/Scenes/Levels/Martino/Bomb islands/bombIslands.unity
+    guid: 5846f590c8b9a064d9c58125d79c81fb
+  - enabled: 1
+    path: Assets/Gambetto/Scenes/Levels/Martino/Bomb Enemies/bomb.unity
+    guid: 88ff00cece318234b8f840e288b78823
   - enabled: 1
     path: Assets/Gambetto/Scenes/Levels/Final/Bobby/martino-Queen/Queen.unity
     guid: d20b0fea8e27d974aac72dd10d36fbbd
@@ -59,4 +68,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Gambetto/Scenes/Levels/Final/Bobby/milo-PawnEscort/PawnEscort.unity
     guid: 048851854f3774f4ab4cc9ae3a7b4822
+  - enabled: 1
+    path: Assets/Gambetto/Scenes/CreditsScene.unity
+    guid: 1856a6b8b7e925c449c3dad5cd160baf
+  - enabled: 1
+    path: Assets/Gambetto/Scenes/QuotesScene.unity
+    guid: 034cf45bc5204b64d8f6431767c44cf9
   m_configObjects: {}

@@ -67,6 +67,12 @@ namespace Gambetto.Scripts.GameCore.Grid
         public GameObject endLevel;
 
         [SerializeField]
+        public GameObject keyTile;
+
+        [SerializeField]
+        public GameObject bombTile;
+
+        [SerializeField]
         public GameObject deathScreen;
 
         [SerializeField]
@@ -75,7 +81,20 @@ namespace Gambetto.Scripts.GameCore.Grid
         public Material lightMaterial;
         public Material darkMaterial;
 
-        public bool isDead;
+        public bool IsDead
+        {
+            get => isDead;
+            set
+            {
+                // if player is set to dead and was not dead before, increment the death count
+                if (!isDead && value && GameManager.Instance != null)
+                {
+                    GameManager.Instance.DeathCount++;
+                }
+                isDead = value;
+            }
+        }
+        private bool isDead;
 
         private GameObject _spawnGameObject;
 
@@ -91,8 +110,8 @@ namespace Gambetto.Scripts.GameCore.Grid
 
         private float _timeSinceLastInput;
 
-        // input is taken every 130ms to let all the pieces the time to move
-        private float InputTimeInterval = TimeManager.inputTimeInterval;
+        // input is taken every 150ms to let all the pieces the time to move
+        private float InputTimeInterval = TimeManager.InputTimeInterval;
 
         private void Start()
         {
@@ -119,7 +138,7 @@ namespace Gambetto.Scripts.GameCore.Grid
                 (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
                 && _timeSinceLastInput >= InputTimeInterval
                 && playerController.choosing
-                && !isDead
+                && !IsDead
                 && Time.timeScale != 0f
                 && !PauseButton.mouseOverItemDropLocation
             )
@@ -166,14 +185,14 @@ namespace Gambetto.Scripts.GameCore.Grid
                 playerController.ChosenMove = _initialPlayerCell;
             }
 
-            if (!isDead)
+            if (!IsDead)
             {
                 UpdatePlayerPosition();
             }
 
             if (_playerCell.IsEmpty())
             {
-                isDead = true;
+                IsDead = true;
                 AudioManager.Instance.PlaySfx(AudioManager.Instance.deathByFall);
                 GameClock.Instance.StopClock();
                 pauseButton.SetActive(false);
@@ -181,7 +200,7 @@ namespace Gambetto.Scripts.GameCore.Grid
                 StartCoroutine(ShowDelayed(deathScreen, 1f));
             }
 
-            if (!isDead)
+            if (!IsDead)
             {
                 if (GameClock.Instance.CurrentTick() != 0)
                 {
@@ -191,9 +210,128 @@ namespace Gambetto.Scripts.GameCore.Grid
                     cpuBehavior.ComputeCPUMoves(_playerCell, _enemies);
                     UpdateEnemiesPosition();
                     CheckPowerUp();
+                    CheckKeyDoor();
+                    CheckBombTrigger();
+                    CheckBombExplosion();
+                    // check if the player is dead after bomb is exploded
+                    if (IsDead)
+                        return;
                 }
                 playerController.StartChoosing(_playerPiece, _playerCell);
             }
+        }
+
+        private void CheckKeyDoor()
+        {
+            if (_playerCell != _key)
+                return;
+            if (_doors.Count == 0)
+                return;
+            if (!_doors[0].IsEmpty())
+                return; //it means that the doors are already open
+            foreach (var door in _doors)
+                door.SetEmpty(false);
+            CubesRuntimeManager.instance.ToggleAllDoors(true);
+        }
+
+        List<Cell> _bombs = new List<Cell>();
+        private List<Cell> _detonatedCells = new List<Cell>();
+
+        Dictionary<Cell, int> _detonatedCellsTimer = new Dictionary<Cell, int>();
+        List<Cell> _emptyDetonateCells = new List<Cell>();
+
+        private void CheckBombTrigger()
+        {
+            //check if any player or enemy is on a bomb
+            var playerEnemies = new List<Cell>();
+            playerEnemies.AddRange(_enemies.Values.ToList());
+            playerEnemies.Add(_playerCell);
+
+            //check if any player or enemy is on a bomb
+            foreach (var cell in playerEnemies)
+            {
+                if (cell.IsEmpty())
+                    continue; //bomb already exploded and enemy is on an empty
+                if (!_bombs.Contains(cell))
+                    continue;
+
+                //find in _bombs the cell which is the same as _playerCell
+                var bombCell = _bombs.Find(c => c == cell);
+                if (_detonatedCellsTimer.ContainsKey(bombCell))
+                    continue; //already activated
+
+                //find the powerup in _powerups which has value = bomb to hide it during explosion
+                var powerUp = _powerUps.Keys.ToList().Find(p => _powerUps[p] == bombCell);
+                powerUp.SetInactive(); //disactivate the powerup
+                _detonatedCellsTimer.Add(bombCell, 3);
+            }
+        }
+
+        
+        
+        private void CheckBombExplosion()
+        {
+            if (_detonatedCellsTimer.Count == 0)
+                return;
+
+            foreach (var cell in _detonatedCellsTimer.Keys.ToList())
+            {
+                _detonatedCellsTimer[cell]--;
+                CubesRuntimeManager.instance.PulsingNeighborhood(cell.Neighborhood());
+                if (_detonatedCellsTimer[cell] == 0)
+                {
+                    BombExplosion(cell);
+                    _detonatedCellsTimer.Remove(cell);
+                }
+            }
+        }
+
+        private void BombExplosion(Cell bombCell)
+        {
+            //find the powerup in _powerups which has value = bomb to hide it during explosion
+            var powerUp = _powerUps.Keys.ToList().Find(p => _powerUps[p] == bombCell);
+            powerUp.PowerUpObject.SetActive(false);
+
+            var bombNeighborhood = new List<Cell>();
+            bombNeighborhood.Add(bombCell);
+            bombNeighborhood.AddRange(bombCell.Neighborhood());
+
+            foreach (var detonatedCell in bombNeighborhood)
+            {
+                //before set each detonated cell as empty, save if it's actual empty
+                //second member is necessary in case of multiple overlapping bombs:
+                //the cell would be empty after the first explosion
+                //and marked wrongly as "original empty"
+                //checking over _detonatedCells this bug is avoided
+                if (detonatedCell.IsEmpty() && !_detonatedCells.Contains(detonatedCell))
+                {
+                    _emptyDetonateCells.Add(detonatedCell);
+                }
+                else
+                {
+                    //set detonated cell as empty
+                    detonatedCell.SetEmpty();
+                }
+            }
+
+            //kill immediately player if inside the bomb explosion
+            if (bombNeighborhood.Contains(_playerCell))
+                IsDead = true;
+
+            //kill immediately enemies if inside the bomb explosion
+            foreach (var enemy in _enemies)
+            {
+                if (bombNeighborhood.Contains(enemy.Value))
+                {
+                    enemy.Key.SetIsKinematic(false);
+                }
+            }
+
+            //move down physical cubes of the detonated cells
+            CubesRuntimeManager.instance.DetonateNeighborhood(bombNeighborhood);
+
+            //accumulate all the cells detonated (also of different bombs) in a list
+            _detonatedCells.AddRange(bombNeighborhood);
         }
 
         public Cell GetPlayerPosition()
@@ -220,7 +358,7 @@ namespace Gambetto.Scripts.GameCore.Grid
         {
             GameClock.Instance.StopClock();
             //after the effects, all the cubes are in the fog, resetting positions:
-            EndOfLevelEffect.instance.ResetEndOfLevelEffect();
+            CubesRuntimeManager.instance.ResetEndOfLevelEffect();
             _enemies.Clear();
             _enemies = new Dictionary<Piece.Piece, Cell>(_initialEnemiesPositions);
             _playerCell = _initialPlayerCell;
@@ -249,7 +387,10 @@ namespace Gambetto.Scripts.GameCore.Grid
             _playerPiece = playerObj.GetComponent<Piece.Piece>();
             _playerPiece.PieceRole = PieceRole.Player;
             ResetPowerUps();
-            isDead = false;
+            ResetDoor();
+            ResetDetonatedCells();
+            ResetBombTimers();
+            IsDead = false;
             pauseButton.SetActive(true);
             GameClock.Instance.StartClock();
             yield return null;
@@ -265,6 +406,8 @@ namespace Gambetto.Scripts.GameCore.Grid
 
             foreach (var enemy in _enemies)
             {
+                if (enemy.Value.IsEmpty())
+                    continue; //skip if the enemy is dead in an explosion
                 enemy.Key.Move(_enemiesPath[enemy.Key]);
             }
         }
@@ -273,6 +416,10 @@ namespace Gambetto.Scripts.GameCore.Grid
         {
             _playerCell = playerController.ChosenMove;
             _playerPath = playerController.MovePath;
+            // set if the player moved in the last turn
+            playerController.PlayerIsStill = (
+                Vector3.Distance(_playerPiece.transform.position, _playerPath[^1]) < 0.1f
+            );
             _playerPiece.Move(_playerPath);
         }
 
@@ -517,6 +664,9 @@ namespace Gambetto.Scripts.GameCore.Grid
             _initialEnemiesPositions.Add(pieceObj.GetComponent<Piece.Piece>(), cell);
         }
 
+        Cell _key;
+        private List<Cell> _doors = new List<Cell>();
+
         /// <summary>
         /// This method is used to support the creation of power ups/ end of level
         /// and to store them in a dictionary (_powerUps) or in a variable (_endLevelCell)
@@ -525,6 +675,19 @@ namespace Gambetto.Scripts.GameCore.Grid
         {
             switch (square.Value)
             {
+                case RoomLayout.MatrixValue.Bomb: //Bomb
+                    _bombs.Add(cell);
+                    InstantiatePowerUp(bombTile, PieceType.Pawn, cell);
+                    break;
+                case RoomLayout.MatrixValue.Key: //Key
+                    _key = cell;
+                    InstantiatePowerUp(keyTile, PieceType.Pawn, cell);
+                    break;
+                case RoomLayout.MatrixValue.Door: //door
+                    _doors.Add(cell);
+                    cell.SetEmpty();
+                    CubesRuntimeManager.instance.AddDoorCoords(cell.GetGlobalCoordinates());
+                    break;
                 case RoomLayout.MatrixValue.PB: //Bishop power up
                     InstantiatePowerUp(bishopPowerUp, PieceType.Bishop, cell);
                     break;
@@ -544,7 +707,7 @@ namespace Gambetto.Scripts.GameCore.Grid
                         cell.GetGlobalCoordinates() + new Vector3(0, 0.001f, 0),
                         quaternion.identity
                     );
-                    EndOfLevelEffect.instance.AddExitCoords(cell.GetGlobalCoordinates());
+                    CubesRuntimeManager.instance.AddExitCoords(cell.GetGlobalCoordinates());
                     break;
                 default:
                     return;
@@ -563,9 +726,13 @@ namespace Gambetto.Scripts.GameCore.Grid
                 cell.GetGlobalCoordinates() + new Vector3(0, 0.001f, 0),
                 quaternion.identity
             );
-            var bishop = new PowerUp(type, powerUpObj, cell);
-            _powerUps.Add(bishop, cell);
-            EndOfLevelEffect.instance.AddPowerUp(powerUpObj);
+            if (prefab != keyTile)
+            {
+                var obj = new PowerUp(type, powerUpObj, cell);
+                _powerUps.Add(obj, cell);
+            }
+
+            CubesRuntimeManager.instance.AddTile(powerUpObj);
         }
 
         /// <summary>
@@ -824,7 +991,7 @@ namespace Gambetto.Scripts.GameCore.Grid
 
                 ExecuteAfterDelay(
                     0.5f,
-                    () => EndOfLevelEffect.instance.FireEffect(_playerPiece.gameObject)
+                    () => CubesRuntimeManager.instance.FireEffect(_playerPiece.gameObject)
                 );
 
                 // but they don't fall
@@ -838,7 +1005,9 @@ namespace Gambetto.Scripts.GameCore.Grid
                 AudioManager.Instance.PlaySfx(AudioManager.Instance.levelFinished);
 
                 if (GameManager.Instance != null)
-                    GameManager.Instance.SetLevelStatus(GameManager.Instance.GetNextLevel(SceneManager.GetActiveScene().name), true);
+                {
+                    GameManager.Instance.SetLevelCompleted(SceneManager.GetActiveScene().name);
+                }
 
                 pauseButton.SetActive(false);
                 playerController.choosing = false;
@@ -919,10 +1088,47 @@ namespace Gambetto.Scripts.GameCore.Grid
         private void ResetPowerUps()
         {
             foreach (var p in _powerUps.Keys)
-            {
                 p.SetInactive();
-            }
             GameClock.Instance.ChangeClockPeriod(GameClock.DefaultClockPeriod);
+        }
+
+        private void ResetDoor()
+        {
+            if (_doors.Count == 0)
+                return;
+            if (_doors[0].IsEmpty())
+                return; //it means that the doors are already open
+            CubesRuntimeManager.instance.ToggleAllDoors(false, true);
+            foreach (var door in _doors)
+                door.SetEmpty();
+        }
+
+        private void ResetDetonatedCells()
+        {
+            if (_detonatedCells.Count == 0)
+                return;
+
+            foreach (var detonatedCell in _detonatedCells)
+            {
+                //if not original empty, it must be set as not empty
+                if (!_emptyDetonateCells.Contains(detonatedCell))
+                {
+                    detonatedCell.SetEmpty(false);
+                }
+            }
+
+            foreach (var powerUp in _powerUps)
+                powerUp.Key.PowerUpObject.SetActive(true);
+
+            CubesRuntimeManager.instance.ResetDetonatedCubes();
+
+            _emptyDetonateCells.Clear();
+            _detonatedCells.Clear(); //clear the list of detonated cells IMPORTANT
+        }
+
+        private void ResetBombTimers()
+        {
+            _detonatedCellsTimer.Clear();
         }
     }
 }

@@ -1874,6 +1874,8 @@ MonoBehaviour:
   musicSlider: {fileID: 3032561795282624231}
   sfxSlider: {fileID: 8148699077610210249}
   unlockAllLevelsToggle: {fileID: 0}
+  disableQuotesToggle: {fileID: 0}
+  enableHighlatedSquaresToggle: {fileID: 0}
 --- !u!114 &8570726247565799504
 MonoBehaviour:
   m_ObjectHideFlags: 0
