@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7ac34a7225b38244ebf91c84eb6a06c1, type: 3}
-  m_Name: unico
+  m_Name: Behaviour 1
   m_EditorClassIdentifier: 
   movements: []
   offset: 0
-  id: 1
+  id: 2
   aggressive: 0
-  activationDistanceCells: 999
+  activationDistanceCells: 20

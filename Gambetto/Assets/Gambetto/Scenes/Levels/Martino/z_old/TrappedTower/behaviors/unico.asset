@@ -15,5 +15,5 @@ MonoBehaviour:
   movements: []
   offset: 0
   id: 1
-  aggressive: 1
-  activationDistanceCells: 0
+  aggressive: 0
+  activationDistanceCells: 500

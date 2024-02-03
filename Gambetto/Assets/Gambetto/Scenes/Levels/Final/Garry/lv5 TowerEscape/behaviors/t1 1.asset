@@ -10,10 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7ac34a7225b38244ebf91c84eb6a06c1, type: 3}
-  m_Name: unico
+  m_Name: t1 1
   m_EditorClassIdentifier: 
-  movements: []
-  offset: 0
+  _movements:
+  - {x: 3, y: 0}
+  - {x: 0, y: -2}
+  - {x: -2, y: 0}
+  - {x: 0, y: -2}
+  - {x: -1, y: 0}
+  - {x: 0, y: -2}
+  - {x: 2, y: 0}
+  - {x: -2, y: 0}
+  - {x: 0, y: 2}
+  - {x: 5, y: 0}
+  - {x: 0, y: 4}
+  - {x: 2, y: 0}
+  - {x: 0, y: -3}
+  _offset: 0
   id: 1
-  aggressive: 0
-  activationDistanceCells: 999

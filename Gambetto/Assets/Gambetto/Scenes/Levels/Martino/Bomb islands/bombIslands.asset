@@ -15,4 +15,7 @@ MonoBehaviour:
   topologyDescription: bombe isole
   roomCsvTextAsset: {fileID: 4900000, guid: 91f0b75d6080ac64f9b98f9e37b647b0, type: 3}
   exitSide: {x: 1, y: 0}
-  behaviours: []
+  behaviours:
+  - {fileID: 11400000, guid: 2e7cee9a5224e9846b6e70d3d09dc851, type: 2}
+  - {fileID: 11400000, guid: c327c468c849de841b76d73dddb6ff23, type: 2}
+  - {fileID: 11400000, guid: a094a5d1f5671494399d6c9cde1b3c97, type: 2}

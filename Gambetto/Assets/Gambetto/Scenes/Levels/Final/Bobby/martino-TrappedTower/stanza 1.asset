@@ -17,4 +17,3 @@ MonoBehaviour:
   exitSide: {x: 1, y: 0}
   behaviours:
   - {fileID: 11400000, guid: 43e0cdedeafb9494eb830045c433cc7d, type: 2}
-  - {fileID: 11400000, guid: 5b4762d2cecfde944bc334ad2ac84788, type: 2}
