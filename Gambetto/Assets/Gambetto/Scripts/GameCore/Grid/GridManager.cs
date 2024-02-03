@@ -243,13 +243,12 @@ namespace Gambetto.Scripts.GameCore.Grid
         private void CheckBombTrigger()
         {
             //check if any player or enemy is on a bomb
-            var player_enemies = new List<Cell>();
-            player_enemies.AddRange(_enemies.Values.ToList());
-            ;
-            player_enemies.Add(_playerCell);
+            var playerEnemies = new List<Cell>();
+            playerEnemies.AddRange(_enemies.Values.ToList());
+            playerEnemies.Add(_playerCell);
 
             //check if any player or enemy is on a bomb
-            foreach (var cell in player_enemies)
+            foreach (var cell in playerEnemies)
             {
                 if (cell.IsEmpty())
                     continue; //bomb already exploded and enemy is on an empty
@@ -268,6 +267,8 @@ namespace Gambetto.Scripts.GameCore.Grid
             }
         }
 
+        
+        
         private void CheckBombExplosion()
         {
             if (_detonatedCellsTimer.Count == 0)

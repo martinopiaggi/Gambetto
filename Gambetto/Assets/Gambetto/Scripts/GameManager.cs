@@ -49,7 +49,7 @@ namespace Gambetto.Scripts
         public bool HighLightedSquaresActive
         {
             get => highLightedSquaresActive;
-            set { highLightedSquaresActive = value; }
+            set => highLightedSquaresActive = value;
         }
 
         private string _nextLevelsSaveDataPath;
@@ -106,7 +106,9 @@ namespace Gambetto.Scripts
         {
             allLevelsUnlocked = PlayerPrefs.GetInt("AllLevelsUnlocked", 0) == 1;
             disableQuotes = PlayerPrefs.GetInt("DisableQuotes", 0) == 1;
+            HighLightedSquaresActive = PlayerPrefs.GetInt("HighLightedSquaresActive", 0) == 1;
             _deathCount = PlayerPrefs.GetInt("DeathCount", 0);
+            
 
             _nextLevelsSaveDataPath = Application.persistentDataPath + "/level_data.json";
             _levelsCompletedSaveDataPath = Application.persistentDataPath + "/completed_data.json";
