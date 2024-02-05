@@ -40,7 +40,11 @@ namespace Gambetto.Scripts.GameCore
             _movePaths = new Dictionary<Piece.Piece, List<Vector3>>();
             _possiblePaths = new List<List<Vector3>>();
         }
-
+        /// <summary>
+        /// This method is used to compute the next move for the AI.
+        /// </summary>
+        /// <param name="playerCell">Starting cell of the player.</param>
+        /// <param name="enemies">Starting cells of the enemies.</param>
         public void ComputeCPUMoves(Cell playerCell, Dictionary<Piece.Piece, Cell> enemies) //todo enemies!
         {
             _playerCell = playerCell;
@@ -59,7 +63,13 @@ namespace Gambetto.Scripts.GameCore
                 ComputeNextMove(enemyRef.Key, enemyRef.Value);
             }
         }
-
+        
+        /// <summary>
+        /// This method computes the next move for the single enemy.
+        /// A distinction is made between enemies with patterns and enemies without patterns.
+        /// </summary>
+        /// <param name="piece">Single enemy piece.</param>
+        /// <param name="cell">Single enemy's current cell.</param>
         private void ComputeNextMove(Piece.Piece piece, Cell cell)
         {
             //if the enemy is on a detonated cell, it doesn't move
@@ -176,7 +186,7 @@ namespace Gambetto.Scripts.GameCore
         {
             var queue = new Queue<(Cell, List<Cell>)>();
             var visited = new HashSet<Cell>();
-            queue.Enqueue((startCell, new List<Cell> { }));
+            queue.Enqueue((startCell, new List<Cell>()));
             var tempListMoves = new List<Vector3>();
             var initialCell = startCell;
 
@@ -207,21 +217,18 @@ namespace Gambetto.Scripts.GameCore
                     out _possiblePaths
                 );
 
-                foreach (var nextCell in possibleMovements)
+                foreach (var nextCell in possibleMovements.Where(nextCell => !visited.Contains(nextCell) && IsAvailable(nextCell)))
                 {
-                    if (!visited.Contains(nextCell) && IsAvailable(nextCell))
-                    {
-                        visited.Add(nextCell);
-                        var newPath = new List<Cell>(path) { nextCell };
-                        queue.Enqueue((nextCell, newPath));
-                    }
+                    visited.Add(nextCell);
+                    var newPath = new List<Cell>(path) { nextCell };
+                    queue.Enqueue((nextCell, newPath));
                 }
             }
 
             return false;
         }
 
-        private List<Vector3> ComputeKnightMovementPattern(Vector3 startingCell, Vector3 finalCell)
+        private static List<Vector3> ComputeKnightMovementPattern(Vector3 startingCell, Vector3 finalCell)
         {
             var temp = finalCell - startingCell;
             var tempListMoves = new List<Vector3>();
@@ -231,39 +238,12 @@ namespace Gambetto.Scripts.GameCore
             tempListMoves.Add(finalCell);
             return tempListMoves;
         }
-
-        // Debug.Log("No path found!");
-        // MinimumDistance(piece, startCell);
-
-        // [Obsolete("MinimumDistance is deprecated, please use MinimumPath instead.", true)]
-        // private void MinimumDistance(Piece.Piece piece, Cell cell)
-        // {
-        //     var possibleMovements = PieceMovement.GetPossibleMovements(
-        //         piece,
-        //         cell,
-        //         out _possiblePaths
-        //     );
-        //     var minDist = float.MaxValue;
-        //     var index = 0;
-        //     var chosenIndex = 0;
-        //     foreach (var move in possibleMovements)
-        //     {
-        //         index++;
-        //         var dist = move.GetGlobalCoordinates() - _playerCell.GetGlobalCoordinates();
-        //         if (move.IsEmpty() || IsAvailable(move) || !(dist.magnitude < minDist))
-        //             continue;
-        //         minDist = dist.magnitude;
-        //         cell = move;
-        //         chosenIndex = index - 1;
-        //     }
-        //
-        //     _chosenMoves[piece] = cell;
-        //     _movePaths[piece] = _possiblePaths[chosenIndex];
-        // }
-
+        /// <summary>
+        /// Checks if a cell is available (is not empty and is not occupied by any enemy).
+        /// </summary>
         /// <param name="cell">Cell to check.</param>
         /// <returns>returns true if the cell is not void and if no other Enemies have chosen it as a move.</returns>
-        public bool IsAvailable(Cell cell)
+        private bool IsAvailable(Cell cell)
         {
             return !cell.IsEmpty() && _chosenMoves.All(enemy => enemy.Value != cell);
         }
