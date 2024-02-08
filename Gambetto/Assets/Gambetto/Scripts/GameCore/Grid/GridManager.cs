@@ -273,11 +273,13 @@ namespace Gambetto.Scripts.GameCore.Grid
         {
             if (_detonatedCellsTimer.Count == 0)
                 return;
+            
 
             foreach (var cell in _detonatedCellsTimer.Keys.ToList())
             {
                 _detonatedCellsTimer[cell]--;
                 CubesRuntimeManager.instance.PulsingNeighborhood(cell.Neighborhood());
+                CubesRuntimeManager.instance.ChangeBombText(cell, RomanNumeralGenerator.GenerateNumeral(_detonatedCellsTimer[cell]));
                 if (_detonatedCellsTimer[cell] == 0)
                 {
                     BombExplosion(cell);
