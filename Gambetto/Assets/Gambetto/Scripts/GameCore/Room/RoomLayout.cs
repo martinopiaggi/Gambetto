@@ -23,9 +23,9 @@ namespace Gambetto.Scripts.GameCore.Room
 
         [SerializeField]
         private List<Behaviour> behaviours;
-    
+
         public List<Behaviour> Behaviours => behaviours;
-    
+
         public Vector2Int GetExit()
         {
             return exitSide;

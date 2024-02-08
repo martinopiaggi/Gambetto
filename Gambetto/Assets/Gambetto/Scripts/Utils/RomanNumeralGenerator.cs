@@ -17,6 +17,11 @@ namespace Gambetto.Scripts.Utils
                 return string.Empty;
             }
 
+            if (number == 0)
+            {
+                return string.Empty;
+            }
+
             string[] romanNumerals =
             {
                 "I",

@@ -122,12 +122,10 @@ namespace Gambetto.Scripts
             if (_fadeCoroutine != null)
                 StopCoroutine(_fadeCoroutine);
             _fadeCoroutine = StartCoroutine(FadeVoicingCoroutine(duration, true));
-            Debug.Log("fading down");
         }
 
         public void FadeUpVoicing()
         {
-            Debug.Log("fading up");
             const float duration = 1f;
             if (_fadeCoroutine != null)
                 StopCoroutine(_fadeCoroutine);
