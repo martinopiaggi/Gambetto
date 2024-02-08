@@ -18,6 +18,14 @@ namespace Gambetto.Scripts
 
         private int _deathCount;
 
+        private int _levelCount;
+
+        public int LevelCount
+        {
+            get => _levelCount;
+            set => _levelCount = value;
+        }
+
         public int DeathCount
         {
             get => _deathCount;
@@ -83,7 +91,8 @@ namespace Gambetto.Scripts
 
         public int GetLevelCount(bool onlyCompleted = false)
         {
-            return onlyCompleted ? _levelsCompleted.Count : _levelStatus.Count;
+            Debug.Log(LevelCount);
+            return onlyCompleted ? _levelsCompleted.Count : LevelCount;
         }
 
         public List<string> nextLevels;
@@ -108,7 +117,6 @@ namespace Gambetto.Scripts
             disableQuotes = PlayerPrefs.GetInt("DisableQuotes", 0) == 1;
             HighLightedSquaresActive = PlayerPrefs.GetInt("HighLightedSquaresActive", 0) == 1;
             _deathCount = PlayerPrefs.GetInt("DeathCount", 0);
-            
 
             _nextLevelsSaveDataPath = Application.persistentDataPath + "/level_data.json";
             _levelsCompletedSaveDataPath = Application.persistentDataPath + "/completed_data.json";
@@ -172,7 +180,8 @@ namespace Gambetto.Scripts
 
             foreach (var (key, value) in data)
             {
-                _levelStatus[key] = value;
+                if (_levelStatus.ContainsKey(key))
+                    _levelStatus[key] = value;
             }
 
             json = ReadFile(_levelsCompletedSaveDataPath);
