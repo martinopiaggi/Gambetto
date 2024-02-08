@@ -6,11 +6,13 @@ using Gambetto.Scripts.GameCore.Piece;
 using Gambetto.Scripts.GameCore.Room;
 using Gambetto.Scripts.UI;
 using Gambetto.Scripts.Utils;
+using TMPro;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 using Behaviour = Gambetto.Scripts.GameCore.Room.Behaviour;
+using Object = UnityEngine.Object;
 
 namespace Gambetto.Scripts.GameCore.Grid
 {
@@ -234,7 +236,7 @@ namespace Gambetto.Scripts.GameCore.Grid
             CubesRuntimeManager.instance.ToggleAllDoors(true);
         }
 
-        List<Cell> _bombs = new List<Cell>();
+        Dictionary<Cell, GameObject> _bombs = new();
         private List<Cell> _detonatedCells = new List<Cell>();
 
         Dictionary<Cell, int> _detonatedCellsTimer = new Dictionary<Cell, int>();
@@ -252,11 +254,11 @@ namespace Gambetto.Scripts.GameCore.Grid
             {
                 if (cell.IsEmpty())
                     continue; //bomb already exploded and enemy is on an empty
-                if (!_bombs.Contains(cell))
+                if (!_bombs.ContainsKey(cell))
                     continue;
 
                 //find in _bombs the cell which is the same as _playerCell
-                var bombCell = _bombs.Find(c => c == cell);
+                var bombCell = _bombs.Keys.ToList().Find(c => c == cell);
                 if (_detonatedCellsTimer.ContainsKey(bombCell))
                     continue; //already activated
 
@@ -267,19 +269,17 @@ namespace Gambetto.Scripts.GameCore.Grid
             }
         }
 
-        
-        
         private void CheckBombExplosion()
         {
             if (_detonatedCellsTimer.Count == 0)
                 return;
-            
 
             foreach (var cell in _detonatedCellsTimer.Keys.ToList())
             {
                 _detonatedCellsTimer[cell]--;
                 CubesRuntimeManager.instance.PulsingNeighborhood(cell.Neighborhood());
-                CubesRuntimeManager.instance.ChangeBombText(cell, RomanNumeralGenerator.GenerateNumeral(_detonatedCellsTimer[cell]));
+                _bombs[cell].GetComponentInChildren<TextMeshPro>().text =
+                    RomanNumeralGenerator.GenerateNumeral(_detonatedCellsTimer[cell]);
                 if (_detonatedCellsTimer[cell] == 0)
                 {
                     BombExplosion(cell);
@@ -678,8 +678,8 @@ namespace Gambetto.Scripts.GameCore.Grid
             switch (square.Value)
             {
                 case RoomLayout.MatrixValue.Bomb: //Bomb
-                    _bombs.Add(cell);
-                    InstantiatePowerUp(bombTile, PieceType.Pawn, cell);
+                    _bombs.Add(cell, InstantiatePowerUp(bombTile, PieceType.Pawn, cell));
+
                     break;
                 case RoomLayout.MatrixValue.Key: //Key
                     _key = cell;
@@ -716,7 +716,7 @@ namespace Gambetto.Scripts.GameCore.Grid
             }
         }
 
-        private void InstantiatePowerUp(
+        private GameObject InstantiatePowerUp(
             GameObject prefab,
             PieceType type,
             Cell cell,
@@ -735,6 +735,7 @@ namespace Gambetto.Scripts.GameCore.Grid
             }
 
             CubesRuntimeManager.instance.AddTile(powerUpObj);
+            return powerUpObj;
         }
 
         /// <summary>

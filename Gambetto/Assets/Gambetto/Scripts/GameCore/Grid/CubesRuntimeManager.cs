@@ -328,30 +328,5 @@ namespace Gambetto.Scripts.GameCore.Grid
         {
             _exitCoords = coords;
         }
-
-        private Dictionary<Cell, TextMesh> _bombTexts = new Dictionary<Cell, TextMesh>();
-
-        public void ChangeBombText(Cell cell, string displayedText)
-        {
-            // if the cell is not in the dictionary, initialize a new game object with a text component
-            if (!_bombTexts.ContainsKey(cell))
-            {
-                var textObject = new GameObject("BombText");
-                textObject.transform.position = cell.GetGlobalCoordinates() + new Vector3(0, 0.5f, 0);
-                textObject.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
-                var textMesh = textObject.AddComponent<TextMesh>();
-                textMesh.characterSize = 0.1f;
-                textMesh.fontSize = 100;
-                textMesh.color = Color.red;
-                textMesh.anchor = TextAnchor.MiddleCenter;
-                textMesh.alignment = TextAlignment.Center;
-                textMesh.text = displayedText;
-                _bombTexts[cell] = textMesh;
-            }
-            else
-            {
-                _bombTexts[cell].text = displayedText;
-            }
-        }
     }
 }
