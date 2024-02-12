@@ -320,7 +320,7 @@ PrefabInstance:
     - target: {fileID: 5283260288071725677, guid: fdbeda54be644584db01138afc1a0104,
         type: 3}
       propertyPath: rooms.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5283260288071725677, guid: fdbeda54be644584db01138afc1a0104,
         type: 3}
@@ -331,6 +331,12 @@ PrefabInstance:
     - target: {fileID: 5283260288071725677, guid: fdbeda54be644584db01138afc1a0104,
         type: 3}
       propertyPath: rooms.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 97afc57dd1c91664f9719bf69be555ef,
+        type: 2}
+    - target: {fileID: 5283260288071725677, guid: fdbeda54be644584db01138afc1a0104,
+        type: 3}
+      propertyPath: rooms.Array.data[2]
       value: 
       objectReference: {fileID: 11400000, guid: 93f217151abced84f939fad24803a5b1,
         type: 2}
