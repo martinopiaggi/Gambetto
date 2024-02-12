@@ -39,6 +39,7 @@ namespace Gambetto.Scripts
         public AudioClip powerUp;
         public AudioClip enemyAlerted;
         public AudioClip bombExplosion;
+        public AudioClip keyUnlock;
 
         //awake method makes sure that AudioManager is not destroyed
         private void Awake()

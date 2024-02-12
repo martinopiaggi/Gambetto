@@ -234,6 +234,7 @@ namespace Gambetto.Scripts.GameCore.Grid
             foreach (var door in _doors)
                 door.SetEmpty(false);
             CubesRuntimeManager.instance.ToggleAllDoors(true);
+            AudioManager.Instance.PlaySfx(AudioManager.Instance.keyUnlock);
         }
 
         Dictionary<Cell, GameObject> _bombs = new();

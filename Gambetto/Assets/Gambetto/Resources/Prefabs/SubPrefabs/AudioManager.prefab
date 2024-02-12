@@ -319,6 +319,7 @@ MonoBehaviour:
   powerUp: {fileID: 8300000, guid: a525336893dd89e4997cc73a80e856aa, type: 3}
   enemyAlerted: {fileID: 8300000, guid: ab428f989acef7b46a2e28f896375e61, type: 3}
   bombExplosion: {fileID: 8300000, guid: 404dbb2348aa1a14db0117d0a014122c, type: 3}
+  keyUnlock: {fileID: 8300000, guid: c40f2b9c62ffe6642afff77030677019, type: 3}
 --- !u!1 &7323523125102614610
 GameObject:
   m_ObjectHideFlags: 0
