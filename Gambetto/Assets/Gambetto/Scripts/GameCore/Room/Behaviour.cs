@@ -20,9 +20,12 @@ namespace Gambetto.Scripts.GameCore.Room
 
         [SerializeField]
         private bool aggressive = true;
-        
+
         [SerializeField]
         private int activationDistanceCells;
+
+        [SerializeField]
+        private int eventCountDown = 3;
 
         public List<Vector2Int> Movements => movements;
 
@@ -33,5 +36,7 @@ namespace Gambetto.Scripts.GameCore.Room
         public bool Aggressive => aggressive;
 
         public int ActivationDistanceCells => activationDistanceCells;
+
+        public int EventCountDown => eventCountDown;
     }
 }

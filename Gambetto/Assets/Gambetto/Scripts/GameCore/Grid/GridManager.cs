@@ -237,11 +237,12 @@ namespace Gambetto.Scripts.GameCore.Grid
             AudioManager.Instance.PlaySfx(AudioManager.Instance.keyUnlock);
         }
 
-        Dictionary<Cell, GameObject> _bombs = new();
+        private Dictionary<Cell, GameObject> _bombs = new();
+        private Dictionary<Cell, int> _bombTimings = new();
         private List<Cell> _detonatedCells = new List<Cell>();
 
-        Dictionary<Cell, int> _detonatedCellsTimer = new Dictionary<Cell, int>();
-        List<Cell> _emptyDetonateCells = new List<Cell>();
+        private Dictionary<Cell, int> _detonatedCellsTimer = new Dictionary<Cell, int>();
+        private List<Cell> _emptyDetonateCells = new List<Cell>();
 
         private void CheckBombTrigger()
         {
@@ -266,7 +267,7 @@ namespace Gambetto.Scripts.GameCore.Grid
                 //find the powerup in _powerups which has value = bomb to hide it during explosion
                 var powerUp = _powerUps.Keys.ToList().Find(p => _powerUps[p] == bombCell);
                 powerUp.SetInactive(); //disactivate the powerup
-                _detonatedCellsTimer.Add(bombCell, 3);
+                _detonatedCellsTimer.Add(bombCell, _bombTimings[bombCell]);
             }
         }
 
@@ -581,7 +582,7 @@ namespace Gambetto.Scripts.GameCore.Grid
                         }
 
                         InstantiatePiece(cell, square, behaviour);
-                        InstantiateTiles(cell, square);
+                        InstantiateTiles(cell, square, behaviour);
                     }
 
                     roomCells.Add(cell); //add cell to current room cells
@@ -674,13 +675,13 @@ namespace Gambetto.Scripts.GameCore.Grid
         /// This method is used to support the creation of power ups/ end of level
         /// and to store them in a dictionary (_powerUps) or in a variable (_endLevelCell)
         /// </summary>
-        private void InstantiateTiles(Cell cell, RoomLayout.Square square)
+        private void InstantiateTiles(Cell cell, RoomLayout.Square square, Behaviour behaviour)
         {
             switch (square.Value)
             {
                 case RoomLayout.MatrixValue.Bomb: //Bomb
                     _bombs.Add(cell, InstantiatePowerUp(bombTile, PieceType.Pawn, cell));
-
+                    _bombTimings.Add(cell, behaviour.EventCountDown);
                     break;
                 case RoomLayout.MatrixValue.Key: //Key
                     _key = cell;
