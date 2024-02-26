@@ -12,6 +12,9 @@ EditorBuildSettings:
     path: Assets/Gambetto/Scenes/Level selection.unity
     guid: 55ec6f38368d6c044ba38962ce034777
   - enabled: 1
+    path: Assets/Gambetto/Scenes/Levels/Martino/bomb_grid/bombGrid.unity
+    guid: edfd299835bcb0248bbec9a65d3f86af
+  - enabled: 1
     path: Assets/Gambetto/Scenes/Levels/Final/Magnus/lv0/tutortial.unity
     guid: 99f02b0c204960d45ab0dde71ce10aa9
   - enabled: 1

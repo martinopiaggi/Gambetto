@@ -20,12 +20,14 @@ namespace Gambetto.Scripts
 
         private int _levelCount;
 
+        
+        public bool IsLevelsCounted { get; set; }
         public int LevelCount
         {
             get => _levelCount;
             set => _levelCount = value;
         }
-
+        
         public int DeathCount
         {
             get => _deathCount;

@@ -13,15 +13,16 @@ namespace Gambetto.Scripts.UI
 
         [SerializeField]
         private List<string> levelNames;
-
         private void Awake()
         {
-            GameManager.Instance.LevelCount += levelNames.Count;
+            if (!GameManager.Instance.IsLevelsCounted)
+                GameManager.Instance.LevelCount += levelNames.Count;
         }
 
         // On start instantiate all the buttons and append them as children of the current object
         private void Start()
         {
+            GameManager.Instance.IsLevelsCounted = true;
             var i = 0;
             foreach (var levelName in levelNames)
             {

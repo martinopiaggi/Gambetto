@@ -3102,7 +3102,8 @@ MonoBehaviour:
   levelNames:
   - KeyReveal
   - bomb
-  - bombislands
+  - bombIslands
+  - bombGrid
 --- !u!114 &1138886584
 MonoBehaviour:
   m_ObjectHideFlags: 0
