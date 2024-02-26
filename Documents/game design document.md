@@ -25,7 +25,7 @@ Strategy puzzle Hybrid with Arcade elements.
 
 ### Platforms
 
-PC
+Windows, Mac, Linux
 
 ### Market Analysis
 
@@ -61,14 +61,14 @@ Using this game mechanic, players navigate the dungeon, progressing through vari
 
 ### Level Design
 
-Levels will each have different challenges and hazards, levels are made of chess board style tiles and are surrounded by a foggy void.
-Levels exhibit unique, irregular shapes and may incorporate openings within their design. They are set apart by alterations in tile patterns, lighting, and fog effects, presenting varying colors to immerse players in diverse environments. Within each room, enemies are strategically positioned, and players will have to find a way to traverse them and reach the end goal, a highlighted tile that "crowns the player as King".
+Levels are divided in "worlds" each with an unique aesthetic and a twist to the gameplay.
+
+Each level has different challenges and hazards, levels are made of chess board style tiles and are surrounded by a foggy void.
+Levels exhibit unique, intricate shapes and may incorporate openings within their design. They are set apart by alterations in tile patterns, lighting, and fog effects, presenting varying colors to immerse players in diverse environments. Within each room, enemies are strategically positioned, and players will have to find a way to traverse them and reach the end goal, a highlighted tile that "crowns the player as King".
 
 ## User Interface
 
-There will be a main menu and a level selection interface.
-
-The in-game user interface will maintain a minimalistic design, featuring only a select few elements, including a pause button.
+The in-game user interface has a minimalistic design, featuring only a pause button that when clicked shows a menu that allows players to return to the level selection screen, restart the level or go to the settings menu.
 
 ## Characters
 
@@ -99,20 +99,22 @@ Discrete, emphasizing movements, captures, transformations and explosions.
 
 ## Technical Specification
 
-- **Engine**: Unity (ideal for both PC and Mobile platforms).
-- **Graphics**: 3D low poly
+- **Engine**: Unity.
+- **Graphics**: 3D low poly.
 - **Controls**: The player can use the space key/mouse click (or screen tap on mobile) to select his move. He needs to press it when the light displayed on the terrain corresponds to his desired direction. Initially the pawn can only move one step in each direction (excluding diagonal moves), but the game will provide some power-ups to increase the variety of the movement. In this last case the player will be also able to select the destination cell always in the unforgiving way that distinguishes the game.
 
 ### Project Structure Overview
 
 Materials
 
-- Two distinct chessboard materials: Dark and Light. These could represent the two different colored squares on a chessboard.
-- background fog
-- gradient background
-- materials change depending on the color scheme of the scene
+- Two distinct chessboard materials: Dark and Light. These are used for the two different colored squares on the chessboard and for all the pieces.
+- Background fog.
+- Particles materials for dust & rain.
+- Transparent material for the end of level light shaft.
+- Emissive materials for the selected square & for the higlighted square (only visible if activated in accessibility settings).
 
 Scenes
+
 - A main menu for game navigation.
 - Level selector scene.
 - Quotes scene.
@@ -122,14 +124,22 @@ Scenes
 Scripts
 
 - Main Game Logic:
-  Scripts for audio management, cell interactions, grid management, level flow, main menu functionality.
+
+  - Scripts for audio management, cell interactions, grid management, level flow, main menu functionality.
 
 - Chess Piece Logic:
-  A script for the basic behavior of chess pieces.
 
+  - Scripts for the behaviors of chess pieces.
+
+- Enemy Piece Logic:
+  - Enemies will calculate their behaviours after each move of the player.
+  - There are two different types of enemy pieces:
+    - enemies following a pattern, the moves of this type of enemy are predefined by the level designer and will be calculated first. This type of enemies won't react to player movements and will loop on their path.
+    - enemies that try to capture the player, the moves of this type of enemy are calculated sequentially using a BFS algorithm in relation to the chosen move of the player. In order to avoid collisions between each other, they have information about the position and chosen moves of all other enemies.
+  - Additionally the latter type of enemies can have an activation distance and be "asleep" until the player gets near enough.
 - Room Logic:
-  Scripts related to room behavior and layout, indicating dynamic and varied level designs.
-  Manually design rooms and concatenate rooms layouts/specifications easily in each level
+  Scripts related to room behavior and layout.
+  Room designs are stored in .csv files, this allows them to be reused and easily expanded or modified.
 
 - UI Logic:
   Sripts related to buttons, trasitions, toggles & sliders.
@@ -183,6 +193,72 @@ sequenceDiagram
 
 - Sounds:
   Audio files for theme music and sound effects, which will contribute to the game's ambiance and player feedback.
+
+## Assets
+- Art
+    - 2D
+        - UI
+            - Pawn_White_Chess_Piece_PNG_Clip_Art-2751.png
+            - RoundedRectange.png
+            - back_icon.png
+            - checkbox.png
+            - exitIcon.png
+            - feedback_icon.png
+            - home_icon.png
+            - levels_icon.png
+            - next_icon.png
+            - pause_icon.png
+            - play_icon.png
+            - restart_icon.png
+            - return_icon.png
+            - settings_icon.png
+        - bK.png
+        - gambettoBomb.png
+        - keyGambettoo.png
+        - wB.png
+        - wK.png
+        - wN.png
+        - wP.png
+        - wQ.png
+        - wR.png
+    - 3D
+        - Bishop.obj
+        - King.obj
+        - Knight.obj
+        - Pawn.obj
+        - Queen.obj
+        - Rook.obj
+    - Animations
+        - exlamation-speech-bubble.png
+        - sleeping-speech-bubble.png
+- Audio
+    - OST
+        - background1.mp3
+        - background2.mp3
+        - piano1.mp3
+        - piano2.mp3
+    - bombExplosion.mp3
+    - chosenMove.mp3
+    - clock_tick.mp3
+    - deathByCollision.ogg
+    - deathByFall.wav
+    - endLevel.wav
+    - gambetto_OST1.wav
+    - keyUnlock.wav
+    - pawnAlerted.wav
+    - powerUp.wav
+    - theme.mp3
+    - tiptoe.mp3
+- Fonts
+    - Anta
+        - Anta-Regular.ttf
+        - OFL.txt
+        - README.md
+    - Robot Serif
+        - RobotoSerif-Light.ttf
+        - RobotoSerif-LightItalic.ttf
+        - RobotoSerif-Regular.ttf
+
 
 ## Deadlines
 
