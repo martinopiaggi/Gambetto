@@ -1,7 +1,10 @@
 ![](Images/BannerCropped.png)
 
 **Gambetto** is an open-source casual arcade game with puzzle elements, designed and developed by a team of 5 Msc Engineering students as part of a university project at Politecnico di Milano. 
-It achieved a grade of 30/30 with assessments based on peer rankings from both professors and fellow students. You can play Gambetto downloading executables from the the **Itch.io Page**
+Player navigates through dungeon-like levels, facing enemy chess pieces and using power-ups to gain new abilities. You can play Gambetto downloading executables from [itch.io page](https://polimi-game-collective.itch.io/gambetto) 
+
+It achieved a grade of 30/30 with assessments based on peer rankings from both professors and fellow students. At the moment is just a 20 minute of gameplay and a concept proof. 
+We aim to ? 
 
 ![](Images/4screenshots.png)
 
