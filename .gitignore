@@ -77,4 +77,4 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 
 /Source/Gambetto/Assets/POLIMIGameCollective
-
+/Source/Gambetto/Assets/POLIMIGameCollective.meta
