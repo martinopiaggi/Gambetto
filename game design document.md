@@ -278,7 +278,6 @@ sequenceDiagram
 - **Experimenting layout of levels**
 - **Milestone Review**
 - **Draft of GDD**
-- **Send the game design document and git repository link to pierluca.lanzi@polimi.it.**
 
 ### Week 5-9 (November 6 - December 12, 2023)
 
