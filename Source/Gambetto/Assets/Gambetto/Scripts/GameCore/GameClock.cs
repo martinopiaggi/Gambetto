@@ -133,15 +133,6 @@ namespace Gambetto.Scripts.GameCore
         {
             OnClockTick(new ClockEventArgs() { CurrentTick = _currentTick });
             _currentTick++;
-            if (Debugger.Instance != null)
-                Debugger
-                    .Instance
-                    .Show(
-                        "currentTick = " + _currentTick,
-                        Color.white,
-                        Debugger.Position.UpperRight,
-                        printConsole: false
-                    );
         }
     }
 }
