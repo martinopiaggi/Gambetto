@@ -260,6 +260,103 @@ sequenceDiagram
         - RobotoSerif-Regular.ttf
 
 
+## Crazy UML diagram 
+
+
+
+```mermaid 
+
+classDiagram
+    class GameManager
+
+    class SoundManager
+
+    class Clock {
+        - global clock for all movements
+        - SINGLETON
+        - acts as an event manager
+        - coroutine runs each tick
+        - sends events to listeners
+        - listeners are pieces
+    }
+
+    class Piece {
+        - role: Player/Enemy/Neutral
+        - type: Bishop/Pawn/Tower/...
+        - countdown: int
+        - possibleMovements: List<Vector2>
+        + Move(positions: List<Vector2>): void
+    }
+
+    class Bishop
+    class Pawn
+    class King
+    class Tower
+    class Knight
+    class Queen
+
+    class CPUBehaviour {
+        + chooseMove(grid, pieces): Map<Piece, Move>
+    }
+
+    class PlayerController {
+        + startChoosing(piece, grid): Move
+    }
+
+    class GridManager {
+        - SINGLETON
+        - contains:
+        - runtime positions of all pieces
+        - list of rooms
+        - active room
+        + change piece position on the grid and trigger piece animation
+    }
+
+    class RoomBuilder {
+        + gridLength: int
+        + gridWidth: int
+        + initialMainPos: Cell
+        + initialPositions: List
+        + startCells: List
+        + endCells: List
+        + entryPoints
+    }
+
+    class Cell {
+        + globalCoordinates: Vector3
+        + room: int
+        + neighbors: List<Cell>
+    }
+
+    class RoomLayout
+    class LevelManager {
+        - rooms: List<RoomLayout>
+    }
+	
+	LevelManager --> RoomLayout
+    GameManager --> Clock
+    SoundManager --> Clock
+    Clock --> Piece
+    Piece <|-- Bishop
+    Piece <|-- Pawn
+    Piece <|-- King
+    Piece <|-- Tower
+    Piece <|-- Knight
+    Piece <|-- Queen
+    CPUBehaviour --> GridManager
+    CPUBehaviour --> Piece
+    PlayerController --> GridManager
+    PlayerController --> Piece
+    GridManager --> RoomBuilder
+    RoomBuilder --> RoomLayout
+    
+    GridManager --> Cell
+
+```
+
+
+
+
 ## Deadlines
 
 ### Week 1 (October 10 - October 17, 2023)
