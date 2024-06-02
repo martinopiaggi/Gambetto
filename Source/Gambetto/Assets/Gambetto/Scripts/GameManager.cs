@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using Gambetto.Scripts.GameCore;
 using Gambetto.Scripts.UI;
+using Gambetto.Scripts.Utils;
 using Newtonsoft.Json;
 using UnityEngine;
 
@@ -20,14 +21,15 @@ namespace Gambetto.Scripts
 
         private int _levelCount;
 
-        
+
         public bool IsLevelsCounted { get; set; }
+
         public int LevelCount
         {
             get => _levelCount;
             set => _levelCount = value;
         }
-        
+
         public int DeathCount
         {
             get => _deathCount;
@@ -38,28 +40,55 @@ namespace Gambetto.Scripts
             }
         }
 
-        [SerializeField]
-        private bool allLevelsUnlocked;
+        [SerializeField] private bool allLevelsUnlocked;
+
         public bool AllLevelsUnlocked
         {
             get => allLevelsUnlocked;
-            set => allLevelsUnlocked = value;
+            set
+            {
+                allLevelsUnlocked = value;
+                PlayerPrefs.SetInt("AllLevelsUnlocked", value ? 1 : 0);
+            }
         }
 
-        [SerializeField]
-        private bool disableQuotes;
+        [SerializeField] private bool disableQuotes;
+
         public bool DisableQuotes
         {
             get => disableQuotes;
-            set => disableQuotes = value;
+            set
+            {
+                disableQuotes = value;
+                PlayerPrefs.SetInt("DisableQuotes", value ? 1 : 0);
+            }
         }
 
-        [SerializeField]
-        private bool highLightedSquaresActive;
+        [SerializeField] private int quality;
+
+        public int Quality
+        {
+            get => quality;
+            set
+            {
+                PlayerPrefs.SetInt("Quality", value);
+                QualitySettings.SetQualityLevel(value);
+                quality = value;
+            }
+        }
+
+        [SerializeField] private bool highLightedSquaresActive;
+
         public bool HighLightedSquaresActive
         {
             get => highLightedSquaresActive;
-            set => highLightedSquaresActive = value;
+            set
+            {
+                highLightedSquaresActive = value;
+                PlayerPrefs.SetInt(
+                    "HighLightedSquaresActive", value ? 1 : 0
+                );
+            }
         }
 
         private string _nextLevelsSaveDataPath;
@@ -113,6 +142,7 @@ namespace Gambetto.Scripts
             return currentLevel;
         }
 
+
         private void Awake()
         {
             allLevelsUnlocked = PlayerPrefs.GetInt("AllLevelsUnlocked", 0) == 1;
@@ -141,6 +171,7 @@ namespace Gambetto.Scripts
                 );
                 _levelStatus.Add(sceneName, false);
             }
+
             // set the first levels as unlocked
             _levelStatus["tutortial"] = true;
             _levelStatus["pawnEnemyIntro"] = true;

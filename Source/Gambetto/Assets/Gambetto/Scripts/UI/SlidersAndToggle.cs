@@ -1,3 +1,5 @@
+using System;
+using Gambetto.Scripts.Utils;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -37,22 +39,28 @@ namespace Gambetto.Scripts.UI
         public void UnlockAllLevels()
         {
             GameManager.Instance.AllLevelsUnlocked = unlockAllLevelsToggle.isOn;
-            PlayerPrefs.SetInt("AllLevelsUnlocked", GameManager.Instance.AllLevelsUnlocked ? 1 : 0);
         }
 
         public void DisableQuotes()
         {
             GameManager.Instance.DisableQuotes = disableQuotesToggle.isOn;
-            PlayerPrefs.SetInt("DisableQuotes", GameManager.Instance.DisableQuotes ? 1 : 0);
         }
 
         public void HighLightedSquaresActive()
         {
             GameManager.Instance.HighLightedSquaresActive = enableHighlatedSquaresToggle.isOn;
-            PlayerPrefs.SetInt(
-                "HighLightedSquaresActive",
-                GameManager.Instance.HighLightedSquaresActive ? 1 : 0
-            );
+        }
+
+        public void HandleQualityInput(int val)
+        {
+            // convert value to actual QualityLevel index
+            val = val switch
+            {
+                0 => 2, // high
+                1 => 1, // low
+                _ => 2
+            };
+            GameManager.Instance.Quality = val;
         }
     }
 }
