@@ -1,16 +1,8 @@
 # Gambetto
 
-## Team
-
-- Martino Piaggi: Developer -> [martinopiaggi](https://github.com/martinopiaggi), martino.piaggi@mail.polimi.it
-- Lorenzo Morelli: Developer-> [lorenzo-morelli](https://github.com/lorenzo-morelli), lorenzo1.morelli@mail.polimi.it
-- Matteo Laini: Developer -> [matteolaini](https://github.com/matteolaini), matteo.laini@mail.polimi.it
-- Milo Brontesi: Developer -> [zibasPk](https://github.com/zibasPk), milo.brontesi@mail.polimi.it
-- Mario Vallone: Developer -> [Mario2414](https://github.com/Mario2414), mario.vallone@mail.polimi.it
-
 ## Overview and Vision Statement
 
-Gambetto combines the strategic depth of chess with puzzle and arcade elements.<br>
+Gambetto combines the strategic depth of chess with puzzle and arcade elements.
 Players take on the role of a chess pawn facing various challenges. As they navigate different types of dungeons, they’ll need to face enemy pieces and get to the end of different rooms. Players can transform using power-ups and gain abilities from other chess pieces, introducing layers of strategy and gameplay depth.
 Some pieces in the game will move following a certain rhythm others will chase the player; players will need to time their movements and avoid them.
 The player also needs to avoid falling out from the chessboard, otherwise they will have to restart the level.
@@ -21,7 +13,7 @@ As a consequence, the next level will be unlocked and playable.
 
 ### Genre
 
-Strategy puzzle Hybrid with Arcade elements.
+Arcade with strategy elements.
 
 ### Platforms
 
@@ -103,166 +95,8 @@ Discrete, emphasizing movements, captures, transformations and explosions.
 - **Graphics**: 3D low poly.
 - **Controls**: The player can use the space key/mouse click (or screen tap on mobile) to select his move. He needs to press it when the light displayed on the terrain corresponds to his desired direction. Initially the pawn can only move one step in each direction (excluding diagonal moves), but the game will provide some power-ups to increase the variety of the movement. In this last case the player will be also able to select the destination cell always in the unforgiving way that distinguishes the game.
 
-### Project Structure Overview
 
-Materials
-
-- Two distinct chessboard materials: Dark and Light. These are used for the two different colored squares on the chessboard and for all the pieces.
-- Background fog.
-- Particles materials for dust & rain.
-- Transparent material for the end of level light shaft.
-- Emissive materials for the selected square & for the higlighted square (only visible if activated in accessibility settings).
-
-Scenes
-
-- A main menu for game navigation.
-- Level selector scene.
-- Quotes scene.
-- All levels divided by category.
-- Credits scene.
-
-Scripts
-
-- Main Game Logic:
-
-  - Scripts for audio management, cell interactions, grid management, level flow, main menu functionality.
-
-- Chess Piece Logic:
-
-  - Scripts for the behaviors of chess pieces.
-
-- Enemy Piece Logic:
-  - Enemies will calculate their behaviours after each move of the player.
-  - There are two different types of enemy pieces:
-    - enemies following a pattern, the moves of this type of enemy are predefined by the level designer and will be calculated first. This type of enemies won't react to player movements and will loop on their path.
-    - enemies that try to capture the player, the moves of this type of enemy are calculated sequentially using a BFS algorithm in relation to the chosen move of the player. In order to avoid collisions between each other, they have information about the position and chosen moves of all other enemies.
-  - Additionally the latter type of enemies can have an activation distance and be "asleep" until the player gets near enough.
-- Room Logic:
-  Scripts related to room behavior and layout.
-  Room designs are stored in .csv files, this allows them to be reused and easily expanded or modified.
-
-- UI Logic:
-  Sripts related to buttons, trasitions, toggles & sliders.
-
-- Clock Logic:
-
-  arrow conventions:
-
-```mermaid
-
-sequenceDiagram
-		A-)B: Asynchronous Call
-		A ->> B: Synchronous Call
-		B-->> A: Synchronous Response
-		B--)A: Asynchronous Response
-
-
-```
-
-<br><br><br>
-
-```mermaid
-
-sequenceDiagram
-
-    participant C as Clock
-
-    participant G as GridManager
-		participant PC as PlayerController
-		participant CB as CPUBehaviour
-		actor P as Player
-		participant PI as Pieces
-		loop Every cycle
-		C-)+G: clockEvent
-		G ->>+ PI: updatePositions
-
-		par GridManager to PlayerController
-		G -)+ PC: startChoosing(piece, currentPosition)
-		PC->>+ P: cycleThroughPossibleMoves
-		P -->>- PC: choose move
-		PC --)- G: chosenMove
-		and GridManager to CPUBehaviour
-		G -)+ CB: chooseMoves(grid,pieces)
-		CB --)- G: chosenMoves
-		end
-		end
-```
-
-- Utilities:
-  Several utility scripts for constants, debugging, and movement directions, among others. These are crucial for game functionality and development efficiency.
-
-- Sounds:
-  Audio files for theme music and sound effects, which will contribute to the game's ambiance and player feedback.
-
-## Assets
-- Art
-    - 2D
-        - UI
-            - Pawn_White_Chess_Piece_PNG_Clip_Art-2751.png
-            - RoundedRectange.png
-            - back_icon.png
-            - checkbox.png
-            - exitIcon.png
-            - feedback_icon.png
-            - home_icon.png
-            - levels_icon.png
-            - next_icon.png
-            - pause_icon.png
-            - play_icon.png
-            - restart_icon.png
-            - return_icon.png
-            - settings_icon.png
-        - bK.png
-        - gambettoBomb.png
-        - keyGambettoo.png
-        - wB.png
-        - wK.png
-        - wN.png
-        - wP.png
-        - wQ.png
-        - wR.png
-    - 3D
-        - Bishop.obj
-        - King.obj
-        - Knight.obj
-        - Pawn.obj
-        - Queen.obj
-        - Rook.obj
-    - Animations
-        - exlamation-speech-bubble.png
-        - sleeping-speech-bubble.png
-- Audio
-    - OST
-        - background1.mp3
-        - background2.mp3
-        - piano1.mp3
-        - piano2.mp3
-    - bombExplosion.mp3
-    - chosenMove.mp3
-    - clock_tick.mp3
-    - deathByCollision.ogg
-    - deathByFall.wav
-    - endLevel.wav
-    - gambetto_OST1.wav
-    - keyUnlock.wav
-    - pawnAlerted.wav
-    - powerUp.wav
-    - theme.mp3
-    - tiptoe.mp3
-- Fonts
-    - Anta
-        - Anta-Regular.ttf
-        - OFL.txt
-        - README.md
-    - Robot Serif
-        - RobotoSerif-Light.ttf
-        - RobotoSerif-LightItalic.ttf
-        - RobotoSerif-Regular.ttf
-
-
-## Crazy UML diagram 
-
-
+## Architecture Overview
 
 ```mermaid 
 
@@ -351,54 +185,81 @@ classDiagram
     RoomBuilder --> RoomLayout
     
     GridManager --> Cell
+```
 
+Sequence diagram of a game cycle with clock logic:
+
+
+```mermaid
+sequenceDiagram
+
+    participant C as Clock
+
+    participant G as GridManager
+		participant PC as PlayerController
+		participant CB as CPUBehaviour
+		actor P as Player
+		participant PI as Pieces
+		loop Every cycle
+		C-)+G: clockEvent
+		G ->>+ PI: updatePositions
+
+		par GridManager to PlayerController
+		G -)+ PC: startChoosing(piece, currentPosition)
+		PC->>+ P: cycleThroughPossibleMoves
+		P -->>- PC: choose move
+		PC --)- G: chosenMove
+		and GridManager to CPUBehaviour
+		G -)+ CB: chooseMoves(grid,pieces)
+		CB --)- G: chosenMoves
+		end
+		end
 ```
 
 
+### Project Structure Overview
 
+Materials
 
-## Deadlines
+- Two distinct chessboard materials: Dark and Light. These are used for the two different colored squares on the chessboard and for all the pieces.
+- Background fog.
+- Particles materials for dust & rain.
+- Transparent material for the end of level light shaft.
+- Emissive materials for the selected square & for the higlighted square (only visible if activated in accessibility settings).
 
-### Week 1 (October 10 - October 17, 2023)
+Scenes
 
-- **Team formation and initial brainstorming sessions.**
-- **Task Assignment to start game's core mechanics.**
+- A main menu for game navigation.
+- Level selector scene.
+- Quotes scene.
+- All levels divided by category.
+- Credits scene.
 
-### Week 2 (October 17 - October 24, 2023)
+Scripts
 
-- **Continuing Core Mechanics Development**
-- **Aesthetics Brainstorm**
-- **Hold a team meeting to discuss progress and potential changes.**
+- Main Game Logic:
 
-### Week 3-4 (October 24 - November 6, 2023)
+  - Scripts for audio management, cell interactions, grid management, level flow, main menu functionality.
 
-- **Experimenting layout of levels**
-- **Milestone Review**
-- **Draft of GDD**
+- Chess Piece Logic:
 
-### Week 5-9 (November 6 - December 12, 2023)
+  - Scripts for the behaviors of chess pieces.
 
-- **Prototype Development**
-- **Aesthetics Implementation**
-- **Regular Playtesting, testing and refining gameplay mechanics**
-- **Prototype Submission** (December 10)
+- Enemy Piece Logic:
+  - Enemies will calculate their behaviours after each move of the player.
+  - There are two different types of enemy pieces:
+    - enemies following a pattern, the moves of this type of enemy are predefined by the level designer and will be calculated first. This type of enemies won't react to player movements and will loop on their path.
+    - enemies that try to capture the player, the moves of this type of enemy are calculated sequentially using a BFS algorithm in relation to the chosen move of the player. In order to avoid collisions between each other, they have information about the position and chosen moves of all other enemies.
+  - Additionally the latter type of enemies can have an activation distance and be "asleep" until the player gets near enough.
+- Room Logic:
+  Scripts related to room behavior and layout.
+  Room designs are stored in .csv files, this allows them to be reused and easily expanded or modified.
 
-### Week 10 (December 12 - December 20, 2023)
+- UI Logic:
+  Sripts related to buttons, trasitions, toggles & sliders.
 
-- **Prototype Evaluation**
-- **Feedback Gathering**
+- Utilities:
+  Several utility scripts for constants, debugging, and movement directions, among others. These are crucial for game functionality and development efficiency.
 
-### Week 11-13 (December 20, 2023 - January 13, 2024)
-
-- **Beta Development**
-- **Bug Fixing**
-
-### Week 14-16 (January 13 - February 23, 2024)
-
-- **Beta Testing**
-- **Feedback Implementation**
-
-### Week 17 (February 23 - February 27, 2024)
-
-- **Final touches and last-minute refinements.**
-- **Submit the final project.**
+- Sounds:
+  Audio files for theme music and sound effects, which will contribute to the game's ambiance and player feedback.
