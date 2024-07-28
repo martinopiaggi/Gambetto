@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 030530086e85cb745a146f3a7806b1b7, type: 3}
+  m_Name: doubleBishop
+  m_EditorClassIdentifier: 
+  topologyDescription: stanzina piccola solo spawn
+  roomCsvTextAsset: {fileID: 4900000, guid: 7305c24e1cf0e7e49aa3225e7207e7d5, type: 3}
+  exitSide: {x: 1, y: 0}
+  behaviours:
+  - {fileID: 11400000, guid: 8314e7aab997a8343bdc9747f4cd08e8, type: 2}
+  - {fileID: 11400000, guid: 6c356afb89f0cd24c89ca84fc11bd76e, type: 2}

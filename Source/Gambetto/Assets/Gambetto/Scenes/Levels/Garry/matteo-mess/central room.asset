@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 030530086e85cb745a146f3a7806b1b7, type: 3}
+  m_Name: central room
+  m_EditorClassIdentifier: 
+  topologyDescription: central room
+  roomCsvTextAsset: {fileID: 4900000, guid: 3eb5ce6de6f5b04458ea248dee28791e, type: 3}
+  exitSide: {x: 1, y: 0}
+  behaviours:
+  - {fileID: 11400000, guid: 787b23a2131fac54288bbb75a1746df5, type: 2}
+  - {fileID: 11400000, guid: 43940b96a73fbb04a99018f0c5a9b8d9, type: 2}
+  - {fileID: 11400000, guid: 49e2ba67ab7e9924fb3d607e2e67e15d, type: 2}
+  - {fileID: 11400000, guid: f3420f5f3b89b0e44a27c1c854de985b, type: 2}
+  - {fileID: 11400000, guid: 4e6ffced5777cc34298f13e56d719d1e, type: 2}
+  - {fileID: 11400000, guid: 8fd5e2e9da23a344384353f1fbd949d8, type: 2}
+  - {fileID: 11400000, guid: cccc2adfe69b03748aa93355f04d1f25, type: 2}
+  - {fileID: 11400000, guid: b1e6cb6645b53e246b89dc8554c80798, type: 2}
