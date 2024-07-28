@@ -4,8 +4,8 @@ Gambetto is an open-source casual arcade game enriched with puzzle elements, cra
 Player navigates through dungeon-like levels, facing enemy chess pieces and using power-ups to gain new abilities. 
 Currently offering 20 minutes of gameplay, Gambetto serves as a proof of concept. You can play Gambetto downloading executables from [itch.io page](https://polimi-game-collective.itch.io/gambetto) 
 
-We are dedicated to expanding and refining Gambetto
-A detailed and complete overview of the game can be found in the [game design document](game%20design%20document.md) ... 
+We are dedicated to expanding and refining Gambetto.
+A tiny architecture overview of the game can be found in the [game design document](game%20design%20document.md) ... 
 
 ![](Images/4screenshots.png)
 

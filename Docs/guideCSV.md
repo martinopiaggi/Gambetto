@@ -1,5 +1,5 @@
 
-**Brief guide to make a room**
+# Brief guide to make a room
 
 Keeping in mind that a level is made by multiple "rooms". 
 The `RoomLayout` class:
