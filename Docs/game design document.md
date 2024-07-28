@@ -102,7 +102,7 @@ Discrete, emphasizing movements, captures, transformations and explosions.
 
 classDiagram
     class GameManager
-
+    class LevelManager
     class SoundManager
 
     class Clock {
