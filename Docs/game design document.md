@@ -98,22 +98,22 @@ Discrete, emphasizing movements, captures, transformations and explosions.
 
 ## Architecture Overview
 
-```mermaid 
+Here it's a stripped-down view of Gambetto's core.
 
-classDiagram
+This simplified diagram focuses on the key components that drive the gameplay:aeshtetic stuff (like Fog, ColorScheme) and other less important classes are omitted. 
+
+```mermaid 
+classDiagram 
     class GameManager
     class LevelManager
     class SoundManager
-
     class Clock {
         - global clock for all movements
         - SINGLETON
-        - acts as an event manager
+        - event manager
         - coroutine runs each tick
-        - sends events to listeners
-        - listeners are pieces
+        - sends events to listeners (pieces)
     }
-
     class Piece {
         - role: Player/Enemy/Neutral
         - type: Bishop/Pawn/Tower/...
@@ -121,31 +121,25 @@ classDiagram
         - possibleMovements: List<Vector2>
         + Move(positions: List<Vector2>): void
     }
-
     class Bishop
     class Pawn
     class King
     class Tower
     class Knight
     class Queen
-
     class CPUBehaviour {
         + chooseMove(grid, pieces): Map<Piece, Move>
     }
-
     class PlayerController {
         + startChoosing(piece, grid): Move
     }
-
     class GridManager {
         - SINGLETON
-        - contains:
-        - runtime positions of all pieces
-        - list of rooms
+        - runtime piece positions
+        - room list
         - active room
-        + change piece position on the grid and trigger piece animation
+        + updatePiecePosition()
     }
-
     class RoomBuilder {
         + gridLength: int
         + gridWidth: int
@@ -155,13 +149,11 @@ classDiagram
         + endCells: List
         + entryPoints
     }
-
     class Cell {
         + globalCoordinates: Vector3
         + room: int
         + neighbors: List<Cell>
     }
-
     class RoomLayout
     class LevelManager {
         - rooms: List<RoomLayout>
@@ -183,11 +175,10 @@ classDiagram
     PlayerController --> Piece
     GridManager --> RoomBuilder
     RoomBuilder --> RoomLayout
-    
     GridManager --> Cell
 ```
 
-Sequence diagram of a game cycle with clock logic:
+The next simplified sequence diagram shows how the clock drives the game loop:
 
 
 ```mermaid

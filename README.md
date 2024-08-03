@@ -5,7 +5,7 @@ Player navigates through dungeon-like levels, facing enemy chess pieces and usin
 Currently offering 20 minutes of gameplay, Gambetto serves as a proof of concept. You can play Gambetto downloading executables from [itch.io page](https://polimi-game-collective.itch.io/gambetto) 
 
 We are dedicated to expanding and refining Gambetto.
-A tiny architecture overview of the game can be found in the [game design document](game%20design%20document.md) ... 
+A tiny architecture overview of the game can be found in the [game design document](game%20design%20document.md). 
 
 ![](Images/4screenshots.png)
 
@@ -22,7 +22,8 @@ Here’s how you can contribute:
 
 ## License
 
-To add : https://github.com/apache/.github/blob/main/LICENSE
+Gambetto is licensed under the Apache License, Version 2.0. See [LICENSE](LICENSE) for the full license text.
+
 
 ## Developers/contacts
 
